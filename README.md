@@ -203,3 +203,61 @@ Front-end blockchain development is still early, and has rough edges. Here are s
   To reset your Metamask account, click Metamask --> Settings --> Advanced --> Reset Account. This is fast and painless
 - If Metamask is unable to / times-out while trying to connect to Localhost 8545: `rm deployments/localhost`, and then re-running `npm run start:local`, was observed to fix this problem and enable Metamask to connect.
 - `Error: a provider or signer is needed to resolve ENS names`. You probably have an undefined address somewhere. But generally it means Ethers doesn't understand the address and is trying to interpret it as an ENS address.
+
+
+# For us -- Weavik
+
+## Requirements
+
+### Java
+
+```shell
+openjdk 18.0.2.1 2022-08-18
+OpenJDK Runtime Environment Homebrew (build 18.0.2.1+0)
+OpenJDK 64-Bit Server VM Homebrew (build 18.0.2.1+0, mixed mode, sharing)
+```
+
+### Python
+
+```shell
+Python 3.10.4
+```
+
+### Firebase
+
+```shell
+11.8.0
+```
+
+## Env File
+
+### Root env
+
+> Substitute `TEST_USER` for your wallet address
+
+### client3 env
+
+Copy paste `.env.example` to `.env.local`
+Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
+
+```
+NEXT_PUBLIC_NETWORK_NAME=localhost
+NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
+```
+
+## Running
+
+Start with fresh install, setup the env files before anything here.
+
+- this will take some time
+  - `nvm use && npm install && npm run bootstrap`
+- start client (1) / protocol
+  - `npm run start:local`
+- open a new terminal (`nvm use` everytime you open a new terminal)
+  - `cd packages/subgraph`
+  - `npm run start-local` this can take a few minutes
+  - `npm run create-local` will trow error if previous was not completed...
+  - `npm run deploy-local` this will take some time
+  - `cd ..`
+  - `cd client3`
+  - `npm run dev`
