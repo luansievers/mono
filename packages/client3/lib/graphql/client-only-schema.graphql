@@ -1,0 +1,137 @@
+extend type SeniorPool {
+  name: String!
+  category: String!
+  icon: String!
+}
+
+type Borrower {
+  name: String!
+  orgType: String!
+  website: String!
+  linkedIn: String!
+  twitter: String
+  logo: String!
+  headerColor: String!
+  bio: String!
+  highlights: [String!]!
+}
+
+extend type TranchedPool {
+  name: String!
+  category: String!
+  description: String!
+  highlights: [String!]
+  icon: String!
+  agreement: String
+  dataroom: String
+  borrower: Borrower!
+}
+
+extend type CreditLine {
+  isLate: Boolean
+}
+
+extend type SeniorPoolStakedPosition {
+  rewardEarnRate: BigInt!
+  claimable: BigInt!
+  granted: BigInt!
+  # I would have liked for endTime to be indexed on the subgraph, but with the signature of positions() changing, it proved to be pretty challenging
+  endTime: BigInt!
+}
+
+enum SupportedFiat {
+  USD
+}
+
+type FiatAmount {
+  symbol: SupportedFiat!
+  amount: Float!
+}
+
+type GfiPrice {
+  """
+  Note that the cache ID for this type is price.symbol. Remember to always select it to avoid cache problems
+  """
+  price: FiatAmount!
+  lastUpdated: Int!
+}
+
+type CryptoAmount {
+  token: SupportedCrypto!
+  amount: BigInt!
+}
+
+enum IndirectGrantSource {
+  MERKLE_DISTRIBUTOR
+  BACKER_MERKLE_DISTRIBUTOR
+}
+
+enum DirectGrantSource {
+  MERKLE_DIRECT_DISTRIBUTOR
+  BACKER_MERKLE_DIRECT_DISTRIBUTOR
+}
+
+enum GrantReason {
+  BACKER
+  LIQUIDITY_PROVIDER
+  FLIGHT_ACADEMY
+  FLIGHT_ACADEMY_AND_LIQUIDITY_PROVIDER
+  GOLDFINCH_INVESTMENT
+}
+
+interface GfiGrant {
+  id: ID!
+  index: Int!
+  reason: GrantReason!
+  proof: [String!]!
+  amount: BigInt!
+}
+
+type IndirectGfiGrant implements GfiGrant {
+  id: ID!
+  index: Int!
+  reason: GrantReason!
+  proof: [String!]!
+  amount: BigInt!
+
+  indirectSource: IndirectGrantSource!
+  vestingLength: BigInt!
+  vestingInterval: BigInt!
+  cliffLength: BigInt!
+  start: BigInt!
+  end: BigInt!
+  vested: BigInt!
+}
+
+type DirectGfiGrant implements GfiGrant {
+  id: ID!
+  index: Int!
+  reason: GrantReason!
+  proof: [String!]!
+  amount: BigInt!
+
+  directSource: DirectGrantSource!
+  isAccepted: Boolean!
+}
+
+type Viewer {
+  account(format: String): String
+  usdcBalance: CryptoAmount
+  gfiBalance: CryptoAmount
+  fiduBalance: CryptoAmount
+
+  gfiGrants: [GfiGrant!]!
+}
+
+type BlockInfo {
+  number: Int!
+  timestamp: Int!
+}
+
+extend type Query {
+  viewer: Viewer!
+  isWalletModalOpen: Boolean!
+  isVerificationModalOpen: Boolean!
+  gfiPrice(fiat: SupportedFiat!): GfiPrice!
+  currentBlock: BlockInfo
+}
