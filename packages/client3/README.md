@@ -27,7 +27,7 @@ After some debate, we decided to use Apollo for the purpose of global app state 
 
 ## Running locally
 
-The easiest way to get the app running locally is by configuring it to consume mainnet data. Start by copying `client2/.env.example` to your own `client2/.env.local` file, and setting `NEXT_PUBLIC_NETWORK_NAME=mainnet`. This will configure the app to consume data from a mainnet subgraph, and use mainnet contract addresses for everything.
+The easiest way to get the app running locally is by configuring it to consume mainnet data. Start by copying `client3/.env.example` to your own `client3/.env.local` file, and setting `NEXT_PUBLIC_NETWORK_NAME=mainnet`. This will configure the app to consume data from a mainnet subgraph, and use mainnet contract addresses for everything.
 
 Running the app against a local chain is possible as well, but you need to set up a local subgraph for it. We do this by running a subgraph inside a Docker container. There are no known restrictions on Docker specs, but here are some sample specs that are known to work (as of June 23rd, 2022):
 
@@ -39,7 +39,7 @@ To bring up the machines:
 
 1. In the monorepo root, run `npm run start:local`. This will start up the local chain, the old client, and all of the other related processes. This will include the local GFI airdrops.
 2. In `packages/subgraph`, run `npm run start-local`. This will bring up a subgraph in Docker. When Docker is up, run `npm run create-local` then `npm run deploy-local`
-3. Finally, in this package, you can set `NEXT_PUBLIC_NETWORK_NAME=localhost` and you can comment out the env var for a graphQL URL if you have it. Now run `npm run dev`. This will start client2 on port 3001 so it doesn't conflict with the old client on port 3000.
+3. Finally, in this package, you can set `NEXT_PUBLIC_NETWORK_NAME=localhost` and you can comment out the env var for a graphQL URL if you have it. Now run `npm run dev`. This will start client3 on port 3001 so it doesn't conflict with the old client on port 3000.
 
 ## Guidelines and Conventions
 

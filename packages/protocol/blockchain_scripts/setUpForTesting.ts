@@ -511,13 +511,13 @@ async function writePoolMetadata({
   const status = [false, true, undefined]
 
   const metadataPath = "../../packages/pools/metadata/localhost.json"
-  const metadataPathForClient2 = "../../packages/client2/constants/metadata/localhost.json"
+  const metadataPathForClient3 = "../../packages/client3/constants/metadata/localhost.json"
   let metadata: any
   let metadata2: any
   try {
     const data = await fs.promises.readFile(metadataPath)
     metadata = JSON.parse(data.toString())
-    const data2 = await fs.promises.readFile(metadataPathForClient2)
+    const data2 = await fs.promises.readFile(metadataPathForClient3)
     metadata2 = JSON.parse(data2.toString())
   } catch (error) {
     metadata = {}
@@ -549,7 +549,7 @@ async function writePoolMetadata({
   }
 
   await fs.promises.writeFile(metadataPath, JSON.stringify(metadata, null, 2))
-  await fs.promises.writeFile(metadataPathForClient2, JSON.stringify(metadata2, null, 2))
+  await fs.promises.writeFile(metadataPathForClient3, JSON.stringify(metadata2, null, 2))
 }
 
 function getLastEventArgs(result: ContractReceipt): Result {
