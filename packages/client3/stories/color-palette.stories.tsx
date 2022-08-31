@@ -11,9 +11,9 @@ export default {
 export const ColorStory: Story = () => {
   return (
     <div className="space-y-10">
-      {Object.entries(colors).map(([colorName, colorMap]) =>
+      {Object.entries(colors).map(([colorName, colorMap], index) =>
         typeof colorMap !== "string" ? (
-          <div>
+          <div key={`${index}`}>
             <div className="font-bold">{colorName}</div>
             <div className="flex flex-wrap">
               {Object.entries(colorMap).map(([colorKey, colorValue]) => (
