@@ -1,12 +1,7 @@
-### What happened?
-<!-- Explain your change, and any non-intutive aspects of it -->
+### Description
 
-### Why?
-<!-- What's the real reason behind this change? -->
+> Include a brief description of changes (list or paragraph)!
+### Checklist
 
-### How has this been tested?
-<!-- Unit tests? Local testing? Something else? -->
-
-**Checklist**
-- [ ] I have reviewed this code myself
-- [ ] Screenshots of the key change are present (if this is a front-end PR)
+- [ ] `CHANGELOG` has been updated (_if appropriate_)
+- [ ] Environment variables updated (_if appropriate_)

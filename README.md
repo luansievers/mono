@@ -204,60 +204,49 @@ Front-end blockchain development is still early, and has rough edges. Here are s
 - If Metamask is unable to / times-out while trying to connect to Localhost 8545: `rm deployments/localhost`, and then re-running `npm run start:local`, was observed to fix this problem and enable Metamask to connect.
 - `Error: a provider or signer is needed to resolve ENS names`. You probably have an undefined address somewhere. But generally it means Ethers doesn't understand the address and is trying to interpret it as an ENS address.
 
+# Weavik
 
-# For us -- Weavik
+This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 
-## Requirements
+##  Stack
 
-### Java
+- [Docker](https://www.docker.com/get-started/) - Development environment container system
+- [Java](https://stackoverflow.com/a/65601197/17198078) - Install using home brew
+- [Pyenv](https://github.com/pyenv/pyenv#getting-pyenv) - To manage Python versions
+- [Python](https://github.com/pyenv/pyenv#usage) - Use version 3.10.4
+- [Firebase](https://formulae.brew.sh/formula/firebase-cli) - Use version 11.8.0
+  
+##  Requirements
 
-```shell
-openjdk 18.0.2.1 2022-08-18
-OpenJDK Runtime Environment Homebrew (build 18.0.2.1+0)
-OpenJDK 64-Bit Server VM Homebrew (build 18.0.2.1+0, mixed mode, sharing)
-```
+- [Git](https://git-scm.com/) - Source control management
 
-### Python
+- **[Docker](https://www.docker.com/get-started/)** and [Docker Compose](https://docs.docker.com/compose/) - Development container management system
 
-```shell
-Python 3.10.4
-```
+- [Make](https://www.gnu.org/software/make/) - Build automation tool
 
-### Firebase
+- _[NodeJS 16](https://nodejs.org/)_\* - _JavaScript server environment (optional, occasional scripting)_
 
-```shell
-11.8.0
-```
+- _[NPM 7](https://github.com/npm/cli)_\* - _NodeJS package manager (optional, local dependencies?)_
 
-## Env File
 
-### Root env
+##  Development
 
-> Substitute `TEST_USER` for your wallet address
-
-### client3 env
-
-Copy paste `.env.example` to `.env.local`
-Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
-
-```
-NEXT_PUBLIC_NETWORK_NAME=localhost
-NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
-```
-
-## Running
-
-Start with fresh install, setup the env files before anything here.
-
-- this will take some time
-  - `nvm use && npm install && npm run bootstrap`
-- start client (1) / protocol
-  - `npm run start:local`
-- open a new terminal (`nvm use` everytime you open a new terminal)
-  - `cd packages/subgraph`
-  - `npm run start-local` this can take a few minutes
-  - `npm run create-local` will trow error if previous was not completed...
-  - `npm run deploy-local` this will take some time
-  - `cd ..`
-  - `cd client3`
-  - `npm run dev`
+1. Run `make setup` to quickly setup development environment (env files, git hooks, etc).
+2. **root env**: Substitute `TEST_USER` for your wallet address
+3. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
+	```
+	NEXT_PUBLIC_NETWORK_NAME=localhost
+	NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
+	```
+4. Running the applications
+	- Start with fresh install, setup the env files before anything here.
+	- `nvm use && npm install && npm run bootstrap` this will take some time
+	- start client (1) / protocol `npm run start:local`
+	- open a new terminal (`nvm use` everytime you open a new terminal)
+	-  `cd packages/subgraph`
+	-  `npm run start-local` this can take a few minutes
+	-  `npm run create-local` will trow error if previous was not completed...
+	-  `npm run deploy-local` this will take some time
+	-  `cd ..`
+	-  `cd client3`
+	-  `npm run dev`
