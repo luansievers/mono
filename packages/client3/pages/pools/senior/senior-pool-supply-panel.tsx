@@ -233,7 +233,7 @@ export function SeniorPoolSupplyPanel({
   }, [account, usdcContract]);
 
   return (
-    <div className="rounded-xl bg-sunrise-02 p-5 text-white">
+    <div className="text-white rounded-xl bg-sunrise-02 p-5">
       <div className="mb-3 flex items-center justify-between gap-2">
         <span className="text-sm">Total est. APY</span>
         <InfoIconTooltip content="The Senior Pool's total current estimated APY, including the current USDC APY and est. GFI rewards APY." />
@@ -326,7 +326,7 @@ export function SeniorPoolSupplyPanel({
           >
             Supply
           </Button>
-          <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
+          <div className="text-white mt-3 flex items-center justify-center gap-3 text-sm">
             <Icon size="md" name="Exclamation" />
             <div>
               Sorry, you are not eligible to participate in the senior pool
@@ -341,7 +341,6 @@ export function SeniorPoolSupplyPanel({
               control={control}
               name="supply"
               label="Supply amount"
-              colorScheme="dark"
               textSize="xl"
               labelClassName="!text-sm !mb-3"
               labelDecoration={

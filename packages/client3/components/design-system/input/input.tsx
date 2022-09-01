@@ -47,13 +47,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    */
   labelDecoration?: ReactNode;
   textSize?: "sm" | "md" | "lg" | "xl";
-  colorScheme?: "light" | "dark";
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     label,
-    hideLabel = false,
+    hideLabel = label ? false : true,
     name,
     id,
     type = "text",
@@ -66,7 +65,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     labelClassName,
     className,
     autoComplete = "off",
-    colorScheme = "light",
     textSize = "md",
     ...rest
   },
@@ -84,11 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <div
       className={clsx(
         "flex flex-col items-start justify-start",
-        colorScheme === "light"
-          ? "text-sand-700"
-          : colorScheme === "dark"
-          ? "text-white"
-          : null,
+        "text-white",
         textSize === "sm"
           ? "text-sm"
           : textSize === "lg"
@@ -113,21 +107,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <input
           className={clsx(
             "unfocused w-full rounded", // unfocused because the color schemes supply a border color as a focus style
-            colorScheme === "light"
-              ? [
-                  "border bg-white focus:border-sand-600",
-                  isError
-                    ? "border-clay-100 placeholder:text-clay-700"
-                    : "border-sand-200 placeholder:text-sand-500",
-                ]
-              : colorScheme === "dark"
-              ? [
-                  "border bg-sky-900 focus:border-white",
-                  isError
-                    ? "border-clay-500 placeholder:text-clay-500"
-                    : "border-transparent placeholder:text-sand-300",
-                ]
-              : null,
+            "focus:border-sand-600 border-2 bg-transparent",
+            "border-width",
+            isError
+              ? "border-state-error placeholder:text-dark-80"
+              : "border-primary placeholder:text-dark-80",
+
             disabled && "opacity-50",
             decoration ? "pr-8" : null,
             textSize === "sm"
@@ -162,16 +147,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       </div>
       {helperText || _errorMessage ? (
         <HelperText
-          className={clsx(
-            isError
-              ? "text-clay-500"
-              : colorScheme === "light"
-              ? "text-sand-500"
-              : colorScheme === "dark"
-              ? "text-sand-300"
-              : null,
-            "mt-1 text-sm leading-none"
-          )}
+          className={clsx(isError ? "" : null, "text-md mt-1 leading-none")}
         >
           {_errorMessage ? _errorMessage : helperText}
         </HelperText>
