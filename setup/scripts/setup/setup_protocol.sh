@@ -1,6 +1,8 @@
 # red color environment
 RED='\033[0;31m'
 NC='\033[0m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 
 
 # Handle node version
@@ -43,9 +45,9 @@ if [ "$NEXT_PUBLIC_MAINNET_RPC_URL" = "https://eth-mainnet.alchemyapi.io/v2/<YOU
   exit 1
 fi
 
+echo "${GREEN}Running Bootstrap${NC}"
 nvm use && npm install && npm run bootstrap
 
-npm --prefix packages/subgraph run start-local
-npm --prefix packages/subgraph run create-local
-npm --prefix packages/subgraph run deploy-local
-npm --prefix packages/client3 run dev
+echo "${GREEN}Goldfinch Protocol Starting${NC}: open a new terminal and run ${YELLOW}make graph${NC}"
+echo ""
+npm run start:local

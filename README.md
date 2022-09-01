@@ -232,13 +232,15 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 ##  Development
 
 1. Run `make setup` to quickly setup development environment (env files, git hooks, etc).
-2. **root env**: Substitute `TEST_USER` for your wallet address
-3. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
+1. **root env**: Substitute `TEST_USER` for your wallet address
+1. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
 	```
 	NEXT_PUBLIC_NETWORK_NAME=localhost
 	NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
 	```
-4. Running the applications
+1. TL;DR:
+   -  Run `make protocol` then `make graph`
+1. Running the applications: 
 	- Start with fresh install, setup the env files before anything here.
 	- `nvm use && npm install && npm run bootstrap` this will take some time
 	- start client (1) / protocol `npm run start:local`
