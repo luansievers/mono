@@ -15,4 +15,9 @@ setup_env_files:
 	cp -n .env.example .env.local || true
 	cp -n packages/client3/.env.example packages/client3/.env.local || true
 
-	
+################################################################################
+# Applications
+################################################################################
+
+protocol:
+	sh ./setup.sh
