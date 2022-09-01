@@ -43,8 +43,6 @@ if [ "$NEXT_PUBLIC_MAINNET_RPC_URL" = "https://eth-mainnet.alchemyapi.io/v2/<YOU
   exit 1
 fi
 
-nvm use
-
 nvm use && npm install && npm run bootstrap
 
 npm --prefix packages/subgraph run start-local
