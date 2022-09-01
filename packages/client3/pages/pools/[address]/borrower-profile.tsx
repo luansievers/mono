@@ -32,7 +32,7 @@ export function BorrowerProfile({
       <div className="mb-8 items-center justify-between lg:flex">
         <div className="mb-3 flex items-center">
           {logo && (
-            <div className="relative mr-3 h-8 w-8 overflow-hidden rounded-full border border-sand-200">
+            <div className="border-sand-200 relative mr-3 h-8 w-8 overflow-hidden rounded-full border">
               <Image
                 src={logo}
                 alt={name}
@@ -46,10 +46,7 @@ export function BorrowerProfile({
           <h2 className="text-3xl lg:mb-0">{name}</h2>
         </div>
         <div className="flex gap-2">
-          <Chip
-            className="relative flex items-center sm:gap-2"
-            colorScheme="sand"
-          >
+          <Chip className="relative flex items-center sm:gap-2">
             <Icon name="Link" size="sm" />
             <a
               className="after:absolute after:top-0 after:left-0 after:h-full after:w-full"
@@ -60,10 +57,7 @@ export function BorrowerProfile({
               <span className="sr-only sm:not-sr-only">Website</span>
             </a>
           </Chip>
-          <Chip
-            className="relative flex items-center sm:gap-2"
-            colorScheme="sand"
-          >
+          <Chip className="relative flex items-center sm:gap-2">
             <Icon name="LinkedIn" size="sm" />
             <a
               className="after:absolute after:top-0 after:left-0 after:h-full after:w-full"
@@ -75,10 +69,7 @@ export function BorrowerProfile({
             </a>
           </Chip>
           {twitter ? (
-            <Chip
-              className="relative flex items-center sm:gap-2"
-              colorScheme="sand"
-            >
+            <Chip className="relative flex items-center sm:gap-2">
               <Icon name="Twitter" size="sm" />
               <a
                 className="after:absolute after:top-0 after:left-0 after:h-full after:w-full"
