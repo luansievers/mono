@@ -148,7 +148,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       </div>
       {helperText || _errorMessage ? (
         <HelperText
-          className={clsx("text-md mt-1 leading-none text-state-error")}
+          className={clsx(
+            isError ? "text-state-error" : null,
+            "mt-1 text-sm leading-none"
+          )}
         >
           {_errorMessage ? _errorMessage : helperText}
         </HelperText>
