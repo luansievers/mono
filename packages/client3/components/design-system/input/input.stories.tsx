@@ -15,9 +15,7 @@ export const InputStory: ComponentStory<typeof Input> = (args) => (
 );
 
 InputStory.args = {
-  label: "Name",
-  placeholder: "John Doe",
-  colorScheme: "light",
+  placeholder: "Placeholder",
   textSize: "md",
 };
 
@@ -36,13 +34,12 @@ export const DollarInputStory: ComponentStory<typeof DollarInput> = (args) => {
         onMaxClick={() => setValue("amount", "1000000")}
         {...args}
       />
-      <button type="submit">Submit</button>
     </form>
   );
 };
 
 DollarInputStory.args = {
-  label: "Dollar amount",
+  placeholder: "Dollar amount",
   name: "amount",
 };
 
