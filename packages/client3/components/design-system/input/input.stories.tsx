@@ -15,7 +15,6 @@ export const InputStory: ComponentStory<typeof Input> = (args) => (
 );
 
 InputStory.args = {
-  // label: "Name",
   placeholder: "Placeholder",
   textSize: "md",
 };
