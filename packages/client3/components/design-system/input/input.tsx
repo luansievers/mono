@@ -106,8 +106,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div className="relative w-full">
         <input
           className={clsx(
-            "unfocused w-full rounded",
-            "border border-dark-80", // unfocused because the color schemes supply a border color as a focus style
+            "unfocused w-full rounded border",
+            // unfocused because the color schemes supply a border color as a focus style
             "focus:border-primary focus:border-2",
             "bg-transparent",
             "placeholder:text-dark-80",
