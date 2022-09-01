@@ -52,7 +52,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     label,
-    hideLabel = label ? false : true,
+    hideLabel = !label,
     name,
     id,
     type = "text",
@@ -107,7 +107,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <input
           className={clsx(
             "unfocused w-full rounded border",
-            // unfocused because the color schemes supply a border color as a focus style
             "focus:border-primary focus:border-2",
             "bg-transparent",
             "placeholder:text-dark-80",
@@ -149,10 +148,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       </div>
       {helperText || _errorMessage ? (
         <HelperText
-          className={clsx(
-            isError ? "" : null,
-            "text-md mt-1 leading-none text-state-error"
-          )}
+          className={clsx("text-md mt-1 leading-none text-state-error")}
         >
           {_errorMessage ? _errorMessage : helperText}
         </HelperText>
