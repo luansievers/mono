@@ -106,12 +106,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div className="relative w-full">
         <input
           className={clsx(
-            "unfocused w-full rounded", // unfocused because the color schemes supply a border color as a focus style
-            "focus:border-sand-600 border-2 bg-transparent",
-            "border-width",
-            isError
-              ? "border-state-error placeholder:text-dark-80"
-              : "border-primary placeholder:text-dark-80",
+            "unfocused w-full rounded",
+            "border border-dark-80", // unfocused because the color schemes supply a border color as a focus style
+            "focus:border-primary focus:border-2",
+            "bg-transparent",
+            "placeholder:text-dark-80",
+            "text-dark-80",
+
+            isError ? "border-state-error" : "border-dark-80",
 
             disabled && "opacity-50",
             decoration ? "pr-8" : null,
@@ -147,7 +149,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       </div>
       {helperText || _errorMessage ? (
         <HelperText
-          className={clsx(isError ? "" : null, "text-md mt-1 leading-none")}
+          className={clsx(
+            isError ? "" : null,
+            "text-md mt-1 leading-none text-state-error"
+          )}
         >
           {_errorMessage ? _errorMessage : helperText}
         </HelperText>
