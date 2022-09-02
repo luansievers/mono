@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { forwardRef, InputHTMLAttributes, ReactNode } from "react";
+import { forwardRef, InputHTMLAttributes, ReactNode, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Icon, IconNameType } from "@/components/design-system";
@@ -47,6 +47,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    */
   labelDecoration?: ReactNode;
   textSize?: "sm" | "md" | "lg" | "xl";
+  money?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -66,11 +67,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className,
     autoComplete = "off",
     textSize = "md",
+    money,
+    onBlur,
     ...rest
   },
   ref
 ) {
   const formContext = useFormContext();
+  const [focus, setFocus] = useState(false);
   let _errorMessage = errorMessage;
   if (formContext !== null) {
     _errorMessage = formContext.formState.errors[name]?.message;
@@ -103,48 +107,98 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <label htmlFor={_id}>{label}</label>
         {labelDecoration ? labelDecoration : null}
       </div>
-      <div className="relative w-full">
-        <input
-          className={clsx(
-            "unfocused w-full rounded border",
-            "focus:border-primary focus:border-2",
-            "bg-transparent",
-            "placeholder:text-dark-80",
-            "text-dark-80",
 
-            isError ? "border-state-error" : "border-dark-80",
-
-            disabled && "opacity-50",
-            decoration ? "pr-8" : null,
-            textSize === "sm"
-              ? "py-1.5 px-3"
-              : textSize === "md"
-              ? "py-2 px-3"
-              : textSize === "lg"
-              ? "px-4 py-3"
-              : textSize === "xl"
-              ? "px-5 py-4"
-              : null,
-            inputClassName
-          )}
-          ref={ref}
-          name={name}
-          id={_id}
-          type={type}
-          disabled={disabled}
-          autoComplete={autoComplete}
-          {...rest}
-        />
-        {typeof decoration === "string" ? (
-          <Icon
-            name={decoration as IconNameType}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2"
-          />
-        ) : decoration ? (
-          <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
-            {decoration}
+      <div
+        className={clsx(
+          "relative mt-1 w-full rounded",
+          money ? "border" : null,
+          focus
+            ? [isError ? "ring-2 ring-state-error" : "ring ring-theme-primary"]
+            : "ring-theme-primary",
+          isError && money ? "border-state-error" : null
+        )}
+      >
+        <div>
+          <div
+            className={clsx(
+              money
+                ? "pointer-events-none absolute inset-y-0 left-0 flex items-center border-r px-3"
+                : null,
+              isError
+                ? [
+                    focus
+                      ? "border-r-2 border-state-error"
+                      : "border-state-error",
+                  ]
+                : "border-r"
+            )}
+          >
+            <span className="text-dark-80 sm:text-sm">
+              {(() => {
+                if (money) return <span>$</span>;
+              })()}
+            </span>
           </div>
-        ) : null}
+          <input
+            className={clsx(
+              "unfocused w-full rounded",
+              money ? "mx-10" : "border",
+              "bg-transparent",
+              "placeholder:text-dark-80",
+              "text-dark-80",
+
+              isError ? "border-state-error" : null,
+
+              disabled && "opacity-50",
+              decoration ? "pr-8" : null,
+              textSize === "sm"
+                ? "py-1.5 px-3"
+                : textSize === "md"
+                ? "py-2 px-3"
+                : textSize === "lg"
+                ? "px-4 py-3"
+                : textSize === "xl"
+                ? "px-5 py-4"
+                : null,
+              inputClassName
+            )}
+            ref={ref}
+            onClick={() => {
+              setFocus(true);
+            }}
+            onBlur={(event) => {
+              onBlur && onBlur(event);
+              setFocus(false);
+            }}
+            name={name}
+            id={_id}
+            type={type}
+            disabled={disabled}
+            autoComplete={autoComplete}
+            {...rest}
+          />
+          <div
+            className={clsx(
+              money ? "absolute right-14 top-1/2 -translate-y-1/2" : null
+            )}
+          >
+            <span className=" text-dark-80 sm:text-sm">
+              {(() => {
+                if (money) return <span>USDC</span>;
+              })()}
+            </span>
+          </div>
+          {typeof decoration === "string" ? (
+            <Icon
+              name={decoration as IconNameType}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2"
+            />
+          ) : decoration ? (
+            <div className="absolute right-3.5 top-1/2 -translate-y-1/2">
+              {decoration}
+            </div>
+          ) : null}
+        </div>
       </div>
       {helperText || _errorMessage ? (
         <></>
