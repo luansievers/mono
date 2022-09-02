@@ -2,7 +2,6 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useForm } from "react-hook-form";
 
 import { Input, DollarInput } from ".";
-import { Checkbox } from "./checkbox";
 import { Select } from "./select";
 
 export default {
@@ -102,17 +101,4 @@ SelectStory.args = {
   label: "Pet food",
   colorScheme: "light",
   textSize: "md",
-};
-
-export const CheckboxStory: ComponentStory<typeof Checkbox> = (args) => {
-  return (
-    <div className={args.colorScheme === "dark" ? "bg-black p-5" : "p-5"}>
-      <Checkbox {...args} />
-    </div>
-  );
-};
-
-CheckboxStory.args = {
-  name: "pug",
-  label: "I like pugs",
 };
