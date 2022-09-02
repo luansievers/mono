@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { forwardRef, InputHTMLAttributes, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { Icon, IconNameType, HelperText } from "@/components/design-system";
+import { Icon, IconNameType } from "@/components/design-system";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
@@ -147,15 +147,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         ) : null}
       </div>
       {helperText || _errorMessage ? (
-        <HelperText
-          className={clsx(
-            isError ? "text-state-error" : "text-dark-80",
-            "mt-1 text-sm leading-none"
-          )}
-        >
-          {_errorMessage ? _errorMessage : helperText}
-        </HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText
+      //   className={clsx(
+      //     isError ? "text-state-error" : "text-dark-80",
+      //     "mt-1 text-sm leading-none"
+      //   )}
+      // >
+      //   {_errorMessage ? _errorMessage : helperText}
+      // </HelperText>
+      null}
     </div>
   );
 });

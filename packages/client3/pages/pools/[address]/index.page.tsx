@@ -12,7 +12,6 @@ import {
   TabPanels,
   Heading,
   ShimmerLines,
-  HelperText,
   Marquee,
   Banner,
 } from "@/components/design-system";
@@ -283,7 +282,7 @@ export default function PoolPage() {
           </div>
           <Heading
             level={1}
-            className="mb-12 text-center text-sand-800 md:text-left"
+            className="text-sand-800 mb-12 text-center md:text-left"
           >
             {tranchedPool ? (
               tranchedPool.name
@@ -293,11 +292,12 @@ export default function PoolPage() {
           </Heading>
 
           {error ? (
-            <HelperText isError>
-              There was a problem fetching data on this pool. Shown data may be
-              outdated.
-            </HelperText>
-          ) : null}
+            <></>
+          ) : // <HelperText isError>
+          //   There was a problem fetching data on this pool. Shown data may be
+          //   outdated.
+          // </HelperText>
+          null}
 
           {poolStatus === PoolStatus.Open ? (
             <FundingBar

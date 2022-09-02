@@ -93,7 +93,7 @@ export function TransactionTable() {
         {transaction.tranchedPool ? (
           <Link
             href={`/pools/${transaction.tranchedPool.id}`}
-            iconRight="ArrowTopRight"
+            // iconRight="ArrowTopRight"
             className="text-sand-400"
           >
             Pool
@@ -106,7 +106,7 @@ export function TransactionTable() {
         rel="noopener noreferrer"
         className="text-sand-400"
         key={`${transaction.id}-link`}
-        iconRight="ArrowTopRight"
+        // iconRight="ArrowTopRight"
       >
         Tx
       </Link>,
@@ -133,7 +133,7 @@ export function TransactionTable() {
   ) : !account ? (
     <div className="text-clay-500">Wallet not connected</div>
   ) : rows.length === 0 ? (
-    <div className="rounded bg-sand-50 p-3 text-center text-sm text-sand-400">
+    <div className="bg-sand-50 text-sand-400 rounded p-3 text-center text-sm">
       No recent activity
     </div>
   ) : (

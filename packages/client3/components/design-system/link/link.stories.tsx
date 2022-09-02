@@ -5,21 +5,10 @@ import { Link } from ".";
 export default {
   title: "Components/Link",
   component: Link,
-  argTypes: {
-    nextLinkProps: {
-      control: false,
-    },
-    className: {
-      control: false,
-    },
-  },
+  argTypes: {},
 } as ComponentMeta<typeof Link>;
 
-export const LinkStory: ComponentStory<typeof Link> = (args) => {
-  return <Link {...args} />;
-};
-
-LinkStory.args = {
-  children: "Hello Goldfinch",
-  href: "#",
-};
+export const LinkStory: ComponentStory<typeof Link> = (args) => (
+  <Link {...args} />
+);
+LinkStory.args = { href: "#", children: "Some link", noUnderline: false };
