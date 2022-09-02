@@ -28,4 +28,7 @@ protocol:
 graph:
 	sh setup/scripts/setup/setup_subgraph.sh
 
+reset_graph:
+	docker compose -f packages/subgraph/docker-compose.yml down -v --rmi all
+
 
