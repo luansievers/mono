@@ -238,7 +238,7 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 	NEXT_PUBLIC_NETWORK_NAME=localhost
 	NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
 	```
-1. TL;DR:
+1. TL;DR to setup the protocol and subgraph:
    -  Run `make protocol` then `make graph`
 1. Running the applications: 
 	- Start with fresh install, setup the env files before anything here.
