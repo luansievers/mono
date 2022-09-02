@@ -1,4 +1,5 @@
 GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
 
@@ -14,7 +15,9 @@ fi
 
 nvm use
 npm --prefix packages/subgraph run start-local
-# wait for subgraph to start/initialize
+echo "${YELLOW}Graph Uploaded${NC}"
+echo ""
+echo "${YELLOW}Sleeping for 45 seconds${NC}"
 sleep 45 
 npm --prefix packages/subgraph run create-local
 npm --prefix packages/subgraph run deploy-local

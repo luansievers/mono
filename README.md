@@ -229,26 +229,33 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 - _[NPM 7](https://github.com/npm/cli)_\* - _NodeJS package manager (optional, local dependencies?)_
 
 
-##  Development
+##  Setup
 
 1. Run `make setup` to quickly setup development environment (env files, git hooks, etc).
-1. **root env**: Substitute `TEST_USER` for your wallet address
-1. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
-	```
+2. **root env**: Substitute `TEST_USER` for your wallet address
+3. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
+ 
+	```sh
 	NEXT_PUBLIC_NETWORK_NAME=localhost
 	NEXT_PUBLIC_MAINNET_RPC_URL=https://eth-mainnet.alchemyapi.io/v2/{YOUR API KEY}
 	```
-1. TL;DR to setup the protocol and subgraph:
+
+4. TL;DR to setup the protocol and subgraph:
    -  Run `make protocol` then `make graph`
-1. Running the applications: 
-	- Start with fresh install, setup the env files before anything here.
-	- `nvm use && npm install && npm run bootstrap` this will take some time
-	- start client (1) / protocol `npm run start:local`
-	- open a new terminal (`nvm use` everytime you open a new terminal)
-	-  `cd packages/subgraph`
-	-  `npm run start-local` this can take a few minutes
-	-  `npm run create-local` will trow error if previous was not completed...
-	-  `npm run deploy-local` this will take some time
-	-  `cd ..`
-	-  `cd client3`
-	-  `npm run dev`
+       - if you get a `ERCONNECT` with `make graph`, run `reset_graph` and start at 5.5 (5.a in the `README.md` preview) 
+5. If above fails:
+	1. Start with fresh install, setup the env files before anything here.
+	`nvm use && npm install && npm run bootstrap` this will take some time
+	2. start client (1) / protocol `npm run start:local`
+	3. open a new terminal (`nvm use` everytime you open a new terminal)
+	4.  `cd packages/subgraph`
+	5.  `npm run start-local` this can take a few minutes
+	6.  `npm run create-local` will throw an error if previous was not completed...
+	7.  `npm run deploy-local` this will take some time
+	8.  `cd ..`
+	9.  `cd client3`
+	10.  `npm run dev`
+
+##  Troubleshooting
+- `@/lib/graphql....` error 
+    - Run `make reset_graph` then stat at 5.5 or (`5.a in the README.md preview`)
