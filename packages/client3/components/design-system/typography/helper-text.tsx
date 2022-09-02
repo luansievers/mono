@@ -15,7 +15,11 @@ export function HelperText({
   const Component = as ?? "p";
   return (
     <Component
-      className={clsx("text-sm", isError ? "text-clay-500" : null, className)} // TODO get a proper error colour when colour palette is finalized
+      className={clsx(
+        "text-sm",
+        isError ? "text-xs text-state-error" : null,
+        className
+      )}
       {...rest}
     />
   );

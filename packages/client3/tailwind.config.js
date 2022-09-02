@@ -38,6 +38,7 @@ module.exports = {
       },
       transparent: "transparent",
       current: "currentColor",
+      white: "#FFFFFF",
     },
     fontFamily: {
       sans: ['"Inter"', "sans-serif"],
