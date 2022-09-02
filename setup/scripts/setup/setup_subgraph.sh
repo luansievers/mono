@@ -14,6 +14,8 @@ fi
 
 nvm use
 npm --prefix packages/subgraph run start-local
+# wait for subgraph to start/initialize
+sleep 45 
 npm --prefix packages/subgraph run create-local
 npm --prefix packages/subgraph run deploy-local
 
