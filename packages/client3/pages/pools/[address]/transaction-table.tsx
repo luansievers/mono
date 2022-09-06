@@ -5,7 +5,7 @@ import { useCallback } from "react";
 
 import { Address } from "@/components/address";
 import {
-  GoldfinchLogo,
+  FreeArtistsLogo,
   Link,
   ShimmerLines,
   Table,
@@ -92,7 +92,7 @@ export function TransactionTable({ tranchedPoolId }: TransactionTableProps) {
         </div>
       ) : transaction.category === TransactionCategory.SeniorPoolRedemption ? (
         <div className="flex items-center gap-2">
-          <GoldfinchLogo className="h-6 w-6" />
+          <FreeArtistsLogo className="h-6 w-6" />
           Senior Pool
         </div>
       ) : (
@@ -151,7 +151,7 @@ export function TransactionTable({ tranchedPoolId }: TransactionTableProps) {
       There was an error fetching transactions: {error.message}
     </div>
   ) : rows.length === 0 ? (
-    <div className="rounded bg-sand-50 p-3 text-center text-sm text-sand-400">
+    <div className="bg-sand-50 text-sand-400 rounded p-3 text-center text-sm">
       No recent activity
     </div>
   ) : (

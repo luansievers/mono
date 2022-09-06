@@ -1,12 +1,12 @@
 import { Story, Meta } from "@storybook/react";
 
-import { GoldfinchLogo } from ".";
+import { FreeArtistsLogo } from ".";
 
 export default {
   title: "Components/Logo",
-  component: GoldfinchLogo,
+  component: FreeArtistsLogo,
 } as Meta;
 
-export const LogoStory: Story<typeof GoldfinchLogo> = () => {
-  return <GoldfinchLogo className="h-10 w-10" />;
+export const LogoStory: Story<typeof FreeArtistsLogo> = () => {
+  return <FreeArtistsLogo className="h-10 w-10" />;
 };
