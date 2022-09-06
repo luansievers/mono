@@ -31,6 +31,9 @@ module.exports = {
         3: "#F4F4F4",
         4: "#FDFDFD",
       },
+      accent1: {
+        100: "#BFED47",
+      },
       state: {
         error: "#EB5757",
         process: "#2D64F5",

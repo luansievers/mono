@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 import {
   Breadcrumb,
-  Button,
   TabButton,
   TabContent,
   TabGroup,
@@ -15,6 +14,7 @@ import {
   HelperText,
   Marquee,
   Banner,
+  LinkButton,
 } from "@/components/design-system";
 import { BannerPortal, SubnavPortal } from "@/components/layout";
 import { SEO } from "@/components/seo";
@@ -254,7 +254,7 @@ export default function PoolPage() {
               : "Paused"}
           </Marquee>
           {/* gives the illusion of rounded corners on the top of the page */}
-          <div className="-mt-3 h-3 rounded-t-xl bg-white" />
+          <div className="bg-white -mt-3 h-3 rounded-t-xl" />
         </SubnavPortal>
       )}
 
@@ -268,22 +268,17 @@ export default function PoolPage() {
               />
             </div>
             {tranchedPool && poolStatus !== PoolStatus.ComingSoon ? (
-              <Button
-                variant="rounded"
-                colorScheme="secondary"
+              <LinkButton
                 iconRight="ArrowTopRight"
-                as="a"
                 href={`https://etherscan.io/address/${tranchedPool.id}`}
-                target="_blank"
-                rel="noopener"
               >
                 Contract
-              </Button>
+              </LinkButton>
             ) : null}
           </div>
           <Heading
             level={1}
-            className="mb-12 text-center text-sand-800 md:text-left"
+            className="text-sand-800 mb-12 text-center md:text-left"
           >
             {tranchedPool ? (
               tranchedPool.name
@@ -392,18 +387,13 @@ export default function PoolPage() {
                     <ShimmerLines lines={3} />
                   )}
                   {tranchedPool?.dataroom ? (
-                    <Button
-                      as="a"
-                      variant="rounded"
+                    <LinkButton
                       iconRight="ArrowTopRight"
                       href={tranchedPool.dataroom}
-                      target="_blank"
-                      rel="noreferrer"
-                      size="lg"
                       className="block"
                     >
                       Dataroom
-                    </Button>
+                    </LinkButton>
                   ) : null}
                 </div>
 

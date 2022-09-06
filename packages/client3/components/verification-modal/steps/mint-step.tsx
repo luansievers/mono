@@ -110,7 +110,6 @@ export function MintStep() {
           <Button
             disabled={!mintingParameters}
             isLoading={isMinting}
-            size="lg"
             onClick={handleMint}
             iconRight="ArrowSmRight"
             className="w-full"
@@ -160,7 +159,7 @@ export function MintStep() {
                 <div className="font-medium">
                   {getUIDLabelFromType(mintingParameters.id)}
                 </div>
-                <div className="mb-5 text-sm text-sand-500">
+                <div className="text-sand-500 mb-5 text-sm">
                   {mintingParameters.id ===
                   UIDType.USNonAccreditedIndividual ? (
                     <div className="flex items-center justify-center gap-1">
@@ -178,7 +177,7 @@ export function MintStep() {
             </div>
           ) : null}
         </div>
-        <div className="text-center text-xs text-sand-400">
+        <div className="text-sand-400 text-center text-xs">
           {!isMinted
             ? "UID is a non-transferrable NFT representing KYC-verification on-chain. It follows the ERC-1155 standard, and is freely usable by any other protocol. A UID is required to participate in Goldfinch lending pools. No personal information is stored on-chain."
             : "With your newly minted UID, you can now participate in all the Goldfinch protocol activities you're eligible for. Get to it!"}

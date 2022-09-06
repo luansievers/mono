@@ -6,8 +6,8 @@ import {
   Breadcrumb,
   Heading,
   HelperText,
-  Button,
   goldfinchLogoWhiteBgPngUrl,
+  LinkButton,
 } from "@/components/design-system";
 import { BannerPortal } from "@/components/layout";
 import { useSeniorPoolPageQuery } from "@/lib/graphql/generated";
@@ -124,7 +124,7 @@ export default function SeniorPoolPage() {
           />
           {/* gives the illusion of rounded corners on the page */}
           <div className="bg-sky-500">
-            <div className="h-3 rounded-t-xl bg-white" />
+            <div className="bg-white h-3 rounded-t-xl" />
           </div>
         </BannerPortal>
       ) : null}
@@ -134,17 +134,12 @@ export default function SeniorPoolPage() {
           <div className="mb-8 flex flex-wrap justify-between gap-2">
             <Breadcrumb label="Goldfinch" image={goldfinchLogoWhiteBgPngUrl} />
             {seniorPool ? (
-              <Button
-                variant="rounded"
-                colorScheme="secondary"
+              <LinkButton
                 iconRight="ArrowTopRight"
-                as="a"
                 href={`https://etherscan.io/address/${seniorPool.id}`}
-                target="_blank"
-                rel="noopener"
               >
                 Contract
-              </Button>
+              </LinkButton>
             ) : null}
           </div>
           <Heading className="text-center lg:text-left" level={1}>
@@ -201,38 +196,29 @@ export default function SeniorPoolPage() {
               Goldfinch. Capital is automatically diversified across Borrower
               pools, and protected by Backer capital.
             </p>
-            <Button
+            <LinkButton
               className="block"
-              as="a"
-              size="lg"
               href="https://docs.goldfinch.finance/goldfinch/protocol-mechanics/liquidityproviders"
               iconRight="ArrowTopRight"
-              variant="rounded"
             >
               How it Works
-            </Button>
+            </LinkButton>
           </div>
 
           <TransactionTable />
           <div className="flex gap-2">
-            <Button
-              as="a"
+            <LinkButton
               href="https://dune.com/goldfinch/goldfinch"
-              colorScheme="secondary"
               iconRight="ArrowTopRight"
-              variant="rounded"
             >
               Dashboard
-            </Button>
-            <Button
-              as="a"
+            </LinkButton>
+            <LinkButton
               href={`https://etherscan.io/address/${seniorPool?.id}`}
-              colorScheme="secondary"
               iconRight="ArrowTopRight"
-              variant="rounded"
             >
               Pool
-            </Button>
+            </LinkButton>
           </div>
 
           <div className="mt-20">

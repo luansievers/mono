@@ -95,7 +95,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
   );
 
   return (
-    <div className="w-80 divide-y divide-sand-100">
+    <div className="divide-sand-100 w-80 divide-y">
       {error ? (
         <HelperText isError>Error while fetching wallet status</HelperText>
       ) : null}
@@ -107,12 +107,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
             We need to verify your identity and issue a Goldfinch UID to
             participate.
           </div>
-          <Button
-            variant="rounded"
-            size="lg"
-            className="block w-full"
-            onClick={openVerificationModal}
-          >
+          <Button className="block w-full" onClick={openVerificationModal}>
             Verify identity
           </Button>
         </div>
@@ -147,7 +142,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                 formatCrypto(viewer.gfiBalance)
               ) : null}
             </div>
-            <div className="text-xs text-sand-500">
+            <div className="text-sand-500 text-xs">
               {loading ? (
                 <Shimmer style={{ width: "12ch" }} />
               ) : gfiBalanceAsFiat ? (
@@ -177,7 +172,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                   ? "Go-listed"
                   : null}
               </div>
-              <div className="text-xs text-sand-500">
+              <div className="text-sand-500 text-xs">
                 {user.isUsNonAccreditedIndividual
                   ? "Limited eligibility"
                   : "Full eligibility"}
@@ -194,15 +189,10 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
           </div>
           {user.isGoListed && !hasUid ? (
             <div className="mt-4">
-              <Button
-                className="block w-full"
-                variant="rounded"
-                size="lg"
-                onClick={openVerificationModal}
-              >
+              <Button className="block w-full" onClick={openVerificationModal}>
                 Claim UID
               </Button>
-              <div className="mt-3 flex items-center gap-2 text-xs text-sand-400">
+              <div className="text-sand-400 mt-3 flex items-center gap-2 text-xs">
                 <Icon name="Exclamation" size="md" />
                 Minting a UID is encouraged (but not required) for go-listed
                 users.
@@ -252,14 +242,12 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
               </tbody>
             </table>
           ) : (
-            <div className="text-sm text-sand-400">No recent activity</div>
+            <div className="text-sand-400 text-sm">No recent activity</div>
           )}
         </div>
       </div>
       <div className="flex justify-between pt-4">
         <Button
-          size="sm"
-          colorScheme="secondary"
           onClick={() => {
             connector.deactivate();
             onWalletDisconnect();
@@ -268,8 +256,6 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
           Disconnect wallet
         </Button>
         <Button
-          size="sm"
-          colorScheme="secondary"
           disabled={!connector.watchAsset || !gfiContract}
           onClick={() => {
             if (gfiContract) {

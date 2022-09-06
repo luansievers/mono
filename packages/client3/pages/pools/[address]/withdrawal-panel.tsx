@@ -204,7 +204,7 @@ export function WithdrawalPanel({
   }, [zaps, totalPrincipalRedeemable, totalInterestRedeemable]);
 
   return (
-    <div className="rounded-xl bg-sunrise-01 p-5 text-white">
+    <div className="text-white rounded-xl bg-sunrise-01 p-5">
       <div className="mb-3 flex justify-between text-sm">
         Available to withdraw
         <InfoIconTooltip
@@ -241,16 +241,11 @@ export function WithdrawalPanel({
           className="mb-3"
           disabled={selectedDestination !== "wallet"}
         />
-        <Button
-          type="submit"
-          colorScheme="secondary"
-          size="xl"
-          className="block w-full"
-        >
+        <Button type="submit" className="block w-full">
           Withdraw
         </Button>
         {!isPoolLocked ? (
-          <div className="mt-3 flex items-center justify-center gap-2 text-sm text-sand-700">
+          <div className="text-sand-700 mt-3 flex items-center justify-center gap-2 text-sm">
             <InfoIconTooltip
               size="sm"
               content="While this Pool is still open for Backer investments, you can instantly withdraw any amount of the funds you have already invested. Once the Pool is has reached its Pool limit for funding and is closed for further investment, you will only be able to withdraw your share of the Pool's interest and principal repayments."

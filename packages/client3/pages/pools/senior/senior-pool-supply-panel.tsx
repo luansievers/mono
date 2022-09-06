@@ -233,7 +233,7 @@ export function SeniorPoolSupplyPanel({
   }, [account, usdcContract]);
 
   return (
-    <div className="rounded-xl bg-sunrise-02 p-5 text-white">
+    <div className="text-white rounded-xl bg-sunrise-02 p-5">
       <div className="mb-3 flex items-center justify-between gap-2">
         <span className="text-sm">Total est. APY</span>
         <InfoIconTooltip content="The Senior Pool's total current estimated APY, including the current USDC APY and est. GFI rewards APY." />
@@ -299,34 +299,19 @@ export function SeniorPoolSupplyPanel({
         </tbody>
       </table>
       {!account ? (
-        <Button
-          className="block w-full"
-          onClick={openWalletModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openWalletModal}>
           Connect wallet
         </Button>
       ) : !isUserVerified ? (
-        <Button
-          className="block w-full"
-          onClick={openVerificationModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openVerificationModal}>
           Verify my identity
         </Button>
       ) : !canUserParticipate ? (
         <div>
-          <Button
-            disabled
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-          >
+          <Button disabled className="block w-full">
             Supply
           </Button>
-          <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
+          <div className="text-white mt-3 flex items-center justify-center gap-3 text-sm">
             <Icon size="md" name="Exclamation" />
             <div>
               Sorry, you are not eligible to participate in the senior pool
@@ -372,12 +357,7 @@ export function SeniorPoolSupplyPanel({
               protocol reserves.
             </div>
           </div>
-          <Button
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-            type="submit"
-          >
+          <Button className="block w-full" type="submit">
             Supply
           </Button>
         </Form>

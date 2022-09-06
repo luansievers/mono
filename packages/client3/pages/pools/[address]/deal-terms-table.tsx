@@ -3,8 +3,8 @@ import { format } from "date-fns";
 import { FixedNumber } from "ethers";
 
 import {
-  Button,
   InfoIconTooltip,
+  LinkButton,
   ShimmerLines,
 } from "@/components/design-system";
 import { POOL_METADATA } from "@/constants";
@@ -60,7 +60,7 @@ export default function DealTermsTable({
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h2 className="text-lg font-semibold">Deal Terms</h2>
-          <div className="flex text-sand-400">
+          <div className="text-sand-400 flex">
             <InfoIconTooltip
               size="sm"
               content="The Borrower's proposed terms for the Pool, including the loan's basic timeframe and conditions."
@@ -68,17 +68,12 @@ export default function DealTermsTable({
           </div>
         </div>
         {tranchedPool && poolStatus !== PoolStatus.ComingSoon ? (
-          <Button
-            variant="rounded"
-            colorScheme="secondary"
+          <LinkButton
             iconRight="ArrowTopRight"
-            as="a"
             href={`https://etherscan.io/address/${tranchedPool.id}`}
-            target="_blank"
-            rel="noopener"
           >
             Contract
-          </Button>
+          </LinkButton>
         ) : null}
       </div>
       {!tranchedPool ? (
@@ -149,10 +144,10 @@ export default function DealTermsTable({
 function Table({ rows }: { rows: [string, string, string][] }) {
   return (
     <div className="overflow-auto">
-      <table className="w-full border-collapse whitespace-nowrap border border-sand-200 text-sand-600">
+      <table className="border-sand-200 text-sand-600 w-full border-collapse whitespace-nowrap border">
         <tbody>
           {rows.map(([heading, tooltip, value], index) => (
-            <tr key={index} className="border border-sand-200">
+            <tr key={index} className="border-sand-200 border">
               <th scope="row" className="bg-sand-50 p-5 font-medium">
                 <div className="flex items-center justify-between">
                   <div className="text-sand-600">{heading}</div>

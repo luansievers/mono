@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useWizard } from "react-use-wizard";
 
-import { Button, Link } from "@/components/design-system";
+import { Button, Link, LinkButton } from "@/components/design-system";
 
 import { VerificationFlowSteps } from "../step-manifest";
 import { useVerificationFlowContext } from "../verification-flow-context";
@@ -17,23 +17,18 @@ export function ParallelMarketsStep() {
       footer={
         <>
           <Button
-            size="lg"
-            colorScheme="secondary"
             onClick={() => goToStep(VerificationFlowSteps.IndividualOrEntity)}
             className="w-full"
           >
             Back
           </Button>
-          <Button
-            as="a"
+          <LinkButton
             href="https://bridge.parallelmarkets.com/goldfinch"
-            target="_blank"
-            rel="noopener"
             className="w-full"
             iconRight="ArrowTopRight"
           >
             Verify my identity
-          </Button>
+          </LinkButton>
         </>
       }
     >
