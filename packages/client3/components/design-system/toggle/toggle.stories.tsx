@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Toggle, UserType } from "./toggle";
+import { Toggle } from "./toggle";
 
 export default {
   component: Toggle,
@@ -11,6 +11,14 @@ export const ToggleStory: ComponentStory<typeof Toggle> = (args) => (
   <Toggle {...args} />
 );
 
+let value = true;
 ToggleStory.args = {
-  user: UserType.ARTIST,
+  onChange: () => {
+    value = !value;
+  },
+  value: value,
+  states: {
+    true: "Backer",
+    false: "Artist",
+  },
 };

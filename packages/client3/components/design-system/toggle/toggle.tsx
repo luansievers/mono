@@ -1,22 +1,15 @@
 import clsx from "clsx";
-import { InputHTMLAttributes, useState } from "react";
 
-interface ToggleProps extends InputHTMLAttributes<HTMLInputElement> {
-  /**
-   * State of the toggle - either Artists or Backers
-   */
-  user: UserType;
+interface ToggleProps {
+  onChange?: () => void;
+  value: boolean;
+  states: {
+    true: string;
+    false: string;
+  };
 }
 
-export enum UserType {
-  BACKER = "backer",
-  ARTIST = "artist",
-}
-
-export function Toggle({ user, ...props }: ToggleProps) {
-  const value = user === UserType.ARTIST ? true : false;
-  const [toggleState, setToggleState] = useState(value);
-
+export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
   return (
     <div className="relative flex min-h-screen  flex-col items-center justify-center overflow-hidden">
       <div className="flex">
@@ -24,14 +17,12 @@ export function Toggle({ user, ...props }: ToggleProps) {
           <input
             type="checkbox"
             className="peer sr-only"
-            checked={toggleState}
+            checked={value}
+            onChange={onChange}
             readOnly
             {...props}
           />
           <div
-            onClick={() => {
-              setToggleState(!toggleState);
-            }}
             className={clsx(
               "flex h-10 w-[14.4rem] rounded-full",
               "bg-theme-accent5",
@@ -47,18 +38,14 @@ export function Toggle({ user, ...props }: ToggleProps) {
               )}
             >
               <span
-                className={clsx(
-                  toggleState ? "text-light-1" : "text-theme-light"
-                )}
+                className={clsx(value ? "text-light-1" : "text-theme-light")}
               >
-                Backer
+                {states.true}
               </span>
               <span
-                className={clsx(
-                  toggleState ? "text-theme-light" : "text-light-1"
-                )}
+                className={clsx(value ? "text-theme-light" : "text-light-1")}
               >
-                Artists
+                {states.false}
               </span>
             </div>
           </div>
