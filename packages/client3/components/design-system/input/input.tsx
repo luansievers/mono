@@ -145,7 +145,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
               money ? "mx-10" : "border",
               "bg-transparent",
               "placeholder:text-dark-80",
-              "text-dark-80",
+              "text-light-4",
 
               isError ? "border-state-error" : null,
 
@@ -201,16 +201,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         </div>
       </div>
       {helperText || _errorMessage ? (
-        <></>
-      ) : // <HelperText
-      //   className={clsx(
-      //     isError ? "text-state-error" : "text-dark-80",
-      //     "mt-1 text-sm leading-none"
-      //   )}
-      // >
-      //   {_errorMessage ? _errorMessage : helperText}
-      // </HelperText>
-      null}
+        <caption
+          className={clsx(
+            isError ? "text-state-error" : "text-dark-50",
+            "mt-1 text-sm leading-none"
+          )}
+        >
+          {_errorMessage ? _errorMessage : helperText}
+        </caption>
+      ) : null}
     </div>
   );
 });
