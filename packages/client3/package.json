@@ -10,7 +10,7 @@
     "start": "next start -p 3001",
     "analyze": "ANALYZE=true npm run build",
     "lint": "next lint",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./public",
     "build-storybook": "build-storybook",
     "gen-contract-types": "typechain --target=ethers-v5 \"abis/*.json\"",
     "codegen": "graphql-codegen",
