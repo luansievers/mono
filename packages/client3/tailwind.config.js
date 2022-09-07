@@ -80,6 +80,9 @@ module.exports = {
       spacing: {
         15: "3.75rem",
       },
+      fontSize: {
+        button: ["16px", "16px"],
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

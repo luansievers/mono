@@ -55,9 +55,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             "bg-theme-accent1 text-theme-dark hover:bg-accent1-100 disabled:opacity-40 disabled:hover:bg-theme-accent1":
               buttonType == "primary",
-            "bg-white disabled:hover:bg-white border border-accent1-100 text-theme-accent1 hover:bg-accent1-100/10 disabled:border-dark-80 disabled:text-dark-80":
+            "border border-accent1-100 bg-white text-theme-accent1 hover:bg-accent1-100/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
               buttonType == "secondary",
-            "text-white disabled:hover:bg-white  hover:bg-dark-80 disabled:text-dark-80":
+            "text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
               buttonType == "tertiary",
           },
           className
@@ -75,7 +75,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             className={clsx(children && "mr-1")}
           />
         ) : null}
-        {children && <div className="text-sm font-semibold">{children}</div>}
+        {children && (
+          <div className="text-button font-semibold">{children}</div>
+        )}
         {spinnerOnRight ? (
           <Spinner size="sm" className={clsx(children && "ml-1")} />
         ) : iconRight ? (
