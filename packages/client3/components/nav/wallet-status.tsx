@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 import {
   Button,
   Shimmer,
-  HelperText,
   Icon,
   InfoIconTooltip,
   Link,
@@ -95,10 +94,11 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
   );
 
   return (
-    <div className="w-80 divide-y divide-sand-100">
+    <div className="divide-sand-100 w-80 divide-y">
       {error ? (
-        <HelperText isError>Error while fetching wallet status</HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText isError>Error while fetching wallet status</HelperText>
+      null}
 
       {!loading && shouldShowVerificationPrompt ? (
         <div className="py-4 first:pt-0">
@@ -147,7 +147,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                 formatCrypto(viewer.gfiBalance)
               ) : null}
             </div>
-            <div className="text-xs text-sand-500">
+            <div className="text-sand-500 text-xs">
               {loading ? (
                 <Shimmer style={{ width: "12ch" }} />
               ) : gfiBalanceAsFiat ? (
@@ -177,7 +177,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                   ? "Go-listed"
                   : null}
               </div>
-              <div className="text-xs text-sand-500">
+              <div className="text-sand-500 text-xs">
                 {user.isUsNonAccreditedIndividual
                   ? "Limited eligibility"
                   : "Full eligibility"}
@@ -202,7 +202,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
               >
                 Claim UID
               </Button>
-              <div className="mt-3 flex items-center gap-2 text-xs text-sand-400">
+              <div className="text-sand-400 mt-3 flex items-center gap-2 text-xs">
                 <Icon name="Exclamation" size="md" />
                 Minting a UID is encouraged (but not required) for go-listed
                 users.
@@ -239,7 +239,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                     <td className="text-right">
                       <Link
                         href={`https://etherscan.io/tx/${transaction.transactionHash}`}
-                        iconRight="ArrowTopRight"
+                        // iconRight="ArrowTopRight"
                         className="text-sand-400"
                         target="_blank"
                         rel="noopener"
@@ -252,7 +252,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
               </tbody>
             </table>
           ) : (
-            <div className="text-sm text-sand-400">No recent activity</div>
+            <div className="text-sand-400 text-sm">No recent activity</div>
           )}
         </div>
       </div>

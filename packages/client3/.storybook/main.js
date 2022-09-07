@@ -21,6 +21,7 @@ module.exports = {
         },
       },
     },
+    "storybook-dark-mode",
   ],
   framework: "@storybook/react",
   webpackFinal: async (config) => {

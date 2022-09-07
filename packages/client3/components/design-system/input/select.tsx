@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Fragment, ReactNode } from "react";
 import { useController, UseControllerProps } from "react-hook-form";
 
-import { HelperText, Icon } from "@/components/design-system";
+import { Icon } from "@/components/design-system";
 
 export interface Option {
   value: string;
@@ -113,7 +113,7 @@ export function Select({
             "unfocused flex w-full items-center justify-between rounded", // unfocused because the color schemes supply a border color as a focus style
             colorScheme === "light"
               ? [
-                  "border bg-white focus:border-sand-600",
+                  "focus:border-sand-600 border bg-white",
                   isError
                     ? "border-clay-100 placeholder:text-clay-700"
                     : "border-sand-200 placeholder:text-sand-500",
@@ -123,7 +123,7 @@ export function Select({
                   "border bg-sky-900 focus:border-white",
                   isError
                     ? "border-clay-500 placeholder:text-clay-500"
-                    : "border-transparent placeholder:text-sand-300",
+                    : "placeholder:text-sand-300 border-transparent",
                 ]
               : null,
             disabled && "opacity-50",
@@ -187,21 +187,22 @@ export function Select({
       </Listbox>
 
       {helperText || errorMessage ? (
-        <HelperText
-          className={clsx(
-            isError
-              ? "text-clay-500"
-              : colorScheme === "light"
-              ? "text-sand-500"
-              : colorScheme === "dark"
-              ? "text-sand-300"
-              : null,
-            "mt-1 text-sm leading-none"
-          )}
-        >
-          {errorMessage ? errorMessage : helperText}
-        </HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText
+      //   className={clsx(
+      //     isError
+      //       ? "text-clay-500"
+      //       : colorScheme === "light"
+      //       ? "text-sand-500"
+      //       : colorScheme === "dark"
+      //       ? "text-sand-300"
+      //       : null,
+      //     "mt-1 text-sm leading-none"
+      //   )}
+      // >
+      //   {errorMessage ? errorMessage : helperText}
+      // </HelperText>
+      null}
     </div>
   );
 }
