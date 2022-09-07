@@ -5,7 +5,6 @@ import {
   Banner,
   Breadcrumb,
   Heading,
-  HelperText,
   Button,
   goldfinchLogoWhiteBgPngUrl,
 } from "@/components/design-system";
@@ -186,11 +185,12 @@ export default function SeniorPoolPage() {
         </div>
         <div style={{ gridArea: "info" }}>
           {error ? (
-            <HelperText isError>
-              There was a problem fetching data on the senior pool. Shown data
-              may be outdated.
-            </HelperText>
-          ) : null}
+            <></>
+          ) : // <HelperText isError>
+          //   There was a problem fetching data on the senior pool. Shown data
+          //   may be outdated.
+          // </HelperText>
+          null}
           {seniorPool ? (
             <StatusSection className="mb-12" seniorPool={seniorPool} />
           ) : null}

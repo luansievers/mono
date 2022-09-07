@@ -3,8 +3,6 @@ import { ReactNode, FormHTMLAttributes, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { UseFormReturn, SubmitHandler } from "react-hook-form/dist/types/form";
 
-import { HelperText } from "../typography";
-
 type FormProps<FormFields> = Omit<
   FormHTMLAttributes<HTMLFormElement>,
   "onSubmit"
@@ -75,11 +73,12 @@ export function Form<FormFields>({
         {children}
         {/* @ts-expect-error Same as above */}
         {errors[reservedErrorField] ? (
-          <HelperText className="mt-2">
-            {/* @ts-expect-error Same as above */}
-            Error: {errors[reservedErrorField].message}
-          </HelperText>
-        ) : null}
+          <></>
+        ) : // <HelperText className="mt-2">
+        //   {/* @ts-expect-error Same as above */}
+        //   Error: {errors[reservedErrorField].message}
+        // </HelperText>
+        null}
       </form>
     </FormProvider>
   );

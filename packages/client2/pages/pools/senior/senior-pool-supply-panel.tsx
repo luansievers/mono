@@ -222,7 +222,7 @@ export function SeniorPoolSupplyPanel({
     }
     usdcContract
       .balanceOf(account)
-      .then((balance) =>
+      .then((balance: BigNumber) =>
         setAvailableBalance(
           formatCrypto(
             { token: SupportedCrypto.Usdc, amount: balance },
@@ -341,7 +341,6 @@ export function SeniorPoolSupplyPanel({
               control={control}
               name="supply"
               label="Supply amount"
-              colorScheme="dark"
               textSize="xl"
               labelClassName="!text-sm !mb-3"
               labelDecoration={
