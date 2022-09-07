@@ -13,6 +13,10 @@ module.exports = {
       xs: "480px",
       ...defaultTheme.screens,
     },
+    fontFamily: {
+      sans: ["Kumbh Sans", ...defaultTheme.fontFamily.sans],
+      serif: ["Anek Telugu", ...defaultTheme.fontFamily.serif],
+    },
     extend: {
       colors: {
         theme: {
@@ -33,10 +37,16 @@ module.exports = {
           100: "#212121",
         },
         light: {
-          1: "#DEDEDE",
-          2: "#E9E9E9",
-          3: "#F4F4F4",
-          4: "#FDFDFD",
+          10: "#DEDEDE",
+          20: "#E9E9E9",
+          30: "#F4F4F4",
+          40: "#FDFDFD",
+        },
+        green: {
+          50: "#506559",
+          80: "#343E3B",
+          90: "#2D3433",
+          100: "#171918",
         },
         state: {
           error: "#EB5757",
