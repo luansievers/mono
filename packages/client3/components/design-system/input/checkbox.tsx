@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { forwardRef, InputHTMLAttributes, ReactNode } from "react";
 
-import { HelperText } from "../typography";
+import { Caption } from "../typography";
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -66,9 +66,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         )}
 
         {errorLabel && (
-          <HelperText className="mt-0.5" isError={true}>
-            {errorLabel}
-          </HelperText>
+          <Caption className="mt-0.5 text-state-error">{errorLabel}</Caption>
         )}
       </div>
     );
