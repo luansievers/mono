@@ -1,7 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 import { ReactNode } from "react";
 
-import { Heading, Paragraph, HelperText, LegalText } from "./index";
+import { Display, Heading, BodyText, Caption } from "./index";
 
 export default {
   title: "Components/Typography",
@@ -21,7 +21,7 @@ const GridRow = ({ displayName, sample }: GridRowProps) => {
   );
 };
 
-export const TypographyStory: Story<{ text: string }> = ({ text }) => {
+export const AllTypographyStory: Story<{ text: string }> = ({ text }) => {
   return (
     <div
       style={{
@@ -31,26 +31,54 @@ export const TypographyStory: Story<{ text: string }> = ({ text }) => {
         gap: "24px",
       }}
     >
-      {([1, 2, 3, 4, 5] as const).map((level) => (
+      {([1, 2] as const).map((level) => (
+        <GridRow
+          key={level}
+          displayName={`Display ${level}`}
+          sample={<Display level={level}>{text}</Display>}
+        />
+      ))}
+      {([1, 2, 3, 4, 5, 6] as const).map((level) => (
         <GridRow
           key={level}
           displayName={`Heading ${level}`}
-          sample={<Heading level={level}>{text}</Heading>}
+          sample={
+            <div>
+              <Heading level={level}>{text}</Heading>
+              {level >= 5 && (
+                <Heading level={level} medium={true}>
+                  {text}
+                </Heading>
+              )}
+            </div>
+          }
         />
       ))}
-      <GridRow displayName="Paragraph" sample={<Paragraph>{text}</Paragraph>} />
+      {(["large", "medium", "normal", "small"] as const).map((size) => (
+        <GridRow
+          key={size}
+          displayName={`BodyText ${size}`}
+          sample={
+            <div>
+              Regular
+              <BodyText size={size}>{text}</BodyText>
+              SemiBold
+              <BodyText size={size} semiBold={true}>
+                {text}
+              </BodyText>
+            </div>
+          }
+        />
+      ))}
       <GridRow
-        displayName="Helper Text"
-        sample={<HelperText>{text}</HelperText>}
-      />
-      <GridRow
-        displayName="Legal Text"
-        sample={<LegalText>{text}</LegalText>}
+        key="caption"
+        displayName="Caption"
+        sample={<Caption>{text}</Caption>}
       />
     </div>
   );
 };
 
-TypographyStory.args = {
+AllTypographyStory.args = {
   text: "The quick brown fox jumped over the lazy dog.",
 };

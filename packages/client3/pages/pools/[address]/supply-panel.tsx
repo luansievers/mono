@@ -436,7 +436,6 @@ export default function SupplyPanel({
               </span>
             }
             rules={{ required: "Required", validate: validateMaximumAmount }}
-            colorScheme="dark"
             textSize="xl"
             onMaxClick={handleMax}
             className="mb-4"
@@ -453,7 +452,6 @@ export default function SupplyPanel({
               />
             }
             placeholder="First and last name"
-            colorScheme="dark"
             textSize="xl"
             className="mb-3"
             labelClassName="!text-sm !mb-3"

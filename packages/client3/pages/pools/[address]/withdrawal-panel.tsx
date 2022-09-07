@@ -235,7 +235,6 @@ export function WithdrawalPanel({
           label="Amount"
           control={control}
           textSize="xl"
-          colorScheme="dark"
           rules={{ validate: validateWithdrawalAmount }}
           labelClassName="!mb-3 text-sm"
           className="mb-3"
@@ -250,7 +249,7 @@ export function WithdrawalPanel({
           Withdraw
         </Button>
         {!isPoolLocked ? (
-          <div className="mt-3 flex items-center justify-center gap-2 text-sm text-sand-700">
+          <div className="text-sand-700 mt-3 flex items-center justify-center gap-2 text-sm">
             <InfoIconTooltip
               size="sm"
               content="While this Pool is still open for Backer investments, you can instantly withdraw any amount of the funds you have already invested. Once the Pool is has reached its Pool limit for funding and is closed for further investment, you will only be able to withdraw your share of the Pool's interest and principal repayments."

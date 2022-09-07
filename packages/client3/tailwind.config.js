@@ -2,53 +2,49 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./stories/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      theme: {
-        primary: "#506559",
-        dark: "#2D3433",
-        light: "#F3EEE9",
-        accent1: "#CDFC51",
-        accent2: "#7BF8AF",
-        accent3: "#D9644A",
-        accent4: "#95628A",
-      },
-      dark: {
-        50: "#909090",
-        70: "#646464",
-        80: "#4D4D4D",
-        90: "#373737",
-        100: "#212121",
-      },
-      light: {
-        1: "#DEDEDE",
-        2: "#E9E9E9",
-        3: "#F4F4F4",
-        4: "#FDFDFD",
-      },
-      state: {
-        error: "#EB5757",
-        process: "#2D64F5",
-        success: "#3A783C",
-      },
-      transparent: "transparent",
-      current: "currentColor",
-      white: "#FFFFFF",
-    },
-    fontFamily: {
-      sans: ['"Inter"', "sans-serif"],
-      serif: ['"Newsreader Display"', "serif"],
-    },
     screens: {
       xs: "480px",
       ...defaultTheme.screens,
     },
     extend: {
+      colors: {
+        theme: {
+          primary: "#506559",
+          dark: "#2D3433",
+          light: "#F3EEE9",
+          accent1: "#CDFC51",
+          accent2: "#7BF8AF",
+          accent3: "#D9644A",
+          accent4: "#95628A",
+        },
+        dark: {
+          50: "#909090",
+          70: "#646464",
+          80: "#4D4D4D",
+          90: "#373737",
+          100: "#212121",
+        },
+        light: {
+          1: "#DEDEDE",
+          2: "#E9E9E9",
+          3: "#F4F4F4",
+          4: "#FDFDFD",
+        },
+        state: {
+          error: "#EB5757",
+          process: "#2D64F5",
+          success: "#3A783C",
+        },
+        transparent: "transparent",
+        current: "currentColor",
+      },
       keyframes: {
         "background-oscillate": {
           "0%": { "background-position": "0 50%" },

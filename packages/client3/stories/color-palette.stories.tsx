@@ -2,7 +2,7 @@ import { Story, Meta } from "@storybook/react";
 
 import tailwindConfig from "../tailwind.config";
 
-const colors = tailwindConfig.theme.colors;
+const colors = tailwindConfig.theme.extend.colors;
 
 export default {
   title: "Globals/Color",
@@ -14,7 +14,7 @@ export const ColorStory: Story = () => {
       {Object.entries(colors).map(([colorName, colorMap], index) =>
         typeof colorMap !== "string" ? (
           <div key={`${index}`}>
-            <div className="font-bold">{colorName}</div>
+            <div className="font-bold dark:text-white">{colorName}</div>
             <div className="flex flex-wrap">
               {Object.entries(colorMap).map(([colorKey, colorValue]) => (
                 <ColorSquare
@@ -41,8 +41,8 @@ function ColorSquare({
   return (
     <div>
       <div className="h-16 w-28" style={{ backgroundColor: colorValue }} />
-      <div className="font-bold">{colorKey}</div>
-      <div>{colorValue}</div>
+      <div className="font-bold dark:text-white">{colorKey}</div>
+      <div className="dark:text-white">{colorValue}</div>
     </div>
   );
 }

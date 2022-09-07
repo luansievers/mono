@@ -227,7 +227,6 @@ export function SeniorPoolWithDrawalPanel({
             label="Withdrawal amount"
             control={control}
             textSize="xl"
-            colorScheme="dark"
             rules={{ required: "Required", validate: validateAmount }}
             labelClassName="!mb-3 text-sm"
             onMaxClick={handleMax}
