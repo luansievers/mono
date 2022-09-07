@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 import {
   Button,
   Shimmer,
-  HelperText,
   Icon,
   InfoIconTooltip,
   Link,
@@ -97,8 +96,9 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
   return (
     <div className="divide-sand-100 w-80 divide-y">
       {error ? (
-        <HelperText isError>Error while fetching wallet status</HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText isError>Error while fetching wallet status</HelperText>
+      null}
 
       {!loading && shouldShowVerificationPrompt ? (
         <div className="py-4 first:pt-0">
@@ -229,7 +229,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                     <td className="text-right">
                       <Link
                         href={`https://etherscan.io/tx/${transaction.transactionHash}`}
-                        iconRight="ArrowTopRight"
+                        // iconRight="ArrowTopRight"
                         className="text-sand-400"
                         target="_blank"
                         rel="noopener"

@@ -294,7 +294,7 @@ export default function SupplyPanel({
   }, [user, account, seniorPoolSharePrice]);
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-02 p-5">
+    <div className="rounded-xl bg-sunrise-02 p-5 text-white">
       <div className="mb-3 flex flex-row justify-between">
         <span className="text-sm">Est. APY</span>
         <InfoIconTooltip
@@ -387,7 +387,7 @@ export default function SupplyPanel({
           <Button disabled className="block w-full">
             Supply
           </Button>
-          <div className="text-white mt-3 flex items-center justify-center gap-3 text-sm">
+          <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
             <Icon size="md" name="Exclamation" />
             <div>
               Sorry, you are not eligible to participate in this pool because
@@ -421,7 +421,6 @@ export default function SupplyPanel({
               </span>
             }
             rules={{ required: "Required", validate: validateMaximumAmount }}
-            colorScheme="dark"
             textSize="xl"
             onMaxClick={handleMax}
             className="mb-4"
@@ -438,7 +437,6 @@ export default function SupplyPanel({
               />
             }
             placeholder="First and last name"
-            colorScheme="dark"
             textSize="xl"
             className="mb-3"
             labelClassName="!text-sm !mb-3"

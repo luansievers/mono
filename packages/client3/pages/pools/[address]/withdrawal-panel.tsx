@@ -204,7 +204,7 @@ export function WithdrawalPanel({
   }, [zaps, totalPrincipalRedeemable, totalInterestRedeemable]);
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-01 p-5">
+    <div className="rounded-xl bg-sunrise-01 p-5 text-white">
       <div className="mb-3 flex justify-between text-sm">
         Available to withdraw
         <InfoIconTooltip
@@ -235,7 +235,6 @@ export function WithdrawalPanel({
           label="Amount"
           control={control}
           textSize="xl"
-          colorScheme="dark"
           rules={{ validate: validateWithdrawalAmount }}
           labelClassName="!mb-3 text-sm"
           className="mb-3"

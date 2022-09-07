@@ -74,19 +74,7 @@ export function PoolCard({
         </div>
       }
       chipSlot={
-        <Chip
-          colorScheme={
-            poolStatus === PoolStatus.Full
-              ? "yellow"
-              : poolStatus === PoolStatus.Open
-              ? "purple"
-              : poolStatus === PoolStatus.ComingSoon
-              ? "blue"
-              : poolStatus === PoolStatus.Repaid
-              ? "green"
-              : "white"
-          }
-        >
+        <Chip>
           {poolStatus === PoolStatus.Full
             ? "FULL"
             : poolStatus === PoolStatus.Open
@@ -133,7 +121,7 @@ function PoolCardLayout({
   chipSlot,
 }: PoolCardLayoutProps) {
   return (
-    <div className="pool-card relative grid items-center gap-x-4 rounded bg-sand-100 p-5 hover:bg-sand-200">
+    <div className="pool-card bg-sand-100 hover:bg-sand-200 relative grid items-center gap-x-4 rounded p-5">
       <div
         className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-white"
         style={{ gridArea: "icon" }}
@@ -236,7 +224,7 @@ export function TranchedPoolCard({
                 )}
               </div>
             </div>
-            <hr className="border-t border-sand-300" />
+            <hr className="border-sand-300 border-t" />
             <div className="flex justify-between">
               <div>Total Est. APY</div>
               <div>{formatPercent(totalApyWithGfi)}</div>

@@ -11,7 +11,6 @@ import {
   TabPanels,
   Heading,
   ShimmerLines,
-  HelperText,
   Marquee,
   Banner,
   LinkButton,
@@ -254,7 +253,7 @@ export default function PoolPage() {
               : "Paused"}
           </Marquee>
           {/* gives the illusion of rounded corners on the top of the page */}
-          <div className="bg-white -mt-3 h-3 rounded-t-xl" />
+          <div className="-mt-3 h-3 rounded-t-xl bg-white" />
         </SubnavPortal>
       )}
 
@@ -288,11 +287,12 @@ export default function PoolPage() {
           </Heading>
 
           {error ? (
-            <HelperText isError>
-              There was a problem fetching data on this pool. Shown data may be
-              outdated.
-            </HelperText>
-          ) : null}
+            <></>
+          ) : // <HelperText isError>
+          //   There was a problem fetching data on this pool. Shown data may be
+          //   outdated.
+          // </HelperText>
+          null}
 
           {poolStatus === PoolStatus.Open ? (
             <FundingBar

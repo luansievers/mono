@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-import { Heading, HelperText, Paragraph } from "@/components/design-system";
+import { Heading } from "@/components/design-system";
 import { formatPercent } from "@/lib/format";
 import { useEarnPageQuery } from "@/lib/graphql/generated";
 import { computeApyFromGfiInFiat, PoolStatus } from "@/lib/pools";
@@ -68,11 +68,12 @@ export default function EarnPage() {
         Pools
       </Heading>
       {error ? (
-        <HelperText isError className="mb-12">
-          There was a problem fetching data on pools. Shown data may be
-          outdated.
-        </HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText isError className="mb-12">
+      //   There was a problem fetching data on pools. Shown data may be
+      //   outdated.
+      // </HelperText>
+      null}
       <Heading
         as="h2"
         level={4}
@@ -80,11 +81,11 @@ export default function EarnPage() {
       >
         Senior Pool
       </Heading>
-      <Paragraph className="mb-8 !text-lg">
+      {/* <Paragraph className="mb-8 !text-lg">
         The simple option for automatically diversified yields. Capital is
         distributed across Borrower Pools, and is protected by Backer capital
         for lower-risk investment.
-      </Paragraph>
+      </Paragraph> */}
       <div className="mb-15">
         {!seniorPool || !fiatPerGfi ? (
           <PoolCardPlaceholder />
@@ -124,7 +125,7 @@ export default function EarnPage() {
                       )}
                     </div>
                   </div>
-                  <hr className="my-3 border-t border-sand-300" />
+                  <hr className="border-sand-300 my-3 border-t" />
                   <div className="flex justify-between">
                     <div>Total Est. APY</div>
                     <div>
@@ -149,10 +150,10 @@ export default function EarnPage() {
       <Heading level={2} className="mb-3 !font-serif !text-[2.5rem] !font-bold">
         Borrower Pools
       </Heading>
-      <Paragraph className="mb-8 !text-lg">
+      {/* <Paragraph className="mb-8 !text-lg">
         The more active option for higher yields. Earn higher APYs by vetting
         Borrowers and supplying first-loss capital directly to individual Pools.
-      </Paragraph>
+      </Paragraph> */}
       <div className="flex flex-col space-y-4">
         {seniorPool && tranchedPools && fiatPerGfi
           ? tranchedPools.map((tranchedPool) => (

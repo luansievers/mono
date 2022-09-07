@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { forwardRef, InputHTMLAttributes, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
-import { Icon, IconNameType, HelperText } from "@/components/design-system";
+import { Icon, IconNameType } from "@/components/design-system";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
@@ -47,13 +47,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    */
   labelDecoration?: ReactNode;
   textSize?: "sm" | "md" | "lg" | "xl";
-  colorScheme?: "light" | "dark";
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     label,
-    hideLabel = false,
+    hideLabel = !label,
     name,
     id,
     type = "text",
@@ -66,7 +65,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     labelClassName,
     className,
     autoComplete = "off",
-    colorScheme = "light",
     textSize = "md",
     ...rest
   },
@@ -84,11 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <div
       className={clsx(
         "flex flex-col items-start justify-start",
-        colorScheme === "light"
-          ? "text-sand-700"
-          : colorScheme === "dark"
-          ? "text-white"
-          : null,
+        "text-white",
         textSize === "sm"
           ? "text-sm"
           : textSize === "lg"
@@ -112,22 +106,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div className="relative w-full">
         <input
           className={clsx(
-            "unfocused w-full rounded", // unfocused because the color schemes supply a border color as a focus style
-            colorScheme === "light"
-              ? [
-                  "border bg-white focus:border-sand-600",
-                  isError
-                    ? "border-clay-100 placeholder:text-clay-700"
-                    : "border-sand-200 placeholder:text-sand-500",
-                ]
-              : colorScheme === "dark"
-              ? [
-                  "border bg-sky-900 focus:border-white",
-                  isError
-                    ? "border-clay-500 placeholder:text-clay-500"
-                    : "border-transparent placeholder:text-sand-300",
-                ]
-              : null,
+            "unfocused w-full rounded border",
+            "focus:border-primary focus:border-2",
+            "bg-transparent",
+            "placeholder:text-dark-80",
+            "text-dark-80",
+
+            isError ? "border-state-error" : "border-dark-80",
+
             disabled && "opacity-50",
             decoration ? "pr-8" : null,
             textSize === "sm"
@@ -161,21 +147,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         ) : null}
       </div>
       {helperText || _errorMessage ? (
-        <HelperText
-          className={clsx(
-            isError
-              ? "text-clay-500"
-              : colorScheme === "light"
-              ? "text-sand-500"
-              : colorScheme === "dark"
-              ? "text-sand-300"
-              : null,
-            "mt-1 text-sm leading-none"
-          )}
-        >
-          {_errorMessage ? _errorMessage : helperText}
-        </HelperText>
-      ) : null}
+        <></>
+      ) : // <HelperText
+      //   className={clsx(
+      //     isError ? "text-state-error" : "text-dark-80",
+      //     "mt-1 text-sm leading-none"
+      //   )}
+      // >
+      //   {_errorMessage ? _errorMessage : helperText}
+      // </HelperText>
+      null}
     </div>
   );
 });

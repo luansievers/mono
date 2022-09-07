@@ -5,7 +5,6 @@ import {
   Banner,
   Breadcrumb,
   Heading,
-  HelperText,
   goldfinchLogoWhiteBgPngUrl,
   LinkButton,
 } from "@/components/design-system";
@@ -124,7 +123,7 @@ export default function SeniorPoolPage() {
           />
           {/* gives the illusion of rounded corners on the page */}
           <div className="bg-sky-500">
-            <div className="bg-white h-3 rounded-t-xl" />
+            <div className="h-3 rounded-t-xl bg-white" />
           </div>
         </BannerPortal>
       ) : null}
@@ -181,11 +180,12 @@ export default function SeniorPoolPage() {
         </div>
         <div style={{ gridArea: "info" }}>
           {error ? (
-            <HelperText isError>
-              There was a problem fetching data on the senior pool. Shown data
-              may be outdated.
-            </HelperText>
-          ) : null}
+            <></>
+          ) : // <HelperText isError>
+          //   There was a problem fetching data on the senior pool. Shown data
+          //   may be outdated.
+          // </HelperText>
+          null}
           {seniorPool ? (
             <StatusSection className="mb-12" seniorPool={seniorPool} />
           ) : null}
