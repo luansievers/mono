@@ -4,6 +4,8 @@ import { useFormContext } from "react-hook-form";
 
 import { Icon, IconNameType } from "@/components/design-system";
 
+import { Caption } from "../typography/caption";
+
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
    * Label text that will appear above the input
@@ -47,7 +49,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    */
   labelDecoration?: ReactNode;
   textSize?: "sm" | "md" | "lg" | "xl";
-  money?: boolean;
+  isMoneyInput?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -67,7 +69,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className,
     autoComplete = "off",
     textSize = "md",
-    money,
+    isMoneyInput,
     onBlur,
     ...rest
   },
@@ -111,17 +113,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div
         className={clsx(
           "relative mt-1 w-full rounded",
-          money ? "border" : null,
+          isMoneyInput ? "border" : null,
           focus
             ? [isError ? "ring-2 ring-state-error" : "ring ring-theme-primary"]
             : "ring-theme-primary",
-          isError && money ? "border-state-error" : null
+          isError && isMoneyInput ? "border-state-error" : null
         )}
       >
         <div>
           <div
             className={clsx(
-              money
+              isMoneyInput
                 ? "pointer-events-none absolute inset-y-0 left-0 flex items-center border-r px-3"
                 : null,
               isError
@@ -133,16 +135,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                 : "border-r"
             )}
           >
-            <span className="text-dark-80 sm:text-sm">
+            <span className="text-light-4 sm:text-sm">
               {(() => {
-                if (money) return <span>$</span>;
+                if (isMoneyInput) return <span>$</span>;
               })()}
             </span>
           </div>
           <input
             className={clsx(
               "unfocused w-full rounded",
-              money ? "mx-10" : "border",
+              isMoneyInput ? "mx-10" : "border",
               "bg-transparent",
               "placeholder:text-dark-80",
               "text-light-4",
@@ -179,12 +181,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           />
           <div
             className={clsx(
-              money ? "absolute right-14 top-1/2 -translate-y-1/2" : null
+              isMoneyInput ? "absolute right-14 top-1/2 -translate-y-1/2" : null
             )}
           >
-            <span className=" text-dark-80 sm:text-sm">
+            <span className=" text-dark-light-4 sm:text-sm">
               {(() => {
-                if (money) return <span>USDC</span>;
+                if (isMoneyInput) return <span>USDC</span>;
               })()}
             </span>
           </div>
@@ -201,14 +203,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         </div>
       </div>
       {helperText || _errorMessage ? (
-        <caption
+        <Caption
           className={clsx(
             isError ? "text-state-error" : "text-dark-50",
             "mt-1 text-sm leading-none"
           )}
         >
           {_errorMessage ? _errorMessage : helperText}
-        </caption>
+        </Caption>
       ) : null}
     </div>
   );

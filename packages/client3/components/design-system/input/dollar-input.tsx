@@ -8,7 +8,7 @@ import { Input } from "./input";
 
 const MaskedInput = IMaskMixin(({ inputRef, ...props }) => {
   // @ts-expect-error ref types don't match because of bad typing
-  return <Input ref={inputRef} {...props} money />;
+  return <Input ref={inputRef} {...props} isMoneyInput />;
 });
 
 type DollarInputProps = ComponentProps<typeof Input> &
