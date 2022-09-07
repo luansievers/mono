@@ -5,6 +5,5 @@ export function Caption({
   className,
   ...rest
 }: HTMLAttributes<HTMLHeadingElement>) {
-  const Component = "small";
-  return <Component className={clsx(className)} {...rest} />;
+  return <small className={clsx(className)} {...rest} />;
 }
