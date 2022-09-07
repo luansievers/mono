@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-interface ToggleProps {
+export interface ToggleProps {
   onChange?: () => void;
   value: boolean;
   states: {
@@ -11,9 +11,9 @@ interface ToggleProps {
 
 export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
   return (
-    <div className="relative flex min-h-screen  flex-col items-center justify-center overflow-hidden">
+    <div className="relative flex flex-col overflow-hidden">
       <div className="flex">
-        <label className="full relative mr-5 inline-flex cursor-pointer items-center">
+        <label className="full relative inline-flex cursor-pointer">
           <input
             type="checkbox"
             className="peer sr-only"
@@ -38,12 +38,12 @@ export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
               )}
             >
               <span
-                className={clsx(value ? "text-light-1" : "text-theme-light")}
+                className={clsx(value ? "text-light-10" : "text-theme-light")}
               >
                 {states.true}
               </span>
               <span
-                className={clsx(value ? "text-theme-light" : "text-light-1")}
+                className={clsx(value ? "text-theme-light" : "text-light-10")}
               >
                 {states.false}
               </span>

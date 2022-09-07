@@ -12,7 +12,7 @@ export function WalletButton() {
   return error ? (
     <Button
       variant="rounded"
-      className="h-10 text-clay-500"
+      className="text-clay-500 h-10"
       iconRight="Exclamation"
       colorScheme="secondary"
       onClick={
