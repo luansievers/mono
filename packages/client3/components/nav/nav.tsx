@@ -9,12 +9,13 @@ import { MobileNav } from "./mobile-nav";
 import { NAV_ITEMS } from "./nav-items";
 import { SecondaryMenu } from "./secondary-menu";
 import { WalletButton } from "./wallet-button";
+import { WalletButton2 } from "./wallet-button-2";
 
 export function Nav() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   return (
     <>
-      <div className="flex flex-row border-b border-sand-100 px-6 md:px-10">
+      <div className="border-sand-100 flex flex-row border-b px-6 md:px-10">
         <div className="self-center md:hidden">
           <button className="p-1" onClick={() => setIsMobileNavOpen(true)}>
             <Icon name="Menu" size="md" />
@@ -39,6 +40,7 @@ export function Nav() {
 
         <div className="flex flex-1 flex-row justify-end gap-3 self-center py-4">
           <WalletButton />
+          <WalletButton2 />
           <SecondaryMenu />
         </div>
       </div>
@@ -67,7 +69,7 @@ export function NavLink({
         "flex items-center border-b-2 px-5 text-sm font-medium !no-underline",
         isCurrentPage
           ? "border-eggplant-600 text-sand-900"
-          : "border-transparent text-sand-700 hover:border-eggplant-600",
+          : "text-sand-700 hover:border-eggplant-600 border-transparent",
         className
       )}
       href={href}

@@ -17,6 +17,7 @@ export function MetaMaskButton() {
       onClick={handleConnectMetaMask}
       errorMessage={error?.message}
     >
+      Connect Wallet
       {`MetaMask${isActive ? " (Connected)" : ""}`}
       {isActivating ? (
         <Spinner className="!h-10 !w-10 text-[#f6851b]" />
