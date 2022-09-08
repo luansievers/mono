@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
 
 import {
-  Breadcrumb,
+  Avatar,
   Button,
   TabButton,
   TabContent,
@@ -261,10 +261,7 @@ export default function PoolPage() {
         <div style={{ gridArea: "heading" }}>
           <div className="mb-8 flex flex-wrap justify-between gap-2">
             <div>
-              <Breadcrumb
-                label={tranchedPool?.name}
-                image={tranchedPool?.icon}
-              />
+              <Avatar image={tranchedPool?.icon} />
             </div>
             {tranchedPool && poolStatus !== PoolStatus.ComingSoon ? (
               <Button

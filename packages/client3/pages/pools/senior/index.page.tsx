@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 
 import {
   Banner,
-  Breadcrumb,
+  Avatar,
   Heading,
   Button,
   goldfinchLogoWhiteBgPngUrl,
@@ -131,7 +131,7 @@ export default function SeniorPoolPage() {
       <div className="pool-layout">
         <div style={{ gridArea: "heading" }}>
           <div className="mb-8 flex flex-wrap justify-between gap-2">
-            <Breadcrumb label="Goldfinch" image={goldfinchLogoWhiteBgPngUrl} />
+            <Avatar image={goldfinchLogoWhiteBgPngUrl} />
             {seniorPool ? (
               <Button
                 variant="rounded"
