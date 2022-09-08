@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { Display, Heading, BodyText, Caption } from "./index";
 
 export default {
-  title: "Components/Typography",
+  title: "FAD/Components/Typography",
 } as Meta;
 
 interface GridRowProps {
