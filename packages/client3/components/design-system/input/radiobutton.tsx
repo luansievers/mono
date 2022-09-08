@@ -17,8 +17,8 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
             className={clsx(
               "peer h-4 w-4 cursor-pointer appearance-none rounded-full", //base style
               "border border-dark-80 bg-white", //enabled state style
-              "checked:border-theme-accent1 checked:bg-theme-accent1", //checked state style
-              "disabled:border-0 disabled:bg-dark-70 checked:disabled:bg-theme-accent1/40" //disabled state styles
+              "checked:border-accent-1 checked:bg-accent-1", //checked state style
+              "disabled:border-0 disabled:bg-dark-70 checked:disabled:bg-accent-1/40" //disabled state styles
             )}
             type="radio"
             ref={ref}
@@ -30,7 +30,7 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
 
         {label && (
           <label
-            className="form-check-label text-gray-800 inline-block"
+            className="form-check-label inline-block text-gray-800"
             htmlFor={_id}
           >
             {label}
