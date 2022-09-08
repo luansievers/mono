@@ -16,17 +16,25 @@ export function DashBoardTotal({
   return (
     <div
       className={clsx(
-        "grid grid-cols-4 gap-4 bg-theme-green100 px-7 py-12",
-        "bg-free-artist-bg bg-center bg-no-repeat"
+        "grid grid-cols-4 gap-4 bg-green-100 px-7 py-12",
+        "bg-img-free-artist bg-center bg-no-repeat"
       )}
     >
       <div>
-        <BodyText size="normal">Total Raised</BodyText>
-        <Heading level={2}>${totalRaised ?? 0}</Heading>
+        <BodyText size="normal" className="text-dark-70">
+          Total Raised
+        </BodyText>
+        <Heading level={2} className="text-dark-70">
+          ${totalRaised ?? 0}
+        </Heading>
       </div>
       <div>
-        <BodyText size="normal">Total Earned</BodyText>
-        <Heading level={2}>${totalEarned ?? 0}</Heading>
+        <BodyText size="normal" className="text-dark-70">
+          Total Earned
+        </BodyText>
+        <Heading level={2} className="text-dark-70">
+          ${totalEarned ?? 0}
+        </Heading>
       </div>
       {onCreatePoolClicked ? (
         <div className="col-start-4 self-center">
