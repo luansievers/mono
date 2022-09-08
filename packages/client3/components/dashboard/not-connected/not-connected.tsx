@@ -6,7 +6,7 @@ type Props = {
 
 export function NotConnected({ onConnectWalletClick }: Props) {
   return (
-    <div className="grid place-items-center bg-theme-green100 pt-[105px] pb-[101px]">
+    <div className="grid place-items-center bg-green-100 pt-[105px] pb-[101px]">
       <BodyText size="large">
         Please connect your wallet to view your dashboard
       </BodyText>
