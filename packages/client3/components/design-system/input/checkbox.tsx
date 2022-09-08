@@ -38,8 +38,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             disabled={disabled}
             className={clsx(
               "peer h-6 w-6  cursor-pointer appearance-none rounded",
-              "border border-dark-80 disabled:bg-dark-70",
-              "checked:border-0 checked:bg-theme-accent1 checked:disabled:bg-theme-accent1/40",
+              "border border-dark-80 bg-white disabled:bg-dark-70",
+              "checked:border-0 checked:bg-accent-1 checked:disabled:bg-accent-1/40",
               errorLabel && "border-2 border-state-error"
             )}
           />
@@ -51,7 +51,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           >
             <path
               d="M6.364 9.193L15.556 0L16.971 1.414L6.364 12.021L0 5.657L1.414 4.243L6.364 9.193Z"
-              className={clsx("fill-theme-dark", disabled && "opacity-50")}
+              className={clsx("fill-green-90", disabled && "opacity-50")}
             />
           </svg>
         </div>
