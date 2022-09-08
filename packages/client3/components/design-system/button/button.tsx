@@ -50,14 +50,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ref={ref as any}
         className={clsx(
-          "rounded-[100px] ",
-          "flex items-center px-6 py-4",
+          "rounded-[100px]",
+          "flex items-center",
+          children && "px-6",
           {
-            "bg-theme-accent1 text-theme-dark hover:bg-accent1-100 disabled:opacity-40 disabled:hover:bg-theme-accent1":
+            "bg-accent-1 text-green-90 hover:bg-accent-1-shade disabled:opacity-40 disabled:hover:bg-accent-1":
               buttonType == "primary",
-            "border border-accent1-100 bg-white text-theme-accent1 hover:bg-accent1-100/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
+            "border border-accent-1 bg-white text-accent-1 hover:bg-accent-1/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
               buttonType == "secondary",
-            "text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
+            "bg-transparent text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
               buttonType == "tertiary",
           },
           className
@@ -76,7 +77,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         ) : null}
         {children && (
-          <div className="text-button font-semibold">{children}</div>
+          <div className="py-4 text-button font-semibold">{children}</div>
         )}
         {spinnerOnRight ? (
           <Spinner size="sm" className={clsx(children && "ml-1")} />
