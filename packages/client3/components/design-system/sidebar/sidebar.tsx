@@ -11,25 +11,16 @@ interface SideBarProps extends ToggleProps {
    */
   labels: Array<string>;
   className?: string;
-  pathName?: string;
-  storyBookMode?: string;
 }
 
-export function SideBar({
-  labels,
-  className,
-  states,
-  pathName,
-  storyBookMode,
-}: SideBarProps) {
+export function SideBar({ labels, className, states }: SideBarProps) {
   const router = useRouter();
-  const handleClick = (event: any, href: string, pathName?: string) => {
-    if (pathName) {
-      return;
-    } else {
-      event.preventDefault();
-      router.push(href);
-    }
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    event.preventDefault();
+    router.push(href);
   };
 
   return (
@@ -41,7 +32,7 @@ export function SideBar({
         <a href="#!">
           <div className="flex justify-center">
             <div className="shrink-0">
-              <FreeArtistsLogoFull storyBookMode={storyBookMode} />
+              <FreeArtistsLogoFull />
             </div>
           </div>
         </a>
@@ -53,26 +44,16 @@ export function SideBar({
         {labels.map((label: string) => (
           <li key={label} className="relative">
             <a
-              href={pathName ? "" : label}
-              onClick={
-                pathName
-                  ? (event) => handleClick(event, label, pathName)
-                  : (event) => handleClick(event, `/${label}`)
-              }
+              href={label}
+              onClick={(event) => handleClick(event, `/${label}`)}
               aria-current="page"
               className={clsx(
                 "relative flex h-20 items-center text-sm font-medium text-light-10 hover:bg-green-80 active:bg-green-50 active:text-accent-1",
-                pathName
-                  ? [
-                      pathName === `/${label}`
-                        ? "bg-green-80 text-accent-1"
-                        : null,
-                    ]
-                  : [
-                      router.pathname === `/${label}`
-                        ? "bg-green-80 text-accent-1"
-                        : null,
-                    ]
+                [
+                  router.pathname === `/${label}`
+                    ? "bg-green-80 text-accent-1"
+                    : null,
+                ]
               )}
             >
               <Heading level={6} medium={true} className="pl-8">

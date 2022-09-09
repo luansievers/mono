@@ -14,11 +14,15 @@ export default {
   },
 } as ComponentMeta<typeof SideBar>;
 
-export const SideBarStory: ComponentStory<typeof SideBar> = (args) => {
+const Template: ComponentStory<typeof SideBar> = (args) => {
   return <SideBar {...args} />;
 };
 
-SideBarStory.args = {
+export const SideBarWithArtistPoolSelectedStory: ComponentStory<
+  typeof SideBar
+> = Template.bind({});
+
+SideBarWithArtistPoolSelectedStory.args = {
   labels: ["All Artists Pools", "My Profile", "Transactions"],
 
   states: {
@@ -26,6 +30,44 @@ SideBarStory.args = {
     state1: "Artist",
     state2: "Backer",
   },
-  pathName: "/My Profile",
-  storyBookMode: "http://localhost:3001/FAD-logo-full.png",
+};
+
+SideBarWithArtistPoolSelectedStory.parameters = {
+  nextRouter: {
+    pathname: "/All Artists Pools",
+  },
+};
+
+export const SideBarWithMyProfileSelectedStory: ComponentStory<typeof SideBar> =
+  Template.bind({});
+
+SideBarWithMyProfileSelectedStory.args = {
+  ...SideBarWithArtistPoolSelectedStory.args,
+};
+
+SideBarWithMyProfileSelectedStory.parameters = {
+  nextRouter: {
+    pathname: "/My Profile",
+  },
+};
+
+export const SideBarWithTransactionsSelectedStory: ComponentStory<
+  typeof SideBar
+> = Template.bind({});
+
+SideBarWithTransactionsSelectedStory.args = {
+  ...SideBarWithArtistPoolSelectedStory.args,
+};
+
+SideBarWithTransactionsSelectedStory.parameters = {
+  nextRouter: {
+    pathname: "/Transactions",
+  },
+};
+
+export const SideBarWithNoSelectionStory: ComponentStory<typeof SideBar> =
+  Template.bind({});
+
+SideBarWithNoSelectionStory.args = {
+  ...SideBarWithArtistPoolSelectedStory.args,
 };

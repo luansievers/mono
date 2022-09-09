@@ -4,6 +4,8 @@ import "../styles/globals.css";
 import { themes } from "@storybook/theming";
 import { DocsContainer } from "./DocsContainer";
 import { useDarkMode } from "storybook-dark-mode";
+import * as NextImage from "next/image";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -24,6 +26,9 @@ export const parameters = {
   docs: {
     container: DocsContainer,
   },
+  nextRouter: {
+    Provider: RouterContext.Provider, // To support next router within storybook
+  },
 };
 
 export const decorators = [
@@ -33,3 +38,14 @@ export const decorators = [
     </div>
   ),
 ];
+
+/**
+ * This was added to handle Next Images within storybook
+ * @source : https://storybook.js.org/blog/get-started-with-storybook-and-next-js/
+ */
+const OriginalNextImage = NextImage.default;
+
+Object.defineProperty(NextImage, "default", {
+  configurable: true,
+  value: (props) => <OriginalNextImage {...props} unoptimized />,
+});
