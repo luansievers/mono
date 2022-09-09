@@ -1,6 +1,6 @@
-import freeArtistsLogoWhiteBgPng from "./fa-logo-white-bg.png";
-import freeArtistsLogoPng from "./fa-logo.png";
-import FreeArtistsLogoSvg from "./fa-logo.svg";
+import freeArtistsLogoWhiteBgPng from "./FAD-logo-white-bg.png";
+import freeArtistsLogoPng from "./FAD-logo.png";
+import FreeArtistsLogoSvg from "./FAD-logo.svg";
 
 export const freeArtistsLogoPngUrl = freeArtistsLogoPng.src;
 export const freeArtistsLogoWhiteBgPngUrl = freeArtistsLogoWhiteBgPng.src;
