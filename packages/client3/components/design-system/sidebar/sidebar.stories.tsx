@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { SideBar } from ".";
 
 export default {
-  title: "Components/Sidebar",
+  title: "FAD/Components/Sidebar",
   component: SideBar,
   argTypes: {
     labels: {

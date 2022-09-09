@@ -1,10 +1,10 @@
+import Image from "next/image";
+
 import FreeArtistsFullLogo from "/public/free_artist_logo_full.png";
 
-import freeArtistsLogoWhiteBgPng from "./fa-logo-white-bg.png";
-import freeArtistsLogoPng from "./fa-logo.png";
-import FreeArtistsLogoSvg from "./fa-logo.svg";
-
-import Image from "next/image";
+import freeArtistsLogoWhiteBgPng from "./FAD-logo-white-bg.png";
+import freeArtistsLogoPng from "./FAD-logo.png";
+import FreeArtistsLogoSvg from "./FAD-logo.svg";
 
 export const freeArtistsLogoPngUrl = "/images/fa-logo.png";
 export const freeArtistsLogoWhiteBgPngUrl = "/public/fa-logo-white-bg.png";

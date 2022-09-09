@@ -3,37 +3,16 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FreeArtistsLogo } from ".";
 
 export default {
-  title: "Components/Logo",
+  title: "FAD/Components/Logo",
   component: FreeArtistsLogo,
-  argTypes: {
-    storyBookMode: {
-      control: {
-        type: "text",
-      },
-    },
-    src: {
-      control: {
-        type: "text",
-      },
-    },
-    width: {
-      control: {
-        type: "text",
-      },
-    },
-    height: {
-      control: {
-        type: "text",
-      },
-    },
-    alt: {
-      control: {
-        type: "text",
-      },
-    },
-  },
 } as ComponentMeta<typeof FreeArtistsLogo>;
 
-export const LogoStory: ComponentStory<typeof FreeArtistsLogo> = () => {
-  return <FreeArtistsLogo className="h-10 w-10" />;
+export const LogoStory: ComponentStory<typeof FreeArtistsLogo> = (args) => {
+  return <FreeArtistsLogo {...args} />;
+};
+
+LogoStory.args = {
+  width: 100,
+  height: 100,
+  className: "",
 };

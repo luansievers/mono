@@ -19,15 +19,17 @@ module.exports = {
     },
     extend: {
       colors: {
-        theme: {
-          primary: "#506559",
-          dark: "#2D3433",
-          light: "#F3EEE9",
-          accent1: "#CDFC51",
-          accent2: "#7BF8AF",
-          accent3: "#D9644A",
-          accent4: "#95628A",
-          accent5: "#343E3B",
+        green: {
+          50: "#506559",
+          80: "#343E3B",
+          90: "#2D3433",
+          100: "#171918",
+        },
+        accent: {
+          1: "#CDFC51",
+          2: "#7BF8AF",
+          3: "#D9644A",
+          4: "#95628A",
         },
         dark: {
           50: "#909090",
@@ -87,6 +89,10 @@ module.exports = {
       },
       spacing: {
         15: "3.75rem",
+      },
+      fontFamily: {
+        "anek-telugu": ["Anek Telugu", "sans-serif"],
+        "kumbh-sans": ["Kumbh Sans", "sans-serif"],
       },
     },
   },
