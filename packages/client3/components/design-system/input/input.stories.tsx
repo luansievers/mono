@@ -7,7 +7,7 @@ import { Select } from "./select";
 
 export default {
   component: Input,
-  title: "Components/Input",
+  title: "FAD/Components/Input",
 } as ComponentMeta<typeof Input>;
 
 export const InputStory: ComponentStory<typeof Input> = (args) => (

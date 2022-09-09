@@ -115,8 +115,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           "relative mt-1 w-full rounded",
           isMoneyInput ? "border" : null,
           focus
-            ? [isError ? "ring-2 ring-state-error" : "ring ring-theme-primary"]
-            : "ring-theme-primary",
+            ? [isError ? "ring-2 ring-state-error" : "ring ring-green-50"]
+            : "ring-green-50",
           isError && isMoneyInput ? "border-state-error" : null
         )}
       >
@@ -135,7 +135,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                 : "border-r"
             )}
           >
-            <span className="text-light-4 sm:text-sm">
+            <span className="text-light-40 sm:text-sm">
               {(() => {
                 if (isMoneyInput) return <span>$</span>;
               })()}
@@ -147,7 +147,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
               isMoneyInput ? "mx-10" : "border",
               "bg-transparent",
               "placeholder:text-dark-80",
-              "text-light-4",
+              "text-light-40",
 
               isError ? "border-state-error" : null,
 
@@ -181,10 +181,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           />
           <div
             className={clsx(
-              isMoneyInput ? "absolute right-14 top-1/2 -translate-y-1/2" : null
+              isMoneyInput ? "absolute right-4 top-1/2 -translate-y-1/2" : null
             )}
           >
-            <span className=" text-dark-light-4 sm:text-sm">
+            <span className=" text-light-40 sm:text-sm">
               {(() => {
                 if (isMoneyInput) return <span>USDC</span>;
               })()}
