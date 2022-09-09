@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useWizard, Wizard } from "react-use-wizard";
 
-import { Button, GoldfinchLogo, Link, Modal } from "@/components/design-system";
+import {
+  Button,
+  FreeArtistsLogo,
+  Link,
+  Modal,
+} from "@/components/design-system";
 
 const nuxPrefix = "betaNux";
 const nuxVersion = 1; // Increment this if you wish for the nux to be shown again.
@@ -25,7 +30,7 @@ export function BetaNux() {
       title={
         <div className="text-sand-500 flex items-center gap-2 text-xs font-medium">
           <div className="bg-sand-100 rounded-full p-1">
-            <GoldfinchLogo className="h-5 w-5" />
+            <FreeArtistsLogo className="h-5 w-5" />
           </div>
           From the Goldfinch Team
         </div>

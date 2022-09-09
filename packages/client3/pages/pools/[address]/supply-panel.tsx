@@ -410,36 +410,16 @@ export default function SupplyPanel({
           <DollarInput
             control={control}
             name="supply"
-            label="Supply amount"
-            labelDecoration={
-              <span className="text-xs">
-                Balance:{" "}
-                {formatCrypto(
-                  { token: SupportedCrypto.Usdc, amount: availableBalance },
-                  { includeToken: true }
-                )}
-              </span>
-            }
             rules={{ required: "Required", validate: validateMaximumAmount }}
             textSize="xl"
             onMaxClick={handleMax}
             className="mb-4"
-            labelClassName="!text-sm !mb-3"
           />
           <Input
             {...register("backerName", { required: "Required" })}
-            label="Full legal name"
-            labelDecoration={
-              <InfoIconTooltip
-                size="sm"
-                placement="top"
-                content="Your full name as it appears on your government-issued identification. This should be the same as your full legal name used to register your UID."
-              />
-            }
             placeholder="First and last name"
             textSize="xl"
             className="mb-3"
-            labelClassName="!text-sm !mb-3"
           />
           <div className="mb-3 text-xs">
             By entering my name and clicking “Supply” below, I hereby agree and
