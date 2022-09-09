@@ -2,14 +2,15 @@ import clsx from "clsx";
 
 interface ToggleProps {
   onChange?: () => void;
-  value: boolean;
+
   states: {
-    true: string;
-    false: string;
+    selectedState: boolean;
+    state1: string;
+    state2: string;
   };
 }
 
-export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
+export function Toggle({ onChange, states, ...props }: ToggleProps) {
   return (
     <div className="relative flex min-h-screen  flex-col items-center justify-center overflow-hidden">
       <div className="flex">
@@ -17,7 +18,7 @@ export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
           <input
             type="checkbox"
             className="peer sr-only"
-            checked={value}
+            checked={states.selectedState}
             onChange={onChange}
             readOnly
             {...props}
@@ -25,9 +26,9 @@ export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
           <div
             className={clsx(
               "flex h-10 w-[14.4rem] rounded-full",
-              "bg-theme-accent5",
-              "after:absolute after:top-0.5 after:left-[3px] after:h-9 after:w-28 after:rounded-full after:border after:border-theme-primary after:bg-theme-primary after:transition-all after:content-['']",
-              "peer peer-checked:bg-theme-accent5 peer-checked:after:translate-x-full peer-checked:after:border-theme-primary"
+              "bg-green-80",
+              "after:absolute after:top-0.5 after:left-[3px] after:h-9 after:w-28 after:rounded-full after:border after:border-green-50 after:bg-green-50 after:transition-all after:content-['']",
+              "peer-checked:after:border-bg-green-80 peer peer-checked:bg-green-80 peer-checked:after:translate-x-full"
             )}
           >
             <div
@@ -38,14 +39,18 @@ export function Toggle({ onChange, value, states, ...props }: ToggleProps) {
               )}
             >
               <span
-                className={clsx(value ? "text-light-1" : "text-theme-light")}
+                className={clsx(
+                  states.selectedState ? "text-dark-50" : "text-light-10"
+                )}
               >
-                {states.true}
+                {states.state1}
               </span>
               <span
-                className={clsx(value ? "text-theme-light" : "text-light-1")}
+                className={clsx(
+                  states.selectedState ? "text-light-10" : "text-dark-50"
+                )}
               >
-                {states.false}
+                {states.state2}
               </span>
             </div>
           </div>
