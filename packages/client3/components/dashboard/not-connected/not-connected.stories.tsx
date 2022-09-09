@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { NotConnected } from "./index";
 
 export default {
-  title: "FAD/Components/Dashboard/NotConnected",
+  title: "FAD/Components/Dashboard",
   component: NotConnected,
 } as ComponentMeta<typeof NotConnected>;
 
