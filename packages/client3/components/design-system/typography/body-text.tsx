@@ -12,9 +12,8 @@ export function BodyText({
   className,
   ...rest
 }: BodyTextProps) {
-  const Component = "p";
   return (
-    <Component
+    <p
       className={clsx(
         `body-text-${size}`,
         semiBold ? "font-semibold" : "font-normal",

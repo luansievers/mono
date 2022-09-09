@@ -6,10 +6,8 @@ export interface DisplayProps extends HTMLAttributes<HTMLHeadingElement> {
 }
 
 export function Display({ level, className, ...rest }: DisplayProps) {
-  const Component = `div`;
-
   return (
-    <Component
+    <div
       className={clsx(`display-${level}`, "font-semibold", className)}
       {...rest}
     />
