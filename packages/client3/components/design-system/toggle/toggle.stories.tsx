@@ -3,8 +3,8 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Toggle } from "./toggle";
 
 export default {
+  title: "FAD/Components/Toggle",
   component: Toggle,
-  title: "Components/Toggle",
 } as ComponentMeta<typeof Toggle>;
 
 export const ToggleStory: ComponentStory<typeof Toggle> = (args) => (
@@ -16,9 +16,9 @@ ToggleStory.args = {
   onChange: () => {
     value = !value;
   },
-  value: value,
   states: {
-    true: "Backer",
-    false: "Artist",
+    selectedState: value,
+    state1: "Backer",
+    state2: "Artist",
   },
 };
