@@ -26,7 +26,6 @@ type DollarInputProps = ComponentProps<typeof Input> &
 
 export function DollarInput({
   mask = "amount",
-  onMaxClick,
   name,
   rules,
   control,
@@ -61,17 +60,6 @@ export function DollarInput({
         unmask
         onAccept={onChange}
         lazy={false}
-        decoration={
-          onMaxClick ? (
-            <button
-              type="button"
-              onClick={onMaxClick}
-              className=" block rounded-md p-2 text-[10px] uppercase leading-none"
-            >
-              Max
-            </button>
-          ) : undefined
-        }
         {...rest}
         {...controllerField}
       />
