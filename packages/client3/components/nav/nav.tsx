@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { Link, GoldfinchLogo, Icon } from "@/components/design-system";
+import { Link, FreeArtistsLogo, Icon } from "@/components/design-system";
 
 import { MobileNav } from "./mobile-nav";
 import { NAV_ITEMS } from "./nav-items";
@@ -25,7 +25,7 @@ export function Nav() {
         <div className="flex flex-1">
           <NextLink href="/" passHref>
             <a className="flex items-center justify-center p-3">
-              <GoldfinchLogo className="h-7 w-7" />
+              <FreeArtistsLogo className="h-7 w-7" />
             </a>
           </NextLink>
         </div>

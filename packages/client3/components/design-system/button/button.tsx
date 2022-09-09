@@ -54,9 +54,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "flex items-center",
           children && "px-6",
           {
-            "bg-accent-1 text-green-90 hover:bg-accent-1-shade disabled:opacity-40 disabled:hover:bg-accent-1":
+            "bg-accent-1 text-green-90 hover:bg-accent-1-shade disabled:opacity-30 disabled:hover:bg-accent-1":
               buttonType == "primary",
-            "border border-accent-1 bg-white text-accent-1 hover:bg-accent-1/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
+            "border border-accent-1 bg-transparent text-accent-1 hover:bg-accent-1/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
               buttonType == "secondary",
             "bg-transparent text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
               buttonType == "tertiary",
