@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { forwardRef, InputHTMLAttributes } from "react";
 
+import { BodyText } from "../typography";
+
 interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   label?: string;
@@ -29,12 +31,11 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
         </div>
 
         {label && (
-          <label
-            className="form-check-label inline-block text-gray-800"
-            htmlFor={_id}
-          >
-            {label}
-          </label>
+          <div className="ml-3">
+            <label htmlFor={_id}>
+              <BodyText size="normal">{label}</BodyText>
+            </label>
+          </div>
         )}
       </div>
     );

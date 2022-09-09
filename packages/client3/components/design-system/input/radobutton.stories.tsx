@@ -4,7 +4,7 @@ import { RadioButton } from "./radiobutton";
 
 export default {
   component: RadioButton,
-  title: "Components/Input/RadioButton",
+  title: "FAD/Components/Input",
 } as ComponentMeta<typeof RadioButton>;
 
 export const RadioButtonStory: ComponentStory<typeof RadioButton> = (args) => (
@@ -12,7 +12,7 @@ export const RadioButtonStory: ComponentStory<typeof RadioButton> = (args) => (
 );
 
 RadioButtonStory.args = {
-  name: "rb",
+  name: "radioButton",
   disabled: false,
   checked: false,
 };

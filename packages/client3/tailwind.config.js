@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
@@ -48,7 +47,6 @@ module.exports = {
         },
         transparent: "transparent",
         current: "currentColor",
-        white: colors.white,
       },
       keyframes: {
         "background-oscillate": {
