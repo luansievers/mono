@@ -5,7 +5,7 @@ import {
   Banner,
   Breadcrumb,
   Heading,
-  goldfinchLogoWhiteBgPngUrl,
+  freeArtistsLogoWhiteBgPngUrl,
   LinkButton,
 } from "@/components/design-system";
 import { BannerPortal } from "@/components/layout";
@@ -131,7 +131,10 @@ export default function SeniorPoolPage() {
       <div className="pool-layout">
         <div style={{ gridArea: "heading" }}>
           <div className="mb-8 flex flex-wrap justify-between gap-2">
-            <Breadcrumb label="Goldfinch" image={goldfinchLogoWhiteBgPngUrl} />
+            <Breadcrumb
+              label="Goldfinch"
+              image={freeArtistsLogoWhiteBgPngUrl}
+            />
             {seniorPool ? (
               <LinkButton
                 iconRight="ArrowTopRight"

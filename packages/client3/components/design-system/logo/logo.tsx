@@ -1,16 +1,16 @@
-import goldfinchLogoWhiteBgPng from "./goldfinch-logo-white-bg.png";
-import goldfinchLogoPng from "./goldfinch-logo.png";
-import GoldfinchLogoSvg from "./goldfinch-logo.svg";
+import freeArtistsLogoWhiteBgPng from "./FAD-logo-white-bg.png";
+import freeArtistsLogoPng from "./FAD-logo.png";
+import FreeArtistsLogoSvg from "./FAD-logo.svg";
 
-export const goldfinchLogoPngUrl = goldfinchLogoPng.src;
-export const goldfinchLogoWhiteBgPngUrl = goldfinchLogoWhiteBgPng.src;
+export const freeArtistsLogoPngUrl = freeArtistsLogoPng.src;
+export const freeArtistsLogoWhiteBgPngUrl = freeArtistsLogoWhiteBgPng.src;
 
-interface GoldfinchLogoProps {
+interface FreeArtistsLogoProps {
   width?: number;
   height?: number;
   className?: string;
 }
 
-export function GoldfinchLogo(props: GoldfinchLogoProps) {
-  return <GoldfinchLogoSvg {...props} />;
+export function FreeArtistsLogo(props: FreeArtistsLogoProps) {
+  return <FreeArtistsLogoSvg {...props} />;
 }

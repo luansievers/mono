@@ -15,7 +15,6 @@ fi
 
 nvm use
 npm --prefix packages/subgraph run start-local
-echo "${YELLOW}Graph Uploaded${NC}"
 echo ""
 echo "${YELLOW}Sleeping for 45 seconds${NC}"
 sleep 45 
