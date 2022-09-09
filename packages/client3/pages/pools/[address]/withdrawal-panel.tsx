@@ -232,11 +232,9 @@ export function WithdrawalPanel({
         />
         <DollarInput
           name="amount"
-          label="Amount"
           control={control}
           textSize="xl"
           rules={{ validate: validateWithdrawalAmount }}
-          labelClassName="!mb-3 text-sm"
           className="mb-3"
           disabled={selectedDestination !== "wallet"}
         />
