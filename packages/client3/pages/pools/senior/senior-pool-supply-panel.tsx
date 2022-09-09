@@ -340,12 +340,7 @@ export function SeniorPoolSupplyPanel({
             <DollarInput
               control={control}
               name="supply"
-              label="Supply amount"
               textSize="xl"
-              labelClassName="!text-sm !mb-3"
-              labelDecoration={
-                <span className="text-xs">Balance: {availableBalance}</span>
-              }
               className="mb-4"
               onMaxClick={handleMax}
               rules={{ required: "Required", validate: validateMaximumAmount }}
