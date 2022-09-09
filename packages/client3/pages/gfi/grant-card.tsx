@@ -317,7 +317,7 @@ function GrantButton({
 
   return (
     <Form rhfMethods={rhfMethods} onSubmit={handleAction}>
-      <Button size="lg" type="submit" disabled={claimable.isZero()}>
+      <Button type="submit" disabled={claimable.isZero()}>
         {message}
       </Button>
     </Form>

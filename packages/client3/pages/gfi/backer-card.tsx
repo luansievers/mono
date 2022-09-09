@@ -82,7 +82,7 @@ export function BackerCard({ token }: BackerCardProps) {
       })}
       action={
         <Form rhfMethods={rhfMethods} onSubmit={handleClaim}>
-          <Button type="submit" size="lg" disabled={!canClaim}>
+          <Button type="submit" disabled={!canClaim}>
             {canClaim ? "Claim GFI" : "Still Locked"}
           </Button>
         </Form>

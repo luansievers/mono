@@ -1,17 +1,11 @@
-import { Popover, Icon, IconButton } from "@/components/design-system";
+import { Popover, Icon, Button } from "@/components/design-system";
 
 import { SECONDARY_MENU_ITEMS } from "./nav-items";
 
 export function SecondaryMenu() {
   return (
     <Popover placement="bottom-end" content={() => <SecondaryMenuContent />}>
-      <IconButton
-        icon="DotsHorizontal"
-        label="More links"
-        variant="rounded"
-        colorScheme="secondary"
-        className="w-10"
-      />
+      <Button iconLeft="DotsHorizontal" className="w-10" />
     </Popover>
   );
 }

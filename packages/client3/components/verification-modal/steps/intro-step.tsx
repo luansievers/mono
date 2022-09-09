@@ -15,7 +15,7 @@ export function IntroStep() {
       heading="Goldfinch requires identity verification"
       headingClassName="font-medium"
       footer={
-        <Button size="lg" onClick={nextStep} className="w-full">
+        <Button onClick={nextStep} className="w-full">
           Begin
         </Button>
       }

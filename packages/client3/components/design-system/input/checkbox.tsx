@@ -1,76 +1,65 @@
 import clsx from "clsx";
-import { forwardRef, InputHTMLAttributes, ReactNode } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
+
+import { BodyText, Caption } from "../typography";
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  labelDecoration?: ReactNode;
-  labelClassName?: string;
+  label?: string;
   id?: string;
-  colorScheme?: "light" | "dark";
   className?: string;
+  errorLabel?: string;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   function Checkbox(
-    {
-      label,
-      labelDecoration,
-      labelClassName,
-      id,
-      name,
-      colorScheme = "light",
-      className,
-      ...rest
-    },
+    { label, id, name, className, disabled, errorLabel, ...rest },
     ref
   ) {
     const _id = id ?? name;
     return (
-      <div
-        className={clsx(
-          "flex items-center",
-          colorScheme === "light"
-            ? "text-sand-700"
-            : colorScheme === "dark"
-            ? "text-white"
-            : null,
-          className
-        )}
-      >
-        <div className="relative flex justify-center">
-          <input
-            {...rest}
-            id={_id}
-            name={name}
-            type="checkbox"
-            ref={ref}
-            className={clsx(
-              "peer h-4 w-4 appearance-none rounded disabled:opacity-50",
-              colorScheme === "light"
-                ? "border border-sand-300 bg-white text-sand-700 checked:border-sand-700 checked:bg-sand-700 hover:bg-sand-100 hover:checked:bg-sand-600"
-                : colorScheme === "dark"
-                ? "border border-transparent bg-sky-900 text-white hover:bg-sky-800"
-                : null
-            )}
-          />
-          <svg
-            viewBox="0 0 8 6"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="pointer-events-none absolute top-1/2 left-1/2 hidden h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 peer-checked:block"
-          >
-            <path
-              d="M7.70711 1.70711C8.09763 1.31658 8.09763 0.683417 7.70711 0.292893C7.31658 -0.0976311 6.68342 -0.0976311 6.29289 0.292893L3 3.58579L1.70711 2.29289C1.31658 1.90237 0.683417 1.90237 0.292893 2.29289C-0.0976311 2.68342 -0.0976311 3.31658 0.292893 3.70711L2.29289 5.70711C2.68342 6.09763 3.31658 6.09763 3.70711 5.70711L7.70711 1.70711Z"
-              fill="white"
+      <div className={clsx("flex-col", className)}>
+        <div className="flex">
+          <div className={clsx("relative flex h-6 w-6")}>
+            <input
+              {...rest}
+              id={_id}
+              name={name}
+              type="checkbox"
+              ref={ref}
+              disabled={disabled}
+              className={clsx(
+                "peer h-6 w-6  cursor-pointer appearance-none rounded",
+                " bg-white disabled:bg-dark-70",
+                "checked:border-0 checked:bg-accent-1 checked:disabled:bg-accent-1/40",
+                errorLabel
+                  ? "border-2 border-state-error"
+                  : "border border-dark-80"
+              )}
             />
-          </svg>
+            <svg
+              viewBox="0 0 17 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="pointer-events-none absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 peer-checked:block"
+            >
+              <path
+                d="M6.364 9.193L15.556 0L16.971 1.414L6.364 12.021L0 5.657L1.414 4.243L6.364 9.193Z"
+                className={clsx("fill-green-90", disabled && "opacity-50")}
+              />
+            </svg>
+          </div>
+
+          {label && (
+            <div className="ml-3">
+              <label htmlFor={_id}>
+                <BodyText size="normal">{label}</BodyText>
+              </label>
+            </div>
+          )}
         </div>
-        <div className="flex w-full items-center justify-between gap-1">
-          <label htmlFor={_id} className={clsx("ml-3", labelClassName)}>
-            {label}
-          </label>
-          {labelDecoration}
-        </div>
+        {errorLabel && (
+          <Caption className="mt-0.5 text-state-error">{errorLabel}</Caption>
+        )}
       </div>
     );
   }

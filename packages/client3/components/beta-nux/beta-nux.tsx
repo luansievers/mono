@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useWizard, Wizard } from "react-use-wizard";
 
-import { Button, GoldfinchLogo, Link, Modal } from "@/components/design-system";
+import {
+  Button,
+  FreeArtistsLogo,
+  Link,
+  Modal,
+} from "@/components/design-system";
 
 const nuxPrefix = "betaNux";
 const nuxVersion = 1; // Increment this if you wish for the nux to be shown again.
@@ -23,9 +28,9 @@ export function BetaNux() {
       isOpen={isNuxOpen}
       onClose={closeNux}
       title={
-        <div className="flex items-center gap-2 text-xs font-medium text-sand-500">
-          <div className="rounded-full bg-sand-100 p-1">
-            <GoldfinchLogo className="h-5 w-5" />
+        <div className="text-sand-500 flex items-center gap-2 text-xs font-medium">
+          <div className="bg-sand-100 rounded-full p-1">
+            <FreeArtistsLogo className="h-5 w-5" />
           </div>
           From the Goldfinch Team
         </div>
@@ -109,21 +114,13 @@ function Footer({ onFinish }: { onFinish: () => void }) {
   } = useWizard();
   return (
     <div className="mt-10 flex justify-between">
-      <Button
-        size="lg"
-        colorScheme="secondary"
-        onClick={isFirstStep ? onFinish : previousStep}
-      >
+      <Button onClick={isFirstStep ? onFinish : previousStep}>
         {isFirstStep ? "Skip" : "Back"}
       </Button>
-      <span className="self-center text-xs text-sand-500">
+      <span className="text-sand-500 self-center text-xs">
         {activeStep + 1} of {stepCount}
       </span>
-      <Button
-        size="lg"
-        colorScheme="primary"
-        onClick={isLastStep ? onFinish : nextStep}
-      >
+      <Button onClick={isLastStep ? onFinish : nextStep}>
         {isLastStep ? "Finish" : "Next"}
       </Button>
     </div>

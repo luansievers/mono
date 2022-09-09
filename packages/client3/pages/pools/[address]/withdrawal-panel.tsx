@@ -204,7 +204,7 @@ export function WithdrawalPanel({
   }, [zaps, totalPrincipalRedeemable, totalInterestRedeemable]);
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-01 p-5">
+    <div className="rounded-xl bg-sunrise-01 p-5 text-white">
       <div className="mb-3 flex justify-between text-sm">
         Available to withdraw
         <InfoIconTooltip
@@ -232,20 +232,13 @@ export function WithdrawalPanel({
         />
         <DollarInput
           name="amount"
-          label="Amount"
           control={control}
           textSize="xl"
           rules={{ validate: validateWithdrawalAmount }}
-          labelClassName="!mb-3 text-sm"
           className="mb-3"
           disabled={selectedDestination !== "wallet"}
         />
-        <Button
-          type="submit"
-          colorScheme="secondary"
-          size="xl"
-          className="block w-full"
-        >
+        <Button type="submit" className="block w-full">
           Withdraw
         </Button>
         {!isPoolLocked ? (

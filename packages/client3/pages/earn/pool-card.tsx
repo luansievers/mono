@@ -123,7 +123,7 @@ function PoolCardLayout({
   return (
     <div className="pool-card bg-sand-100 hover:bg-sand-200 relative grid items-center gap-x-4 rounded p-5">
       <div
-        className="bg-white relative h-12 w-12 shrink-0 overflow-hidden rounded-full"
+        className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full bg-white"
         style={{ gridArea: "icon" }}
       >
         {iconSlot}

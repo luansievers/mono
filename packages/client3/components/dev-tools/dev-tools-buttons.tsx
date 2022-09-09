@@ -19,7 +19,6 @@ export default function DevToolsButtons({
       <div className="-mx-2 mb-8 flex">
         <div className="px-2">
           <Button
-            size="lg"
             isLoading={loading === "setup"}
             disabled={disabled}
             onClick={async () => {
@@ -48,7 +47,6 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            size="lg"
             isLoading={loading === "fund"}
             disabled={disabled}
             onClick={async () => {
@@ -77,7 +75,6 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            size="lg"
             isLoading={loading === "advance1"}
             disabled={disabled}
             onClick={async () => {
@@ -103,7 +100,6 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            size="lg"
             isLoading={loading === "advance30"}
             disabled={disabled}
             onClick={async () => {
@@ -135,7 +131,6 @@ export default function DevToolsButtons({
       <div className="-mx-2 flex">
         <div className="px-2">
           <Button
-            size="lg"
             disabled={disabled}
             onClick={() => {
               setPanel("kyc");
@@ -146,13 +141,11 @@ export default function DevToolsButtons({
         </div>
 
         <div className="px-2">
-          <Button size="lg" disabled={true}>
-            Set User Address
-          </Button>
+          <Button disabled={true}>Set User Address</Button>
         </div>
 
         <div className="px-2">
-          <Button size="lg" onClick={() => openVerificationModal()}>
+          <Button onClick={() => openVerificationModal()}>
             Begin verification flow
           </Button>
         </div>

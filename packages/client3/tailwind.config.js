@@ -22,10 +22,20 @@ module.exports = {
           100: "#171918",
         },
         accent: {
-          1: "#CDFC51",
-          2: "#7BF8AF",
-          3: "#D9644A",
-          4: "#95628A",
+          1: {
+            DEFAULT: "#CDFC51",
+            shade: "#BFED47",
+          },
+          2: {
+            DEFAULT: "#7BF8AF",
+            shade: "#BFED47",
+          },
+          3: {
+            DEFAULT: "#D9644A",
+          },
+          4: {
+            DEFAULT: "#95628A",
+          },
         },
         dark: {
           50: "#909090",
@@ -84,6 +94,9 @@ module.exports = {
       fontFamily: {
         "anek-telugu": ["Anek Telugu", "sans-serif"],
         "kumbh-sans": ["Kumbh Sans", "sans-serif"],
+      },
+      fontSize: {
+        button: ["16px", "16px"],
       },
     },
   },

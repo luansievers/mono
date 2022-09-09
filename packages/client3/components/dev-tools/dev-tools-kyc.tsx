@@ -71,7 +71,6 @@ export default function DevToolsKYC() {
         <div className="mb-4 flex flex-wrap gap-4">
           <div className="w-64">
             <Input
-              label="Country Code"
               inputMode="text"
               {...register("countryCode", {
                 required: "Country code is required.",
@@ -83,13 +82,7 @@ export default function DevToolsKYC() {
 
           <div className="w-64">
             <Input
-              label="Residency"
-              {...register("residency", {
-                validate: (value) =>
-                  value !== "us" && value !== "non-us"
-                    ? 'Must be "us" or "non-us"'
-                    : true,
-              })}
+              name="residency"
               helperText="This represents where the user permanently resides"
               errorMessage={formErrors.residency?.message}
             />
@@ -111,12 +104,7 @@ export default function DevToolsKYC() {
           </div>
         </div>
 
-        <Button
-          type="submit"
-          isLoading={isLoading}
-          disabled={isLoading}
-          size="lg"
-        >
+        <Button type="submit" isLoading={isLoading} disabled={isLoading}>
           Submit
         </Button>
       </form>

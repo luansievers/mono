@@ -1,10 +1,10 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Button } from ".";
+import { LinkButton } from ".";
 
 export default {
   title: "FAD/Components/Button",
-  component: Button,
+  component: LinkButton,
   argTypes: {
     children: {
       control: {
@@ -15,14 +15,15 @@ export default {
   parameters: {
     controls: { expanded: true },
   },
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<typeof LinkButton>;
 
-export const ButtonStory: ComponentStory<typeof Button> = (args) => (
-  <Button {...args} />
+export const LinkButtonStory: ComponentStory<typeof LinkButton> = (args) => (
+  <LinkButton {...args} />
 );
 
-ButtonStory.args = {
+LinkButtonStory.args = {
   children: "Button",
   disabled: false,
   buttonType: "primary",
+  href: "www.google.com",
 };

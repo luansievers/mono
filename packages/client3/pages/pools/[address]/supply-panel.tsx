@@ -294,7 +294,7 @@ export default function SupplyPanel({
   }, [user, account, seniorPoolSharePrice]);
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-02 p-5">
+    <div className="rounded-xl bg-sunrise-02 p-5 text-white">
       <div className="mb-3 flex flex-row justify-between">
         <span className="text-sm">Est. APY</span>
         <InfoIconTooltip
@@ -375,34 +375,19 @@ export default function SupplyPanel({
       </table>
 
       {!account ? (
-        <Button
-          className="block w-full"
-          onClick={openWalletModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openWalletModal}>
           Connect wallet
         </Button>
       ) : !isUserVerified ? (
-        <Button
-          className="block w-full"
-          onClick={openVerificationModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openVerificationModal}>
           Verify my identity
         </Button>
       ) : !canUserParticipate ? (
         <div>
-          <Button
-            disabled
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-          >
+          <Button disabled className="block w-full">
             Supply
           </Button>
-          <div className="text-white mt-3 flex items-center justify-center gap-3 text-sm">
+          <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
             <Icon size="md" name="Exclamation" />
             <div>
               Sorry, you are not eligible to participate in this pool because
@@ -425,36 +410,16 @@ export default function SupplyPanel({
           <DollarInput
             control={control}
             name="supply"
-            label="Supply amount"
-            labelDecoration={
-              <span className="text-xs">
-                Balance:{" "}
-                {formatCrypto(
-                  { token: SupportedCrypto.Usdc, amount: availableBalance },
-                  { includeToken: true }
-                )}
-              </span>
-            }
             rules={{ required: "Required", validate: validateMaximumAmount }}
             textSize="xl"
             onMaxClick={handleMax}
             className="mb-4"
-            labelClassName="!text-sm !mb-3"
           />
           <Input
             {...register("backerName", { required: "Required" })}
-            label="Full legal name"
-            labelDecoration={
-              <InfoIconTooltip
-                size="sm"
-                placement="top"
-                content="Your full name as it appears on your government-issued identification. This should be the same as your full legal name used to register your UID."
-              />
-            }
             placeholder="First and last name"
             textSize="xl"
             className="mb-3"
-            labelClassName="!text-sm !mb-3"
           />
           <div className="mb-3 text-xs">
             By entering my name and clicking “Supply” below, I hereby agree and
@@ -468,12 +433,7 @@ export default function SupplyPanel({
             for this pool, and (ii) my name and transaction information may be
             shared with the borrower.
           </div>
-          <Button
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-            type="submit"
-          >
+          <Button className="block w-full" type="submit">
             Supply
           </Button>
         </Form>
