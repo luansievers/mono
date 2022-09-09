@@ -191,7 +191,7 @@ export function SeniorPoolWithDrawalPanel({
   };
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-01 p-5">
+    <div className="rounded-xl bg-sunrise-01 p-5 text-white">
       <div className="mb-6">
         <div className="mb-3 flex items-center justify-between gap-1 text-sm">
           <div>Available to withdraw</div>
@@ -224,11 +224,9 @@ export function SeniorPoolWithDrawalPanel({
         <div className="mb-3">
           <DollarInput
             name="amount"
-            label="Withdrawal amount"
             control={control}
             textSize="xl"
             rules={{ required: "Required", validate: validateAmount }}
-            labelClassName="!mb-3 text-sm"
             onMaxClick={handleMax}
           />
         </div>

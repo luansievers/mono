@@ -8,14 +8,6 @@ import { Caption } from "../typography/caption";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
-   * Label text that will appear above the input
-   */
-  label: string;
-  /**
-   * Visually hide the label. Screen readers will still read it.
-   */
-  hideLabel?: boolean;
-  /**
    * The `name` attribute of the input element. This is important to the functionality of standard HTML forms.
    */
   name: string;
@@ -35,27 +27,17 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    * Class that goes specifically on the input element, not on the wrapper. Makes it easier to override input-specific styles like placeholder
    */
   inputClassName?: string;
-  /**
-   * Class that goes specifically on the label element, not on the wrapper. Makes it easier to override label-specific styles.
-   */
-  labelClassName?: string;
   disabled?: boolean;
   /**
    * An element that will render on the right side of the input. Can be used to create things like a "reveal password" button, or a "max" button
    */
   decoration?: IconNameType | ReactNode;
-  /**
-   * An element that will render on the right side of the label. Can be used to add extra contextual information like a tooltip.
-   */
-  labelDecoration?: ReactNode;
   textSize?: "sm" | "md" | "lg" | "xl";
   isMoneyInput?: boolean;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
-    label,
-    hideLabel = !label,
     name,
     id,
     type = "text",
@@ -63,9 +45,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     errorMessage,
     disabled = false,
     decoration,
-    labelDecoration,
     inputClassName,
-    labelClassName,
     className,
     autoComplete = "off",
     textSize = "md",
@@ -99,17 +79,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         className
       )}
     >
-      <div
-        className={clsx(
-          "mb-1.5 flex w-full items-end justify-between gap-4 leading-none",
-          hideLabel && "sr-only",
-          labelClassName
-        )}
-      >
-        <label htmlFor={_id}>{label}</label>
-        {labelDecoration ? labelDecoration : null}
-      </div>
-
       <div
         className={clsx(
           "relative mt-1 w-full rounded",

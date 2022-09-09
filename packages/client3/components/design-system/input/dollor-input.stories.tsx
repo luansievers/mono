@@ -5,7 +5,7 @@ import { DollarInput } from "./dollar-input";
 
 export default {
   component: DollarInput,
-  title: "FAD/Components/DollarInput",
+  title: "FAD/Components/Input",
 } as ComponentMeta<typeof DollarInput>;
 
 export const DollarInputStory: ComponentStory<typeof DollarInput> = (args) => {
