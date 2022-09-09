@@ -2,24 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Kumbh Sans";
-  src: url(./KumbhSans-Regular.ttf) format("truetype");
-}
-
-@font-face {
-  font-family: "Anek Telugu";
-  src: url(./AnekTelugu.ttf) format("truetype");
-}
+@import url("https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@400;500;600;700&family=Kumbh+Sans:wght@400;500;600;700&display=swap");
 
 .light {
-  font-family: "Anek Telugu";
-  @apply text-theme-dark;
+  @apply font-anek-telugu;
+  @apply text-black;
 }
 
 .dark {
-  font-family: "Kumbh Sans";
-  @apply text-theme-light;
+  @apply font-kumbh-sans;
+  @apply text-white;
 }
 
 .display-1 {
@@ -98,7 +90,7 @@
     height: 100%;
   }
   body {
-    /* @apply font-sans font-normal text-theme-primary; */
+    @apply font-sans font-normal text-green-50;
   }
 
   /* gets rid of that highlight when you tap buttons on mobile */
@@ -183,7 +175,7 @@
 
 @layer utilities {
   .focused {
-    @apply ring-2 ring-theme-primary;
+    @apply ring-2 ring-green-50;
   }
   .unfocused {
     @apply ring-0;
@@ -193,12 +185,12 @@
 /* Toastify custom styles */
 :root {
   --toastify-color-progress-light: #000;
-  --toastify-color-success: theme("colors.theme.primary");
+  --toastify-color-success: theme("colors.green.50");
   --toastify-color-warning: #fbf7d5;
-  --toastify-color-error: theme("colors.theme.primary");
-  --toastify-text-color-success: theme("colors.theme.primary");
+  --toastify-color-error: theme("colors.green.50");
+  --toastify-text-color-success: theme("colors.green.50");
   --toastify-text-color-warning: #645c18;
-  --toastify-text-color-error: theme("colors.theme.primary");
+  --toastify-text-color-error: theme("colors.green.50");
 }
 
 .Toastify__toast-container {
