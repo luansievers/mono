@@ -27,5 +27,5 @@ SideBarStory.args = {
     state2: "Backer",
   },
   pathName: "/My Profile",
-  storyBookMode: "http://localhost:3001/free_artist_logo_full.png",
+  storyBookMode: "http://localhost:3001/FAD-logo-full.png",
 };
