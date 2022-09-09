@@ -18,7 +18,6 @@ interface SideBarProps extends ToggleProps {
 export function SideBar({
   labels,
   className,
-  value,
   states,
   pathName,
   storyBookMode,
@@ -26,7 +25,6 @@ export function SideBar({
   const router = useRouter();
   const handleClick = (event: any, href: string, pathName?: string) => {
     if (pathName) {
-      console.log("StoryBook mode", pathName);
       return;
     } else {
       event.preventDefault();
@@ -49,7 +47,7 @@ export function SideBar({
         </a>
       </div>
       <div className="flex shrink-0 justify-center pb-10">
-        <Toggle value={value} states={states} />
+        <Toggle states={states} />
       </div>
       <ul className="relative ">
         {labels.map((label: string) => (
@@ -63,16 +61,16 @@ export function SideBar({
               }
               aria-current="page"
               className={clsx(
-                "relative flex h-20 items-center text-sm font-medium text-light-10 hover:bg-green-80 active:bg-theme-primary active:text-theme-accent1",
+                "relative flex h-20 items-center text-sm font-medium text-light-10 hover:bg-green-80 active:bg-green-50 active:text-accent-1",
                 pathName
                   ? [
                       pathName === `/${label}`
-                        ? "bg-green-80 text-theme-accent1"
+                        ? "bg-green-80 text-accent-1"
                         : null,
                     ]
                   : [
                       router.pathname === `/${label}`
-                        ? "bg-green-80 text-theme-accent1"
+                        ? "bg-green-80 text-accent-1"
                         : null,
                     ]
               )}

@@ -20,11 +20,12 @@ export const SideBarStory: ComponentStory<typeof SideBar> = (args) => {
 
 SideBarStory.args = {
   labels: ["All Artists Pools", "My Profile", "Transactions"],
-  value: true,
+
   states: {
-    true: "Artist",
-    false: "Backer",
+    selectedState: true,
+    state1: "Artist",
+    state2: "Backer",
   },
-  pathName: "/artistprofile",
+  pathName: "/My Profile",
   storyBookMode: "http://localhost:3001/free_artist_logo_full.png",
 };
