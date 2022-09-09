@@ -6,7 +6,7 @@ import {
   Breadcrumb,
   Heading,
   Button,
-  goldfinchLogoWhiteBgPngUrl,
+  freeArtistsLogoWhiteBgPngUrl,
 } from "@/components/design-system";
 import { BannerPortal } from "@/components/layout";
 import { useSeniorPoolPageQuery } from "@/lib/graphql/generated";
@@ -123,7 +123,7 @@ export default function SeniorPoolPage() {
           />
           {/* gives the illusion of rounded corners on the page */}
           <div className="bg-sky-500">
-            <div className="h-3 rounded-t-xl bg-white" />
+            <div className="bg-white h-3 rounded-t-xl" />
           </div>
         </BannerPortal>
       ) : null}
@@ -131,7 +131,10 @@ export default function SeniorPoolPage() {
       <div className="pool-layout">
         <div style={{ gridArea: "heading" }}>
           <div className="mb-8 flex flex-wrap justify-between gap-2">
-            <Breadcrumb label="Goldfinch" image={goldfinchLogoWhiteBgPngUrl} />
+            <Breadcrumb
+              label="Goldfinch"
+              image={freeArtistsLogoWhiteBgPngUrl}
+            />
             {seniorPool ? (
               <Button
                 variant="rounded"
