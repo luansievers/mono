@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { Link, GoldfinchLogo, Icon } from "@/components/design-system";
+import { Link, FreeArtistsLogo, Icon } from "@/components/design-system";
 
 import { MobileNav } from "./mobile-nav";
 import { NAV_ITEMS } from "./nav-items";
@@ -14,7 +14,7 @@ export function Nav() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   return (
     <>
-      <div className="flex flex-row border-b border-sand-100 px-6 md:px-10">
+      <div className="border-sand-100 flex flex-row border-b px-6 md:px-10">
         <div className="self-center md:hidden">
           <button className="p-1" onClick={() => setIsMobileNavOpen(true)}>
             <Icon name="Menu" size="md" />
@@ -24,7 +24,7 @@ export function Nav() {
         <div className="flex flex-1">
           <NextLink href="/" passHref>
             <a className="flex items-center justify-center p-3">
-              <GoldfinchLogo className="h-7 w-7" />
+              <FreeArtistsLogo className="h-7 w-7" />
             </a>
           </NextLink>
         </div>
@@ -67,7 +67,7 @@ export function NavLink({
         "flex items-center border-b-2 px-5 text-sm font-medium !no-underline",
         isCurrentPage
           ? "border-eggplant-600 text-sand-900"
-          : "border-transparent text-sand-700 hover:border-eggplant-600",
+          : "text-sand-700 hover:border-eggplant-600 border-transparent",
         className
       )}
       href={href}

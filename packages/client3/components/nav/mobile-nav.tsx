@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Fragment } from "react";
 
-import { GoldfinchLogo, Icon } from "@/components/design-system";
+import { FreeArtistsLogo, Icon } from "@/components/design-system";
 import { NavLink } from "@/components/nav";
 import { WalletButton } from "@/components/nav/wallet-button";
 
@@ -47,7 +47,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       <Dialog
         open={isOpen}
         onClose={onClose}
-        className="fixed left-0 top-0 z-10 flex h-full w-full flex-col bg-white"
+        className="bg-white fixed left-0 top-0 z-10 flex h-full w-full flex-col"
       >
         <div className="flex flex-row px-6 md:px-10">
           <div className="self-center md:hidden">
@@ -67,7 +67,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           <div className="mb-6 -mt-15">
             <NextLink href="/" passHref>
               <a className="flex items-center justify-center p-3">
-                <GoldfinchLogo className="h-7 w-7" />
+                <FreeArtistsLogo className="h-7 w-7" />
               </a>
             </NextLink>
           </div>
