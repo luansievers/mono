@@ -233,7 +233,7 @@ export function SeniorPoolSupplyPanel({
   }, [account, usdcContract]);
 
   return (
-    <div className="text-white rounded-xl bg-sunrise-02 p-5">
+    <div className="rounded-xl bg-sunrise-02 p-5 text-white">
       <div className="mb-3 flex items-center justify-between gap-2">
         <span className="text-sm">Total est. APY</span>
         <InfoIconTooltip content="The Senior Pool's total current estimated APY, including the current USDC APY and est. GFI rewards APY." />
@@ -326,7 +326,7 @@ export function SeniorPoolSupplyPanel({
           >
             Supply
           </Button>
-          <div className="text-white mt-3 flex items-center justify-center gap-3 text-sm">
+          <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
             <Icon size="md" name="Exclamation" />
             <div>
               Sorry, you are not eligible to participate in the senior pool
@@ -355,9 +355,9 @@ export function SeniorPoolSupplyPanel({
               label={`Stake to earn GFI (${formatPercent(
                 seniorPoolApyFromGfiFiat
               )})`}
-              labelDecoration={
-                <InfoIconTooltip content="Liquidity Providers can earn GFI by staking the FIDU they receive from supplying USDC to the Senior Pool. Selecting this box will automatically stake the FIDU you receive for this supply transaction. GFI tokens are granted at a variable est. APY rate, which is based on a target pool balance set by Governance." />
-              }
+              // labelDecoration={
+              //   <InfoIconTooltip content="Liquidity Providers can earn GFI by staking the FIDU they receive from supplying USDC to the Senior Pool. Selecting this box will automatically stake the FIDU you receive for this supply transaction. GFI tokens are granted at a variable est. APY rate, which is based on a target pool balance set by Governance." />
+              // }
               className="mb-3"
             />
             {/* TODO senior pool agreement page */}
