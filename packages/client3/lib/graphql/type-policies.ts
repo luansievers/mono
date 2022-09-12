@@ -1,6 +1,6 @@
 import { FieldReadFunction, InMemoryCacheConfig } from "@apollo/client";
 
-import { goldfinchLogoPngUrl } from "@/components/design-system";
+import { freeArtistsLogoPngUrl } from "@/components/design-system";
 import { POOL_METADATA, BORROWER_METADATA } from "@/constants";
 import { PoolMetadata } from "@/constants/metadata/types";
 import {
@@ -52,7 +52,7 @@ export const typePolicies: InMemoryCacheConfig["typePolicies"] = {
     fields: {
       name: { read: () => "Goldfinch Senior Pool" },
       category: { read: () => "Automated diversified portfolio" },
-      icon: { read: () => goldfinchLogoPngUrl },
+      icon: { read: () => freeArtistsLogoPngUrl },
     },
   },
   TranchedPool: {

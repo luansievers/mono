@@ -6,7 +6,7 @@ import {
   Avatar,
   Heading,
   Button,
-  goldfinchLogoWhiteBgPngUrl,
+  freeArtistsLogoWhiteBgPngUrl,
 } from "@/components/design-system";
 import { BannerPortal } from "@/components/layout";
 import { useSeniorPoolPageQuery } from "@/lib/graphql/generated";
@@ -131,7 +131,7 @@ export default function SeniorPoolPage() {
       <div className="pool-layout">
         <div style={{ gridArea: "heading" }}>
           <div className="mb-8 flex flex-wrap justify-between gap-2">
-            <Avatar image={goldfinchLogoWhiteBgPngUrl} />
+            <Avatar image={freeArtistsLogoWhiteBgPngUrl} />
             {seniorPool ? (
               <Button
                 variant="rounded"
