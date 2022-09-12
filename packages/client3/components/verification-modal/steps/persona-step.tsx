@@ -67,16 +67,12 @@ export function PersonaStep() {
       footer={
         <>
           <Button
-            size="lg"
-            colorScheme="secondary"
             onClick={() => goToStep(VerificationFlowSteps.IndividualOrEntity)}
             className="w-full"
           >
             Back
           </Button>
           <Button
-            size="lg"
-            colorScheme="primary"
             onClick={beginPersonaInquiry}
             iconRight="ArrowSmRight"
             isLoading={isPersonaLoading}

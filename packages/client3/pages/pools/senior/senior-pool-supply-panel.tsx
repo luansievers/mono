@@ -299,31 +299,16 @@ export function SeniorPoolSupplyPanel({
         </tbody>
       </table>
       {!account ? (
-        <Button
-          className="block w-full"
-          onClick={openWalletModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openWalletModal}>
           Connect wallet
         </Button>
       ) : !isUserVerified ? (
-        <Button
-          className="block w-full"
-          onClick={openVerificationModal}
-          size="xl"
-          colorScheme="secondary"
-        >
+        <Button className="block w-full" onClick={openVerificationModal}>
           Verify my identity
         </Button>
       ) : !canUserParticipate ? (
         <div>
-          <Button
-            disabled
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-          >
+          <Button disabled className="block w-full">
             Supply
           </Button>
           <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
@@ -365,12 +350,7 @@ export function SeniorPoolSupplyPanel({
               protocol reserves.
             </div>
           </div>
-          <Button
-            className="block w-full"
-            size="xl"
-            colorScheme="secondary"
-            type="submit"
-          >
+          <Button className="block w-full" type="submit">
             Supply
           </Button>
         </Form>

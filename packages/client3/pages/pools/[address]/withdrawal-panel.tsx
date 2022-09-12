@@ -238,12 +238,7 @@ export function WithdrawalPanel({
           className="mb-3"
           disabled={selectedDestination !== "wallet"}
         />
-        <Button
-          type="submit"
-          colorScheme="secondary"
-          size="xl"
-          className="block w-full"
-        >
+        <Button type="submit" className="block w-full">
           Withdraw
         </Button>
         {!isPoolLocked ? (

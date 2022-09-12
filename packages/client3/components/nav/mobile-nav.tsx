@@ -47,7 +47,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       <Dialog
         open={isOpen}
         onClose={onClose}
-        className="bg-white fixed left-0 top-0 z-10 flex h-full w-full flex-col"
+        className="fixed left-0 top-0 z-10 flex h-full w-full flex-col bg-white"
       >
         <div className="flex flex-row px-6 md:px-10">
           <div className="self-center md:hidden">

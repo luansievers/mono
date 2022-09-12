@@ -107,12 +107,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
             We need to verify your identity and issue a Goldfinch UID to
             participate.
           </div>
-          <Button
-            variant="rounded"
-            size="lg"
-            className="block w-full"
-            onClick={openVerificationModal}
-          >
+          <Button className="block w-full" onClick={openVerificationModal}>
             Verify identity
           </Button>
         </div>
@@ -194,12 +189,7 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
           </div>
           {user.isGoListed && !hasUid ? (
             <div className="mt-4">
-              <Button
-                className="block w-full"
-                variant="rounded"
-                size="lg"
-                onClick={openVerificationModal}
-              >
+              <Button className="block w-full" onClick={openVerificationModal}>
                 Claim UID
               </Button>
               <div className="text-sand-400 mt-3 flex items-center gap-2 text-xs">
@@ -258,8 +248,6 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
       </div>
       <div className="flex justify-between pt-4">
         <Button
-          size="sm"
-          colorScheme="secondary"
           onClick={() => {
             connector.deactivate();
             onWalletDisconnect();
@@ -268,8 +256,6 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
           Disconnect wallet
         </Button>
         <Button
-          size="sm"
-          colorScheme="secondary"
           disabled={!connector.watchAsset || !gfiContract}
           onClick={() => {
             if (gfiContract) {

@@ -86,11 +86,7 @@ export function StakingCard({ position }: StakingCardProps) {
       )}
       action={
         <Form rhfMethods={rhfMethods} onSubmit={handleClaim}>
-          <Button
-            size="lg"
-            type="submit"
-            disabled={position.claimable.isZero()}
-          >
+          <Button type="submit" disabled={position.claimable.isZero()}>
             {!position.claimable.isZero() ? "Claim GFI" : "Still Locked"}
           </Button>
         </Form>
