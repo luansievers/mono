@@ -36,7 +36,7 @@ export function DevToolsPanel(): JSX.Element {
       </div>
 
       {open && (
-        <div className="border-sand-400 shadow-sand-700 bg-white fixed right-5 bottom-20 rounded-xl border p-6 drop-shadow-lg ">
+        <div className="border-sand-400 shadow-sand-700 fixed right-5 bottom-20 rounded-xl border bg-white p-6 drop-shadow-lg ">
           <div className="mb-4 flex items-center justify-between">
             <h5 className="text-xl font-bold">Dev Tools</h5>
 

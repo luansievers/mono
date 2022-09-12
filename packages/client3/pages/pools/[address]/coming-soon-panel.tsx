@@ -20,12 +20,12 @@ export default function ComingSoonPanel({ fundableAt }: ComingSoonPanelProps) {
       <div className="px-5 py-10">
         <div className="mb-5 text-xl">
           This pool will open on{" "}
-          <span className="text-sky-700 font-semibold">
+          <span className="font-semibold text-sky-700">
             {format(date, "MMMM d, y")}
           </span>
         </div>
 
-        <div className="text-sky-700 text-[7.5rem] font-semibold leading-none">
+        <div className="text-[7.5rem] font-semibold leading-none text-sky-700">
           {difference === 0 ? "Today" : difference}
         </div>
 

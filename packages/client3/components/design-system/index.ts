@@ -1,6 +1,6 @@
 // Try to keep these alphabetized, it just helps keep organized
 export * from "./banner";
-export * from "./breadcrumb";
+export * from "./avatar";
 export * from "./button";
 export * from "./chip";
 export * from "./form";

@@ -8,6 +8,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./stories/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /./,
+    },
+  ],
   theme: {
     screens: {
       xs: "480px",
