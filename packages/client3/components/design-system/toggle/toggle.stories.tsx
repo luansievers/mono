@@ -17,7 +17,7 @@ ToggleStory.args = {
     value = !value;
   },
   states: {
-    selectedState: value,
+    isState1Selected: value,
     state1: "Backer",
     state2: "Artist",
   },

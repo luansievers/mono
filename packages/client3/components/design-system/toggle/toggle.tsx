@@ -4,7 +4,7 @@ interface ToggleProps {
   onChange?: () => void;
 
   states: {
-    selectedState: boolean;
+    isState1Selected: boolean;
     state1: string;
     state2: string;
   };
@@ -18,7 +18,7 @@ export function Toggle({ onChange, states, ...props }: ToggleProps) {
           <input
             type="checkbox"
             className="peer sr-only"
-            checked={states.selectedState}
+            checked={states.isState1Selected}
             onChange={onChange}
             readOnly
             {...props}
@@ -40,14 +40,14 @@ export function Toggle({ onChange, states, ...props }: ToggleProps) {
             >
               <span
                 className={clsx(
-                  states.selectedState ? "text-dark-50" : "text-light-10"
+                  states.isState1Selected ? "text-dark-50" : "text-light-10"
                 )}
               >
                 {states.state1}
               </span>
               <span
                 className={clsx(
-                  states.selectedState ? "text-light-10" : "text-dark-50"
+                  states.isState1Selected ? "text-light-10" : "text-dark-50"
                 )}
               >
                 {states.state2}
