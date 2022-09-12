@@ -16,7 +16,7 @@ export function ExitFlowButton({ children }: { children: ReactNode }) {
     }
   };
   return (
-    <Button size="lg" className="w-full" onClick={exitFlow}>
+    <Button className="w-full" onClick={exitFlow}>
       {children}
     </Button>
   );

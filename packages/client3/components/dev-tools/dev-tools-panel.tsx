@@ -32,11 +32,11 @@ export function DevToolsPanel(): JSX.Element {
           setOpen(true);
         }}
       >
-        <Button size="lg">Dev Tools</Button>
+        <Button>Dev Tools</Button>
       </div>
 
       {open && (
-        <div className="fixed right-5 bottom-20 rounded-xl border border-sand-400 bg-white p-6 shadow-sand-700 drop-shadow-lg ">
+        <div className="border-sand-400 shadow-sand-700 fixed right-5 bottom-20 rounded-xl border bg-white p-6 drop-shadow-lg ">
           <div className="mb-4 flex items-center justify-between">
             <h5 className="text-xl font-bold">Dev Tools</h5>
 

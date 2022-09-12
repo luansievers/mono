@@ -233,12 +233,7 @@ export function SeniorPoolWithDrawalPanel({
         <div className="mb-3 text-sm">
           Please be aware that Goldfinch charges a withdrawal fee of 0.5%
         </div>
-        <Button
-          colorScheme="secondary"
-          size="xl"
-          className="block w-full"
-          type="submit"
-        >
+        <Button className="block w-full" type="submit">
           Withdraw
         </Button>
       </Form>

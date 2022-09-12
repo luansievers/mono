@@ -1,6 +1,6 @@
 import { differenceInDays, format } from "date-fns";
 
-import { Button } from "@/components/design-system";
+import { LinkButton } from "@/components/design-system";
 import type { TranchedPool } from "@/lib/graphql/generated";
 
 interface ComingSoonPanelProps {
@@ -16,7 +16,7 @@ export default function ComingSoonPanel({ fundableAt }: ComingSoonPanelProps) {
   const difference = differenceInDays(date, new Date());
 
   return (
-    <div className="flex flex-col rounded-xl border border-sand-200 text-center ">
+    <div className="border-sand-200 flex flex-col rounded-xl border text-center ">
       <div className="px-5 py-10">
         <div className="mb-5 text-xl">
           This pool will open on{" "}
@@ -32,21 +32,17 @@ export default function ComingSoonPanel({ fundableAt }: ComingSoonPanelProps) {
         {difference !== 0 && <div>{difference === 1 ? "Day" : "Days"}</div>}
       </div>
 
-      <div className="border-t border-sand-200 bg-sand-50 px-5 py-10">
+      <div className="border-sand-200 bg-sand-50 border-t px-5 py-10">
         <p className="mx-5 mb-5">
           Subscribe to be the first to hear about new pool launches
         </p>
-        <Button
-          as="a"
+        <LinkButton
           iconRight="ArrowTopRight"
-          target="_blank"
-          colorScheme="sky"
-          size="xl"
           href="https://bit.ly/backer-updates"
           className="w-full"
         >
           Subscribe
-        </Button>
+        </LinkButton>
       </div>
     </div>
   );

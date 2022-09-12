@@ -114,21 +114,13 @@ function Footer({ onFinish }: { onFinish: () => void }) {
   } = useWizard();
   return (
     <div className="mt-10 flex justify-between">
-      <Button
-        size="lg"
-        colorScheme="secondary"
-        onClick={isFirstStep ? onFinish : previousStep}
-      >
+      <Button onClick={isFirstStep ? onFinish : previousStep}>
         {isFirstStep ? "Skip" : "Back"}
       </Button>
       <span className="text-sand-500 self-center text-xs">
         {activeStep + 1} of {stepCount}
       </span>
-      <Button
-        size="lg"
-        colorScheme="primary"
-        onClick={isLastStep ? onFinish : nextStep}
-      >
+      <Button onClick={isLastStep ? onFinish : nextStep}>
         {isLastStep ? "Finish" : "Next"}
       </Button>
     </div>

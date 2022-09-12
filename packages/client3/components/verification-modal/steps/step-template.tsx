@@ -52,7 +52,7 @@ export function StepTemplate({
         ) : null}
 
         {subheading ? (
-          <p className="mb-8 text-justify text-xs text-sand-500">
+          <p className="text-sand-500 mb-8 text-justify text-xs">
             {subheading}
           </p>
         ) : null}
@@ -61,16 +61,11 @@ export function StepTemplate({
 
         {includePrivacyStatement ? <PrivacyStatement className="mt-8" /> : null}
       </div>
-      <div className="-mx-6 mt-9 flex gap-3 border-t border-t-sand-100 px-6 pt-6">
+      <div className="border-t-sand-100 -mx-6 mt-9 flex gap-3 border-t px-6 pt-6">
         {footer ? (
           footer
         ) : (
-          <Button
-            className="w-full"
-            colorScheme="secondary"
-            size="lg"
-            onClick={previousStep}
-          >
+          <Button className="w-full" onClick={previousStep}>
             Back
           </Button>
         )}

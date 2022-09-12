@@ -15,16 +15,12 @@ export function IdWarningStep() {
       footer={
         <>
           <Button
-            colorScheme="secondary"
-            size="lg"
             onClick={() => goToStep(VerificationFlowSteps.Persona)}
             className="w-full"
           >
             No, continue
           </Button>
           <Button
-            colorScheme="primary"
-            size="lg"
             onClick={() => goToStep(VerificationFlowSteps.Persona)}
             className="w-full"
           >
@@ -38,7 +34,7 @@ export function IdWarningStep() {
           <Image src={warningImg} height={110} width={110} alt="Warning" />
         </div>
         <div className="mb-5">Do you have a Non-U.S. ID?</div>
-        <div className="text-xs text-sand-400">
+        <div className="text-sand-400 text-xs">
           If you have a U.S. ID, you may not be eligible to participate in
           certain Goldfinch protocol activities, including lending capital. If
           you have a Non-U.S. ID you can use for identity verification purposes,

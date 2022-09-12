@@ -24,13 +24,12 @@ export function confirmDialog(children: ReactNode): Promise<boolean> {
         <div className="mt-4 flex gap-4">
           <Button
             className="grow"
-            size="xl"
-            colorScheme="secondary"
+            buttonType="secondary"
             onClick={handleClose(false)}
           >
             Cancel
           </Button>
-          <Button className="grow" size="xl" onClick={handleClose(true)}>
+          <Button className="grow" onClick={handleClose(true)}>
             Confirm
           </Button>
         </div>

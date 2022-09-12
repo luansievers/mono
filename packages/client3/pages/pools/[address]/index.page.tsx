@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 import {
   Avatar,
-  Button,
   TabButton,
   TabContent,
   TabGroup,
@@ -14,6 +13,7 @@ import {
   ShimmerLines,
   Marquee,
   Banner,
+  LinkButton,
 } from "@/components/design-system";
 import { BannerPortal, SubnavPortal } from "@/components/layout";
 import { SEO } from "@/components/seo";
@@ -264,17 +264,12 @@ export default function PoolPage() {
               <Avatar image={tranchedPool?.icon} />
             </div>
             {tranchedPool && poolStatus !== PoolStatus.ComingSoon ? (
-              <Button
-                variant="rounded"
-                colorScheme="secondary"
+              <LinkButton
                 iconRight="ArrowTopRight"
-                as="a"
                 href={`https://etherscan.io/address/${tranchedPool.id}`}
-                target="_blank"
-                rel="noopener"
               >
                 Contract
-              </Button>
+              </LinkButton>
             ) : null}
           </div>
           <Heading
@@ -389,18 +384,13 @@ export default function PoolPage() {
                     <ShimmerLines lines={3} />
                   )}
                   {tranchedPool?.dataroom ? (
-                    <Button
-                      as="a"
-                      variant="rounded"
+                    <LinkButton
                       iconRight="ArrowTopRight"
                       href={tranchedPool.dataroom}
-                      target="_blank"
-                      rel="noreferrer"
-                      size="lg"
                       className="block"
                     >
                       Dataroom
-                    </Button>
+                    </LinkButton>
                   ) : null}
                 </div>
 
