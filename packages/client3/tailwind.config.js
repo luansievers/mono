@@ -59,12 +59,6 @@ module.exports = {
           30: "#F4F4F4",
           40: "#FDFDFD",
         },
-        green: {
-          50: "#506559",
-          80: "#343E3B",
-          90: "#2D3433",
-          100: "#171918",
-        },
         state: {
           error: "#EB5757",
           process: "#2D64F5",
