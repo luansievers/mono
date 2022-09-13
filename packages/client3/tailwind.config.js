@@ -18,10 +18,6 @@ module.exports = {
       xs: "480px",
       ...defaultTheme.screens,
     },
-    fontFamily: {
-      sans: ["Kumbh Sans", ...defaultTheme.fontFamily.sans],
-      serif: ["Anek Telugu", ...defaultTheme.fontFamily.serif],
-    },
     extend: {
       colors: {
         green: {
