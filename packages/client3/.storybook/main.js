@@ -22,6 +22,7 @@ module.exports = {
       },
     },
     "storybook-dark-mode",
+    "storybook-addon-next-router",
   ],
   framework: "@storybook/react",
   webpackFinal: async (config) => {

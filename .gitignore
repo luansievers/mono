@@ -112,3 +112,5 @@ packages/subgraph/generated/
 packages/subgraph/docker-compose.yml
 
 *.wasm
+
+packages/client3/storybook-static/
