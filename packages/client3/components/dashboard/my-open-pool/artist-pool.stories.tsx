@@ -1,16 +1,16 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { MyOpenPool } from "./index";
+import { ArtistPool } from "./index";
 
 export default {
-  title: "FAD/Components/Dashboard/MyOpenPool",
-  component: MyOpenPool,
-} as ComponentMeta<typeof MyOpenPool>;
+  title: "FAD/Components/Dashboard/ArtistPool",
+  component: ArtistPool,
+} as ComponentMeta<typeof ArtistPool>;
 
-export const UnverifiedStateStory: ComponentStory<typeof MyOpenPool> = (
+export const UnverifiedStateStory: ComponentStory<typeof ArtistPool> = (
   args
 ) => {
-  return <MyOpenPool {...args} />;
+  return <ArtistPool {...args} />;
 };
 
 UnverifiedStateStory.args = {
@@ -20,8 +20,8 @@ UnverifiedStateStory.args = {
   },
 };
 
-export const VerifiedStateStory: ComponentStory<typeof MyOpenPool> = (args) => {
-  return <MyOpenPool {...args} />;
+export const VerifiedStateStory: ComponentStory<typeof ArtistPool> = (args) => {
+  return <ArtistPool {...args} />;
 };
 
 VerifiedStateStory.args = {

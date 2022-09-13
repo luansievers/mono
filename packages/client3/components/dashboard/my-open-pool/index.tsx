@@ -1,1 +1,1 @@
-export * from "./my-open-pool";
+export * from "./artist-pool";
