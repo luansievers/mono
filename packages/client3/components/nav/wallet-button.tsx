@@ -1,8 +1,9 @@
 import detectEthereumProvider from "@metamask/detect-provider";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
+import { handleAddressFormat } from "@/lib/format/common";
 import { useCurrentUserWalletInfoQuery } from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import { metaMask } from "@/lib/wallet/connectors/metamask";
@@ -18,17 +19,29 @@ export function WalletButton({
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
 
-  const detectBrowser = useCallback(async () => {
+  const { data } = useCurrentUserWalletInfoQuery({
+    variables: { userAccount: "" },
+    fetchPolicy: "network-only",
+  });
+
+  const user = data?.user;
+  useEffect(() => {
+    if (user) {
+      getAccount(user);
+    }
+  }, [getAccount, user]);
+
+  const detectBrowser = async () => {
     const provider = await detectEthereumProvider();
     if (provider) {
       return true;
     }
     return false;
-  }, []);
+  };
 
   const handleWalletConnect = async () => {
     setIsLoading(true);
-    if (await detectBrowser) {
+    if (await detectBrowser()) {
       if (!isActive) {
         await metaMask.activate(DESIRED_CHAIN_ID);
       }
@@ -36,20 +49,15 @@ export function WalletButton({
     setIsLoading(false);
   };
 
-  function handleAddressFormat(account: string) {
-    return `${account.substring(0, 4)}...${account.substring(
-      account.length - 4
-    )}`;
-  }
-
-  const getButtonStyles = useCallback((): IWalletButtonStyles => {
+  const getButtonStyles = (): IWalletButtonStyles => {
     if (isLoading) {
       return {
         icon: "",
         type: ButtonType.PRIMARY,
-        state: ButtonStateText.CONNECT,
+        state: ButtonStateText.CONNECTING,
       };
-    } else if (error) {
+    }
+    if (error) {
       if (error.message.includes("MetaMask not installed")) {
         return {
           icon: "Exclamation",
@@ -64,48 +72,33 @@ export function WalletButton({
         state: ButtonStateText.ERROR,
         tooltip: error.message,
       };
-    } else if (isActive) {
+    }
+    if (isActive) {
       return {
         icon: "Wallet",
         type: ButtonType.SECONDARY,
         state: handleAddressFormat(account as string),
       };
-    } else {
-      return {
-        icon: "",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.CONNECT,
-      };
     }
-  }, [account, error, isActive, isLoading]);
-
+    return {
+      icon: "",
+      type: ButtonType.PRIMARY,
+      state: ButtonStateText.CONNECT,
+    };
+  };
   const buttonStyles = getButtonStyles();
 
-  const { data } = useCurrentUserWalletInfoQuery({
-    variables: { userAccount: "" },
-    fetchPolicy: "network-only",
-  });
-  const user = data?.user;
-
-  useEffect(() => {
-    if (user) {
-      getAccount(user);
-    }
-  }, [getAccount, user]);
-
   return buttonStyles.tooltip ? (
-    <>
-      <Tooltip content={buttonStyles.tooltip}>
-        <Button
-          onClick={handleWalletConnect}
-          isLoading={{ isLoading, position: "left" }}
-          iconLeft={buttonStyles.icon as IconProps["name"]}
-          buttonType={buttonStyles.type as ButtonType}
-        >
-          {buttonStyles.state}
-        </Button>
-      </Tooltip>
-    </>
+    <Tooltip content={buttonStyles.tooltip}>
+      <Button
+        onClick={handleWalletConnect}
+        isLoading={{ isLoading, position: "left" }}
+        iconLeft={buttonStyles.icon as IconProps["name"]}
+        buttonType={buttonStyles.type as ButtonType}
+      >
+        {buttonStyles.state}
+      </Button>
+    </Tooltip>
   ) : (
     <Button
       onClick={handleWalletConnect}
