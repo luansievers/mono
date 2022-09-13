@@ -1,19 +1,21 @@
 import clsx from "clsx";
 
 import { BodyText, Button, Heading } from "@/components/design-system";
+import { formatCrypto } from "@/lib/format";
+import { CryptoAmount } from "@/lib/graphql/generated";
 
 type Props = {
   onCreatePoolClicked?: () => void;
-  totalRaised: number;
-  totalEarned: number;
+  totalRaisedAmount: CryptoAmount;
+  totalEarnedAmount: CryptoAmount;
 };
 
 export function DashBoardTotal({
   onCreatePoolClicked,
-  totalEarned,
-  totalRaised,
+  totalRaisedAmount,
+  totalEarnedAmount,
 }: Props) {
-  const hasData = (totalRaised ?? 0) > 0;
+  const hasData = totalRaisedAmount.amount.toNumber() > 0;
 
   return (
     <div
@@ -27,7 +29,7 @@ export function DashBoardTotal({
           Total Raised
         </BodyText>
         <Heading level={2} className={hasData ? "text-white" : "text-dark-70"}>
-          ${totalRaised ?? 0}
+          {formatCrypto(totalRaisedAmount)}
         </Heading>
       </div>
       <div>
@@ -35,7 +37,7 @@ export function DashBoardTotal({
           Total Earned
         </BodyText>
         <Heading level={2} className={hasData ? "text-white" : "text-dark-70"}>
-          ${totalEarned ?? 0}
+          {formatCrypto(totalEarnedAmount)}
         </Heading>
       </div>
       {onCreatePoolClicked ? (

@@ -56,6 +56,12 @@ module.exports = {
         },
       ],
     });
+    // Allows .graphql files to be imported literally
+    config.module.rules.push({
+      test: /\.graphql$/i,
+      issuer: /\.[jt]sx?$/,
+      type: "asset/source",
+    });
 
     return config;
   },

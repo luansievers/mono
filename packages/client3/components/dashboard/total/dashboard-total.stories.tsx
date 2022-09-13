@@ -1,4 +1,7 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { BigNumber } from "ethers";
+
+import { SupportedCrypto } from "@/lib/graphql/generated";
 
 import { DashBoardTotal } from "./index";
 
@@ -14,8 +17,14 @@ export const DashBoardTotalWithButtonStory: ComponentStory<
 };
 
 DashBoardTotalWithButtonStory.args = {
-  totalEarned: 20000,
-  totalRaised: 232323,
+  totalEarnedAmount: {
+    amount: BigNumber.from(20000),
+    token: SupportedCrypto.Usdc,
+  },
+  totalRaisedAmount: {
+    amount: BigNumber.from(232323),
+    token: SupportedCrypto.Usdc,
+  },
   onCreatePoolClicked: () => {
     //Empty comment to prevent ESLint errors
   },
@@ -28,7 +37,13 @@ export const DashBoardTotalWithoutButtonStory: ComponentStory<
 };
 
 DashBoardTotalWithoutButtonStory.args = {
-  totalEarned: 0,
-  totalRaised: 0,
+  totalEarnedAmount: {
+    amount: BigNumber.from(0),
+    token: SupportedCrypto.Usdc,
+  },
+  totalRaisedAmount: {
+    amount: BigNumber.from(0),
+    token: SupportedCrypto.Usdc,
+  },
   onCreatePoolClicked: undefined,
 };
