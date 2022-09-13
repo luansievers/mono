@@ -91,6 +91,7 @@ module.exports = {
           "linear-gradient(180deg, rgba(231, 182, 145, 0) 19.27%, #FED9BD 100%),linear-gradient(0deg, #7BA3D0, #7BA3D0)",
         "sunset-02":
           "linear-gradient(180deg, rgba(160, 190, 223, 0) 16.67%, #FBECBD 100%),linear-gradient(0deg, #E99390, #E99390)",
+        "img-free-artist": "url('/images/free-artists-bg.png')",
       },
       spacing: {
         15: "3.75rem",
