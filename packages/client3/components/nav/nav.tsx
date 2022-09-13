@@ -8,11 +8,19 @@ import { Link, FreeArtistsLogo, Icon } from "@/components/design-system";
 import { MobileNav } from "./mobile-nav";
 import { NAV_ITEMS } from "./nav-items";
 import { SecondaryMenu } from "./secondary-menu";
+import { User } from "./types";
 import { WalletButton } from "./wallet-button";
-import { WalletButton2 } from "./wallet-button-2";
 
 export function Nav() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [account, setAccount] = useState({});
+
+  const handleAccount = (account?: User) => {
+    if (account) {
+      console.log(account);
+      setAccount(account);
+    }
+  };
   return (
     <>
       <div className="border-sand-100 flex flex-row border-b px-6 md:px-10">
@@ -39,8 +47,7 @@ export function Nav() {
         </nav>
 
         <div className="flex flex-1 flex-row justify-end gap-3 self-center py-4">
-          <WalletButton />
-          <WalletButton2 />
+          <WalletButton getAccount={handleAccount} />
           <SecondaryMenu />
         </div>
       </div>
