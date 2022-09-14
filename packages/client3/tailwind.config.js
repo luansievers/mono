@@ -103,6 +103,9 @@ module.exports = {
       fontSize: {
         button: ["16px", "16px"],
       },
+      boxShadow: {
+        "top-bar": " 0px 2px 7px 2px rgba(0, 0, 0, 0.15)",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

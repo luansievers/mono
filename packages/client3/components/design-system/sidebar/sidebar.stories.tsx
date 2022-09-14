@@ -23,7 +23,11 @@ export const SideBarWithArtistPoolSelectedStory: ComponentStory<
 > = Template.bind({});
 
 SideBarWithArtistPoolSelectedStory.args = {
-  labels: ["All Artists Pools", "My Profile", "Transactions"],
+  labels: [
+    { label: "All Artists Pools", key: "all-artist-pools" },
+    { label: "My Profile", key: "my-profile" },
+    { label: "Transactions", key: "transactions" },
+  ],
 
   states: {
     isState1Selected: true,
