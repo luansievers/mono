@@ -20,7 +20,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <ToastContainer position="top-center" theme="colored" />
         <Head>
-          <title>Goldfinch</title>
+          <title>Free Artists</title>
           {/* remove this if we decide we want Google to index the app pages (unlikely) */}
           <meta name="robots" content="noindex" />
         </Head>
