@@ -109,7 +109,7 @@ export function MintStep() {
         !isMinted ? (
           <Button
             disabled={!mintingParameters}
-            isLoading={isMinting}
+            isLoading={{ isLoading: isMinting }}
             onClick={handleMint}
             iconRight="ArrowSmRight"
             className="w-full"

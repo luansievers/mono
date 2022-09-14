@@ -13,8 +13,14 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   buttonType?: "primary" | "secondary" | "tertiary";
   iconLeft?: IconProps["name"];
   iconRight?: IconProps["name"];
-  isLoading?: boolean;
+  isLoading?: { isLoading: boolean; position?: "left" | "right" };
 };
+
+export enum ButtonType {
+  PRIMARY = "primary",
+  SECONDARY = "secondary",
+  TERTIARY = "tertiary",
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
@@ -25,7 +31,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       type,
       buttonType = "primary",
-      isLoading = false,
+      isLoading = { isLoading: false, spinnerPosition: "left" }, //because the IconProps does not have a loading icon
       className,
       ...rest
     },
@@ -33,7 +39,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) {
     const formContext = useFormContext();
     let _disabled = disabled;
-    let _isLoading = isLoading;
+    let _isLoading = isLoading.isLoading;
     if (formContext !== null && type === "submit") {
       const {
         formState: { isSubmitting, errors },
@@ -43,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       _disabled = disabled || isSubmitting || !isValid;
       _isLoading = isSubmitting;
     }
-    const spinnerOnLeft = _isLoading && iconLeft;
+    const spinnerOnLeft = _isLoading && isLoading.position === "left";
     const spinnerOnRight = _isLoading && !spinnerOnLeft;
     return (
       <button
@@ -54,9 +60,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           "flex items-center",
           children && "px-6",
           {
-            "bg-accent-1 text-green-90 hover:bg-accent-1-shade disabled:opacity-30 disabled:hover:bg-accent-1":
+            "bg-accent-1 text-green-90 hover:bg-accent-1-shade disabled:opacity-40 disabled:hover:bg-accent-1":
               buttonType == "primary",
-            "border border-accent-1 bg-transparent text-accent-1 hover:bg-accent-1/10 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
+            "border border-accent-1 bg-dark-100 text-accent-1 hover:bg-dark-90 disabled:border-dark-80 disabled:text-dark-80 disabled:hover:bg-white":
               buttonType == "secondary",
             "bg-transparent text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
               buttonType == "tertiary",
@@ -73,7 +79,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           <Icon
             name={iconLeft}
             size="sm"
-            className={clsx(children && "mr-1")}
+            className={clsx(children && "mr-2.5")}
           />
         ) : null}
         {children && (

@@ -102,7 +102,7 @@ export function Tooltip({
     useDismiss(context),
   ]);
 
-  return (
+  return content ? (
     <>
       {useWrapper ? (
         <div
@@ -141,7 +141,7 @@ export function Tooltip({
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <div className="relative min-w-max rounded-md border border-sand-100 bg-white p-3 text-sm drop-shadow-lg">
+            <div className="border-sand-100 relative min-w-max rounded-md border bg-white p-3 text-sm drop-shadow-lg">
               {typeof content === "string" ? (
                 <div className="max-w-[250px]">{content}</div>
               ) : (
@@ -157,7 +157,7 @@ export function Tooltip({
                   height: "12px",
                 }}
                 className={clsx(
-                  "absolute origin-center rotate-45 border-sand-100 bg-white",
+                  "border-sand-100 absolute origin-center rotate-45 bg-white",
                   actualPlacement.startsWith("top")
                     ? "border-r border-b"
                     : actualPlacement.startsWith("right")
@@ -174,7 +174,7 @@ export function Tooltip({
         </div>
       </FloatingPortal>
     </>
-  );
+  ) : null;
 }
 
 interface InfoIconTooltipProps
