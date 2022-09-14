@@ -1,35 +1,47 @@
+import { gql, useQuery } from "@apollo/client";
 import detectEthereumProvider from "@metamask/detect-provider";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
 import { handleAddressFormat } from "@/lib/format/common";
-import { useCurrentUserWalletInfoQuery } from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import { metaMask } from "@/lib/wallet/connectors/metamask";
+import { UserContext } from "@/pages/_app.page";
 
-import { Button } from "../design-system";
-import { User, ButtonStateText, IWalletButtonStyles } from "./types";
+import { Button } from "..";
+import { ButtonStateText, IWalletButtonStyles } from "./types";
 
-export function WalletButton({
-  getAccount: getAccount,
-}: {
-  getAccount: (account: User) => void;
-}) {
+const accountQuery = gql`
+  query UserWalletInformation($userAccount: ID!) {
+    user(id: $userAccount) {
+      id
+      isUsEntity
+      isNonUsEntity
+      isUsAccreditedIndividual
+      isUsNonAccreditedIndividual
+      isNonUsIndividual
+      isGoListed
+    }
+  }
+`;
+
+export function WalletButton() {
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
-  const { data } = useCurrentUserWalletInfoQuery({
-    variables: { userAccount: "" },
-    fetchPolicy: "network-only",
+  const user = useQuery(accountQuery, {
+    variables: {
+      userAccount: account?.toLowerCase(),
+    },
   });
 
-  const user = data?.user;
   useEffect(() => {
-    if (user) {
-      getAccount(user);
+    if (user?.data?.user) {
+      setUser && setUser(user?.data?.user);
     }
-  }, [getAccount, user]);
+  }, [user, setUser]);
 
   const detectBrowser = async () => {
     const provider = await detectEthereumProvider();

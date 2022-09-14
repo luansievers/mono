@@ -1,15 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Fragment } from "react";
 
 import { FreeArtistsLogo, Icon } from "@/components/design-system";
+import { WalletButton } from "@/components/design-system/wallet-button/wallet-button";
 import { NavLink } from "@/components/nav";
-import { WalletButton } from "@/components/nav/wallet-button";
 
 import { NAV_ITEMS } from "./nav-items";
-import { User } from "./types";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -18,15 +17,6 @@ interface MobileNavProps {
 
 export function MobileNav({ isOpen, onClose }: MobileNavProps) {
   const router = useRouter();
-  const [account, setAccount] = useState({});
-
-  const handleAccount = (account?: User) => {
-    if (account) {
-      console.log(account);
-      setAccount(account);
-    }
-  };
-
   /**
    * Close menu on route change
    */
@@ -68,7 +58,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           <div className="flex flex-1"></div>
 
           <div className="flex flex-1 flex-row justify-end self-center py-4">
-            <WalletButton getAccount={handleAccount} />
+            <WalletButton />
           </div>
         </div>
 

@@ -1,11 +1,13 @@
 import { BigNumber } from "ethers";
-import { useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
 import { NotConnected } from "@/components/dashboard/not-connected";
 import { DashBoardTotal } from "@/components/dashboard/total";
 import { Heading } from "@/components/design-system";
 import { SupportedCrypto } from "@/lib/graphql/generated";
+import { UserContext } from "@/pages/_app.page";
+import { User } from "@/types/user";
 
 const DummyDashboardData = {
   totalEarnedAmount: {
@@ -31,11 +33,31 @@ const DummyDashboardDataEmpty = {
 
 function DashBoard() {
   const [dashBoardData, setDashBoardData] = useState<
-    typeof DummyDashboardDataEmpty | null
-  >(null);
-  const [isVerified, setIsVerified] = useState(false);
+    typeof DummyDashboardDataEmpty
+  >(DummyDashboardDataEmpty);
 
-  if (dashBoardData) {
+  const [isVerified, setIsVerified] = useState(false);
+  const { user } = useContext(UserContext);
+
+  const hasUid = useCallback(() => {
+    if (
+      user?.isUsNonAccreditedIndividual ||
+      user?.isNonUsIndividual ||
+      user?.isUsEntity ||
+      user?.isNonUsEntity ||
+      user?.isUsAccreditedIndividual
+    ) {
+      setIsVerified(true);
+    } else {
+      setIsVerified(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    hasUid();
+  }, [hasUid]);
+
+  if (isVerified) {
     return (
       <>
         <DashBoardTotal
@@ -62,12 +84,7 @@ function DashBoard() {
 
   return (
     <div>
-      <NotConnected
-        onConnectWalletClick={() => {
-          //TODO ; Implement On Click, currently dummy function is being used
-          setDashBoardData(DummyDashboardDataEmpty);
-        }}
-      />
+      <NotConnected />
     </div>
   );
 }

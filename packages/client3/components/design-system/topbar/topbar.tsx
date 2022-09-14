@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
+import { WalletButton } from "@/components/design-system/wallet-button/wallet-button";
+
 import { Avatar } from "../avatar";
-import { Button } from "../button";
 import { Heading } from "../typography";
 
 interface TopBarProps {
@@ -24,8 +25,7 @@ export function TopBar({ className, topBarTitle, avatarUrl }: TopBarProps) {
             </div>
           </div>
           <div className="float-right flex items-center pr-2 ">
-            {/* TODO - REPLACE FOR CONNECT WALLET BUTTON */}
-            <Button>Connect Wallet</Button>
+            <WalletButton />
             <Avatar image={avatarUrl} size={11} className="pl-12" />
           </div>
         </div>

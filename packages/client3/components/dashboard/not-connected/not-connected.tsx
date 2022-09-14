@@ -1,18 +1,14 @@
-import { BodyText, Button } from "../../design-system";
+import { WalletButton } from "@/components/design-system/wallet-button/wallet-button";
 
-type Props = {
-  onConnectWalletClick: () => void;
-};
+import { BodyText } from "../../design-system";
 
-export function NotConnected({ onConnectWalletClick }: Props) {
+export function NotConnected() {
   return (
     <div className="grid place-items-center bg-green-100 pt-[105px] pb-[101px]">
-      <BodyText size="large" className="text-dark-50">
+      <BodyText size="large" className="pb-[24px] text-dark-50">
         Please connect your wallet to view your dashboard
       </BodyText>
-      <Button className="mt-4" onClick={onConnectWalletClick}>
-        Connect Wallet
-      </Button>
+      <WalletButton />
     </div>
   );
 }
