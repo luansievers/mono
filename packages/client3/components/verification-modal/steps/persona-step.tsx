@@ -75,7 +75,7 @@ export function PersonaStep() {
           <Button
             onClick={beginPersonaInquiry}
             iconRight="ArrowSmRight"
-            isLoading={isPersonaLoading}
+            isLoading={{ isLoading: isPersonaLoading }}
             className="w-full"
           >
             Verify my identity

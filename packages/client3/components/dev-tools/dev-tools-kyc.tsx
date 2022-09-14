@@ -104,7 +104,7 @@ export default function DevToolsKYC() {
           </div>
         </div>
 
-        <Button type="submit" isLoading={isLoading} disabled={isLoading}>
+        <Button type="submit" isLoading={{ isLoading }} disabled={isLoading}>
           Submit
         </Button>
       </form>

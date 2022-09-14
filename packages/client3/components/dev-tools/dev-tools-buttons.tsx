@@ -19,7 +19,7 @@ export default function DevToolsButtons({
       <div className="-mx-2 mb-8 flex">
         <div className="px-2">
           <Button
-            isLoading={loading === "setup"}
+            isLoading={{ isLoading: loading == "setup" ? true : false }}
             disabled={disabled}
             onClick={async () => {
               setDisabled(true);
@@ -47,7 +47,7 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            isLoading={loading === "fund"}
+            isLoading={{ isLoading: loading === "fund" }}
             disabled={disabled}
             onClick={async () => {
               setDisabled(true);
@@ -75,7 +75,7 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            isLoading={loading === "advance1"}
+            isLoading={{ isLoading: loading === "advance1" }}
             disabled={disabled}
             onClick={async () => {
               setDisabled(true);
@@ -100,7 +100,7 @@ export default function DevToolsButtons({
 
         <div className="px-2">
           <Button
-            isLoading={loading === "advance30"}
+            isLoading={{ isLoading: loading === "advance30" }}
             disabled={disabled}
             onClick={async () => {
               setDisabled(true);
