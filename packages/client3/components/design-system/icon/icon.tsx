@@ -56,7 +56,6 @@ export interface IconProps {
   name: keyof typeof iconManifest;
   size?: IconSizeType;
   className?: string;
-  onClick?: () => void;
 }
 
 export function sizeToClassName(size: IconProps["size"]) {
@@ -74,7 +73,7 @@ export function sizeToClassName(size: IconProps["size"]) {
 }
 
 export const Icon = forwardRef<SVGElement, IconProps>(function Icon(
-  { name, size = "text", className, onClick }: IconProps,
+  { name, size = "text", className }: IconProps,
   ref
 ) {
   const IconComponent = iconManifest[name];
@@ -83,7 +82,6 @@ export const Icon = forwardRef<SVGElement, IconProps>(function Icon(
       aria-hidden="true"
       ref={ref}
       className={clsx(sizeToClassName(size), "inline shrink-0", className)}
-      onClick={onClick}
     />
   );
 });
