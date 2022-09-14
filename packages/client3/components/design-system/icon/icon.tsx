@@ -22,7 +22,6 @@ import Menu from "./svg/menu.svg";
 import Twitter from "./svg/twitter.svg";
 import Usdc from "./svg/usdc.svg";
 import Wallet from "./svg/wallet.svg";
-import WarningCircle from "./svg/warningcircle.svg";
 import X from "./svg/x.svg";
 
 export const iconManifest = {
@@ -47,7 +46,6 @@ export const iconManifest = {
   Twitter,
   Usdc,
   Wallet,
-  WarningCircle,
   X,
 };
 
