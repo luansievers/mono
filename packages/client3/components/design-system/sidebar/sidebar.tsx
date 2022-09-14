@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import { Link } from "../link";
 import { FreeArtistsLogoFullSvg, FreeArtistsLogoProps } from "../logo";
 import { Toggle, ToggleProps } from "../toggle";
 import { Heading } from "../typography";
@@ -13,6 +14,7 @@ interface SideBarProps extends ToggleProps {
   labels: SideBarMenuItemType;
   className?: string;
   selectedPathName: string;
+  getHref: (key: string) => string;
 }
 
 export function SideBar({
@@ -23,6 +25,7 @@ export function SideBar({
   height,
   onChange: onToggle,
   selectedPathName,
+  getHref,
 }: SideBarProps & FreeArtistsLogoProps) {
   return (
     <div
@@ -42,8 +45,8 @@ export function SideBar({
       <ul className="relative ">
         {labels.map((label) => (
           <li key={label.key} className="relative">
-            <a
-              href={label.key}
+            <Link
+              href={getHref(label.key)}
               aria-current="page"
               className={clsx(
                 "relative flex h-20 items-center text-sm font-medium hover:bg-green-80 active:bg-green-50 active:text-accent-1",
@@ -53,11 +56,12 @@ export function SideBar({
                     : "text-light-10",
                 ]
               )}
+              noUnderline
             >
               <Heading level={6} medium={true} className="pl-8">
                 {label.label}
               </Heading>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

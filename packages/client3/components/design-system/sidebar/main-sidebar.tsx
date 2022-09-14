@@ -1,12 +1,10 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-import {
-  ArtistMenuItems,
-  ToggleStates,
-} from "@/constants/pages/sidebar-constants";
+import { ToggleStates } from "@/constants/pages/sidebar-constants";
+import { useSideBarMenuItem } from "@/hooks/sidebar-hooks";
 
-import { SideBar, SideBarMenuItemType } from "./sidebar";
+import { SideBar } from "./sidebar";
 
 type Props = {
   className?: string;
@@ -14,23 +12,9 @@ type Props = {
 
 function MainSideBar({ className }: Props) {
   const router = useRouter();
-  const [sideBarMenuItems, setSideBarMenuItems] = useState<SideBarMenuItemType>(
-    []
-  );
-  const activeState = router.asPath.split("/")?.[1];
-  const selectedMenuItem = router.asPath.split("/")?.[2];
+  const { sideBarMenuItems, activeState, selectedMenuItem } =
+    useSideBarMenuItem();
 
-  useEffect(() => {
-    if (!activeState) {
-      setSideBarMenuItems([]);
-    }
-    if (activeState === ToggleStates.state1.key) {
-      setSideBarMenuItems([]);
-    }
-    if (activeState === ToggleStates.state2.key) {
-      setSideBarMenuItems(ArtistMenuItems);
-    }
-  }, [activeState]);
   const isState1Selected = ToggleStates.state1.key === activeState;
 
   return (
@@ -43,6 +27,7 @@ function MainSideBar({ className }: Props) {
         state2: ToggleStates.state2.label,
       }}
       selectedPathName={selectedMenuItem}
+      getHref={(key) => `/${activeState}/${key}`}
       onChange={() => {
         if (isState1Selected) {
           router.push(`/${ToggleStates.state2.key}/dashboard`);
@@ -54,4 +39,4 @@ function MainSideBar({ className }: Props) {
   );
 }
 
-export default MainSideBar;
+export default dynamic(() => Promise.resolve(MainSideBar), { ssr: false });

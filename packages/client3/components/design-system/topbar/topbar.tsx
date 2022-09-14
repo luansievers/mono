@@ -1,18 +1,30 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-import { WalletButton } from "@/components/design-system/wallet-button/wallet-button";
+import { useSideBarMenuItem } from "@/hooks/sidebar-hooks";
 
 import { Avatar } from "../avatar";
 import { Heading } from "../typography";
+import { WalletButton } from "../wallet-button";
 
 interface TopBarProps {
   className?: string;
-  topBarTitle: ReactNode;
+  topBarTitle?: ReactNode;
   avatarUrl?: string;
 }
 
-export function TopBar({ className, topBarTitle, avatarUrl }: TopBarProps) {
+export function TopBar({
+  className,
+  topBarTitle: _topBarTitle,
+  avatarUrl,
+}: TopBarProps) {
+  const { sideBarMenuItems, selectedMenuItem } = useSideBarMenuItem();
+  const topBarTitle =
+    (_topBarTitle ||
+      sideBarMenuItems.find((menuItem) => menuItem.key === selectedMenuItem)
+        ?.label) ??
+    "";
+
   return (
     <div className={clsx("w-full bg-dark-100 shadow-top-bar", className)}>
       <div className="mx-auto px-9 py-7">

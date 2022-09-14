@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
         <MainSideBar className="min-h-[1024px]" />
         <div className="grow">
           <div>
-            <TopBar topBarTitle="Artist Dashboard" />
+            <TopBar />
           </div>
           <div className="px-5">
             <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
