@@ -1,13 +1,13 @@
 import { gql, useQuery } from "@apollo/client";
 import detectEthereumProvider from "@metamask/detect-provider";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
+import { useSetUser } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
 import { useWallet } from "@/lib/wallet";
 import { metaMask } from "@/lib/wallet/connectors/metamask";
-import { UserContext } from "@/pages/_app.page";
 
 import { Button } from "..";
 import { ButtonStateText, IWalletButtonStyles } from "./types";
@@ -29,7 +29,7 @@ const accountQuery = gql`
 export function WalletButton() {
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
-  const { setUser } = useContext(UserContext);
+  const setUser = useSetUser();
 
   const user = useQuery(accountQuery, {
     variables: {
@@ -39,7 +39,7 @@ export function WalletButton() {
 
   useEffect(() => {
     if (user?.data?.user) {
-      setUser && setUser(user?.data?.user);
+      setUser && setUser(user.data.user);
     }
   }, [user, setUser]);
 

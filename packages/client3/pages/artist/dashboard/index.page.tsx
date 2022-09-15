@@ -1,13 +1,13 @@
 import { BigNumber } from "ethers";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
 import { NotConnected } from "@/components/dashboard/not-connected";
 import { DashBoardTotal } from "@/components/dashboard/total";
 import { Heading } from "@/components/design-system";
+import { useUser } from "@/hooks/user-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
-import { UserContext } from "@/pages/_app.page";
-import { User } from "@/types/user";
+import { hasUid } from "@/services/user-services";
 
 const DummyDashboardData = {
   totalEarnedAmount: {
@@ -37,25 +37,12 @@ function DashBoard() {
   >(DummyDashboardDataEmpty);
 
   const [isVerified, setIsVerified] = useState(false);
-  const { user } = useContext(UserContext);
-
-  const hasUid = useCallback(() => {
-    if (
-      user?.isUsNonAccreditedIndividual ||
-      user?.isNonUsIndividual ||
-      user?.isUsEntity ||
-      user?.isNonUsEntity ||
-      user?.isUsAccreditedIndividual
-    ) {
-      setIsVerified(true);
-    } else {
-      setIsVerified(false);
-    }
-  }, [user]);
+  const user = useUser();
 
   useEffect(() => {
-    hasUid();
-  }, [hasUid]);
+    const isVerified = hasUid(user);
+    setIsVerified(isVerified);
+  }, [user]);
 
   if (isVerified) {
     return (
