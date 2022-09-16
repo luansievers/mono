@@ -34,6 +34,7 @@ export function WalletButton() {
   const user = useQuery(accountQuery, {
     variables: {
       userAccount: account?.toLowerCase(),
+      fetchPolicy: "network-only",
     },
   });
 
