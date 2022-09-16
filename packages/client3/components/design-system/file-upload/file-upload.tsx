@@ -25,7 +25,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       <>
         <div className="flex w-full items-center justify-center">
           <label
-            htmlFor="dropzone-file"
+            htmlFor="file"
             className={clsx(
               "flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-dark-90 hover:bg-dark-80",
               "border border-dashed",
@@ -34,11 +34,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             )}
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <Icon
-                name={"AddCircle"}
-                size="md"
-                className={clsx("my-[10px]")}
-              />
+              <Icon name={"AddCircle"} size="md" className={clsx("my-2.5")} />
               <p className="mb-2 text-sm text-dark-50">
                 <span className="font-semibold">Upload an Image here</span>
               </p>
