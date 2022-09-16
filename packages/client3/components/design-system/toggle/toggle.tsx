@@ -11,6 +11,7 @@ export interface ToggleProps {
 }
 
 export function Toggle({ onChange, states, ...props }: ToggleProps) {
+  const isChecked = Boolean(!states.isState1Selected);
   return (
     <div className="relative flex flex-col overflow-hidden">
       <div className="flex">
@@ -18,7 +19,7 @@ export function Toggle({ onChange, states, ...props }: ToggleProps) {
           <input
             type="checkbox"
             className="peer sr-only"
-            checked={states.isState1Selected}
+            checked={isChecked}
             onChange={onChange}
             readOnly
             {...props}
@@ -38,18 +39,10 @@ export function Toggle({ onChange, states, ...props }: ToggleProps) {
                 "text-sm font-medium"
               )}
             >
-              <span
-                className={clsx(
-                  states.isState1Selected ? "text-dark-50" : "text-light-10"
-                )}
-              >
+              <span className={isChecked ? "text-dark-50" : "text-light-10"}>
                 {states.state1}
               </span>
-              <span
-                className={clsx(
-                  states.isState1Selected ? "text-light-10" : "text-dark-50"
-                )}
-              >
+              <span className={isChecked ? "text-light-10" : "text-dark-50"}>
                 {states.state2}
               </span>
             </div>

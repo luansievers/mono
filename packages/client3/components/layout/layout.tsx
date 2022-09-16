@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import { Footer } from "../footer";
-import { Nav } from "../nav";
+import MainSideBar from "../design-system/sidebar/main-sidebar";
+import { TopBar } from "../design-system/topbar";
 
 const bannerId = "banner";
 const subnavId = "subnav";
@@ -13,16 +13,22 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex h-full flex-col">
-      <Nav />
-      <div className="relative flex-grow">
-        <div id={bannerId} />
-        <div id={subnavId} />
-        <div className="px-5">
-          <div className="mx-auto min-h-full max-w-7xl py-14">{children}</div>
+    <div className="bg-dark-100">
+      <div id={bannerId} />
+      <div id={subnavId} />
+      <div className="flex">
+        <MainSideBar className="min-h-[1024px]" />
+        <div className="grow">
+          <div>
+            <TopBar />
+          </div>
+          <div className="px-5">
+            <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
+              {children}
+            </div>
+          </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

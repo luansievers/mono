@@ -8,11 +8,5 @@ export default {
 } as ComponentMeta<typeof NotConnected>;
 
 export const NotConnectedStory: ComponentStory<typeof NotConnected> = () => {
-  return (
-    <NotConnected
-      onConnectWalletClick={() => {
-        //Empty function comment to prevent eslint error
-      }}
-    />
-  );
+  return <NotConnected />;
 };
