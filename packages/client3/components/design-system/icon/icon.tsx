@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { forwardRef } from "react";
 
+import AddCircle from "./svg/add-circle.svg";
 import ArrowDownCircle from "./svg/arrow-down-circle-solid.svg";
 import ArrowDown from "./svg/arrow-down.svg";
 import ArrowSmRight from "./svg/arrow-sm-right.svg";
@@ -25,6 +26,7 @@ import Wallet from "./svg/wallet.svg";
 import X from "./svg/x.svg";
 
 export const iconManifest = {
+  AddCircle,
   ArrowDown,
   ArrowDownCircle,
   ArrowSmRight,
