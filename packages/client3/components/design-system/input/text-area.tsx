@@ -71,12 +71,12 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           <div
             className={clsx(
               "relative mt-1 w-full rounded",
-              focus ? null : "ring ring-dark-80",
-              isError ? "ring ring-state-error" : null,
+              focus ? "ring-2 ring-green-50" : "ring ring-dark-80",
+              isError ? "ring ring-state-error" : "ring-green-50",
 
               focus
                 ? [isError ? "ring-2 ring-state-error" : "ring ring-green-50"]
-                : "ring-green-50"
+                : null
             )}
           >
             <textarea
@@ -118,7 +118,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             <Caption
               className={clsx(
                 isError ? "text-state-error" : "text-dark-50",
-                "mt-1 text-sm leading-none"
+                "mt-1 leading-none"
               )}
             >
               {_errorMessage ? _errorMessage : helperText}

@@ -23,10 +23,10 @@ setup_env_files:
 ################################################################################
 
 protocol:
-	sh setup/scripts/setup/setup_protocol.sh
+	sh setup/scripts/setup_protocol.sh
 
 graph:
-	sh setup/scripts/setup/setup_subgraph.sh
+	sh setup/scripts/setup_subgraph.sh
 
 reset_graph:
 	docker compose -f packages/subgraph/docker-compose.yml down -v --rmi all
