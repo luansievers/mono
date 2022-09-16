@@ -2,7 +2,12 @@ import clsx from "clsx";
 import React from "react";
 import { ToastContainer } from "react-toastify";
 
-import { ISnackbar } from "./types";
+import { SnackbarType } from "./types";
+
+interface ISnackbar {
+  message: string;
+  type: SnackbarType;
+}
 
 export function Snackbar(props: ISnackbar) {
   return (
