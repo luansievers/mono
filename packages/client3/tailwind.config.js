@@ -56,9 +56,18 @@ module.exports = {
           40: "#FDFDFD",
         },
         state: {
-          error: "#EB5757",
-          process: "#2D64F5",
-          success: "#3A783C",
+          error: {
+            DEFAULT: "#EB5757",
+            light: "#FCEAEA",
+          },
+          process: {
+            DEFAULT: "#2D64F5",
+            light: "#E9F0FF",
+          },
+          success: {
+            DEFAULT: "#3A783C",
+            light: "#E9F1DE",
+          },
         },
         transparent: "transparent",
         current: "currentColor",

@@ -172,7 +172,6 @@
     }
   }
 }
-
 @layer utilities {
   .focused {
     @apply ring-2 ring-green-50;
@@ -185,12 +184,15 @@
 /* Toastify custom styles */
 :root {
   --toastify-color-progress-light: #000;
-  --toastify-color-success: theme("colors.green.50");
+  --toastify-color-success: theme(colors.state.success.DEFAULT);
   --toastify-color-warning: #fbf7d5;
-  --toastify-color-error: theme("colors.green.50");
-  --toastify-text-color-success: theme("colors.green.50");
+  --toastify-color-error: theme(colors.state.error.DEFAULT);
+  --toastify-text-color-success: theme(colors.state.success.DEFAULT);
   --toastify-text-color-warning: #645c18;
-  --toastify-text-color-error: theme("colors.green.50");
+  --toastify-text-color-error: theme(colors.state.error.DEFAULT);
+  --toastify-icon-color-info: theme(colors.state.process.light);
+  --toastify-icon-color-success: theme(colors.state.success.light);
+  --toastify-icon-color-error: theme(colors.state.error.light);
 }
 
 .Toastify__toast-container {
