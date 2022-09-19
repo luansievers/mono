@@ -34,22 +34,17 @@ export function PoolCard({
         </BodyText>
         <Caption className="pt-[3px] text-dark-50">{poolName}</Caption>
       </div>
-      <div className="flex-1 pt-[28px] text-center">
-        <BodyText size="normal" className="text-light-40">
-          {formatCrypto(totalSuppliedAmount)}
-        </BodyText>
-      </div>
-      {/* pt-[28px] or pt-[20px] */}
-      {/* <div className="flex-1 pt-[20px]">
-        <BodyText size="normal" className="text-light-40">
-          July 30, 2022
-        </BodyText>
-        <Caption className="pt-[3px] text-dark-50">13 days left</Caption>
-      </div> */}
       {type ? (
-        <div className="flex-1 pt-[28px] text-center capitalize">
-          <Chip type={type}>{type}</Chip>
-        </div>
+        <>
+          <div className="flex-1 pt-[28px] text-center">
+            <BodyText size="normal" className="text-light-40">
+              {formatCrypto(totalSuppliedAmount)}
+            </BodyText>
+          </div>
+          <div className="flex-1 pt-[28px] text-center capitalize">
+            <Chip type={type}>{type}</Chip>
+          </div>
+        </>
       ) : undefined}
       <div className="flex-1 pt-[20px]">
         <Progress percentage={50} type={type ? type : undefined} />

@@ -9,12 +9,6 @@ export default {
   title: "FAD/Components/Dashboard/PoolCard",
   component: PoolCard,
   argTypes: {
-    totalSuppliedAmount: {
-      type: "number",
-    },
-    totalGoalAmount: {
-      type: "number",
-    },
     type: {
       options: ["completed", "failed", ""],
     },
@@ -22,19 +16,21 @@ export default {
 } as ComponentMeta<typeof PoolCard>;
 
 export const PoolCardStory: ComponentStory<typeof PoolCard> = (args) => {
-  const totalSuppliedAmountParam = args.totalSuppliedAmount;
-  const totalGoalAmountParam = args.totalGoalAmount;
-  return (
-    <PoolCard
-      {...args}
-      totalSuppliedAmount={{
-        token: SupportedCrypto.Usdc,
-        amount: BigNumber.from(totalSuppliedAmountParam),
-      }}
-      totalGoalAmount={{
-        token: SupportedCrypto.Usdc,
-        amount: BigNumber.from(totalGoalAmountParam),
-      }}
-    />
-  );
+  return <PoolCard {...args} />;
+};
+
+PoolCardStory.args = {
+  image:
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAdUlEQVR42mNgGAWjAAj+48GUG37i92+cmFJL/hMDKLHkv1TeVYKYIgvwBQ81gommFvxHtqB0797/6BbCxMixAGzA7AcPUFyJzEcWI9sHxAQP1YIIGWPzCVUjeehbQLN8gK2wG1o+oElpSiiIqFoXUKuCoboFAP+MJG7jSOWlAAAAAElFTkSuQmCC",
+  totalSuppliedAmount: {
+    amount: BigNumber.from(0),
+    token: SupportedCrypto.Usdc,
+  },
+  totalGoalAmount: {
+    amount: BigNumber.from(0),
+    token: SupportedCrypto.Usdc,
+  },
+  artistName: "Tom Smith",
+  poolName: "Techno Collab",
+  type: "completed",
 };
