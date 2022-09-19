@@ -3,20 +3,20 @@ import { BigNumber } from "ethers";
 
 import { SupportedCrypto } from "@/lib/graphql/generated";
 
-import { DashBoardTotal } from "./index";
+import { DashboardTotal } from "./index";
 
 export default {
   title: "FAD/Components/Dashboard/Total",
-  component: DashBoardTotal,
-} as ComponentMeta<typeof DashBoardTotal>;
+  component: DashboardTotal,
+} as ComponentMeta<typeof DashboardTotal>;
 
-export const DashBoardTotalWithButtonStory: ComponentStory<
-  typeof DashBoardTotal
+export const DashboardTotalWithButtonStory: ComponentStory<
+  typeof DashboardTotal
 > = (args) => {
-  return <DashBoardTotal {...args} />;
+  return <DashboardTotal {...args} />;
 };
 
-DashBoardTotalWithButtonStory.args = {
+DashboardTotalWithButtonStory.args = {
   totalEarnedAmount: {
     amount: BigNumber.from(20000),
     token: SupportedCrypto.Usdc,
@@ -30,13 +30,13 @@ DashBoardTotalWithButtonStory.args = {
   },
 };
 
-export const DashBoardTotalWithoutButtonStory: ComponentStory<
-  typeof DashBoardTotal
+export const DashboardTotalWithoutButtonStory: ComponentStory<
+  typeof DashboardTotal
 > = (args) => {
-  return <DashBoardTotal {...args} />;
+  return <DashboardTotal {...args} />;
 };
 
-DashBoardTotalWithoutButtonStory.args = {
+DashboardTotalWithoutButtonStory.args = {
   totalEarnedAmount: {
     amount: BigNumber.from(0),
     token: SupportedCrypto.Usdc,

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
 import { NotConnected } from "@/components/dashboard/not-connected";
-import { DashBoardTotal } from "@/components/dashboard/total";
+import { DashboardTotal } from "@/components/dashboard/total";
 import { Heading } from "@/components/design-system";
 import { useUser } from "@/hooks/user-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
@@ -47,7 +47,7 @@ function DashBoard() {
   if (isVerified) {
     return (
       <>
-        <DashBoardTotal
+        <DashboardTotal
           totalEarnedAmount={dashBoardData.totalEarnedAmount}
           totalRaisedAmount={dashBoardData.totalRaisedAmount}
         />

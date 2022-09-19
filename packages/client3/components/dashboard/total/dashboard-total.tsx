@@ -10,7 +10,7 @@ type Props = {
   totalEarnedAmount: CryptoAmount;
 };
 
-export function DashBoardTotal({
+export function DashboardTotal({
   onCreatePoolClicked,
   totalRaisedAmount,
   totalEarnedAmount,
@@ -21,7 +21,7 @@ export function DashBoardTotal({
     <div
       className={clsx(
         "grid grid-cols-4 gap-4 bg-green-100 px-7 py-12",
-        "bg-img-free-artist bg-center bg-no-repeat"
+        "rounded-lg bg-img-free-artist bg-center bg-no-repeat"
       )}
     >
       <div>

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { toast } from "react-toastify";
+import { toast, TypeOptions } from "react-toastify";
 
 import { Snackbar } from ".";
 import { SnackbarType } from "./types";
@@ -12,7 +12,7 @@ export default {
 export const SnackbarStory: ComponentStory<typeof Snackbar> = (args) => {
   const notify = () => {
     toast(args.message, {
-      type: args.type,
+      type: args.type as TypeOptions,
       hideProgressBar: true,
       closeOnClick: true,
     });
