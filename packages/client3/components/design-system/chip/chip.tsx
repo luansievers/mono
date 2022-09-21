@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
+import { BodyText } from "../typography";
+
 interface ChipProps {
   children: ReactNode;
   className?: string;
@@ -13,13 +15,15 @@ export function Chip({ children, className, type = "completed" }: ChipProps) {
       className={clsx(
         "inline-block rounded-full py-1.5 px-3",
         {
-          "bg-theme-dark": type == "completed",
-          "bg-theme-accent3": type == "failed",
+          "bg-green-90": type == "completed",
+          "bg-accent-3": type == "failed",
         },
         className
       )}
     >
-      <div className="text-sm text-light-4">{children}</div>
+      <BodyText className="text-light-40" size="small">
+        {children}
+      </BodyText>
     </div>
   );
 }

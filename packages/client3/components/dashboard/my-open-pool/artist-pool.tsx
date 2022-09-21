@@ -7,7 +7,7 @@ type Props = {
 
 export function ArtistPool({ isVerified, onButtonClick }: Props) {
   return (
-    <div className="grid place-items-center bg-green-100 pt-14 pb-12">
+    <div className="grid place-items-center rounded-lg bg-green-100 pt-14 pb-12">
       <BodyText size="normal" className="text-dark-50">
         {isVerified
           ? "You haven’t created your pool yet, create your first pool"
