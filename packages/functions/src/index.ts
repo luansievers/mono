@@ -5,13 +5,41 @@ import * as crypto from "crypto"
 import * as admin from "firebase-admin"
 import * as functions from "firebase-functions"
 import dotenv from "dotenv"
-import {findEnvLocal, assertIsString} from "@goldfinch-eng/utils"
 import {getAgreements, getConfig, getDb, getUsers} from "./db"
 import {genRequestHandler} from "./helpers"
 import {SignatureVerificationSuccessResult} from "./types"
 import firestore = admin.firestore
-import {circulatingSupply} from "./handlers/circulatingSupply"
+import path from "path"
+
+export function findEnvLocal() {
+  const envPath = path.join(__dirname, "../../../.env.local")
+  return envPath
+}
+
 dotenv.config({path: findEnvLocal()})
+
+export const assertIsString: (obj: unknown) => asserts obj is string = genAssertIsTypeof("string")
+
+function genAssertIsTypeof<T extends TypeofReturnType>(assertedType: T): (obj: unknown) => asserts obj is T {
+  return (obj: unknown): asserts obj is T => {
+    if (typeof obj !== assertedType) {
+      throw new TypeofAssertionError(obj, assertedType)
+    }
+  }
+}
+
+export class TypeofAssertionError extends Error {
+  constructor(obj: unknown, expectedType: TypeofReturnType) {
+    const message = `${typeof obj} type does not match expected type: ${expectedType}`
+    super(message)
+    this.name = "TypeofAssertionError"
+  }
+}
+
+function getTypeof(obj: unknown) {
+  return typeof obj
+}
+type TypeofReturnType = ReturnType<typeof getTypeof>
 
 const _config = getConfig(functions)
 Sentry.GCPFunction.init({
@@ -208,4 +236,4 @@ const personaCallback = genRequestHandler({
   },
 })
 
-export {kycStatus, personaCallback, signAgreement, circulatingSupply}
+export {kycStatus, personaCallback, signAgreement}
