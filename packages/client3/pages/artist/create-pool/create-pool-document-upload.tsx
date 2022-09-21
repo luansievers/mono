@@ -21,7 +21,7 @@ function CreatePoolDocumentUpload() {
         <BodyText className="text-white" size="normal">
           Pool Contract
         </BodyText>
-        <Link className="text-dark-50" href="www.dummyurl.com">
+        <Link className="text-dark-50" href="/artist/dummyUrl">
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
@@ -30,7 +30,7 @@ function CreatePoolDocumentUpload() {
         <BodyText className="text-white" size="normal">
           Term Sheet
         </BodyText>
-        <Link className="text-dark-50" href="www.dummyurl.com">
+        <Link className="text-dark-50" href="/artist/dummyUrl">
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
@@ -38,14 +38,14 @@ function CreatePoolDocumentUpload() {
         className="col-span-3"
         uploadedFile={{
           fileName: "Pool Contract.pdf",
-          fileUrl: "dummyUrl.com",
+          fileUrl: "/artist/dummyUrl",
         }}
       />
       <div>
         <BodyText className="text-white" size="normal">
           Proposal
         </BodyText>
-        <Link className="text-dark-50" href="www.dummyurl.com">
+        <Link className="text-dark-50" href="/artist/dummyUrl">
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
