@@ -37,6 +37,7 @@ SideBarWithArtistPoolSelectedStory.args = {
 
   width: 176,
   height: 59.66,
+  getHref: () => "dummyUrl.com",
 };
 
 SideBarWithArtistPoolSelectedStory.parameters = {

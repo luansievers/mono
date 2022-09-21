@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import MainSideBar from "../design-system/sidebar/main-sidebar";
@@ -10,24 +10,42 @@ const subnavId = "subnav";
 interface LayoutProps {
   children: ReactNode;
 }
+type LayoutItems = {
+  title?: string;
+  selectedSidebarItem?: string;
+};
+export const LayoutContext = createContext<
+  LayoutItems & { setLayoutItems?: (layout: LayoutItems) => void }
+>({});
 
 export function Layout({ children }: LayoutProps) {
+  const [layout, setLayout] = useState<LayoutItems>({});
+  const onSetLayout = (layout: LayoutItems) => {
+    setLayout((currentLayout) => ({
+      ...currentLayout,
+      ...layout,
+    }));
+  };
   return (
     <div className="bg-dark-100">
       <div id={bannerId} />
       <div id={subnavId} />
       <div className="flex">
-        <MainSideBar className="min-h-[1024px]" />
-        <div className="grow">
-          <div>
-            <TopBar />
-          </div>
-          <div className="px-5">
-            <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
-              {children}
+        <LayoutContext.Provider
+          value={{ ...layout, setLayoutItems: onSetLayout }}
+        >
+          <MainSideBar className="min-h-[1024px]" />
+          <div className="grow">
+            <div>
+              <TopBar topBarTitle={layout.title} />
+            </div>
+            <div className="px-5">
+              <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
+                {children}
+              </div>
             </div>
           </div>
-        </div>
+        </LayoutContext.Provider>
       </div>
     </div>
   );

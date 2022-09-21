@@ -22,6 +22,8 @@ type DollarInputProps = ComponentProps<typeof Input> &
      * If this prop is included, a "MAX" button will be included on the input. When that button is clicked, this callback will be invoked.
      */
     onMaxClick?: () => void;
+
+    className?: string;
   };
 
 export function DollarInput({
@@ -31,6 +33,7 @@ export function DollarInput({
   control,
   shouldUnregister,
   defaultValue,
+  className,
   ...rest
 }: DollarInputProps) {
   const {
@@ -44,7 +47,7 @@ export function DollarInput({
   });
 
   return (
-    <div>
+    <div className={className}>
       <MaskedInput
         mask={mask}
         blocks={{
