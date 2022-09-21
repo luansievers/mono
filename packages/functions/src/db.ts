@@ -1,26 +1,6 @@
 import * as admin from "firebase-admin"
-import {isPlainObject as _isPlainObject} from "lodash"
+import {isPlainObject, isString, isStringOrUndefined} from "@goldfinch-eng/utils"
 import firestore = admin.firestore
-
-export type PlainObject = Record<string, unknown>
-
-export function isPlainObject(obj: unknown): obj is PlainObject {
-  return _isPlainObject(obj)
-}
-
-export function isString(obj: unknown): obj is string {
-  return typeof obj === "string"
-}
-
-export const isStringOrUndefined = orUndefined(isString)
-
-export function orUndefined<T>(typeGuard: (obj: unknown) => obj is T): (obj: unknown) => obj is T | undefined {
-  return (obj: unknown): obj is T | undefined => typeGuard(obj) || isUndefined(obj)
-}
-
-export function isUndefined(obj: unknown): obj is undefined {
-  return obj === undefined
-}
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
@@ -151,7 +131,7 @@ function getConfig(functions: any): FirebaseConfig {
   if (isFirebaseConfig(result)) {
     return result
   } else {
-    throw new Error(`Firebase config failed type guard. result:${JSON.stringify(result)}`)
+    throw new Error(`Firebase config failed type guard. result:${result}`)
   }
 }
 

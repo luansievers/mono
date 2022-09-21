@@ -1,14 +1,7 @@
 import {promises} from "fs"
 import path from "path"
 import {spawn} from "child_process"
-
-export class AssertionError extends Error {}
-
-export function assertNonNullable<T>(val: T | null | undefined, errorMessage?: string): asserts val is NonNullable<T> {
-  if (val === null || val === undefined) {
-    throw new AssertionError(errorMessage || `Value ${val} is not non-nullable.`)
-  }
-}
+import {assertNonNullable} from "@goldfinch-eng/utils"
 
 /**
  * Run a command in a sub-process.
@@ -20,7 +13,7 @@ async function runCommand(args: Array<string>, {cwd}: {cwd: string}): Promise<st
   return new Promise((resolve, reject) => {
     let output = ""
     const child = spawn(command, args, {cwd})
-    child.stdout.on("data", (chunk) => {
+    child.stdout.on("data", (chunk: any) => {
       output += chunk.toString()
     })
     child.on("close", (code: number) => {
