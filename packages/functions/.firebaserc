@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "free-artists-dev",
+    "default": "goldfinch-frontends-dev",
     "dev": "goldfinch-frontends-dev",
     "prod": "goldfinch-frontends-prod"
   }

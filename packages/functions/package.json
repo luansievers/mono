@@ -32,6 +32,8 @@
     ]
   },
   "dependencies": {
+    "@goldfinch-eng/protocol": "^0.1.0",
+    "@goldfinch-eng/utils": "^0.0.1",
     "@sentry/integrations": "^6.8.0",
     "@sentry/serverless": "^6.8.0",
     "bignumber.js": "^9.0.2",
