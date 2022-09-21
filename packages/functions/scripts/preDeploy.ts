@@ -1,7 +1,14 @@
 import {promises} from "fs"
 import path from "path"
 import {spawn} from "child_process"
-import {assertNonNullable} from "@goldfinch-eng/utils"
+
+export class AssertionError extends Error {}
+
+export function assertNonNullable<T>(val: T | null | undefined, errorMessage?: string): asserts val is NonNullable<T> {
+  if (val === null || val === undefined) {
+    throw new AssertionError(errorMessage || `Value ${val} is not non-nullable.`)
+  }
+}
 
 /**
  * Run a command in a sub-process.

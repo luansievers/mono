@@ -1,6 +1,26 @@
 import * as admin from "firebase-admin"
-import {isPlainObject, isString, isStringOrUndefined} from "@goldfinch-eng/utils"
+import {isPlainObject as _isPlainObject} from "lodash"
 import firestore = admin.firestore
+
+export type PlainObject = Record<string, unknown>
+
+export function isPlainObject(obj: unknown): obj is PlainObject {
+  return _isPlainObject(obj)
+}
+
+export function isString(obj: unknown): obj is string {
+  return typeof obj === "string"
+}
+
+export const isStringOrUndefined = orUndefined(isString)
+
+export function orUndefined<T>(typeGuard: (obj: unknown) => obj is T): (obj: unknown) => obj is T | undefined {
+  return (obj: unknown): obj is T | undefined => typeGuard(obj) || isUndefined(obj)
+}
+
+export function isUndefined(obj: unknown): obj is undefined {
+  return obj === undefined
+}
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
@@ -117,20 +137,21 @@ function getConfig(functions: any): FirebaseConfig {
   // whether we're in this bootstrapping phase, and use the test config for it as well as for when
   // `process.env.NODE_ENV === "test"`. `process.env.NODE_ENV` becomes `"test"` immediately after this
   // bootstrapping phase, via the `npm test` command passed as an argument to `npx firebase emulators:exec`.
-  const isBootstrappingEmulator =
-    process.env.FUNCTIONS_EMULATOR === "true" && // Cf. https://stackoverflow.com/a/60963496
-    process.env.NODE_ENV === undefined &&
-    // We expect the emulator never to be used with the prod project's functions, so we can
-    // include the following extra condition to prevent `isBootstrappingEmulator` ever enabling use of the
-    // test config with the prod project.
-    process.env.GCLOUD_PROJECT === "goldfinch-frontends-dev"
+  // const isBootstrappingEmulator =
+  //   process.env.FUNCTIONS_EMULATOR === "true" && // Cf. https://stackoverflow.com/a/60963496
+  //   process.env.NODE_ENV === undefined &&
+  //   // We expect the emulator never to be used with the prod project's functions, so we can
+  //   // include the following extra condition to prevent `isBootstrappingEmulator` ever enabling use of the
+  //   // test config with the prod project.
+  //   process.env.GCLOUD_PROJECT === "goldfinch-frontends-dev"
 
-  const isTesting = process.env.NODE_ENV === "test"
-  const result = isBootstrappingEmulator || isTesting ? _configForTest : functions.config()
+  // const isTesting = process.env.NODE_ENV === "test"
+  // const result = isBootstrappingEmulator || isTesting ? _configForTest : functions.config()
+  const result = _configForTest
   if (isFirebaseConfig(result)) {
     return result
   } else {
-    throw new Error(`Firebase config failed type guard. result:${result}`)
+    throw new Error(`Firebase config failed type guard. result:${JSON.stringify(result)}`)
   }
 }
 
