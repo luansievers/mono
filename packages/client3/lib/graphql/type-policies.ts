@@ -57,7 +57,7 @@ export const typePolicies: InMemoryCacheConfig["typePolicies"] = {
   },
   TranchedPool: {
     fields: {
-      artistName: { read: readFieldFromMetadata("artistName") },
+      artist: { read: readFieldFromMetadata("artist") },
       name: { read: readFieldFromMetadata("name") },
       description: { read: readFieldFromMetadata("description") },
       highlights: { read: readFieldFromMetadata("highlights") },

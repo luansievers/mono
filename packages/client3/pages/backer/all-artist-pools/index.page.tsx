@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { BigNumber } from "ethers";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import {
@@ -8,7 +9,7 @@ import {
   TabList,
   TabPanels,
 } from "@/components/design-system";
-import { SupportedCrypto, useEarnPageQuery } from "@/lib/graphql/generated";
+import { SupportedCrypto } from "@/lib/graphql/generated";
 import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
 
 const TRANCHED_POOL_CARD_FIELDS = gql`
@@ -18,19 +19,20 @@ const TRANCHED_POOL_CARD_FIELDS = gql`
     name @client
     category @client
     icon @client
-    artistName @client
+    artist @client
+    id
     creditLine {
-      id
       maxLimit
     }
     juniorTranches {
+      id
       lockedUntil
       principalDeposited
     }
   }
 `;
 
-const testequery = gql`
+const query = gql`
   ${TRANCHED_POOL_CARD_FIELDS}
   query AllArtistPoolsPageSomething {
     tranchedPools(orderBy: createdAt, orderDirection: desc) {
@@ -40,46 +42,83 @@ const testequery = gql`
 `;
 
 function AllArtistPoolPage() {
-  const { data, error } = useQuery(testequery);
-  console.log(data);
+  const { data, error } = useQuery(query);
 
-  const openTranchedPools = data?.tranchedPools?.filter(
-    (tranchedPool: any) => tranchedPool.name !== null
+  const openTranchedPools = data?.tranchedPools?.filter((tranchedPool: any) =>
+    (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+  );
+
+  const closedTranchedPools = data?.tranchedPools?.filter(
+    (tranchedPool: any) =>
+      !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
 
   return (
-    <TabGroup>
-      <TabList>
-        <TabButton>Open</TabButton>
-        <TabButton>Closed</TabButton>
-      </TabList>
-      <TabPanels>
-        <TabContent>
-          {openTranchedPools
-            ? openTranchedPools.map((tranchedPool: any) => (
-                <PoolCard
-                  key={tranchedPool.id}
-                  className="mb-10"
-                  poolName={tranchedPool.name}
-                  totalSuppliedAmount={{
-                    token: SupportedCrypto.Usdc,
-                    amount: tranchedPool?.juniorTranches[0].principalDeposited, //not sure if this is the correct field
-                  }}
-                  totalGoalAmount={{
-                    token: SupportedCrypto.Usdc,
-                    amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
-                  }}
-                  // figure out artist name
-                  artistName={tranchedPool.name}
-                  // should be the artist picture
-                  image={tranchedPool.icon}
-                />
-              ))
-            : undefined}
-        </TabContent>
-        <TabContent>Content 2</TabContent>
-      </TabPanels>
-    </TabGroup>
+    <>
+      TODO: Search box TODO: Sort
+      <TabGroup>
+        <TabList>
+          <TabButton>Open</TabButton>
+          <TabButton>Closed</TabButton>
+        </TabList>
+        <TabPanels>
+          <TabContent>
+            {openTranchedPools
+              ? openTranchedPools.map((tranchedPool: any) => (
+                  <PoolCard
+                    key={tranchedPool.id}
+                    className="mb-10"
+                    poolName={tranchedPool.name}
+                    totalSuppliedAmount={{
+                      token: SupportedCrypto.Usdc,
+                      amount:
+                        tranchedPool?.juniorTranches[0].principalDeposited, //not sure if this is the correct field
+                    }}
+                    totalGoalAmount={{
+                      token: SupportedCrypto.Usdc,
+                      amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
+                    }}
+                    artistName={tranchedPool.artist}
+                    // should be the artist picture
+                    image={tranchedPool.icon}
+                  />
+                ))
+              : undefined}
+          </TabContent>
+          <TabContent>
+            {closedTranchedPools
+              ? closedTranchedPools.map((tranchedPool: any) => (
+                  <PoolCard
+                    key={tranchedPool.id}
+                    className="mb-10"
+                    poolName={tranchedPool.name}
+                    totalSuppliedAmount={{
+                      token: SupportedCrypto.Usdc,
+                      amount:
+                        tranchedPool?.juniorTranches[0].principalDeposited, //not sure if this is the correct field
+                    }}
+                    totalGoalAmount={{
+                      token: SupportedCrypto.Usdc,
+                      amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
+                    }}
+                    artistName={tranchedPool.artist}
+                    // should be the artist picture
+                    image={tranchedPool.icon}
+                    type={
+                      (
+                        tranchedPool?.juniorTranches[0]
+                          .principalDeposited as BigNumber
+                      ).gte(tranchedPool.creditLine.maxLimit)
+                        ? "completed"
+                        : "failed"
+                    }
+                  />
+                ))
+              : undefined}
+          </TabContent>
+        </TabPanels>
+      </TabGroup>
+    </>
   );
 }
 
