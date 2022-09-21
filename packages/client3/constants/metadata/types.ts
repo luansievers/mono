@@ -1,4 +1,5 @@
 export interface PoolMetadata {
+  artistName: string;
   name: string;
   category: string;
   icon: string;

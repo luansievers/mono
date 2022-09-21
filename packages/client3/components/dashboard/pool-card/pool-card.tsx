@@ -1,8 +1,8 @@
 import clsx from "clsx";
 
 import { Progress } from "@/components/design-system/progress";
-import { formatCrypto } from "@/lib/format";
-import { CryptoAmount } from "@/lib/graphql/generated";
+import { cryptoToFloat, formatCrypto, formatFiat } from "@/lib/format";
+import { CryptoAmount, SupportedFiat } from "@/lib/graphql/generated";
 
 import { Avatar, BodyText, Caption, Chip } from "../../design-system";
 
@@ -13,6 +13,7 @@ interface PoolCardProps {
   totalSuppliedAmount: CryptoAmount;
   totalGoalAmount: CryptoAmount;
   type?: "completed" | "failed";
+  className?: string;
 }
 
 export function PoolCard({
@@ -22,9 +23,30 @@ export function PoolCard({
   totalSuppliedAmount,
   totalGoalAmount,
   type,
+  className,
 }: PoolCardProps) {
+  const totalSuppliedAmountFloat = cryptoToFloat(totalSuppliedAmount);
+
+  let supplied = "-";
+  let progressPercentage = 0;
+
+  if (!totalSuppliedAmount.amount.isZero()) {
+    progressPercentage =
+      (totalSuppliedAmount.amount.toNumber() /
+        totalGoalAmount.amount.toNumber()) *
+      100;
+    if (type != "failed") {
+      supplied = formatCrypto(totalSuppliedAmount);
+    }
+  }
+
   return (
-    <div className="flex gap-4 rounded-lg bg-green-100 px-6 py-4">
+    <div
+      className={clsx(
+        "flex gap-4 rounded-lg bg-green-100 px-6 py-4",
+        className
+      )}
+    >
       <div className="flex-none">
         <Avatar size={20} image={image} />
       </div>
@@ -38,7 +60,7 @@ export function PoolCard({
         <>
           <div className="flex-1 pt-[28px] text-center">
             <BodyText size="normal" className="text-light-40">
-              {formatCrypto(totalSuppliedAmount)}
+              {supplied}
             </BodyText>
           </div>
           <div className="flex-1 pt-[28px] text-center capitalize">
@@ -46,20 +68,29 @@ export function PoolCard({
           </div>
         </>
       ) : undefined}
-      <div className="flex-1 pt-[20px]">
-        <Progress percentage={50} type={type ? type : undefined} />
+      <div className="w-60 flex-none pt-[20px]">
+        <Progress
+          percentage={progressPercentage}
+          type={type ? type : undefined}
+        />
         <div className="grid grid-cols-2 pt-[11px]">
           <BodyText
             size="normal"
             semiBold={true}
             className={clsx("h-3 rounded-full", {
-              "text-accent-2": type == "completed" || !type,
+              "text-accent-2": !type,
+              "text-light-40": type == "completed",
               "text-accent-3": type == "failed",
             })}
           >
-            {formatCrypto(totalSuppliedAmount)}
+            {/* Supplied is format fiat */}
+            {formatFiat({
+              symbol: SupportedFiat.Usd,
+              amount: totalSuppliedAmountFloat,
+            })}
           </BodyText>
           <BodyText size="normal" className="text-right text-dark-50">
+            {/* Goal is format crypto */}
             of {formatCrypto(totalGoalAmount)}
           </BodyText>
         </div>
