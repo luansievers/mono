@@ -137,7 +137,7 @@ app.post("/advanceTimeThirtyDays", async (req, res) => {
   return res.status(200).send({status: "success", result: JSON.stringify({success: true})})
 })
 
-admin.initializeApp({projectId: "goldfinch-frontends-dev"})
+admin.initializeApp({projectId: "free-artists-dev"})
 
 app.post("/kycStatus", async (req, res) => {
   if (process.env.NODE_ENV === "production") {
