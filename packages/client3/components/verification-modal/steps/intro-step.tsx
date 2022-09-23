@@ -12,7 +12,7 @@ export function IntroStep() {
 
   return (
     <StepTemplate
-      heading="Goldfinch requires identity verification"
+      heading="Free Artists requires identity verification"
       headingClassName="font-medium"
       footer={
         <Button onClick={nextStep} className="w-full">

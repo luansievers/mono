@@ -1,12 +1,14 @@
 import { BigNumber } from "ethers";
 import { useEffect, useState } from "react";
 
+import { KYC } from "@/components/dashboard/kyc";
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
 import { NotConnected } from "@/components/dashboard/not-connected";
 import { DashboardTotal } from "@/components/dashboard/total";
 import { Heading } from "@/components/design-system";
 import { useUser } from "@/hooks/user-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
+import { useWallet } from "@/lib/wallet";
 import { hasUid } from "@/services/user-services";
 
 const DummyDashboardData = {
@@ -38,6 +40,7 @@ function DashBoard() {
 
   const [isVerified, setIsVerified] = useState(false);
   const user = useUser();
+  const { account } = useWallet();
 
   useEffect(() => {
     const isVerified = hasUid(user);
@@ -67,13 +70,10 @@ function DashBoard() {
         />
       </>
     );
+  } else if (account && !isVerified) {
+    return <KYC />;
   }
-
-  return (
-    <div>
-      <NotConnected />
-    </div>
-  );
+  return <NotConnected />;
 }
 
 export default DashBoard;

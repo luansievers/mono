@@ -4,7 +4,7 @@ import { Link } from "@/components/design-system";
 
 export function PrivacyStatement({ className }: { className?: string }) {
   return (
-    <p className={clsx("text-justify text-xs text-sand-500", className)}>
+    <p className={clsx("text-sand-500 text-justify text-xs", className)}>
       All information you provide is kept secure and will not be used for any
       purpose beyond executing your transactions.{" "}
       <Link
@@ -12,7 +12,7 @@ export function PrivacyStatement({ className }: { className?: string }) {
         target="_blank"
         rel="noopener"
       >
-        Why does Goldfinch KYC?
+        Why does Free Artists KYC?
       </Link>
     </p>
   );

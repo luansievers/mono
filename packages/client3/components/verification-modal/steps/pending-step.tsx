@@ -21,10 +21,9 @@ export function PendingStep() {
         <div className="my-5">
           Your identity verification review is in progress
         </div>
-        <div className="text-center text-xs text-sand-400">
+        <div className="text-sand-400 text-center text-xs">
           After it has been approved, you can claim your UID and begin
-          participating in Goldfinch protocol activities. This should take less
-          than 24-48 hrs
+          participating in Free Artists. This should take less than 24-48 hrs
         </div>
       </div>
     </StepTemplate>
