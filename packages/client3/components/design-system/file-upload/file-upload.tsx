@@ -8,9 +8,6 @@ import { addFileToIPFS } from "@/ipfs/utils/services";
 import { Icon } from "../icon";
 import { Caption } from "../typography";
 
-export const addFile = async (fileToUpload: any) => {
-  await addFileToIPFS(fileToUpload);
-};
 interface FileUploadProps {
   name: string;
   id?: string;
@@ -20,8 +17,13 @@ interface FileUploadProps {
 }
 
 export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
-  function FileUpload({ name, errorMessage, disabled, className }) {
+  function FileUpload(
+    { name, errorMessage, disabled, className, ...rest },
+    ref
+  ) {
     const [file, setFile] = useState([] as any);
+    const [ipfsHash, setIpfsHash] = useState<string | undefined>("");
+
     const formContext = useFormContext();
 
     let _errorMessage = errorMessage;
@@ -32,8 +34,9 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
     const { getRootProps, isDragActive } = useDropzone({
       accept: {
-        "image/*": [".png", ".jpg", ".jpeg", ".gif", ".svg"],
+        "image/*": [".png", ".jpg", ".jpeg", ".bmp", ".gif", ".svg"],
       },
+      maxSize: 200000000, //200MB
       onDrop: (acceptedFile) => {
         setFile(
           acceptedFile.map((file) =>
@@ -43,7 +46,18 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       },
     });
 
-    const coverImage = file[0]?.preview;
+    const addFile = async (fileToUpload: any) => {
+      if (!(fileToUpload instanceof Blob)) {
+        fileToUpload = new Blob([fileToUpload], { type: "application/json" });
+      }
+      const file = await addFileToIPFS(fileToUpload);
+      if (formContext !== null) {
+        if (file) {
+          setIpfsHash(file);
+          formContext.setValue("projectCoverImage", ipfsHash);
+        }
+      }
+    };
 
     useEffect(() => {
       if (file.length > 0) {
@@ -54,12 +68,18 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       }
     });
 
-    useEffect(
-      () => () => {
-        file.forEach((file: any) => URL.revokeObjectURL(file.preview));
-      },
-      [file]
-    );
+    const handleEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) {
+        setFile(
+          Array.from(event.target.files).map((file) =>
+            Object.assign(file, { preview: URL.createObjectURL(file) })
+          )
+        );
+      }
+      if (isError) {
+        return console.log(isError);
+      }
+    };
 
     return (
       <div className={className}>
@@ -68,19 +88,41 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             <label
               htmlFor="file"
               className={clsx(
-                "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg bg-dark-90 hover:bg-dark-80",
+                "flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg ",
                 "border border-dashed",
                 isError ? "border-state-error" : "border-dark-70",
-                disabled && "opacity-50"
+                disabled && "opacity-50",
+                "bg-dark-90 hover:bg-dark-80"
               )}
             >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <div className="flex flex-col items-center justify-center pt-5 pb-6 ">
                 {file.length > 0 && !isError ? (
-                  <div className="h-96 w-96 flex-col overflow-hidden">
+                  <div className="relative h-96 w-96 overflow-hidden ">
+                    <Icon
+                      name={isError ? "Exclamation" : "XCircle"}
+                      size="lg"
+                      className={clsx(
+                        "my-[10px] ",
+                        isError && "text-state-error",
+                        "absolute top-0 right-0 cursor-pointer",
+                        "z-10",
+                        "stroke-light-10",
+                        "bg-dark-90",
+                        "rounded-l-[50%]"
+                      )}
+                      onClick={() => {
+                        setFile([]);
+                      }}
+                    />
                     <img
-                      src={coverImage}
-                      alt="cover"
-                      className="min-h-0 w-full object-contain"
+                      src={file.length > 0 ? file[0].preview : ""}
+                      alt="cover image"
+                      className={clsx(
+                        "min-h-0 w-full object-cover",
+                        "transform transition duration-500 ease-in-out hover:scale-105",
+                        "absolute top-0 left-0 right-0 bottom-0 m-auto",
+                        "rounded-lg"
+                      )}
                     />
                   </div>
                 ) : (
@@ -113,12 +155,10 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                       className="hidden"
                       disabled={disabled}
                       onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        if (isError) {
-                          return;
-                        }
-                        addFile(file);
+                        handleEvent(event);
                       }}
+                      ref={ref}
+                      {...rest}
                     />
                   </div>
                 )}

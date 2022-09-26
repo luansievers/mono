@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
@@ -27,16 +28,19 @@ export interface FormFields {
 }
 
 function CreatePoolForm() {
-  const rhfMethods = useForm<FormFields>({ mode: "onSubmit" });
+  const rhfMethods = useForm<FormFields>({
+    mode: "onSubmit",
+    shouldFocusError: true,
+  });
   const { control, register, formState } = rhfMethods;
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    //Dummy method
-    const response = await axios.post(`/api/pool`, {
+    await axios.post(`/api/pool`, {
       params: data,
     });
+    router.push("/artist/dashboard");
   };
-  console.log(formState);
 
   return (
     <Form rhfMethods={rhfMethods} onSubmit={onSubmit}>
@@ -57,7 +61,14 @@ function CreatePoolForm() {
       </div>
 
       <div className="float-right my-10 flex gap-x-2 px-64">
-        <Button buttonType="tertiary">Cancel</Button>
+        <Button
+          buttonType="tertiary"
+          onClick={() => {
+            router.push("/artist/dashboard");
+          }}
+        >
+          Cancel
+        </Button>
         <Button type="submit">Submit Proposal</Button>
       </div>
     </Form>

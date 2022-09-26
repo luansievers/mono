@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
@@ -32,6 +33,7 @@ const DummyDashboardDataEmpty = {
 };
 
 function DashBoard() {
+  const router = useRouter();
   const [dashBoardData, setDashBoardData] = useState<
     typeof DummyDashboardDataEmpty
   >(DummyDashboardDataEmpty);
@@ -59,9 +61,9 @@ function DashBoard() {
           onButtonClick={() => {
             //TODO: Dummy function definition below
             if (isVerified) {
-              setDashBoardData(DummyDashboardData);
+              router.push("/artist/create-pool");
             } else {
-              setIsVerified(true);
+              setIsVerified(false);
             }
           }}
         />

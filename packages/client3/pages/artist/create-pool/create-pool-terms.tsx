@@ -38,7 +38,7 @@ function CreatePoolTerms({ formState: { errors }, register }: Props) {
         className="col-span-3"
         name="terms.raisedTarget"
         inputMode="text"
-        placeholder="Revenue, Equity, ect."
+        placeholder="Revenue, Equity, etc."
         errorMessage={errors?.terms?.raisedTarget?.message}
       />
     </>

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { BodyText, Button, Heading } from "@/components/design-system";
+import { BodyText, Heading } from "@/components/design-system";
 import { formatCrypto } from "@/lib/format";
 import { CryptoAmount } from "@/lib/graphql/generated";
 
@@ -40,11 +40,11 @@ export function DashboardTotal({
           {formatCrypto(totalEarnedAmount)}
         </Heading>
       </div>
-      {onCreatePoolClicked ? (
+      {/* {onCreatePoolClicked ? (
         <div className="col-start-5 self-center">
           <Button buttonType="secondary">Create Pool</Button>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }

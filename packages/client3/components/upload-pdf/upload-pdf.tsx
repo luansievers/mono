@@ -53,7 +53,7 @@ function UploadPDF({
             onRemoveFile();
           }}
         >
-          <Icon className="ml-3" name="XCircle" size="lg" />
+          <Icon className="ml-3 stroke-dark-50" name="XCircle" size="lg" />
         </span>
       </BodyText>
     );
