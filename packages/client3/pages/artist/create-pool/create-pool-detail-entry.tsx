@@ -35,7 +35,7 @@ function CreatePoolDetailEntry({
         Pool Name
       </BodyText>
       <Input
-        {...register("poolName", { required: true })}
+        {...register("poolName", { required: "Pool name is required" })}
         className="col-span-3"
         name="poolName"
         inputMode="text"
@@ -74,7 +74,9 @@ function CreatePoolDetailEntry({
         Project Detail
       </BodyText>
       <TextArea
-        {...register("projectDetail", { required: true })}
+        {...register("projectDetail", {
+          required: "Project Details is required",
+        })}
         outerClassName="col-span-3"
         className="resize-none"
         name="projectDetail"
@@ -88,7 +90,7 @@ function CreatePoolDetailEntry({
         Project Cover Image
       </BodyText>
       <div className="col-span-3">
-        <FileUpload name="poolName" />
+        <FileUpload name="projectCoverImage" />
         <BodyText
           size="normal"
           className="mt-2 flex items-center gap-x-2 text-accent-1"

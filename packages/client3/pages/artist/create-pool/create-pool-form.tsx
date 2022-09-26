@@ -1,7 +1,9 @@
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
+import { UploadedFileType } from "@/components/upload-pdf";
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
@@ -12,16 +14,29 @@ export interface FormFields {
   goalAmount: string;
   closingDate: Date;
   projectDetail: string;
+  projectCoverImage: string;
+  pdfDocuments: {
+    poolContractPdf: UploadedFileType;
+    termSheetPdf: UploadedFileType;
+    proposalPdf: UploadedFileType;
+  };
+  terms: {
+    projectGoal: string;
+    raisedTarget: string;
+  };
 }
 
 function CreatePoolForm() {
   const rhfMethods = useForm<FormFields>({ mode: "onSubmit" });
   const { control, register, formState } = rhfMethods;
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    //TODO
-    data;
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    //Dummy method
+    const response = await axios.post(`/api/pool`, {
+      params: data,
+    });
   };
+  console.log(formState);
 
   return (
     <Form rhfMethods={rhfMethods} onSubmit={onSubmit}>
@@ -34,11 +49,11 @@ function CreatePoolForm() {
 
         <Divider className="col-span-4" />
 
-        <CreatePoolDocumentUpload />
+        <CreatePoolDocumentUpload control={control} />
 
         <Divider className="col-span-4" />
 
-        <CreatePoolTerms />
+        <CreatePoolTerms formState={formState} register={register} />
       </div>
 
       <div className="float-right my-10 flex gap-x-2 px-64">
