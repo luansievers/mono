@@ -2,7 +2,7 @@ import type { Web3Provider } from "@ethersproject/providers";
 
 import { API_BASE_URL, UNIQUE_IDENTITY_SIGNER_URL } from "@/constants";
 
-interface IKYCStatus {
+export interface IKYCStatus {
   status: "unknown" | "approved" | "failed";
   countryCode: string;
 }
