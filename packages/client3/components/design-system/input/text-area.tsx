@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { forwardRef, ReactNode, TextareaHTMLAttributes, useState } from "react";
+import { forwardRef, TextareaHTMLAttributes, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Caption } from "../typography";
@@ -27,13 +27,14 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
    * An element that will render on the right side of the input. Can be used to create things like a "reveal password" button, or a "max" button
    */
   textSize?: "sm" | "md" | "lg" | "xl";
+
+  outerClassName?: string;
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   function TextArea(
     {
       name,
-      id,
       helperText,
       errorMessage,
       disabled = false,
@@ -41,6 +42,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       autoComplete = "off",
       textSize = "md",
       onBlur,
+      outerClassName,
       ...rest
     },
     ref
@@ -65,13 +67,14 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
               ? "text-lg"
               : textSize === "xl"
               ? "text-2xl"
-              : null
+              : null,
+            outerClassName
           )}
         >
           <div
             className={clsx(
               "relative mt-1 w-full rounded",
-              focus ? "ring-2 ring-green-50" : "ring ring-dark-80",
+              focus ? "ring-2 ring-green-50" : "border border-dark-80",
               isError ? "ring ring-state-error" : "ring-green-50",
 
               focus
@@ -108,9 +111,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
               }}
               disabled={disabled}
               autoComplete={autoComplete}
-              {...rest}
               ref={ref}
               placeholder={focus ? "" : rest.placeholder}
+              name={name}
+              {...rest}
             />
           </div>
 

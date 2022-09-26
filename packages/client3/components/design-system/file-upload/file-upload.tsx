@@ -10,10 +10,11 @@ interface FileUploadProps {
   id?: string;
   errorMessage?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
-  function FileUpload({ name, errorMessage, disabled }, ref) {
+  function FileUpload({ name, errorMessage, disabled, className }) {
     const formContext = useFormContext();
     let _errorMessage = errorMessage;
     if (formContext !== null) {
@@ -22,7 +23,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     const isError = !!_errorMessage;
 
     return (
-      <>
+      <div className={className}>
         <div className="flex w-full items-center justify-center">
           <label
             htmlFor="file"
@@ -55,7 +56,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             {_errorMessage}
           </div>
         </Caption>
-      </>
+      </div>
     );
   }
 );

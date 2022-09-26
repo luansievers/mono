@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { SideBarMenuItemType } from "@/components/design-system/sidebar";
+import { LayoutContext } from "@/components/layout";
 import {
   ArtistMenuItems,
   ToggleStates,
@@ -16,8 +17,9 @@ export function useSideBarMenuItem() {
   const [sideBarMenuItems, setSideBarMenuItems] = useState<SideBarMenuItemType>(
     []
   );
+  const { selectedSidebarItem } = useLayoutContext();
   const activeState = router.asPath.split("/")?.[1];
-  const selectedMenuItem = router.asPath.split("/")?.[2];
+  const selectedMenuItem = selectedSidebarItem || router.asPath.split("/")?.[2];
 
   useEffect(() => {
     if (activeState === ToggleStates.state1.key) {
@@ -33,4 +35,31 @@ export function useSideBarMenuItem() {
     activeState,
     selectedMenuItem,
   };
+}
+
+export function useLayoutContext() {
+  const layoutContext = useContext(LayoutContext);
+  return layoutContext;
+}
+
+export function useSelectedSidebarItem(newSelectedSidebarItem: string) {
+  const { selectedSidebarItem, setLayoutItems } = useLayoutContext();
+  useEffect(() => {
+    if (
+      setLayoutItems &&
+      newSelectedSidebarItem &&
+      newSelectedSidebarItem !== selectedSidebarItem
+    ) {
+      setLayoutItems({ selectedSidebarItem: newSelectedSidebarItem });
+    }
+  }, [newSelectedSidebarItem, selectedSidebarItem, setLayoutItems]);
+}
+
+export function useLayoutTitle(newTitle: string) {
+  const { title, setLayoutItems } = useLayoutContext();
+  useEffect(() => {
+    if (setLayoutItems && newTitle && newTitle !== title) {
+      setLayoutItems({ title: newTitle });
+    }
+  }, [title, newTitle, setLayoutItems]);
 }

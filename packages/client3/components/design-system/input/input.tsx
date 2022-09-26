@@ -82,7 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div
         className={clsx(
           "relative mt-1 w-full rounded",
-          isMoneyInput ? "border" : null,
+          isMoneyInput ? "border border-dark-80" : null,
           focus
             ? [isError ? "ring-2 ring-state-error" : "ring ring-green-50"]
             : "ring-green-50",
@@ -93,7 +93,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           <div
             className={clsx(
               isMoneyInput
-                ? "pointer-events-none absolute inset-y-0 left-0 flex items-center border-r px-3"
+                ? "pointer-events-none absolute inset-y-0 left-0 flex items-center border-r border-dark-80 px-3"
                 : null,
               isError
                 ? [
@@ -113,7 +113,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           <input
             className={clsx(
               "unfocused w-full rounded",
-              isMoneyInput ? "mx-10" : "border",
+              isMoneyInput ? "mx-10" : "border border-dark-80",
               "bg-transparent",
               "placeholder:text-dark-80",
               "text-light-40",

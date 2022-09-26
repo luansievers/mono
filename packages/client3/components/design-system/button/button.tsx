@@ -10,10 +10,11 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    */
   children?: ReactNode;
   disabled?: boolean;
-  buttonType?: "primary" | "secondary" | "tertiary";
+  buttonType?: "primary" | "secondary" | "tertiary" | "custom";
   iconLeft?: IconProps["name"];
   iconRight?: IconProps["name"];
   isLoading?: { isLoading: boolean; position?: "left" | "right" };
+  childrenClassName?: string;
 };
 
 export enum ButtonType {
@@ -33,6 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       buttonType = "primary",
       isLoading = { isLoading: false, spinnerPosition: "left" }, //because the IconProps does not have a loading icon
       className,
+      childrenClassName,
       ...rest
     },
     ref
@@ -56,7 +58,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ref={ref as any}
         className={clsx(
-          "rounded-[100px]",
+          buttonType != "custom" && "rounded-[100px]",
           "flex items-center",
           children && "px-6",
           {
@@ -83,7 +85,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         ) : null}
         {children && (
-          <div className="py-4 text-button font-semibold">{children}</div>
+          <div
+            className={clsx(
+              "text-button font-semibold",
+              childrenClassName || "py-4"
+            )}
+          >
+            {children}
+          </div>
         )}
         {spinnerOnRight ? (
           <Spinner size="sm" className={clsx(children && "ml-1")} />
