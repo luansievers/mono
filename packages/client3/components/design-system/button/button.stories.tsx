@@ -1,6 +1,7 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { Button } from ".";
+import { SocialMediaButton } from "./social-media-button";
 
 export default {
   title: "FAD/Components/Button",
@@ -25,4 +26,12 @@ ButtonStory.args = {
   children: "Button",
   disabled: false,
   buttonType: "primary",
+};
+
+export const SocialMediaButtonStory: ComponentStory<typeof Button> = (args) => (
+  <SocialMediaButton {...args} />
+);
+
+SocialMediaButtonStory.args = {
+  children: "Button",
 };
