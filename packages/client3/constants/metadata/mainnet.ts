@@ -12,7 +12,7 @@ import type { PoolMetadata } from "./types";
 
 export const mainnetMetadata: Record<string, PoolMetadata> = {
   "0xd43a4f3041069c6178b99d55295b00d0db955bb5": {
-    artist: "somethinbg",
+    artist: "something",
     borrower: "cauris",
     name: "Cauris Fund #3: Africa Innovation Pool",
     category: "Africa multi-sector loans",
