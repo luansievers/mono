@@ -583,7 +583,7 @@ export async function fundFromLocalWhale(userToFund: string, erc20s: any, {logge
     await (
       await protocol_owner.sendTransaction({
         to: userToFund,
-        value: ethers.utils.parseEther("10.0"),
+        value: ethers.utils.parseEther("0.1"),
       })
     ).wait()
     await new Promise((r) => setTimeout(r, 4000))
