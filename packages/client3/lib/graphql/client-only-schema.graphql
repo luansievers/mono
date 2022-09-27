@@ -17,6 +17,7 @@ type Borrower {
 }
 
 extend type TranchedPool {
+  artist: String!
   name: String!
   category: String!
   description: String!

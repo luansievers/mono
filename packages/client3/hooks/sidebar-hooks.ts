@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { SideBarMenuItemType } from "@/components/design-system/sidebar";
 import { LayoutContext } from "@/components/layout";
 import {
+  BackerMenuItems,
   ArtistMenuItems,
   ToggleStates,
 } from "@/constants/pages/sidebar-constants";
@@ -23,7 +24,7 @@ export function useSideBarMenuItem() {
 
   useEffect(() => {
     if (activeState === ToggleStates.state1.key) {
-      setSideBarMenuItems([]);
+      setSideBarMenuItems(BackerMenuItems);
     } else if (activeState === ToggleStates.state2.key) {
       setSideBarMenuItems(ArtistMenuItems);
     } else {

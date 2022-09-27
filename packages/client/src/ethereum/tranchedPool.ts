@@ -90,6 +90,7 @@ async function getMetadataStore(networkId: string): Promise<MetadataStore> {
 
 export interface TranchedPoolMetadata {
   name: string
+  // artistName: string
   category: string
   icon: string
   description?: string

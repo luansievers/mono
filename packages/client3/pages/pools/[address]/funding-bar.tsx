@@ -37,7 +37,7 @@ export default function FundingBar({
     <div>
       <div
         className={clsx(
-          "mb-3 flex items-center text-sm text-sand-600",
+          "text-sand-600 mb-3 flex items-center text-sm",
           backerWidth + seniorWidth < 50 ? "justify-start" : "justify-end"
         )}
         style={
@@ -52,7 +52,7 @@ export default function FundingBar({
         }
       >
         Supplied{" "}
-        <span className="ml-3 inline-block text-base font-medium text-sand-700">
+        <span className="text-sand-700 ml-3 inline-block text-base font-medium">
           {formatFiat({
             symbol: SupportedFiat.Usd,
             amount: backerSupplyFloat + seniorSupplyFloat,
@@ -60,7 +60,7 @@ export default function FundingBar({
         </span>
       </div>
       <div
-        className="mb-3 flex h-8 overflow-hidden rounded bg-sand-200"
+        className="bg-sand-200 mb-3 flex h-8 overflow-hidden rounded"
         style={{
           backgroundImage: `url(${diagonals.src})`,
           backgroundRepeat: "repeat",
@@ -108,9 +108,9 @@ export default function FundingBar({
           </Tooltip>
         </div>
       </div>
-      <div className="flex items-center justify-end text-sm text-sand-600">
+      <div className="text-sand-600 flex items-center justify-end text-sm">
         Goal{" "}
-        <span className="ml-3 inline-block text-base font-medium text-sand-700">
+        <span className="text-sand-700 ml-3 inline-block text-base font-medium">
           {formatCrypto(goal)}
         </span>
       </div>

@@ -32,7 +32,7 @@ function MainSideBar({ className }: Props) {
         if (isState1Selected) {
           router.push(`/${ToggleStates.state2.key}/dashboard`);
         } else {
-          router.push(`/${ToggleStates.state1.key}/dashboard`);
+          router.push(`/${ToggleStates.state1.key}/all-artist-pools`);
         }
       }}
     />
