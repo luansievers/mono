@@ -40,11 +40,6 @@ export function DashboardTotal({
           {formatCrypto(totalEarnedAmount)}
         </Heading>
       </div>
-      {/* {onCreatePoolClicked ? (
-        <div className="col-start-5 self-center">
-          <Button buttonType="secondary">Create Pool</Button>
-        </div>
-      ) : null} */}
     </div>
   );
 }
