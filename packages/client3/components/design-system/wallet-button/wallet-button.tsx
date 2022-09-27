@@ -19,9 +19,7 @@ export function WalletButton() {
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useSetUser();
-  const [isWrongUser, setIsWrongUser] = useState<boolean | undefined>(
-    undefined
-  );
+  const [isWrongUser, setIsWrongUser] = useState<boolean>(false);
 
   const user = useQuery(accountQuery, {
     variables: {
