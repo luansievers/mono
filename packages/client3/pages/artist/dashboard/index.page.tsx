@@ -48,7 +48,7 @@ function Dashboard() {
   const user = useUser();
 
   useEffect(() => {
-    const isVerified = true; //hasUid(user);
+    const isVerified = hasUid(user);
     setIsVerified(isVerified);
     setDashboardData(DummyDashboardData);
   }, [user]);
@@ -76,6 +76,7 @@ function Dashboard() {
           onButtonClick={() => {
             //TODO: Dummy function definition below
             if (isVerified) {
+              // Todo KYC integration
               setDashboardData(DummyDashboardData);
             } else {
               setIsVerified(true);

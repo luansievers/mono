@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { BigNumber } from "ethers";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
@@ -10,39 +10,10 @@ import {
   TabPanels,
 } from "@/components/design-system";
 import { SupportedCrypto } from "@/lib/graphql/generated";
-import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
-
-const TRANCHED_POOL_CARD_FIELDS = gql`
-  ${TRANCHED_POOL_STATUS_FIELDS}
-  fragment TranchedPoolCardFieldsTemp on TranchedPool {
-    id
-    name @client
-    category @client
-    icon @client
-    artist @client
-    id
-    creditLine {
-      maxLimit
-    }
-    juniorTranches {
-      id
-      lockedUntil
-      principalDeposited
-    }
-  }
-`;
-
-const query = gql`
-  ${TRANCHED_POOL_CARD_FIELDS}
-  query AllArtistPoolsPageSomething {
-    tranchedPools(orderBy: createdAt, orderDirection: desc) {
-      ...TranchedPoolCardFieldsTemp
-    }
-  }
-`;
+import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
 
 function AllArtistPoolPage() {
-  const { data, error } = useQuery(query);
+  const { data, error } = useQuery(backerAllArtistPools);
 
   const openTranchedPools = data?.tranchedPools?.filter((tranchedPool: any) =>
     (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
@@ -72,7 +43,7 @@ function AllArtistPoolPage() {
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
                       amount:
-                        tranchedPool?.juniorTranches[0].principalDeposited, //not sure if this is the correct field
+                        tranchedPool?.juniorTranches[0].principalDeposited,
                     }}
                     totalGoalAmount={{
                       token: SupportedCrypto.Usdc,
@@ -95,7 +66,7 @@ function AllArtistPoolPage() {
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
                       amount:
-                        tranchedPool?.juniorTranches[0].principalDeposited, //not sure if this is the correct field
+                        tranchedPool?.juniorTranches[0].principalDeposited,
                     }}
                     totalGoalAmount={{
                       token: SupportedCrypto.Usdc,
