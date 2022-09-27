@@ -10,7 +10,7 @@ import {
   TabPanels,
 } from "@/components/design-system";
 import { SupportedCrypto } from "@/lib/graphql/generated";
-import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
+import { backerAllArtistPools } from "@/queries/backer.queries";
 
 function AllArtistPoolPage() {
   const { data, error } = useQuery(backerAllArtistPools);
@@ -49,9 +49,8 @@ function AllArtistPoolPage() {
                       token: SupportedCrypto.Usdc,
                       amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
                     }}
-                    artistName={tranchedPool.artist}
-                    // should be the artist picture
-                    image={tranchedPool.icon}
+                    artistName={tranchedPool.borrower.name}
+                    image={tranchedPool.borrower.logo}
                   />
                 ))
               : undefined}
@@ -72,9 +71,8 @@ function AllArtistPoolPage() {
                       token: SupportedCrypto.Usdc,
                       amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
                     }}
-                    artistName={tranchedPool.artist}
-                    // should be the artist picture
-                    image={tranchedPool.icon}
+                    artistName={tranchedPool.borrower.name}
+                    image={tranchedPool.borrower.logo}
                     type={
                       (
                         tranchedPool?.juniorTranches[0]

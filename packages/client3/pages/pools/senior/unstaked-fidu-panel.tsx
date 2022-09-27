@@ -36,7 +36,7 @@ export function UnstakedFiduBanner({
       <LinkButton
         className="block w-full"
         iconRight="ArrowSmRight"
-        href="https://app.goldfinch.finance/stake"
+        href="/stake"
       >
         Stake all FIDU
       </LinkButton>

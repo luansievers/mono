@@ -36,7 +36,7 @@ gql`
     user(id: $userId) {
       id
       ...SeniorPoolSupplyPanelUserFields
-      seniorPoolStakedPositions {
+      seniorPoolStakedPositions(where: { positionType: Fidu }) {
         ...SeniorPoolWithdrawalPanelPositionFields
       }
     }

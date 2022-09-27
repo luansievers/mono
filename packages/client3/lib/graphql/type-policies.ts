@@ -57,7 +57,6 @@ export const typePolicies: InMemoryCacheConfig["typePolicies"] = {
   },
   TranchedPool: {
     fields: {
-      artist: { read: readFieldFromMetadata("artist") },
       name: { read: readFieldFromMetadata("name") },
       description: { read: readFieldFromMetadata("description") },
       highlights: { read: readFieldFromMetadata("highlights") },
@@ -85,5 +84,8 @@ export const typePolicies: InMemoryCacheConfig["typePolicies"] = {
   },
   Viewer: {
     keyFields: [], // Viewer is a singleton type representing the current viewer, therefore it shouldn't have key fields
+  },
+  CurvePool: {
+    keyFields: [], // CurvePool is a singleton, therefore it shouldn't have key fields
   },
 };
