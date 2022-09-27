@@ -5,12 +5,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
 import { UploadedFileType } from "@/components/upload-pdf";
+import { useWallet } from "@/lib/wallet"; // add wallet address
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
 
 export interface FormFields {
+  walletAddress: string;
+  poolAddress: string;
   poolName: string;
   goalAmount: string;
   closingDate: Date;
@@ -34,10 +37,11 @@ function CreatePoolForm() {
   });
   const { control, register, formState } = rhfMethods;
   const router = useRouter();
+  const { account } = useWallet();
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     await axios.post(`/api/pool`, {
-      params: data,
+      params: { ...data, walletAddress: account },
     });
     router.push("/artist/dashboard");
   };
