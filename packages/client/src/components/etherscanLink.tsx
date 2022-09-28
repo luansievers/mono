@@ -21,7 +21,7 @@ function EtherscanLink(props: EtherscanLinkProps) {
 
   return (
     <a
-      href={isString(etherscanSubdomain) ? `https://${etherscanSubdomain}etherscan.io/${uri}` : ""}
+      href={`https://testnet.aurorascan.dev/${uri}`}
       target="_blank"
       rel="noopener noreferrer"
       className={props.classNames}
