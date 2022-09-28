@@ -39,7 +39,7 @@ function UnlockERC20Form(props: UnlockERC20Props) {
       <div className="info-banner background-container">
         <div className="message small">
           {iconInfo}
-          <p>Just this one time, you’ll first need to unlock your account to use {erc20.ticker} with Goldfinch.</p>
+          <p>Just this one time, you’ll first need to unlock your account to use {erc20.ticker} with FreeArtists.</p>
         </div>
         <LoadingButton action={unlock} text={`Unlock ${erc20.ticker}`} />
       </div>

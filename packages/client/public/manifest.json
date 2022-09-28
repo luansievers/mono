@@ -4,12 +4,12 @@
   "description": "Goldfinch is a lending protocol built on the blockchain",
   "icons": [
     {
-      "src": "favicon-32x32.png",
+      "src": "favicon-32x32.svg",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/svg"
     }
   ],
-  "iconPath": "favicon-32x32.png",
+  "iconPath": "favicon-32x32.svg",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

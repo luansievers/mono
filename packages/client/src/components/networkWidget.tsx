@@ -460,7 +460,7 @@ function NetworkWidget(props: NetworkWidgetProps) {
             USDC balance <span className="value">{usdcBalance}</span>
           </div>
           {transactions}
-          {isWalletConnectProvider(web3.readOnly.currentProvider) ? (
+          {/* {isWalletConnectProvider(web3.readOnly.currentProvider) ? (
             <button className="disconnect" onClick={closeWalletConnect}>
               {iconDisconnect} Disconnect wallet
             </button>
@@ -468,7 +468,7 @@ function NetworkWidget(props: NetworkWidgetProps) {
             <button className="add-gfi-to-wallet" onClick={handleAddGFIToWallet}>
               Add GFI token to wallet {iconOutArrow}
             </button>
-          )}
+          )} */}
         </div>
       </div>
     )

@@ -141,7 +141,7 @@ export default function Earn() {
   }, [capitalProvider, tranchedPoolsEstimatedApyFromGfi, currentBlock])
 
   const loaded = pool && backers.loaded
-  const earnMessage = userWalletWeb3Status?.type === "no_web3" || loaded ? "Pools" : "Loading..."
+  const earnMessage = userWalletWeb3Status?.type === "no_web3" || loaded ? "" : "Loading..."
   let limitToDisplay: string
   if (seniorPoolStatus.value?.totalFundsLimit?.gte(ONE_QUADRILLION_USDC)) {
     limitToDisplay = "No Limit"
@@ -173,7 +173,7 @@ export default function Earn() {
       )}
       <div className="pools">
         <PoolList
-          title="Borrower Pools"
+          title="Artist Pools"
           subtitle="The more active, higher risk, higher return option. Earn higher APYs by vetting borrowers and supplying first-loss capital directly to individual pools."
         >
           {!poolsAddresses.loaded && !backers.loaded ? (

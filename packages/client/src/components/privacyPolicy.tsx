@@ -5,11 +5,11 @@ function PrivacyPolicy(props) {
     <div className="content-section">
       <div className="page-header">Privacy Policy</div>
       <div className="legal">
-        <h3>Effective Date: April 1, 2021</h3>
+        <h3>Effective Date: October 1, 2022</h3>
         <h3>
-          Thank you for visiting goldfinch.finance (the “Website”). Your privacy is important to us. This Privacy Policy
-          (the “Policy”) describes the types of information Goldfinch Technology Company (the “Company”, “us”, “we”, or
-          “our”) may collect from you or that you may provide when you visit the Website and the products, features,
+          Thank you for visiting freeartists.dao (the “Website”). Your privacy is important to us. This Privacy Policy
+          (the “Policy”) describes the types of information FreeArtists Technology Company (the “Company”, “us”, “we”,
+          or “our”) may collect from you or that you may provide when you visit the Website and the products, features,
           materials, and services we offer (collectively with the Website, the “Services”). This Policy also describes
           our policies and procedures for collecting, using, maintaining, protecting, and disclosing that information.
         </h3>
@@ -199,8 +199,8 @@ function PrivacyPolicy(props) {
             respond to any government or regulatory request.
           </li>
           <li>
-            <em>When we enforce our rights. </em>To enforce or apply this Policy, our Terms of Use
-            (https://app.goldfinch.finance/terms), and other agreements, including for billing and collection purposes.
+            <em>When we enforce our rights. </em>To enforce or apply this Policy, our Terms of Use and other agreements,
+            including for billing and collection purposes.
           </li>
           <li>
             <em>To help protect lawful interests. </em>If we believe disclosure will help us protect the rights,
@@ -325,7 +325,7 @@ function PrivacyPolicy(props) {
           the rights described above free from discrimination.
         </p>
         <h2>How to Submit a Request</h2>
-        <p>To request access to or deletion of personal information to admin@goldfinch.finance.</p>
+        <p>To request access to or deletion of personal information to admin@freeartists.dao.</p>
         <h2>Identity Verification</h2>
         <p>
           The CCPA requires us to verify the identity of the individual submitting a request to access or delete
@@ -374,15 +374,14 @@ function PrivacyPolicy(props) {
         </h1>
         <p>
           If you choose to visit the Services, your visit and any dispute over privacy is subject to this Policy and our
-          Terms of Use (https://app.goldfinch.finance/terms), including limitations on damages, resolution of disputes,
-          and application of the law of the state of Delaware.
+          Terms of Use, including limitations on damages, resolution of disputes, and application of the law of the
+          state of Delaware.
         </p>
         <h1>
           <span className="term-number">10. </span>Contact Us.
         </h1>
         <p>
-          We welcome your questions, comments, and concerns about privacy. You can contact us at
-          admin@goldfinch.finance.
+          We welcome your questions, comments, and concerns about privacy. You can contact us at admin@freeartists.dao.
         </p>
       </div>
     </div>
