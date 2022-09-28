@@ -7,10 +7,11 @@ type Props = {
     fileName: string;
     fileUrl: string;
   };
+  onUploadedFileRemoved?: () => void;
   className?: string;
 };
 
-function UploadPDF({ className, uploadedFile }: Props) {
+function UploadPDF({ className, uploadedFile, onUploadedFileRemoved }: Props) {
   if (uploadedFile) {
     return (
       <BodyText
@@ -22,7 +23,9 @@ function UploadPDF({ className, uploadedFile }: Props) {
         <Link className="ml-3" href={uploadedFile.fileUrl} noUnderline>
           {uploadedFile.fileName}
         </Link>
-        <Icon className="ml-3" name="XCircle" size="lg" />
+        {onUploadedFileRemoved ? (
+          <Icon className="ml-3" name="XCircle" size="lg" />
+        ) : null}
       </BodyText>
     );
   }
