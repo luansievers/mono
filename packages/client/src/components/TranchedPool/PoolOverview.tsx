@@ -37,13 +37,13 @@ export function PoolOverview({tranchedPool, handleDetails}: {tranchedPool: Tranc
   }
 
   let detailsLink = <></>
-  if (user && user.info.value.goListed && tranchedPool.metadata?.detailsUrl) {
-    detailsLink = (
-      <button onClick={() => handleDetails()}>
-        Details & Discussion <span className="outbound-link">{iconOutArrow}</span>
-      </button>
-    )
-  }
+  // if (user && user.info.value.goListed && tranchedPool.metadata?.detailsUrl) {
+  //   detailsLink = (
+  //     <button onClick={() => handleDetails()}>
+  //       Details & Discussion <span className="outbound-link">{iconOutArrow}</span>
+  //     </button>
+  //   )
+  // }
 
   const highlights = tranchedPool.metadata?.poolHighlights
   const dataroomHref = tranchedPool.metadata?.dataroom ?? tranchedPool.metadata?.agreement
