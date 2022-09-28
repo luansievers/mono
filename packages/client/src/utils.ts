@@ -246,7 +246,8 @@ export function isProductionAndPrivateNetwork(network: NetworkConfig | undefined
   // Undetected networks are marked as private by the provider. On our config any private
   // network is marked as localhost, check `mapNetworkToID`, this function is useful to
   // check for scenarios when users are on undetected networks
-  return network && network.name === "localhost" && process.env.NODE_ENV === "production"
+  return false
+  // return network && network.name === "localhost" && process.env.NODE_ENV === "production"
 }
 
 export async function switchToNetwork(
@@ -302,13 +303,13 @@ export async function switchNetworkIfRequired(networkConfig: NetworkConfig): Pro
   const currentNetwork: SupportedChainId = SupportedChainId[networkConfig.name]
   let idealNetworkId: SupportedChainId = SupportedChainId.MAINNET
 
-  if (isProductionAndPrivateNetwork(networkConfig)) {
-    idealNetworkId = SupportedChainId.MAINNET
-  } else if (process.env.NODE_ENV === "production") {
-    idealNetworkId = !networkConfig.supported ? SupportedChainId.MAINNET : currentNetwork
-  } else if (process.env.REACT_APP_MURMURATION === "yes" || process.env.NODE_ENV === "development") {
-    idealNetworkId = SupportedChainId.LOCAL
-  }
+  // if (isProductionAndPrivateNetwork(networkConfig)) {
+  //   idealNetworkId = SupportedChainId.MAINNET
+  // } else if (process.env.NODE_ENV === "production") {
+  //   idealNetworkId = !networkConfig.supported ? SupportedChainId.MAINNET : currentNetwork
+  // } else if (process.env.REACT_APP_MURMURATION === "yes" || process.env.NODE_ENV === "development") {
+  //   idealNetworkId = SupportedChainId.LOCAL
+  // }
   idealNetworkId = SupportedChainId.AURORA
 
   if (idealNetworkId && currentNetwork !== idealNetworkId) {
@@ -317,13 +318,14 @@ export async function switchNetworkIfRequired(networkConfig: NetworkConfig): Pro
 }
 
 export function GFITokenImageURL(): string {
-  if (process.env.NODE_ENV === "development") {
-    if (process.env.REACT_APP_MURMURATION === "yes") {
-      return "https://murmuration.goldfinch.finance/gfi-token.svg"
-    } else {
-      return "http://localhost:3000/gfi-token.svg"
-    }
-  } else {
-    return "https://app.goldfinch.finance/gfi-token.svg"
-  }
+  // if (process.env.NODE_ENV === "development") {
+  //   if (process.env.REACT_APP_MURMURATION === "yes") {
+  //     return "https://murmuration.goldfinch.finance/gfi-token.svg"
+  //   } else {
+  //     return "http://localhost:3000/gfi-token.svg"
+  //   }
+  // } else {
+  //   return "https://app.goldfinch.finance/gfi-token.svg"
+  // }
+  return "https://d2dq341cbfldko.cloudfront.net/gfi-token.svg"
 }

@@ -37,11 +37,12 @@ function configureSentry() {
         console.error("Failed to obtain Sentry `environment`.")
       }
     }
-  } else {
-    if (process.env.NODE_ENV !== "development") {
-      console.error("Failed to obtain Sentry `dsn`.")
-    }
   }
+  // else {
+  //   if (process.env.NODE_ENV !== "development") {
+  //     console.error("Failed to obtain Sentry `dsn`.")
+  //   }
+  // }
 }
 
 configureSentry()
