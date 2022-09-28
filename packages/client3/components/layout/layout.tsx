@@ -18,6 +18,11 @@ export const LayoutContext = createContext<
   LayoutItems & { setLayoutItems?: (layout: LayoutItems) => void }
 >({});
 
+export const ApplicationContext = createContext<{
+  isState1Selected?: boolean;
+  setApplicationState?: (isState1Selected: boolean) => void;
+}>({});
+
 export function Layout({ children }: LayoutProps) {
   const [layout, setLayout] = useState<LayoutItems>({});
   const onSetLayout = (layout: LayoutItems) => {
@@ -26,6 +31,10 @@ export function Layout({ children }: LayoutProps) {
       ...layout,
     }));
   };
+  const [isState1Selected, setApplicationState] = useState<boolean | undefined>(
+    undefined
+  );
+
   return (
     <div className="bg-dark-100">
       <div id={bannerId} />
@@ -34,17 +43,21 @@ export function Layout({ children }: LayoutProps) {
         <LayoutContext.Provider
           value={{ ...layout, setLayoutItems: onSetLayout }}
         >
-          <MainSideBar className="min-h-[1024px]" />
-          <div className="grow">
-            <div>
-              <TopBar topBarTitle={layout.title} />
-            </div>
-            <div className="px-5">
-              <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
-                {children}
+          <ApplicationContext.Provider
+            value={{ isState1Selected, setApplicationState }}
+          >
+            <MainSideBar className="min-h-[1024px]" />
+            <div className="grow">
+              <div>
+                <TopBar topBarTitle={layout.title} />
+              </div>
+              <div className="px-5">
+                <div className="bg-sand-900 mx-auto min-h-full max-w-7xl pt-10">
+                  {children}
+                </div>
               </div>
             </div>
-          </div>
+          </ApplicationContext.Provider>
         </LayoutContext.Provider>
       </div>
     </div>

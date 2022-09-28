@@ -1,5 +1,20 @@
 import { SideBarMenuItemType } from "@/components/design-system/sidebar";
 
+export const BackerMenuItems: SideBarMenuItemType = [
+  {
+    label: "All Artist Pools",
+    key: "all-artist-pools",
+  },
+  {
+    label: "My Portfolio",
+    key: "my-portfolio",
+  },
+  {
+    label: "Transaction",
+    key: "transactions",
+  },
+];
+
 export const ArtistMenuItems: SideBarMenuItemType = [
   {
     label: "Artist Dashboard",

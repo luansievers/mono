@@ -68,7 +68,7 @@ export function PersonaStep() {
         <>
           <Button
             onClick={() => goToStep(VerificationFlowSteps.IndividualOrEntity)}
-            className="w-full"
+            className="w-full text-center"
           >
             Back
           </Button>
@@ -93,7 +93,7 @@ export function PersonaStep() {
         />
 
         <p className="mt-5 w-7/12 text-center">
-          Goldfinch uses Persona to complete identity verification
+          Free Artists uses Persona to complete identity verification
         </p>
 
         {errorMessage ? <p className="text-clay-500">{errorMessage}</p> : null}

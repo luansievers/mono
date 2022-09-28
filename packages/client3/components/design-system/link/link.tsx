@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
+import React from "react";
 import { AnchorHTMLAttributes } from "react";
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -13,6 +14,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
    */
   nextLinkProps?: NextLinkProps;
   className?: string;
+  useNextLink?: boolean; // Defaults to true. Use this when we need to use underlying a tag. NextLinkProps will be ignored if this prop is used
 }
 
 export function Link({
@@ -20,18 +22,26 @@ export function Link({
   noUnderline = false,
   nextLinkProps,
   className,
+  useNextLink = true,
   ...rest
 }: LinkProps) {
-  return (
-    <NextLink passHref {...nextLinkProps} href={href}>
-      <a
-        className={clsx(
-          noUnderline ? "no-underline" : "underline",
-          "font-semibold",
-          className
-        )}
-        {...rest}
-      />
-    </NextLink>
+  const ChildComponent = (
+    <a
+      className={clsx(
+        noUnderline ? "no-underline" : "underline",
+        "font-semibold",
+        className
+      )}
+      {...rest}
+    />
   );
+
+  if (useNextLink) {
+    return (
+      <NextLink passHref {...nextLinkProps} href={href}>
+        {ChildComponent}
+      </NextLink>
+    );
+  }
+  return <>{ChildComponent}</>;
 }

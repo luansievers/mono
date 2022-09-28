@@ -1,35 +1,25 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import detectEthereumProvider from "@metamask/detect-provider";
 import React, { useEffect, useState } from "react";
 
 import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
+import { useApplicationState } from "@/hooks/application-hooks";
 import { useSetUser } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
 import { useWallet } from "@/lib/wallet";
 import { metaMask } from "@/lib/wallet/connectors/metamask";
+import { accountQuery } from "@/queries/user.queries";
+import { checkWalletAddress } from "@/services/user-services";
 
 import { Button } from "..";
 import { ButtonStateText, IWalletButtonStyles } from "./types";
-
-const accountQuery = gql`
-  query UserWalletInformation($userAccount: ID!) {
-    user(id: $userAccount) {
-      id
-      isUsEntity
-      isNonUsEntity
-      isUsAccreditedIndividual
-      isUsNonAccreditedIndividual
-      isNonUsIndividual
-      isGoListed
-    }
-  }
-`;
 
 export function WalletButton() {
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useSetUser();
+  const [isWrongUser, setIsWrongUser] = useState<boolean>(false);
 
   const user = useQuery(accountQuery, {
     variables: {
@@ -37,6 +27,22 @@ export function WalletButton() {
       fetchPolicy: "network-only",
     },
   });
+  const applicationState = useApplicationState();
+
+  useEffect(() => {
+    const checkWallet = async () => {
+      setIsWrongUser(false);
+      const accountInformation = await checkWalletAddress(
+        account,
+        applicationState
+      );
+      if (accountInformation?.isAccountCorrectState === false) {
+        //set explicitly to false to ignores the `undefined` cases
+        setIsWrongUser(true);
+      }
+    };
+    checkWallet();
+  }, [applicationState, account, error]);
 
   useEffect(() => {
     if (user?.data?.user) {
@@ -62,6 +68,12 @@ export function WalletButton() {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    if (user?.data?.user) {
+      setUser && setUser(user.data.user);
+    }
+  }, [user, setUser]);
+
   const getButtonStyles = (): IWalletButtonStyles => {
     if (isLoading) {
       return {
@@ -84,6 +96,14 @@ export function WalletButton() {
         type: ButtonType.PRIMARY,
         state: ButtonStateText.ERROR,
         tooltip: error.message,
+      };
+    }
+    if (isWrongUser) {
+      return {
+        icon: "Exclamation",
+        type: ButtonType.PRIMARY,
+        state: ButtonStateText.ERROR,
+        tooltip: "Wrong user type",
       };
     }
     if (isActive) {

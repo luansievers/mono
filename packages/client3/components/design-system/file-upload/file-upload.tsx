@@ -149,7 +149,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                       <span className="mb-2 text-sm font-semibold text-dark-50">
                         Drop
                       </span>
-                    ) : !isLoading ? (
+                    ) : isLoading ? (
                       <span className="mb-2 text-sm font-semibold text-dark-50">
                         Uploading to IPFS
                       </span>

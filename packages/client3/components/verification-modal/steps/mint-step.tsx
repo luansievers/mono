@@ -101,7 +101,7 @@ export function MintStep() {
       includePrivacyStatement={false}
       heading={
         !isMinted
-          ? "Goldfinch uses UID for identity management"
+          ? "Free Artists uses UID for identity management"
           : "Success! You're all set."
       }
       headingClassName="font-medium"
@@ -179,8 +179,8 @@ export function MintStep() {
         </div>
         <div className="text-sand-400 text-center text-xs">
           {!isMinted
-            ? "UID is a non-transferrable NFT representing KYC-verification on-chain. It follows the ERC-1155 standard, and is freely usable by any other protocol. A UID is required to participate in Goldfinch lending pools. No personal information is stored on-chain."
-            : "With your newly minted UID, you can now participate in all the Goldfinch protocol activities you're eligible for. Get to it!"}
+            ? "UID is a non-transferrable NFT representing KYC-verification on-chain. It follows the ERC-1155 standard, and is freely usable by any other protocol. A UID is required to participate in Free Artists lending pools. No personal information is stored on-chain."
+            : "With your newly minted UID, you can now participate in all the Free Artists protocol activities you're eligible for. Get to it!"}
         </div>
       </div>
     </StepTemplate>
