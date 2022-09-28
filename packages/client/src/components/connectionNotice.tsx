@@ -66,7 +66,7 @@ export const strategies: ConnectionNoticeStrategy[] = [
       !!showCreditLineStatus && !!user && (!user.borrower || !user.borrower.creditLinesAddresses.length),
     render: (_props) => (
       <TextBanner>
-        You do not have any credit lines. To borrow funds from the pool, you need a Goldfinch credit line.
+        You do not have any credit lines. To borrow funds from the pool, you need a FreeArtists credit line.
       </TextBanner>
     ),
   },

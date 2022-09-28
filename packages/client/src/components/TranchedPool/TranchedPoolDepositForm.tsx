@@ -50,13 +50,13 @@ export function TranchedPoolDepositForm({
     }
 
     const depositAmount = usdcToAtomic(transactionAmount)
-    let signatureData = await gatherPermitSignature({
-      token: usdc,
-      value: new BigNumber(depositAmount),
-      spender: tranchedPool.address,
-    })
+    // let signatureData = await gatherPermitSignature({
+    //   token: usdc,
+    //   value: new BigNumber(depositAmount),
+    //   spender: tranchedPool.address,
+    // })
     sendFromUser(
-      usdc.contract.userWallet.methods.approve(tranchedPool.address, signatureData.value),
+      usdc.contract.userWallet.methods.approve(tranchedPool.address, depositAmount),
       {
         type: USDC_APPROVAL_TX_TYPE,
         data: {
@@ -65,7 +65,7 @@ export function TranchedPoolDepositForm({
       },
       {rejectOnError: true}
     )
-    return sendFromUser(tranchedPool.contract.userWallet.methods.deposit(TRANCHES.Junior, signatureData.value), {
+    return sendFromUser(tranchedPool.contract.userWallet.methods.deposit(TRANCHES.Junior, depositAmount), {
       type: SUPPLY_TX_TYPE,
       data: {
         amount: transactionAmount,
