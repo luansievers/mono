@@ -1,11 +1,12 @@
 import clsx from "clsx";
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFormContext } from "react-hook-form";
 
 import { addFileToIPFS } from "@/ipfs/utils/services";
 
 import { Icon } from "../icon";
+import { Spinner } from "../spinners";
 import { Caption } from "../typography";
 
 interface FileUploadProps {
@@ -22,7 +23,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     ref
   ) {
     const [file, setFile] = useState([] as any);
-    const [ipfsHash, setIpfsHash] = useState<string | undefined>("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const formContext = useFormContext();
 
@@ -46,18 +47,22 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       },
     });
 
-    const addFile = async (fileToUpload: any) => {
-      if (!(fileToUpload instanceof Blob)) {
-        fileToUpload = new Blob([fileToUpload], { type: "application/json" });
-      }
-      const file = await addFileToIPFS(fileToUpload);
-      if (formContext !== null) {
-        if (file) {
-          setIpfsHash(file);
-          formContext.setValue("projectCoverImage", ipfsHash);
+    const addFile = useCallback(
+      async (fileToUpload: any) => {
+        setIsLoading(true);
+        if (!(fileToUpload instanceof Blob)) {
+          fileToUpload = new Blob([fileToUpload], { type: "application/json" });
         }
-      }
-    };
+        const file = await addFileToIPFS(fileToUpload);
+        if (formContext !== null) {
+          if (file) {
+            formContext.setValue("projectCoverImage", file);
+          }
+        }
+        setIsLoading(false);
+      },
+      [formContext]
+    );
 
     useEffect(() => {
       if (file.length > 0) {
@@ -66,7 +71,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
         }
         addFile(file[0]);
       }
-    });
+    }, [file, isError, addFile]);
 
     const handleEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files) {
@@ -108,7 +113,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                         "z-10",
                         "stroke-light-10",
                         "bg-dark-90",
-                        "rounded-l-[50%]"
+                        "rounded-full"
                       )}
                       onClick={() => {
                         setFile([]);
@@ -127,17 +132,26 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center">
-                    <Icon
-                      name={isError ? "Exclamation" : "AddCircle"}
-                      size="md"
-                      className={clsx(
-                        "my-[10px]",
-                        isError && "text-state-error"
-                      )}
-                    />
+                    {isLoading ? (
+                      <Spinner className="text-dark-70" size="lg" />
+                    ) : (
+                      <Icon
+                        name={isError ? "Exclamation" : "AddCircle"}
+                        size="md"
+                        className={clsx(
+                          "my-[10px]",
+                          isError && "text-state-error"
+                        )}
+                      />
+                    )}
+
                     {isDragActive ? (
                       <span className="mb-2 text-sm font-semibold text-dark-50">
                         Drop
+                      </span>
+                    ) : !isLoading ? (
+                      <span className="mb-2 text-sm font-semibold text-dark-50">
+                        Uploading to IPFS
                       </span>
                     ) : (
                       <span

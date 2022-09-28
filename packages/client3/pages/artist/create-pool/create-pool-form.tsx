@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
@@ -38,12 +39,15 @@ function CreatePoolForm() {
   const { control, register, formState } = rhfMethods;
   const router = useRouter();
   const { account } = useWallet();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    setIsLoading(true);
     await axios.post(`/api/pool`, {
       params: { ...data, walletAddress: account },
     });
     router.push("/artist/dashboard");
+    setIsLoading(false);
   };
 
   return (
@@ -73,7 +77,9 @@ function CreatePoolForm() {
         >
           Cancel
         </Button>
-        <Button type="submit">Submit Proposal</Button>
+        <Button type="submit" isLoading={{ isLoading }}>
+          Submit Proposal
+        </Button>
       </div>
     </Form>
   );

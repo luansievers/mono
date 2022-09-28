@@ -103,7 +103,7 @@ function CreatePoolDetailEntry({
         </Caption>
         <img
           src="https://gateway.ipfs.io/ipfs/QmUG9ZCvVPZT7JMARSypqvuX4LBCb72449tnAeRyknNVCE#x-ipfs-companion-no-redirect"
-          className={clsx("rounded", "h-[90px] w-[150px]")}
+          className={clsx("rounded-md", "h-[90px] w-[150px]", "object-fill")}
         />
       </div>
     </>
