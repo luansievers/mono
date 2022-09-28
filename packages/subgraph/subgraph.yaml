@@ -8,9 +8,9 @@ dataSources:
     name: SeniorPoolProxy
     network: aurora-testnet
     source:
-      address: "0xB87b4FFFAe8a36bBBF5de2283DAD4B9A28026Bbc"
+      address: "0xe1ab1f88Ad7CFFc6cf3aDc686C2510bd7870712d"
       abi: SeniorPool
-      startBlock: 100330143
+      startBlock: 100915849
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -42,9 +42,9 @@ dataSources:
     name: GoldfinchFactoryProxy
     network: aurora-testnet
     source:
-      address: "0xC367b9d768067e884CF73Db3b3c7B319dfCE0205"
+      address: "0xc2872Dc1AC3da8e8074685b86Fb80522182Ef564"
       abi: GoldfinchFactory
-      startBlock: 100330669
+      startBlock: 100915993
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -77,9 +77,9 @@ dataSources:
     name: PoolProxy
     network: aurora-testnet
     source:
-      address: "0xf3b3b1A1885fd1698B79443D88Ec00d3FeE012E1"
+      address: "0x4D79DC12C2237B51DFCe27C79d91AA4f9171B538"
       abi: Pool_Proxy
-      startBlock: 100329856
+      startBlock: 100915718
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -107,9 +107,9 @@ dataSources:
     name: PoolTokensProxy
     network: aurora-testnet
     source:
-      address: "0x6372C493a3FB08256E4d44F34fe65fFD6Dcc27E2"
+      address: "0x4B881Ed117bD9c296415Ed71Fe90D79E60cd5e4B"
       abi: PoolTokens_Proxy
-      startBlock: 100329804
+      startBlock: 100915664
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -136,9 +136,9 @@ dataSources:
     name: StakingRewardsProxy
     network: aurora-testnet
     source:
-      address: "0xE932322F05aa724b374466bB33FDbfe87555326b"
+      address: "0x1A3C9b6c29e7a870946946891E2C8148CFe1f558"
       abi: StakingRewards_Proxy
-      startBlock: 100330815
+      startBlock: 100916075
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -161,9 +161,9 @@ dataSources:
     name: BackerRewardsProxy
     network: aurora-testnet
     source:
-      address: "0x1be4c55102000a60781Cf1a1B643e18E6e9BCA1F"
+      address: "0x09a4B7838D3F07aCb0B3C5bb47dAc96218Ed5CF5"
       abi: BackerRewards_Proxy
-      startBlock: 100330945
+      startBlock: 100918682
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
