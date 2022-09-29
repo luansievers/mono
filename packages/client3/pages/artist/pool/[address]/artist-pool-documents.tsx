@@ -13,6 +13,10 @@ function ArtistPoolDocuments() {
           fileName: "Pool Contract.pdf",
           fileUrl: "/artist/dummyUrl",
         }}
+        onFileUpload={(uploadedFile) =>
+          console.log("File uploaded", uploadedFile)
+        }
+        onRemoveFile={() => console.log("File removed")}
       />
       <UploadPDF
         className="mt-4"
@@ -20,6 +24,10 @@ function ArtistPoolDocuments() {
           fileName: "Term Sheeet.pdf",
           fileUrl: "/artist/dummyUrl",
         }}
+        onFileUpload={(uploadedFile) =>
+          console.log("File uploaded", uploadedFile)
+        }
+        onRemoveFile={() => console.log("File removed")}
       />
       <UploadPDF
         className="mt-4"
@@ -27,6 +35,10 @@ function ArtistPoolDocuments() {
           fileName: "Proposal.pdf",
           fileUrl: "/artist/dummyUrl",
         }}
+        onFileUpload={(uploadedFile) =>
+          console.log("File uploaded", uploadedFile)
+        }
+        onRemoveFile={() => console.log("File removed")}
       />
     </div>
   );

@@ -1,4 +1,5 @@
 import { BigNumber } from "ethers";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { KYC } from "@/components/dashboard/kyc";
@@ -42,6 +43,7 @@ const DummyDashboardDataEmpty = {
 };
 
 function Dashboard() {
+  const router = useRouter();
   const [dashBoardData, setDashboardData] = useState<
     typeof DummyDashboardDataEmpty
   >(DummyDashboardDataEmpty);
@@ -74,15 +76,17 @@ function Dashboard() {
             Progress
           </Caption>
         </div>
-        {/* <ArtistPool
+        {/* 
+        // Ticket FAD-85 TODO
+        
+        <ArtistPool
           isVerified={isVerified}
           onButtonClick={() => {
             //TODO: Dummy function definition below
             if (isVerified) {
-              // Todo KYC integration
-              setDashboardData(DummyDashboardData);
+              router.push("/artist/create-pool");
             } else {
-              setIsVerified(true);
+              setIsVerified(false);
             }
           }}
         /> */}

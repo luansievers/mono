@@ -1,26 +1,53 @@
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
+import { UploadedFileType } from "@/components/upload-pdf";
+import { useWallet } from "@/lib/wallet"; // add wallet address
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
 
 export interface FormFields {
+  walletAddress: string;
+  poolAddress: string;
   poolName: string;
   goalAmount: string;
   closingDate: Date;
   projectDetail: string;
+  projectCoverImage: string;
+  pdfDocuments: {
+    poolContractPdf: UploadedFileType;
+    termSheetPdf: UploadedFileType;
+    proposalPdf: UploadedFileType;
+  };
+  terms: {
+    projectGoal: string;
+    raisedTarget: string;
+  };
 }
 
 function CreatePoolForm() {
-  const rhfMethods = useForm<FormFields>({ mode: "onSubmit" });
+  const rhfMethods = useForm<FormFields>({
+    mode: "onSubmit",
+    shouldFocusError: true,
+  });
   const { control, register, formState } = rhfMethods;
+  const router = useRouter();
+  const { account } = useWallet();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    //TODO
-    data;
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    setIsLoading(true);
+    await axios.post(`/api/pool`, {
+      params: { ...data, walletAddress: account },
+    });
+    router.push("/artist/dashboard");
+    setIsLoading(false);
   };
 
   return (
@@ -34,16 +61,25 @@ function CreatePoolForm() {
 
         <Divider className="col-span-4" />
 
-        <CreatePoolDocumentUpload />
+        <CreatePoolDocumentUpload control={control} />
 
         <Divider className="col-span-4" />
 
-        <CreatePoolTerms />
+        <CreatePoolTerms formState={formState} register={register} />
       </div>
 
       <div className="float-right my-10 flex gap-x-2 px-64">
-        <Button buttonType="tertiary">Cancel</Button>
-        <Button type="submit">Submit Proposal</Button>
+        <Button
+          buttonType="tertiary"
+          onClick={() => {
+            router.push("/artist/dashboard");
+          }}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" isLoading={{ isLoading }}>
+          Submit Proposal
+        </Button>
       </div>
     </Form>
   );

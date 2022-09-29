@@ -1,3 +1,5 @@
+import { Control, Controller } from "react-hook-form";
+
 import {
   Heading,
   BodyText,
@@ -5,9 +7,30 @@ import {
   Icon,
   Link,
 } from "@/components/design-system";
-import UploadPDF from "@/components/upload-pdf/upload-pdf";
+import UploadPDF, {
+  UploadedFileType,
+} from "@/components/upload-pdf/upload-pdf";
+import { toBase64 } from "@/lib/file-utils";
 
-function CreatePoolDocumentUpload() {
+import { FormFields } from "./create-pool-form";
+
+type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<FormFields, any>;
+};
+
+function CreatePoolDocumentUpload({ control }: Props) {
+  const onFileUpload = async (
+    file: File,
+    onComplete: (base64File: UploadedFileType) => void
+  ) => {
+    const base64String = await toBase64(file);
+    onComplete({
+      fileName: file.name,
+      fileUrl: base64String,
+    });
+  };
+
   return (
     <>
       <Heading className="text-white" level={4}>
@@ -25,7 +48,24 @@ function CreatePoolDocumentUpload() {
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
-      <UploadPDF className="col-span-3" />
+      <Controller
+        name={"pdfDocuments.poolContractPdf"}
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <UploadPDF
+              className="col-span-3"
+              onFileUpload={(file) => {
+                onFileUpload(file, onChange);
+              }}
+              onRemoveFile={() => {
+                onChange(undefined);
+              }}
+              uploadedFile={value}
+            />
+          );
+        }}
+      />
       <div>
         <BodyText className="text-white" size="normal">
           Term Sheet
@@ -34,13 +74,25 @@ function CreatePoolDocumentUpload() {
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
-      <UploadPDF
-        className="col-span-3"
-        uploadedFile={{
-          fileName: "Pool Contract.pdf",
-          fileUrl: "/artist/dummyUrl",
+      <Controller
+        name={"pdfDocuments.termSheetPdf"}
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <UploadPDF
+              className="col-span-3"
+              onFileUpload={(file) => {
+                onFileUpload(file, onChange);
+              }}
+              onRemoveFile={() => {
+                onChange(undefined);
+              }}
+              uploadedFile={value}
+            />
+          );
         }}
       />
+
       <div>
         <BodyText className="text-white" size="normal">
           Proposal
@@ -49,8 +101,24 @@ function CreatePoolDocumentUpload() {
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
-      <UploadPDF className="col-span-3" />
-
+      <Controller
+        name={"pdfDocuments.proposalPdf"}
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <UploadPDF
+              className="col-span-3"
+              onFileUpload={(file) => {
+                onFileUpload(file, onChange);
+              }}
+              onRemoveFile={() => {
+                onChange(undefined);
+              }}
+              uploadedFile={value}
+            />
+          );
+        }}
+      />
       <BodyText className="my-auto text-white" size="normal">
         Other Documents (Optional)
       </BodyText>
