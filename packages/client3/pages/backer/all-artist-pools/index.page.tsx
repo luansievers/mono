@@ -12,10 +12,14 @@ import {
   TabList,
   TabPanels,
 } from "@/components/design-system";
+import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
 
 function AllArtistPoolPage() {
+  useSelectedSidebarItem("all-artist-pools");
+  useLayoutTitle("All Artist Pools");
+
   const { data, error } = useQuery(backerAllArtistPools);
   const [openPoolData, setOpenPoolData] = useState<any[]>([]);
   /**
