@@ -4,7 +4,11 @@ import { BackersList, DummyBackersListData } from "@/components/backers-list";
 import { Avatar, BodyText, Heading } from "@/components/design-system";
 import { SocialMediaButton } from "@/components/design-system/button/social-media-button";
 
-function PoolDetail() {
+type Props = {
+  poolData: any;
+};
+
+function PoolDetail({ poolData }: Props) {
   return (
     <>
       <div className="relative mt-3 h-[668px] w-full">
@@ -37,7 +41,8 @@ function PoolDetail() {
         Project Detail
       </Heading>
       <BodyText size="normal" className="mt-6 text-white">
-        Longtime friends Joe Smith and Chaz D. (DJ Chaz) left their small
+        {poolData?.projectDetail ??
+          `Longtime friends Joe Smith and Chaz D. (DJ Chaz) left their small
         Northern Illinois town to pursue music. After moving to opposide sides
         of the country, DJ Chaz worked as a solo artist as Joe opened and
         performed on several music tours. Years later, they reunited to jam on
@@ -45,7 +50,7 @@ function PoolDetail() {
         project: a collaborative 5-track EP calling for all other Northern
         Illinois musicians. Check out Joe’s video for an exclusive look into the
         making of Techno Collab, the next best sound from the most unique
-        artists in Northern Illinois!
+        artists in Northern Illinois!`}
       </BodyText>
       <Heading className="mt-10 text-white" level={5}>
         Social Media Updates
