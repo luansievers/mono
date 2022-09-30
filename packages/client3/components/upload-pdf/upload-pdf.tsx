@@ -29,7 +29,6 @@ function UploadPDF({
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    event.stopPropagation();
     if (event.target?.files?.[0]) {
       const chosenFile = event.target.files[0];
       onFileUpload(chosenFile);

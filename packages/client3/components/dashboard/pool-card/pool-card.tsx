@@ -14,6 +14,7 @@ interface PoolCardProps {
   totalGoalAmount: CryptoAmount;
   type?: "completed" | "failed";
   className?: string;
+  onClick?: () => void;
 }
 
 export function PoolCard({
@@ -24,6 +25,7 @@ export function PoolCard({
   totalGoalAmount,
   type,
   className,
+  onClick,
 }: PoolCardProps) {
   const totalSuppliedAmountFloat = cryptoToFloat(totalSuppliedAmount);
 
@@ -44,8 +46,10 @@ export function PoolCard({
     <div
       className={clsx(
         "flex gap-4 rounded-lg bg-green-100 px-6 py-4",
+        onClick && "cursor-pointer",
         className
       )}
+      onClick={onClick}
     >
       <div className="flex-none">
         <Avatar size={20} image={image} />

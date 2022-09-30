@@ -14,7 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       "./pools.json"
     );
 
-    const newPoolData = req.body;
+    const newPoolData = req.body.params;
     let fileData;
     try {
       fileData = JSON.parse(fs.readFileSync(pathname, "utf-8"));
@@ -32,5 +32,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       id: id,
       fileData,
     });
+  } else if (req.method === "GET") {
+    const pathname = path.resolve(
+      `${process.cwd()}/pages/api/pool`,
+      "./pools.json"
+    );
+    let fileData;
+    try {
+      fileData = JSON.parse(fs.readFileSync(pathname, "utf-8"));
+    } catch (error) {
+      fs.writeFileSync(pathname, "{}");
+      fileData = {};
+    }
+    res.status(200).json(fileData);
   }
 }

@@ -30,7 +30,7 @@ interface DatePickerProps extends React.ComponentProps<typeof ReactDatePicker> {
 }
 
 export const DatePicker = forwardRef<ReactDatePicker, DatePickerProps>(
-  function Input(
+  function DatePicker(
     {
       helperText,
       errorMessage,
