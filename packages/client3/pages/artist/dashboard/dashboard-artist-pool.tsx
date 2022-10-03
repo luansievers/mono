@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import { Heading, Caption } from "@/components/design-system";
+import { handleAddressFormat } from "@/lib/format/common";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
 
@@ -62,7 +63,10 @@ function DashboardArtistPool() {
                 token: SupportedCrypto.Usdc,
                 amount: BigNumber.from(tranchedPool.goalAmount ?? 0), //90% - not sure if this is the correct field
               }}
-              artistName={tranchedPool.artist ?? "Tom Smith"}
+              artistName={
+                tranchedPool.artist ??
+                handleAddressFormat(tranchedPool.walletAddress as string)
+              }
               // should be the artist picture
               image={tranchedPool.icon}
               onClick={() => handleClick(tranchedPool.id)}

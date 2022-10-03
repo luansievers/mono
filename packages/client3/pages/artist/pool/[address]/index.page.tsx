@@ -41,7 +41,7 @@ function ArtistPoolPage() {
         href={"/artist/dashboard"}
         iconLeft="CaretLeft"
       >
-        Artist Portfolio
+        Artist Dashboard
       </LinkButton>
       <div className="mb-10 px-4">
         <Heading level={1} className="text-white">
