@@ -11,7 +11,8 @@ export function Progress({ percentage, type }: ProgressProps) {
       <div
         className={clsx("h-3 rounded-full", {
           "bg-accent-2": !type,
-          "bg-green-90": type == "completed" || type == "failed",
+          "bg-accent-2-opacity": type == "completed",
+          "bg-accent-3-opacity": type == "failed",
         })}
         style={{ width: `${percentage}%` }}
       ></div>

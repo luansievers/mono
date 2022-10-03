@@ -1,54 +1,41 @@
 import { useQuery } from "@apollo/client";
-import axios from "axios";
 import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import { Heading, Caption } from "@/components/design-system";
 import { handleAddressFormat } from "@/lib/format/common";
 import { SupportedCrypto } from "@/lib/graphql/generated";
+import { useWallet } from "@/lib/wallet";
 import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
 
 type Props = {
+  openPoolData: any[];
   setEarnedAndRaisedAmount: (
     earnedAmount: number,
     raisedAmount: number
   ) => void;
 };
 
-function DashboardArtistPool({ setEarnedAndRaisedAmount }: Props) {
+function DashboardArtistPool({
+  openPoolData,
+  setEarnedAndRaisedAmount,
+}: Props) {
   const { data, error } = useQuery(backerAllArtistPools);
-  const [openPoolData, setOpenPoolData] = useState<any[]>([]);
   const router = useRouter();
 
-  /**
-   * Below code(useEffect) and it's usages need to be replaced by openTranchedPools when create pool insertion is done
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/api/pool`);
-      const mappedData = Object.keys(response.data).map((key) => ({
-        id: key,
-        ...response.data[key],
-      }));
-      setOpenPoolData(mappedData);
-    };
-    fetchData();
-  }, []);
-
-  const openTranchedPools = data?.tranchedPools?.filter((tranchedPool: any) =>
-    (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-  );
+  const { account } = useWallet();
 
   const closedTranchedPools = data?.tranchedPools?.filter(
-    (tranchedPool: any) =>
-      !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+    (tranchedPool: any) => {
+      !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero() &&
+        tranchedPool.artistName === account;
+    }
   );
 
   useEffect(() => {
     let totalRaised = 0;
-    // TODO Integrate total earned
     (closedTranchedPools ?? []).forEach((tranchedPool: any) => {
       totalRaised += Number(
         tranchedPool?.juniorTranches?.[0]?.principalDeposited ?? 0
@@ -63,6 +50,7 @@ function DashboardArtistPool({ setEarnedAndRaisedAmount }: Props) {
   const handleClick = (poolAddress: string) => {
     router.push(`/artist/pool/${poolAddress}`);
   };
+
   return (
     <>
       <div className="mb-5 mt-10 flex">
@@ -72,7 +60,7 @@ function DashboardArtistPool({ setEarnedAndRaisedAmount }: Props) {
         <Caption className="mr-11 w-60 flex-none text-right">Progress</Caption>
       </div>
       {openPoolData
-        ? openPoolData.map((tranchedPool) => (
+        ? openPoolData.map((tranchedPool: any) => (
             <PoolCard
               key={tranchedPool.id}
               className="mb-10"
@@ -89,7 +77,6 @@ function DashboardArtistPool({ setEarnedAndRaisedAmount }: Props) {
                 tranchedPool.artist ??
                 handleAddressFormat(tranchedPool.walletAddress as string)
               }
-              // should be the artist picture
               image={tranchedPool.icon}
               onClick={() => handleClick(tranchedPool.id)}
             />

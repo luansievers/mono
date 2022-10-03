@@ -1,4 +1,7 @@
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+
+import { useApplicationState } from "@/hooks/application-hooks";
 
 import { Link } from "../link";
 import { FreeArtistsLogoFullSvg, FreeArtistsLogoProps } from "../logo";
@@ -27,13 +30,24 @@ export function SideBar({
   selectedPathName,
   getHref,
 }: SideBarProps & FreeArtistsLogoProps) {
+  const [logoUrl, setLogoUrl] = useState<string>("");
+  const applicationState = useApplicationState();
+
+  useEffect(() => {
+    if (applicationState) {
+      setLogoUrl("/backer/all-artist-pools");
+    } else {
+      setLogoUrl("/artist/dashboard");
+    }
+  }, [applicationState]);
+
   return (
     <div
       className={clsx("h-full w-72 bg-green-90 shadow-md", className)}
       id="sideBar"
     >
       <div className="px-12 pt-4 pb-12">
-        <a href="#!">
+        <a href={logoUrl}>
           <div className="flex justify-center">
             <FreeArtistsLogoFullSvg width={width} height={height} />
           </div>

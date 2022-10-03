@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 import { Progress } from "@/components/design-system/progress";
 import { cryptoToFloat, formatCrypto, formatFiat } from "@/lib/format";
+import { handleAddressFormat } from "@/lib/format/common";
 import { CryptoAmount, SupportedFiat } from "@/lib/graphql/generated";
 
 import { Avatar, BodyText, Caption, Chip } from "../../design-system";
@@ -56,7 +57,9 @@ export function PoolCard({
       </div>
       <div className="flex-1 pt-[18.5px]">
         <BodyText size="normal" className="text-light-40">
-          {artistName}
+          {artistName?.startsWith("0x")
+            ? handleAddressFormat(artistName)
+            : artistName}
         </BodyText>
         <Caption className="pt-[3px] text-dark-50">{poolName}</Caption>
       </div>
