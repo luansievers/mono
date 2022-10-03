@@ -36,7 +36,6 @@ const DummyDashboardDataEmpty = {
 };
 
 function Dashboard() {
-  const router = useRouter();
   useSelectedSidebarItem("dashboard");
   useLayoutTitle("Artist Dashboard");
   const [dashBoardData, setDashboardData] = useState<
@@ -50,18 +49,32 @@ function Dashboard() {
   useEffect(() => {
     const isVerified = hasUid(user);
     setIsVerified(isVerified);
-    setDashboardData(DummyDashboardData);
   }, [user]);
 
-  if (isVerified) {
+  const onSetEarnedAndRaisedAmount = (
+    earnedAmount: number,
+    raisedAmount: number
+  ) => {
+    const dashBoardData = {
+      totalEarnedAmount: {
+        amount: BigNumber.from(earnedAmount),
+        token: SupportedCrypto.Usdc,
+      },
+      totalRaisedAmount: {
+        amount: BigNumber.from(raisedAmount),
+        token: SupportedCrypto.Usdc,
+      },
+    };
+    setDashboardData(dashBoardData);
+  };
+
+  if (!isVerified) {
     return (
       <>
         <DashboardTotal
           totalEarnedAmount={dashBoardData.totalEarnedAmount}
           totalRaisedAmount={dashBoardData.totalRaisedAmount}
-          onCreatePoolClicked={() => {
-            /** */
-          }}
+          createPoolHref={"/artist/create-pool"}
         />
         {/* 
         // Ticket FAD-85 TODO
@@ -77,7 +90,9 @@ function Dashboard() {
             }
           }}
         /> */}
-        <DashboardArtistPool />
+        <DashboardArtistPool
+          setEarnedAndRaisedAmount={onSetEarnedAndRaisedAmount}
+        />
       </>
     );
   }

@@ -10,7 +10,14 @@ import { handleAddressFormat } from "@/lib/format/common";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 import { backerAllArtistPools } from "@/queries/all-artist-pool-queries";
 
-function DashboardArtistPool() {
+type Props = {
+  setEarnedAndRaisedAmount: (
+    earnedAmount: number,
+    raisedAmount: number
+  ) => void;
+};
+
+function DashboardArtistPool({ setEarnedAndRaisedAmount }: Props) {
   const { data, error } = useQuery(backerAllArtistPools);
   const [openPoolData, setOpenPoolData] = useState<any[]>([]);
   const router = useRouter();
@@ -38,6 +45,21 @@ function DashboardArtistPool() {
     (tranchedPool: any) =>
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
+
+  useEffect(() => {
+    let totalRaised = 0;
+    // TODO Integrate total earned
+    (closedTranchedPools ?? []).forEach((tranchedPool: any) => {
+      totalRaised += Number(
+        tranchedPool?.juniorTranches?.[0]?.principalDeposited ?? 0
+      );
+    });
+    (openPoolData ?? []).forEach((tranchedPool: any) => {
+      totalRaised += Number(tranchedPool.totalSuppliedAmount ?? 0);
+    });
+    setEarnedAndRaisedAmount(totalRaised * 0.8, totalRaised);
+  }, [closedTranchedPools, openPoolData, setEarnedAndRaisedAmount]);
+
   const handleClick = (poolAddress: string) => {
     router.push(`/artist/pool/${poolAddress}`);
   };

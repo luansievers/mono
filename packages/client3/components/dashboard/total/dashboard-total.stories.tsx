@@ -25,9 +25,7 @@ DashboardTotalWithButtonStory.args = {
     amount: BigNumber.from(232323),
     token: SupportedCrypto.Usdc,
   },
-  onCreatePoolClicked: () => {
-    //Empty comment to prevent ESLint errors
-  },
+  createPoolHref: "#",
 };
 
 export const DashboardTotalWithoutButtonStory: ComponentStory<
@@ -45,5 +43,5 @@ DashboardTotalWithoutButtonStory.args = {
     amount: BigNumber.from(0),
     token: SupportedCrypto.Usdc,
   },
-  onCreatePoolClicked: undefined,
+  createPoolHref: undefined,
 };
