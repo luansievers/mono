@@ -79,7 +79,7 @@ function SeniorPoolStatus(props: SeniorPoolStatusProps) {
           Dashboard<span className="outbound-link">{iconOutArrow}</span>
         </a>
         <a
-          href={pool ? `https://testnet.aurorascan.dev/address/${pool.address}` : ""}
+          href={pool ? `https://moonbase.moonscan.io/address/${pool.address}` : ""}
           target="_blank"
           rel="noopener noreferrer"
         >

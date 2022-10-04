@@ -21,7 +21,7 @@ function EtherscanLink(props: EtherscanLinkProps) {
 
   return (
     <a
-      href={`https://testnet.aurorascan.dev/${uri}`}
+      href={`https://moonbase.moonscan.io/${uri}`}
       target="_blank"
       rel="noopener noreferrer"
       className={props.classNames}

@@ -56,7 +56,7 @@ function RecentRepayments() {
           <span className="transaction-link-label">{croppedAddress(tx.id)}</span>
           <a
             className="inline-button"
-            href={`https://testnet.aurorascan.dev/tx/${tx.id}`}
+            href={`https://moonbase.moonscan.io/tx/${tx.id}`}
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -296,7 +296,7 @@ function NetworkWidget(props: NetworkWidgetProps) {
           {web3.readOnly.utils.isHexStrict(tx.id) && (
             <a
               className="inline-button"
-              href={`https://testnet.aurorascan.dev/tx/${tx.id}`}
+              href={`https://moonbase.moonscan.io/tx/${tx.id}`}
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -80,7 +80,7 @@ export function CreditStatus({tranchedPool}: {tranchedPool: TranchedPool | undef
           <td className="transaction-link">
             <a
               className="inline-button"
-              href={`https://testnet.aurorascan.dev/tx/${tx.txHash}`}
+              href={`https://moonbase.moonscan.io/tx/${tx.txHash}`}
               target="_blank"
               rel="noopener noreferrer"
             >

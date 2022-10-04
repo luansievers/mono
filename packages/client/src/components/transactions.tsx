@@ -391,7 +391,7 @@ function Transactions(props: TransactionsProps) {
         <td className="transaction-link">
           <a
             className="inline-button"
-            href={`https://testnet.aurorascan.dev/tx/${tx.id}`}
+            href={`https://moonbase.moonscan.io/tx/${tx.id}`}
             target="_blank"
             rel="noopener noreferrer"
           >
