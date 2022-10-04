@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: SeniorPoolProxy
-    network: aurora-testnet
+    network: mbase
     source:
-      address: "0xe1ab1f88Ad7CFFc6cf3aDc686C2510bd7870712d"
+      address: "0x379855536dcD9fbE78f249e75e0149094D068356"
       abi: SeniorPool
-      startBlock: 100915849
+      startBlock: 2951592
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -40,11 +40,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: GoldfinchFactoryProxy
-    network: aurora-testnet
+    network: mbase
     source:
       address: "0xc2872Dc1AC3da8e8074685b86Fb80522182Ef564"
       abi: GoldfinchFactory
-      startBlock: 100915993
+      startBlock: 2951615
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -75,11 +75,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: PoolProxy
-    network: aurora-testnet
+    network: mbase
     source:
-      address: "0x4D79DC12C2237B51DFCe27C79d91AA4f9171B538"
+      address: "0x7e277bB31c0A288ac34c851D0A0DcDAC928BB1BC"
       abi: Pool_Proxy
-      startBlock: 100915718
+      startBlock: 2951573
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -105,11 +105,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: PoolTokensProxy
-    network: aurora-testnet
+    network: mbase
     source:
-      address: "0x4B881Ed117bD9c296415Ed71Fe90D79E60cd5e4B"
+      address: "0x29BCC38E355551d6C280713972cb88a9AE789C94"
       abi: PoolTokens_Proxy
-      startBlock: 100915664
+      startBlock: 2951564
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -134,11 +134,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: StakingRewardsProxy
-    network: aurora-testnet
+    network: mbase
     source:
-      address: "0x1A3C9b6c29e7a870946946891E2C8148CFe1f558"
+      address: "0x9230541a0F7138aF9fecD57801Bab11228233b0f"
       abi: StakingRewards_Proxy
-      startBlock: 100916075
+      startBlock: 2951629
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -159,11 +159,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: BackerRewardsProxy
-    network: aurora-testnet
+    network: mbase
     source:
-      address: "0x09a4B7838D3F07aCb0B3C5bb47dAc96218Ed5CF5"
+      address: "0x5D4e40b7e5C278155757E6C2807A2a2340A1afc9"
       abi: BackerRewards_Proxy
-      startBlock: 100918682
+      startBlock: 2951658
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -185,7 +185,7 @@ dataSources:
 templates:
   - name: SeniorPool
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: SeniorPool
     mapping:
@@ -229,7 +229,7 @@ templates:
 
   - name: Pool
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: Pool
     mapping:
@@ -251,7 +251,7 @@ templates:
 
   - name: GoldfinchFactory
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: GoldfinchFactory
     mapping:
@@ -285,7 +285,7 @@ templates:
 
   - name: TranchedPool
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: TranchedPool
     mapping:
@@ -351,7 +351,7 @@ templates:
 
   - name: PoolTokens
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: PoolTokens
     mapping:
@@ -398,7 +398,7 @@ templates:
 
   - name: StakingRewards
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: StakingRewards
     mapping:
@@ -425,7 +425,7 @@ templates:
 
   - name: BackerRewards
     kind: ethereum/contract
-    network: aurora-testnet
+    network: mbase
     source:
       abi: BackerRewards
     mapping:
