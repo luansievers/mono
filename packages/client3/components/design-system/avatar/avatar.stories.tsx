@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Avatar } from ".";
 
 export default {
-  title: "FAD/Components/Avatar",
+  title: "FAD/Components/General/Avatar",
   component: Avatar,
 } as ComponentMeta<typeof Avatar>;
 

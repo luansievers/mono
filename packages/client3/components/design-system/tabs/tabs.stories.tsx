@@ -4,7 +4,7 @@ import { Heading } from "../typography";
 import { TabButton, TabContent, TabGroup, TabList, TabPanels } from "./tabs";
 
 export default {
-  title: "FAD/Components/Tabs",
+  title: "FAD/Components/General/Tabs",
   component: TabGroup,
 } as ComponentMeta<typeof TabGroup>;
 

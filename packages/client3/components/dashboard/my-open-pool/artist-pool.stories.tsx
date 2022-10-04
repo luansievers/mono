@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ArtistPool } from "./index";
 
 export default {
-  title: "FAD/Components/Dashboard/ArtistPool",
+  title: "FAD/Components/Dashboard/States",
   component: ArtistPool,
 } as ComponentMeta<typeof ArtistPool>;
 

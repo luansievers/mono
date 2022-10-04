@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { LinkButton } from ".";
 
 export default {
-  title: "FAD/Components/Button",
+  title: "FAD/Components/General/Button",
   component: LinkButton,
   argTypes: {
     children: {

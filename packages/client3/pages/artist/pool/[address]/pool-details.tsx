@@ -1,8 +1,11 @@
 import Image from "next/image";
 
-import { BackersList, DummyBackersListData } from "@/components/backers-list";
 import { Avatar, BodyText, Heading } from "@/components/design-system";
 import { SocialMediaButton } from "@/components/design-system/button/social-media-button";
+import {
+  BackersList,
+  DummyBackersListData,
+} from "@/components/pool/backers-list";
 
 function PoolDetail() {
   return (
