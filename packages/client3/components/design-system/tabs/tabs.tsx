@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 
 interface TabProps {
   children: ReactNode;
+  className?: string;
 }
 
 export function TabButton({ children }: TabProps) {
@@ -26,10 +27,10 @@ export function TabButton({ children }: TabProps) {
   );
 }
 
-export function TabContent({ children }: TabProps) {
+export function TabContent({ children, className }: TabProps) {
   return (
     <Tab.Panel>
-      <div className="pt-12">{children}</div>
+      <div className={className}>{children}</div>
     </Tab.Panel>
   );
 }

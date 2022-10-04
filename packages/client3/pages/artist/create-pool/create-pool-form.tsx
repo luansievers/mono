@@ -44,7 +44,11 @@ function CreatePoolForm() {
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     setIsLoading(true);
     await axios.post(`/api/pool`, {
-      params: { ...data, walletAddress: account },
+      params: {
+        ...data,
+        walletAddress: account,
+        closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),
+      },
     });
     router.push("/artist/dashboard");
     setIsLoading(false);

@@ -1,18 +1,45 @@
+import { BigNumber } from "ethers";
+
 import { Display, BodyText, Icon, Button } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
+import { formatCrypto } from "@/lib/format";
+import { SupportedCrypto } from "@/lib/graphql/generated";
 
-function ArtistCancelPool() {
+type Props = {
+  poolData: any;
+};
+function ArtistCancelPool({ poolData }: Props) {
+  const useDummy = !poolData;
+  const totalSuppliedAmount = {
+    token: SupportedCrypto.Usdc,
+    amount: BigNumber.from(
+      useDummy ? "250000000" : poolData.totalSuppliedAmount ?? 0
+    ),
+  };
+  const totalGoalAmount = {
+    token: SupportedCrypto.Usdc,
+    amount: BigNumber.from(useDummy ? "1000000000" : poolData.goalAmount ?? 0), //90% - not sure if this is the correct field
+  };
+  let progressPercentage = 0;
+
+  if (!totalSuppliedAmount.amount.isZero()) {
+    progressPercentage =
+      (totalSuppliedAmount.amount.toNumber() /
+        totalGoalAmount.amount.toNumber()) *
+      100;
+  }
+
   return (
     <div className="rounded-lg border border-dark-90 p-6">
       <div className="flex justify-between">
         <Display className="text-accent-2" level={2}>
-          $2580.235
+          {formatCrypto(totalSuppliedAmount)}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of $10,000
+          of {formatCrypto(totalGoalAmount)}
         </BodyText>
       </div>
-      <Progress percentage={(2580.235 / 10000) * 100} />
+      <Progress percentage={progressPercentage} />
       <div className="mt-9 flex items-center">
         <Display level={2} className="text-white">
           224

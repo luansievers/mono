@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 import { Progress } from "@/components/design-system/progress";
 import { cryptoToFloat, formatCrypto, formatFiat } from "@/lib/format";
+import { handleAddressFormat } from "@/lib/format/common";
 import { CryptoAmount, SupportedFiat } from "@/lib/graphql/generated";
 
 import { Avatar, BodyText, Caption, Chip } from "../../design-system";
@@ -14,6 +15,7 @@ interface PoolCardProps {
   totalGoalAmount: CryptoAmount;
   type?: "completed" | "failed";
   className?: string;
+  onClick?: () => void;
 }
 
 export function PoolCard({
@@ -24,6 +26,7 @@ export function PoolCard({
   totalGoalAmount,
   type,
   className,
+  onClick,
 }: PoolCardProps) {
   const totalSuppliedAmountFloat = cryptoToFloat(totalSuppliedAmount);
 
@@ -44,15 +47,19 @@ export function PoolCard({
     <div
       className={clsx(
         "flex gap-4 rounded-lg bg-green-100 px-6 py-4",
+        onClick && "cursor-pointer",
         className
       )}
+      onClick={onClick}
     >
       <div className="flex-none">
         <Avatar size={20} image={image} />
       </div>
       <div className="flex-1 pt-[18.5px]">
         <BodyText size="normal" className="text-light-40">
-          {artistName}
+          {artistName?.startsWith("0x")
+            ? handleAddressFormat(artistName)
+            : artistName}
         </BodyText>
         <Caption className="pt-[3px] text-dark-50">{poolName}</Caption>
       </div>

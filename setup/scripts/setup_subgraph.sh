@@ -23,5 +23,10 @@ npm --prefix packages/subgraph run deploy-local
 
 echo "${GREEN}Graph Uploaded${NC}"
 echo ""
+
+echo "${GREEN}Starting IPFS node for client3${NC}"
+docker compose -f packages/client3/ipfs/docker-compose.yaml up -d 
+echo ""
+
 echo "${GREEN}Starting Client 3${NC}"
 npm --prefix packages/client3 run dev
