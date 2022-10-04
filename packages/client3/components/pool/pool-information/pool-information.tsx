@@ -27,12 +27,14 @@ import {
 } from "@/lib/graphql/generated";
 import {
   approveErc20IfRequired,
+  canUserParticipateInPool,
   signAgreement,
   usdcWithinEpsilon,
 } from "@/lib/pools";
 import { openVerificationModal } from "@/lib/state/actions";
 import { toastTransaction } from "@/lib/toast";
 import { isSmartContract, useWallet } from "@/lib/wallet";
+import { validateMaximumAmountSupply } from "@/utilities/validation.util";
 
 type Props = {
   totalSuppliedAmount: number;
@@ -69,57 +71,37 @@ export function PoolInformation({
   const tranchedPoolContract = useContract("TranchedPool", tranchedPoolAddress);
   const usdcContract = useContract("USDC");
   const user = useUser() as SupplyPanelUserFieldsFragment;
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const isUserVerified =
-  //   user?.isGoListed ||
-  //   user?.isUsEntity ||
-  //   user?.isNonUsEntity ||
-  //   user?.isUsAccreditedIndividual ||
-  //   user?.isUsNonAccreditedIndividual ||
-  //   user?.isNonUsIndividual;
+  const isUserVerified =
+    user?.isGoListed ||
+    user?.isUsEntity ||
+    user?.isNonUsEntity ||
+    user?.isUsAccreditedIndividual ||
+    user?.isUsNonAccreditedIndividual ||
+    user?.isNonUsIndividual;
 
-  // const canUserParticipate = user
-  //   ? canUserParticipateInPool(allowedUidTypes, user)
-  //   : false;
-  /** TODO: REMOVE -> JUST TO TEST */
-  const isUserVerified = true;
-  const canUserParticipate = true;
-
-  /** TODO: REMOVE <- JUST TO TEST */
+  const canUserParticipate = user
+    ? canUserParticipateInPool(allowedUidTypes, user)
+    : false;
 
   const rhfMethods = useForm<FormFields>({
     mode: "onSubmit",
     shouldFocusError: true,
   });
-  // const { control, register, formState } = rhfMethods;
-  const { control, watch, register, setValue } = rhfMethods;
+  const { control, register } = rhfMethods;
   const [availableBalance, setAvailableBalance] = useState(BigNumber.from(0));
 
-  const validateMaximumAmount = async (value: string) => {
-    if (!account || !usdcContract) {
-      return;
-    }
-    const valueAsUsdc = utils.parseUnits(value, USDC_DECIMALS);
-    console.log(valueAsUsdc);
-    if (valueAsUsdc.gt(remainingJuniorCapacity)) {
-      return "Amount exceeds remaining junior capacity";
-    }
-    if (valueAsUsdc.lte(BigNumber.from(0))) {
-      return "Must deposit more than 0";
-    }
-    if (
-      valueAsUsdc.gt(availableBalance) &&
-      !usdcWithinEpsilon(valueAsUsdc, availableBalance)
-    ) {
-      return "Amount exceeds USDC balance";
-    }
-  };
-  //
-  const [isLoading, setIsLoading] = useState(false);
+  const validateMaximumAmount = async (value: string) =>
+    await validateMaximumAmountSupply(
+      value,
+      account,
+      usdcContract,
+      remainingJuniorCapacity,
+      availableBalance
+    );
 
   const onSubmit = async (data: FormFields) => {
-    debugger;
-    console.log(data);
     setIsLoading(true);
     if (!usdcContract || !provider || !account) {
       throw new Error("Wallet not connected properly");
