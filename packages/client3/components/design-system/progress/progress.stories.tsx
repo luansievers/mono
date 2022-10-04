@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Progress } from "./index";
 
 export default {
-  title: "FAD/Components/Progress",
+  title: "FAD/Components/General/Progress",
   component: Progress,
   argTypes: {
     children: {

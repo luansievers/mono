@@ -6,7 +6,7 @@ import { SupportedCrypto } from "@/lib/graphql/generated";
 import { PoolCard } from "./index";
 
 export default {
-  title: "FAD/Components/Dashboard/PoolCard",
+  title: "FAD/Components/Dashboard/Pool List",
   component: PoolCard,
   argTypes: {
     type: {

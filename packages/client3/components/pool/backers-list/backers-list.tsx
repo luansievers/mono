@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Avatar, BodyText, Link } from "../design-system";
+import { Avatar, BodyText, Link } from "../../design-system";
 
 /**
  * Dummy Data to be used for now
