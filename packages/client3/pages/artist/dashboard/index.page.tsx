@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BigNumber } from "ethers";
-import Router, { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useState } from "react";
 
 import { KYC } from "@/components/dashboard/kyc";
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
@@ -62,22 +62,22 @@ function Dashboard() {
     fetchData();
   }, [state, account]);
 
-  const onSetEarnedAndRaisedAmount = (
-    earnedAmount: number,
-    raisedAmount: number
-  ) => {
-    const dashBoardData = {
-      totalEarnedAmount: {
-        amount: BigNumber.from(earnedAmount),
-        token: SupportedCrypto.Usdc,
-      },
-      totalRaisedAmount: {
-        amount: BigNumber.from(raisedAmount),
-        token: SupportedCrypto.Usdc,
-      },
-    };
-    setDashboardData(dashBoardData);
-  };
+  const onSetEarnedAndRaisedAmount = useCallback(
+    (earnedAmount: number, raisedAmount: number) => {
+      const dashBoardData = {
+        totalEarnedAmount: {
+          amount: BigNumber.from(earnedAmount),
+          token: SupportedCrypto.Usdc,
+        },
+        totalRaisedAmount: {
+          amount: BigNumber.from(raisedAmount),
+          token: SupportedCrypto.Usdc,
+        },
+      };
+      setDashboardData(dashBoardData);
+    },
+    [setDashboardData]
+  );
 
   if (isVerified) {
     if (openPoolData.length > 0) {

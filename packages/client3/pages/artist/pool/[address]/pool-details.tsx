@@ -3,7 +3,6 @@ import Image from "next/image";
 import { BackersList, DummyBackersListData } from "@/components/backers-list";
 import { Avatar, BodyText, Heading } from "@/components/design-system";
 import { SocialMediaButton } from "@/components/design-system/button/social-media-button";
-import { handleAddressFormat } from "@/lib/format/common";
 
 type Props = {
   poolData: any;
@@ -26,7 +25,7 @@ function PoolDetail({ poolData }: Props) {
           image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAdUlEQVR42mNgGAWjAAj+48GUG37i92+cmFJL/hMDKLHkv1TeVYKYIgvwBQ81gommFvxHtqB0797/6BbCxMixAGzA7AcPUFyJzEcWI9sHxAQP1YIIGWPzCVUjeehbQLN8gK2wG1o+oElpSiiIqFoXUKuCoboFAP+MJG7jSOWlAAAAAElFTkSuQmCC"
         />
         <BodyText className="pl-3 text-white" size="large" semiBold>
-          {poolData?.artist ?? handleAddressFormat(poolData?.walletAddress)}
+          {poolData?.artist ?? "Tom Smith"}
         </BodyText>
       </div>
       <BodyText size="normal" className="mt-6 text-white">
