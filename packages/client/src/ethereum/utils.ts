@@ -72,7 +72,7 @@ const ONE_INCH_ADDRESSES = {
 const mapNetworkToID: Record<string, string> = {
   main: MAINNET,
   ropsten: ROPSTEN,
-  private: AURORA,
+  private: MOONBEAM,
   rinkeby: RINKEBY,
   aurora: AURORA,
   moonbeam: MOONBEAM,
