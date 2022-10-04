@@ -14,7 +14,7 @@ import WebsocketProvider from "web3-providers-ws"
 import HttpProvider from "web3-providers-http"
 import {JsonRpcPayload, JsonRpcResponse, WebsocketProviderOptions} from "web3-core-helpers"
 import {Web3IO, UserWalletWeb3Status} from "./types/web3"
-import {AURORA, MAINNET} from "./ethereum/utils"
+import {AURORA, MAINNET, MOONBEAM} from "./ethereum/utils"
 import {GFITokenImageURL} from "./utils"
 import {isWalletConnectProvider, WalletConnectWeb3Provider, web3Modal} from "./walletConnect"
 import {getERC20, Ticker} from "./ethereum/erc20"
@@ -41,6 +41,7 @@ const networkNameByChainId: {[chainId: string]: string} = {
   "0x1": MAINNET,
   "0x4": "rinkeby",
   "0x4e454153": "aurora",
+  "0x507": "moonbeam",
 }
 
 const websocketOptions: WebsocketProviderOptions = {
@@ -179,6 +180,12 @@ const getWeb3ProviderConfig = (networkName: string): Web3ProviderConfig | undefi
     ? {
         websocketUrl: "wss://testnet.aurora.dev",
         httpUrl: "https://testnet.aurora.dev",
+        name: "Alchemy",
+      }
+    : networkName === MOONBEAM
+    ? {
+        websocketUrl: "wss://wss.api.moonbase.moonbeam.network",
+        httpUrl: "https://rpc.api.moonbase.moonbeam.network",
         name: "Alchemy",
       }
     : undefined

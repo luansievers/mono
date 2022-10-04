@@ -46,7 +46,7 @@ export const originAllowed = (allowedOrigins: string[], origin: string): boolean
  * one to use by default in servicing the request.
  */
 const defaultBlockchainIdentifierByOrigin: {[origin: string]: string | number} = {
-  "http://localhost:3000": 1313161555,
+  "http://localhost:3000": 1287,
   "https://murmuration.goldfinch.finance": "https://murmuration.goldfinch.finance/_chain",
   "https://app.goldfinch.finance": 1,
 }
@@ -77,7 +77,7 @@ const _getBlockchain = (origin: string): BaseProvider => {
   // } else {
   //   return new ethers.providers.InfuraProvider(network, INFURA_PROJECT_ID)
   // }
-  return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
+  return new ethers.providers.WebSocketProvider("wss://wss.api.moonbase.moonbeam.network")
 }
 
 /**

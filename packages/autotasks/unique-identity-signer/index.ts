@@ -24,6 +24,7 @@ const API_URLS = {
   1: "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net",
   31337: "http://localhost:5001/goldfinch-frontends-dev/us-central1",
   1313161555: "https://us-central1-free-artists-dev.cloudfunctions.net",
+  1287: "https://us-central1-free-artists-dev.cloudfunctions.net",
 }
 
 /**
