@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FreeArtistsLogo } from ".";
 
 export default {
-  title: "FAD/Components/Logo",
+  title: "FAD/Components/General/Logo",
   component: FreeArtistsLogo,
 } as ComponentMeta<typeof FreeArtistsLogo>;
 

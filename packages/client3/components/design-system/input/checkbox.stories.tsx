@@ -4,7 +4,7 @@ import { Checkbox } from "./checkbox";
 
 export default {
   component: Checkbox,
-  title: "FAD/Components/Input",
+  title: "FAD/Components/General/Input",
 } as ComponentMeta<typeof Checkbox>;
 
 export const CheckboxStory: ComponentStory<typeof Checkbox> = (args) => (

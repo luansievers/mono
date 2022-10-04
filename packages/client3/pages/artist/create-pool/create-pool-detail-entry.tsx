@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+import clsx from "clsx";
+import { addDays } from "date-fns";
 import {
   Control,
   Controller,
@@ -8,10 +11,10 @@ import {
 import {
   BodyText,
   DollarInput,
-  Icon,
   Input,
   TextArea,
   DatePicker,
+  Caption,
 } from "@/components/design-system";
 import { FileUpload } from "@/components/design-system/file-upload";
 
@@ -35,7 +38,7 @@ function CreatePoolDetailEntry({
         Pool Name
       </BodyText>
       <Input
-        {...register("poolName", { required: true })}
+        {...register("poolName", { required: "Pool name is required" })}
         className="col-span-3"
         name="poolName"
         inputMode="text"
@@ -51,6 +54,7 @@ function CreatePoolDetailEntry({
         name="goalAmount"
         inputMode="text"
         placeholder="Enter goal amount"
+        errorMessage={errors.poolName?.message}
       />
       <BodyText className="my-auto text-white" size="normal">
         Closing Date
@@ -66,6 +70,8 @@ function CreatePoolDetailEntry({
               selected={value}
               placeholderText="MM/DD/YYYY"
               errorMessage={errors.closingDate?.message}
+              minDate={addDays(new Date(), 1)}
+              maxDate={addDays(new Date(), 365)}
             />
           );
         }}
@@ -74,7 +80,9 @@ function CreatePoolDetailEntry({
         Project Detail
       </BodyText>
       <TextArea
-        {...register("projectDetail", { required: true })}
+        {...register("projectDetail", {
+          required: "Project Details is required",
+        })}
         outerClassName="col-span-3"
         className="resize-none"
         name="projectDetail"
@@ -88,14 +96,19 @@ function CreatePoolDetailEntry({
         Project Cover Image
       </BodyText>
       <div className="col-span-3">
-        <FileUpload name="poolName" />
-        <BodyText
-          size="normal"
-          className="mt-2 flex items-center gap-x-2 text-accent-1"
-        >
-          <Icon size="lg" name="PlusCircle" />
-          Add Additional Media(Photo, Video or Audio)
-        </BodyText>
+        <FileUpload
+          className="col-span-3"
+          name="projectCoverImage"
+          errorMessage={errors.projectCoverImage?.message}
+        />
+        <Caption className="text-dark-50">
+          Default image if no image is uploaded
+        </Caption>
+        <img
+          src="https://gateway.ipfs.io/ipfs/QmUG9ZCvVPZT7JMARSypqvuX4LBCb72449tnAeRyknNVCE#x-ipfs-companion-no-redirect"
+          className={clsx("rounded-md", "h-[90px] w-[150px]", "object-fill")}
+          alt=""
+        />
       </div>
     </>
   );

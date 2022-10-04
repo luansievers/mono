@@ -22,11 +22,19 @@ setup_env_files:
 # Applications
 ################################################################################
 
-protocol:
+protocol: 
 	sh setup/scripts/setup_protocol.sh
+
+reset_protocol: 
+	sh setup/scripts/reset_protocol.sh
 
 graph:
 	sh setup/scripts/setup_subgraph.sh
+
+# only need to run this once
+ipfs:
+	$(MAKE) -C packages/client3/ipfs ipfs
+	
 
 reset_graph:
 	docker compose -f packages/subgraph/docker-compose.yml down -v --rmi all

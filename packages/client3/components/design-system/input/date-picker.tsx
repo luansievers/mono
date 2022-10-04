@@ -30,7 +30,7 @@ interface DatePickerProps extends React.ComponentProps<typeof ReactDatePicker> {
 }
 
 export const DatePicker = forwardRef<ReactDatePicker, DatePickerProps>(
-  function Input(
+  function DatePicker(
     {
       helperText,
       errorMessage,
@@ -68,9 +68,7 @@ export const DatePicker = forwardRef<ReactDatePicker, DatePickerProps>(
                 "bg-transparent",
                 "placeholder:text-dark-80",
                 "text-light-40",
-
                 isError ? "border border-state-error" : "border border-dark-80",
-
                 disabled && "opacity-50",
                 decoration ? "pr-8" : null,
                 textSize === "sm"

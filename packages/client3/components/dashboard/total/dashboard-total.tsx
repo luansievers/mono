@@ -1,17 +1,17 @@
 import clsx from "clsx";
 
-import { BodyText, Button, Heading } from "@/components/design-system";
+import { BodyText, Heading, LinkButton } from "@/components/design-system";
 import { formatCrypto } from "@/lib/format";
 import { CryptoAmount } from "@/lib/graphql/generated";
 
 type Props = {
-  onCreatePoolClicked?: () => void;
+  createPoolHref?: string;
   totalRaisedAmount: CryptoAmount;
   totalEarnedAmount: CryptoAmount;
 };
 
 export function DashboardTotal({
-  onCreatePoolClicked,
+  createPoolHref,
   totalRaisedAmount,
   totalEarnedAmount,
 }: Props) {
@@ -40,9 +40,11 @@ export function DashboardTotal({
           {formatCrypto(totalEarnedAmount)}
         </Heading>
       </div>
-      {onCreatePoolClicked ? (
+      {createPoolHref ? (
         <div className="col-start-5 self-center">
-          <Button buttonType="secondary">Create Pool</Button>
+          <LinkButton buttonType="secondary" href={createPoolHref}>
+            Create Pool
+          </LinkButton>
         </div>
       ) : null}
     </div>

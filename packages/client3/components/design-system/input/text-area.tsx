@@ -76,7 +76,6 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
               "relative mt-1 w-full rounded",
               focus ? "ring-2 ring-green-50" : "border border-dark-80",
               isError ? "ring ring-state-error" : "ring-green-50",
-
               focus
                 ? [isError ? "ring-2 ring-state-error" : "ring ring-green-50"]
                 : null

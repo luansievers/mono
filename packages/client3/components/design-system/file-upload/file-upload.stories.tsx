@@ -3,18 +3,8 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { FileUpload } from ".";
 
 export default {
-  title: "FAD/Components/File Upload",
+  title: "FAD/Components/General/File Upload",
   component: FileUpload,
-  argTypes: {
-    children: {
-      control: {
-        type: "text",
-      },
-    },
-  },
-  parameters: {
-    controls: { expanded: true },
-  },
 } as ComponentMeta<typeof FileUpload>;
 
 export const FileUploadStory: ComponentStory<typeof FileUpload> = (args) => (

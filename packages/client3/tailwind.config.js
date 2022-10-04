@@ -33,10 +33,12 @@ module.exports = {
           },
           2: {
             DEFAULT: "#7BF8AF",
-            shade: "#BFED47",
+            shade: "#77EAA7",
+            opacity: "#7BF8AF33",
           },
           3: {
             DEFAULT: "#D9644A",
+            opacity: "#D9644A33",
           },
           4: {
             DEFAULT: "#95628A",

@@ -15,7 +15,11 @@ import { checkWalletAddress } from "@/services/user-services";
 import { Button } from "..";
 import { ButtonStateText, IWalletButtonStyles } from "./types";
 
-export function WalletButton() {
+type Props = {
+  className?: string;
+};
+
+export function WalletButton({ className }: Props) {
   const { account, isActive, error } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useSetUser();
@@ -128,6 +132,7 @@ export function WalletButton() {
         isLoading={{ isLoading, position: "left" }}
         iconLeft={buttonStyles.icon as IconProps["name"]}
         buttonType={buttonStyles.type as ButtonType}
+        className={className}
       >
         {buttonStyles.state}
       </Button>
@@ -138,6 +143,7 @@ export function WalletButton() {
       isLoading={{ isLoading, position: "left" }}
       iconLeft={buttonStyles.icon as IconProps["name"]}
       buttonType={buttonStyles.type as ButtonType}
+      className={className}
     >
       {buttonStyles.state}
     </Button>

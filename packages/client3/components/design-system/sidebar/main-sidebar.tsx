@@ -41,7 +41,7 @@ function MainSideBar({ className }: Props) {
           router.push(`/${ToggleStates.state2.key}/dashboard`);
         } else {
           setApplicationState && setApplicationState(true);
-          router.push(`/${ToggleStates.state1.key}/dashboard`);
+          router.push(`/${ToggleStates.state1.key}/all-artist-pools`);
         }
       }}
     />

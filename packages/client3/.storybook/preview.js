@@ -6,6 +6,10 @@ import { DocsContainer } from "./DocsContainer";
 import { useDarkMode } from "storybook-dark-mode";
 import * as NextImage from "next/image";
 import { RouterContext } from "next/dist/shared/lib/router-context";
+import { WalletProvider } from "@/lib/wallet";
+import { apolloClient } from "@/lib/graphql/apollo";
+import { ApolloProvider } from "@apollo/client";
+import { AppWideModals } from "@/lib/state/app-wide-modals";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -34,7 +38,12 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <div className={useDarkMode() ? themes.dark.className : "light"}>
-      <Story />
+      <WalletProvider>
+        <ApolloProvider client={apolloClient}>
+          <AppWideModals />
+          <Story />
+        </ApolloProvider>
+      </WalletProvider>
     </div>
   ),
 ];

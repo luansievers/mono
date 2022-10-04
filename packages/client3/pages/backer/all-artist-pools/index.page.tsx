@@ -1,19 +1,43 @@
 import { useQuery } from "@apollo/client";
+import axios from "axios";
 import { BigNumber } from "ethers";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import {
+  Heading,
   TabButton,
   TabContent,
   TabGroup,
   TabList,
   TabPanels,
 } from "@/components/design-system";
+import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 import { backerAllArtistPools } from "@/queries/backer.queries";
 
 function AllArtistPoolPage() {
+  useSelectedSidebarItem("all-artist-pools");
+  useLayoutTitle("All Artist Pools");
+
   const { data, error } = useQuery(backerAllArtistPools);
+  const [openPoolData, setOpenPoolData] = useState<any[]>([]);
+  const router = useRouter();
+  /**
+   * Below code(useEffect) and it's usages need to be replaced by openTranchedPools when create pool insertion is done
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(`/api/pool`);
+      const mappedData = Object.keys(response.data).map((key) => ({
+        id: key,
+        ...response.data[key],
+      }));
+      setOpenPoolData(mappedData);
+    };
+    fetchData();
+  }, []);
 
   const openTranchedPools = data?.tranchedPools?.filter((tranchedPool: any) =>
     (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
@@ -23,39 +47,47 @@ function AllArtistPoolPage() {
     (tranchedPool: any) =>
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
+  const handleClick = (poolAddress: string) => {
+    router.push(`/artist/pool/${poolAddress}`);
+  };
 
   return (
     <>
-      TODO: Search box TODO: Sort
       <TabGroup>
         <TabList>
-          <TabButton>Open</TabButton>
-          <TabButton>Closed</TabButton>
+          <TabButton>
+            <Heading level={4}>Open</Heading>
+          </TabButton>
+          <TabButton>
+            <Heading level={4}>Closed</Heading>
+          </TabButton>
         </TabList>
         <TabPanels>
-          <TabContent>
-            {openTranchedPools
-              ? openTranchedPools.map((tranchedPool: any) => (
+          <TabContent className="mt-7">
+            {openPoolData
+              ? openPoolData.map((tranchedPool) => (
                   <PoolCard
                     key={tranchedPool.id}
                     className="mb-10"
-                    poolName={tranchedPool.name}
+                    poolName={tranchedPool.poolName}
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
-                      amount:
-                        tranchedPool?.juniorTranches[0].principalDeposited,
+                      amount: BigNumber.from(
+                        tranchedPool.totalSuppliedAmount ?? 0
+                      ),
                     }}
                     totalGoalAmount={{
                       token: SupportedCrypto.Usdc,
-                      amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
+                      amount: BigNumber.from(tranchedPool.goalAmount ?? 0), //90% - not sure if this is the correct field
                     }}
                     artistName={tranchedPool.borrower.name}
                     image={tranchedPool.borrower.logo}
+                    onClick={() => handleClick(tranchedPool.id)}
                   />
                 ))
               : undefined}
           </TabContent>
-          <TabContent>
+          <TabContent className="mt-7">
             {closedTranchedPools
               ? closedTranchedPools.map((tranchedPool: any) => (
                   <PoolCard
