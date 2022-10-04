@@ -9,3 +9,7 @@ git checkout ../client2/constants/metadata/localhost.json
 rm -rf .openzeppelin/unknown-1313161555.json
 rm -rf deployments/aurora/
 rm -rf ../client/config/pool-metadata/aurora.json
+
+rm -rf .openzeppelin/unknown-1287.json
+rm -rf deployments/moonbeam/
+rm -rf ../client/config/pool-metadata/moonbeam.json
