@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { TopBar } from "./index";
 
 export default {
-  title: "FAD/Components/TopBar",
+  title: "FAD/Components/General/TopBar",
   component: TopBar,
   argTypes: {
     topBarTitle: {

@@ -4,7 +4,7 @@ import { Button } from ".";
 import { SocialMediaButton } from "./social-media-button";
 
 export default {
-  title: "FAD/Components/Button",
+  title: "FAD/Components/General/Button",
   component: Button,
   argTypes: {
     children: {

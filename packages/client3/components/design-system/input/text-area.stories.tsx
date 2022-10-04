@@ -4,7 +4,7 @@ import { TextArea } from ".";
 
 export default {
   component: TextArea,
-  title: "FAD/Components/Input",
+  title: "FAD/Components/General/Input",
 } as ComponentMeta<typeof TextArea>;
 
 export const TextAreaStory: ComponentStory<typeof TextArea> = (args) => (

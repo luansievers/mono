@@ -4,7 +4,7 @@ import { RadioButton } from "./radiobutton";
 
 export default {
   component: RadioButton,
-  title: "FAD/Components/Input",
+  title: "FAD/Components/General/Input",
 } as ComponentMeta<typeof RadioButton>;
 
 export const RadioButtonStory: ComponentStory<typeof RadioButton> = (args) => (

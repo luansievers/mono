@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { BackersList, DummyBackersListData } from "./index";
 
 export default {
-  title: "FAD/Components/Pool/BackersList",
+  title: "FAD/Components/Pool/Backers List",
   component: BackersList,
 } as ComponentMeta<typeof BackersList>;
 

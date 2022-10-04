@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Display } from ".";
 
 export default {
-  title: "FAD/Components/Typography",
+  title: "FAD/Components/General/Typography",
   component: Display,
 } as ComponentMeta<typeof Display>;
 
