@@ -112,6 +112,7 @@
     "@goldfinch-eng/functions": "^0.0.1",
     "@goldfinch-eng/utils": "^0.0.1",
     "@nomiclabs/hardhat-ethers": "^2.0.1",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/cli": "^2.6.0",

@@ -11,10 +11,12 @@ import {
 import "hardhat-contract-sizer"
 import "@openzeppelin/hardhat-upgrades"
 import "solidity-docgen"
+import "@nomiclabs/hardhat-etherscan"
 
 dotenv.config({path: findEnvLocal()})
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
 const ALCHEMY_RINKEBY_API_KEY = process.env.ALCHEMY_RINKEBY_API_KEY
+const MOONSCAN_API_KEY = process.env.MOONSCAN_API_KEY
 
 // *** Uncomment when you actually want to run on mainnet or testnet ****
 // const TEST_PROTOCOL_OWNER_KEY = process.env.TESTNET_PROTOCOL_OWNER_KEY
@@ -92,6 +94,11 @@ export default {
       url: "https://eth.bd.evmos.dev:8545",
       accounts: {mnemonic: process.env.EOA_MNEMONIC},
       chainId: 9000,
+    },
+  },
+  etherscan: {
+    apiKey: {
+      moonbaseAlpha: MOONSCAN_API_KEY,
     },
   },
   solidity: {
