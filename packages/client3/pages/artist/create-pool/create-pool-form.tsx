@@ -1,13 +1,19 @@
 import axios from "axios";
+import BN from "bn.js";
+import { BigNumber, ContractReceipt } from "ethers";
+import { Result } from "ethers/lib/utils";
+import hre, { ethers } from "hardhat";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import "@nomiclabs/hardhat-ethers";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
 import { UploadedFileType } from "@/components/upload-pdf";
 import { useContract } from "@/lib/contracts";
 import { useWallet } from "@/lib/wallet"; // add wallet address
+import { TranchedPool } from "@/types/ethers-contracts";
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
@@ -31,6 +37,151 @@ export interface FormFields {
     raisedTarget: string;
   };
 }
+// export type Log = {
+//   blockNumber: number;
+//   blockHash: string;
+//   transactionHash: string;
+//   transactionIndex: number;
+//   logIndex: number;
+//   removed: boolean;
+//   address: string;
+//   topics: string[];
+//   data: string;
+// };
+// export type Receipt = {
+//   from: string;
+//   transactionHash: string;
+//   blockHash: string;
+//   blockNumber: number;
+//   transactionIndex: number;
+//   cumulativeGasUsed: BigNumber | string | number;
+//   gasUsed: BigNumber | string | number;
+//   contractAddress?: string;
+//   to?: string;
+//   logs?: Log[];
+//   events?: any[];
+//   logsBloom?: string;
+//   byzantium?: boolean;
+//   status?: number;
+//   confirmations?: number;
+// };
+
+// export type Libraries = { [libraryName: string]: string };
+
+// export type Facet = {
+//   facetAddress: string;
+//   functionSelectors: string[];
+// };
+
+// export type FacetCut = Facet & {
+//   action: FacetCutAction;
+// };
+
+// export enum FacetCutAction {
+//   Add,
+//   Replace,
+//   Remove,
+// }
+// export interface Deployment {
+//   address: string;
+//   abi: any[];
+//   receipt?: Receipt;
+//   transactionHash?: string;
+//   history?: Deployment[];
+//   implementation?: string;
+//   args?: any[];
+//   linkedData?: any;
+//   solcInputHash?: string;
+//   metadata?: string;
+//   bytecode?: string;
+//   deployedBytecode?: string;
+//   libraries?: Libraries;
+//   userdoc?: any;
+//   devdoc?: any;
+//   methodIdentifiers?: any;
+//   diamondCut?: FacetCut[];
+//   facets?: Facet[];
+//   storageLayout?: any;
+//   gasEstimates?: any;
+// }
+
+export function assertNonNullable<T>(
+  val: T | null | undefined,
+  errorMessage?: string
+): asserts val is NonNullable<T> {
+  if (val === null || val === undefined) {
+    console.log("Pool is undefined", errorMessage);
+    throw new Error(errorMessage);
+  }
+}
+// function isTestEnv() {
+//   return process.env.NODE_ENV === "test";
+// }
+
+// async function getDeployedAsEthersContractOrNull<T>(
+//   getter: (name: string) => Promise<Deployment | null>,
+//   name: string
+// ): Promise<T | null> {
+//   const {
+//     deployments: { log: logger },
+//   } = hre;
+
+//   logger("📡 Trying to get the deployed version of...", name);
+//   let deployed = await getter(name);
+//   if (!deployed && isTestEnv()) {
+//     deployed = await getter(`Test${name}`);
+//   }
+//   if (deployed) {
+//     return await toEthers<T>(deployed as Parameters<typeof toEthers>[0]);
+//   } else {
+//     return null;
+//   }
+// }
+
+// async function getDeployedAsEthersContract<T>(
+//   getter: (name: string) => Promise<Deployment | null>,
+//   name: string
+// ): Promise<T> {
+//   const deployed = await getDeployedAsEthersContractOrNull<T>(getter, name);
+//   if (deployed) {
+//     return deployed;
+//   } else {
+//     throw new Error("Contract is not deployed");
+//   }
+// }
+
+function getLastEventArgs(result: ContractReceipt): Result {
+  const events = result.events;
+  assertNonNullable(events);
+  const lastEvent = events[events.length - 1];
+  assertNonNullable(lastEvent);
+  assertNonNullable(lastEvent.args);
+  return lastEvent.args;
+}
+const INTEREST_DECIMALS = new BN(String(1e18));
+
+function interestAprAsBN(interestPercentageString: string): BN {
+  const interestPercentageFloat = parseFloat(interestPercentageString);
+  return new BN(String(interestPercentageFloat * 100000))
+    .mul(INTEREST_DECIMALS)
+    .div(new BN(10000000));
+}
+const USDCDecimals = new BN(String(1e6));
+
+// async function getProtocolOwner(): Promise<string> {
+//   const chainId = 31337;
+//   const { protocol_owner } = await getNamedAccounts();
+//   if (isMainnetForking()) {
+//     return SAFE_CONFIG[MAINNET_CHAIN_ID].safeAddress;
+//   } else if (chainId === LOCAL_CHAIN_ID) {
+//     assertIsString(protocol_owner);
+//     return protocol_owner;
+//   } else if (SAFE_CONFIG[chainId]) {
+//     return SAFE_CONFIG[chainId].safeAddress;
+//   } else {
+//     throw new Error(`Unknown owner for chain id ${chainId}`);
+//   }
+// }
 
 function CreatePoolForm() {
   const rhfMethods = useForm<FormFields>({
@@ -42,37 +193,56 @@ function CreatePoolForm() {
   const { account } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
 
-  const BORROWER = "0x2D0113824068e9c5fc106772abC583BF8e19597A";
-  const GOLDFINCH_FACTORY = "0xc2872Dc1AC3da8e8074685b86Fb80522182Ef564";
-  const JUNIOR_FEE_PERCENT = "20";
-  const LIMIT = "10000000000";
-  const INTEREST_APR = "50000000000000000"; // 5% APR
-  const PAYMENT_PERIOD_IN_DAYS = "10";
-  const TERM_IN_DAYS = "365";
-  const LATE_FEE_APR = "0";
-  const PRINCIPAL_GRACE_PERIOD_IN_DAYS = "185";
-  const FUNDABLE_AT = "0";
-  const ALLOWED_UID = [0];
+  const BORROWER = "0x108cc3833cd49333a7908e4bb52f4cf8f4090425";
+  const juniorFeePercent = String(new BN(20));
+  const limit = String(new BN(10000).mul(USDCDecimals));
+  const interestApr = String(interestAprAsBN("5.00"));
+  const paymentPeriodInDays = String(new BN(30));
+  const termInDays = String(new BN(360));
+  const lateFeeApr = String(new BN(0));
+  const principalGracePeriodInDays = String(new BN(185));
+  const fundableAt = String(new BN(0));
+  // const protocol_owner = await getProtocolOwner();
+  // const underwriterSigner = ethers.provider.getSigner(underwriter);
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
     "0xd20508E1E971b80EE172c73517905bfFfcBD87f9"
   );
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data): Promise<void> => {
     setIsLoading(true);
-    const receipt = await goldfinchFactory?.createPool(
-      BORROWER,
-      JUNIOR_FEE_PERCENT,
-      LIMIT,
-      INTEREST_APR,
-      PAYMENT_PERIOD_IN_DAYS,
-      TERM_IN_DAYS,
-      LATE_FEE_APR,
-      PRINCIPAL_GRACE_PERIOD_IN_DAYS,
-      FUNDABLE_AT,
-      ALLOWED_UID
-    );
-    console.log("Receipt", receipt);
+
+    try {
+      const receipt = await (
+        await goldfinchFactory!
+          // .connect(underwriterSigner)
+          .createPool(
+            BORROWER,
+            juniorFeePercent,
+            limit,
+            interestApr,
+            paymentPeriodInDays,
+            termInDays,
+            lateFeeApr,
+            principalGracePeriodInDays,
+            fundableAt,
+            [0]
+          )
+      ).wait();
+      console.log("Receipt", receipt);
+      const lastEventArgs = getLastEventArgs(receipt);
+      console.log("Last event args", lastEventArgs);
+      const poolAddress = lastEventArgs[0];
+      console.log("Pool address", poolAddress);
+
+      // const poolContract = await getDeployedAsEthersContract<TranchedPool>(
+      //   getOrNull,
+      //   "TranchedPool"
+      // );
+    } catch (error) {
+      console.log(error);
+    }
+
     // await axios.post(`/api/pool`, {
     //   params: {
     //     ...data,
@@ -80,7 +250,7 @@ function CreatePoolForm() {
     //     closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),
     //   },
     // });
-    router.push("/artist/dashboard");
+    // router.push("/artist/dashboard");
     setIsLoading(false);
   };
 

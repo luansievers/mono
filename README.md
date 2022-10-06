@@ -259,3 +259,7 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 ##  Troubleshooting
 - `@/lib/graphql....` error 
     - Run `make reset_graph` then stat at 5.5 or (`5.a in the README.md preview`)
+- `@goldfinch-eng/protocol: SyntaxError: /Users/"user"/Documents/weavik/mono/packages/protocol/cache/solidity-files-cache.json: Unexpected end of JSON input`
+    - Delete your `packages/protocol/cache` and rerun `make protocol`
+- Metamask `nonce` too high?
+    - Reset metamask wallet: https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-an-account 
