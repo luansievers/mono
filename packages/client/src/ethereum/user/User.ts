@@ -70,7 +70,7 @@ import {getCachedPastEvents, GoldfinchProtocol} from "../GoldfinchProtocol"
 import {MerkleDirectDistributorLoaded} from "../merkleDirectDistributor"
 import {MerkleDistributorLoaded} from "../merkleDistributor"
 import {getStakedPositionTypeByValue, SeniorPoolLoaded, StakedPositionType, StakingRewardsLoaded} from "../pool"
-import {getFromBlock} from "../utils"
+import {getFromBlock, MOONBEAM_LAUNCH_BLOCK} from "../utils"
 import {UserStakingRewards, UserStakingRewardsLoaded} from "./UserStakingRewards"
 import {Web3IO} from "../../types/web3"
 
@@ -508,7 +508,7 @@ async function getAndTransformUSDCEvents(
 ): Promise<HistoricalTx<ApprovalEventType>[]> {
   let approvalEvents = await getCachedPastEvents(usdc.contract.readOnly, APPROVAL_EVENT, {
     filter: {owner, spender},
-    fromBlock: "earliest",
+    fromBlock: MOONBEAM_LAUNCH_BLOCK,
     toBlock: currentBlock.number,
   })
   approvalEvents = _.chain(approvalEvents)
