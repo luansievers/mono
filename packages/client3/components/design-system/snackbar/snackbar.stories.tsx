@@ -5,7 +5,7 @@ import { Snackbar } from ".";
 import { SnackbarType } from "./types";
 
 export default {
-  title: "FAD/Components/Snackbar",
+  title: "FAD/Components/General/Snackbar",
   component: Snackbar,
 } as ComponentMeta<typeof Snackbar>;
 

@@ -5,7 +5,7 @@ import { DatePicker } from "./date-picker";
 
 export default {
   component: DatePicker,
-  title: "FAD/Components/Input",
+  title: "FAD/Components/General/Input",
 } as ComponentMeta<typeof DatePicker>;
 
 export const DatePickerInputStory: ComponentStory<typeof DatePicker> = (

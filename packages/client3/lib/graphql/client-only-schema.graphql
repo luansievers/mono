@@ -17,7 +17,6 @@ type Borrower {
 }
 
 extend type TranchedPool {
-  artist: String!
   name: String!
   category: String!
   description: String!
@@ -120,7 +119,7 @@ type Viewer {
   usdcBalance: CryptoAmount
   gfiBalance: CryptoAmount
   fiduBalance: CryptoAmount
-
+  curveLpBalance: CryptoAmount
   gfiGrants: [GfiGrant!]!
 }
 
@@ -129,10 +128,15 @@ type BlockInfo {
   timestamp: Int!
 }
 
+type CurvePool {
+  estimatedCurveStakingApyRaw: BigDecimal!
+}
+
 extend type Query {
   viewer: Viewer!
   isWalletModalOpen: Boolean!
   isVerificationModalOpen: Boolean!
   gfiPrice(fiat: SupportedFiat!): GfiPrice!
   currentBlock: BlockInfo
+  curvePool: CurvePool!
 }

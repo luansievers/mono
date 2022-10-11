@@ -4,7 +4,7 @@ import { Input } from ".";
 
 export default {
   component: Input,
-  title: "FAD/Components/Input",
+  title: "FAD/Components/General/Input",
 } as ComponentMeta<typeof Input>;
 
 export const InputStory: ComponentStory<typeof Input> = (args) => (

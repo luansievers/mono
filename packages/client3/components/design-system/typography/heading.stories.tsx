@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Heading } from ".";
 
 export default {
-  title: "FAD/Components/Typography",
+  title: "FAD/Components/General/Typography",
   component: Heading,
   argTypes: {
     as: {

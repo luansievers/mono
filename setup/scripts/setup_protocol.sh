@@ -14,6 +14,15 @@ if [ "$node_version" != "v16.15.1" ]; then
   echo $node_version
   nvm install 16.15.1
 fi
+# set python version
+python_version=`python -V`
+
+if [ "$python_version" != "Python 3.10.4" ]; then
+  echo $python_version
+  pyenv install 3.10.4
+  pyenv global 3.9.7
+fi
+pyenv global 3.10.4
 
 export $(grep -v '^#' .env.local | xargs)
 if [ "$TEST_USER" = "{{ADD_YOUR_METAMASK_ADDRESS_HERE}}" ]; then

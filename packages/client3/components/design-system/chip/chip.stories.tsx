@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Chip } from "./index";
 
 export default {
-  title: "FAD/Components/Chip",
+  title: "FAD/Components/General/Chip",
   component: Chip,
   argTypes: {
     children: {
