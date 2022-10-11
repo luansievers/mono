@@ -23,7 +23,7 @@ export function WalletButton({ className }: Props) {
     <Tooltip content={error.message}>
       <Button
         iconLeft="Exclamation"
-        buttonType={ButtonType.PRIMARY as ButtonType}
+        buttonType={ButtonType.PRIMARY}
         className={className}
         onClick={
           error.name === "ChainIdNotAllowedError"
@@ -43,7 +43,7 @@ export function WalletButton({ className }: Props) {
     >
       <Button
         iconLeft={"Wallet"}
-        buttonType={ButtonType.SECONDARY as ButtonType}
+        buttonType={ButtonType.SECONDARY}
         className={className}
       >
         {handleAddressFormat(account)}
@@ -52,7 +52,7 @@ export function WalletButton({ className }: Props) {
   ) : (
     <Button
       onClick={openWalletModal}
-      buttonType={ButtonType.PRIMARY as ButtonType}
+      buttonType={ButtonType.PRIMARY}
       className={className}
     >
       {ButtonStateText.CONNECT}
