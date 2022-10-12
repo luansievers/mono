@@ -2,15 +2,18 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { Heading, LinkButton } from "@/components/design-system";
-import { useLayoutTitle, useSelectedSidebarItem } from "@/hooks/sidebar-hooks";
+import { Button, Heading, LinkButton } from "@/components/design-system";
+import {
+  useLayoutContext,
+  useLayoutTitle,
+  useSelectedSidebarItem,
+} from "@/hooks/sidebar-hooks";
 
 import PoolDetail from "./pool-details";
 import PoolDetailsRightGrid from "./pool-details-grid-right";
 
 function ArtistPoolPage() {
-  useSelectedSidebarItem("dashboard");
-  useLayoutTitle("Artist Dashboard");
+  const { title } = useLayoutContext();
   const [poolData, setPoolData] = useState<any>(undefined);
   const router = useRouter();
   const { address } = router.query;
@@ -36,13 +39,13 @@ function ArtistPoolPage() {
 
   return (
     <>
-      <LinkButton
+      <Button
         buttonType="tertiary"
-        href={"/artist/dashboard"}
+        onClick={() => router.back()}
         iconLeft="CaretLeft"
       >
-        Artist Dashboard
-      </LinkButton>
+        {title}
+      </Button>
       <div className="mb-10 px-4">
         <Heading level={1} className="text-white">
           {poolData?.poolName ?? "Collaboration with Sam"}

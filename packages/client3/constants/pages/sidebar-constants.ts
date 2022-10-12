@@ -22,7 +22,7 @@ export const ArtistMenuItems: SideBarMenuItemType = [
   },
   {
     label: "Transactions",
-    key: "artist-transaction",
+    key: "transactions",
   },
 ];
 

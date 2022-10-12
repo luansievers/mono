@@ -30,7 +30,7 @@ function DashboardArtistPool({
   }, [openPoolData, setEarnedAndRaisedAmount]);
 
   const handleClick = (poolAddress: string) => {
-    router.push(`/artist/pool/${poolAddress}`);
+    router.push(`/artist/${poolAddress}`);
   };
 
   return (
