@@ -9,7 +9,7 @@ import { ipfs } from "..";
  */
 // export const addFileToIPFS = (fileToUpload: any): Promise<string> => {
 export const addFileToIPFS = (fileToUpload: any): Promise<string> => {
-  let ipfsHash = "";
+  let ipfsHash;
   const fileReader = new FileReader();
 
   return new Promise((resolve, reject) => {

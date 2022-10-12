@@ -12,7 +12,7 @@ import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
 
-export interface FormFields {
+export interface IPool {
   walletAddress: string;
   poolAddress: string;
   poolName: string;
@@ -27,12 +27,18 @@ export interface FormFields {
   };
   terms: {
     projectGoal: string;
-    raisedTarget: string;
+    raiseTarget: string;
   };
 }
 
+export enum reviewStatus {
+  PENDING = "pending",
+  APPROVED = "approved",
+  DECLINED = "declined",
+}
+
 function CreatePoolForm() {
-  const rhfMethods = useForm<FormFields>({
+  const rhfMethods = useForm<IPool>({
     mode: "onSubmit",
     shouldFocusError: true,
   });
@@ -41,11 +47,12 @@ function CreatePoolForm() {
   const { account } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<IPool> = async (data) => {
     setIsLoading(true);
     await axios.post(`/api/pool`, {
       params: {
         ...data,
+        reviewStatus: reviewStatus.PENDING,
         walletAddress: account,
         closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),
       },

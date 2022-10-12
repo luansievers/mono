@@ -2,11 +2,11 @@ import { FormState, UseFormRegister } from "react-hook-form";
 
 import { Heading, BodyText, Input } from "@/components/design-system";
 
-import { FormFields } from "./create-pool-form";
+import { IPool } from "./create-pool-form";
 
 type Props = {
-  formState: FormState<FormFields>;
-  register: UseFormRegister<FormFields>;
+  formState: FormState<IPool>;
+  register: UseFormRegister<IPool>;
 };
 
 function CreatePoolTerms({ formState: { errors }, register }: Props) {
@@ -34,12 +34,12 @@ function CreatePoolTerms({ formState: { errors }, register }: Props) {
         Raised Target
       </BodyText>
       <Input
-        {...register("terms.raisedTarget", { required: true })}
+        {...register("terms.raiseTarget", { required: true })}
         className="col-span-3"
-        name="terms.raisedTarget"
+        name="terms.raiseTarget"
         inputMode="text"
         placeholder="Revenue, Equity, etc."
-        errorMessage={errors?.terms?.raisedTarget?.message}
+        errorMessage={errors?.terms?.raiseTarget?.message}
       />
     </>
   );
