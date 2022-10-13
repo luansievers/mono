@@ -23,7 +23,7 @@ export const addFileToIPFS = (fileToUpload: any): Promise<string> => {
         await ipfs.pin.add(ipfsHash);
         console.log(
           "content is availabe at:",
-          "http://localhost:8080/ipfs/" + ipfsHash
+          "http://localhost:8081/ipfs/" + ipfsHash
           // TODO future Sacha problem, but add external pinning - tested with cloudflare-ipfs (50GB/month free) and works
         );
         resolve(ipfsHash);
