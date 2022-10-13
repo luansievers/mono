@@ -18,6 +18,7 @@ import { AppLevelSideEffects } from "./_app-side-effects";
 
 const initialUser = {
   id: "",
+  isGoListed: false,
   isUsEntity: false,
   isNonUsEntity: false,
   isUsAccreditedIndividual: false,

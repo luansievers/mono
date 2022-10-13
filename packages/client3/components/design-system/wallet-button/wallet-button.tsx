@@ -1,151 +1,96 @@
 import { useQuery } from "@apollo/client";
-import detectEthereumProvider from "@metamask/detect-provider";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
+import {
+  Button,
+  ButtonProps,
+  ButtonType,
+  Tooltip,
+} from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
-import { useApplicationState } from "@/hooks/application-hooks";
 import { useSetUser } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
 import { useWallet } from "@/lib/wallet";
-import { metaMask } from "@/lib/wallet/connectors/metamask";
+import { metaMask, metaMaskHooks } from "@/lib/wallet/connectors/metamask";
 import { accountQuery } from "@/queries/user.queries";
-import { checkWalletAddress } from "@/services/user-services";
-
-import { Button } from "..";
-import { ButtonStateText, IWalletButtonStyles } from "./types";
 
 type Props = {
   className?: string;
 };
 
-export function WalletButton({ className }: Props) {
-  const { account, isActive, error } = useWallet();
-  const [isLoading, setIsLoading] = useState(false);
-  const setUser = useSetUser();
-  const [isWrongUser, setIsWrongUser] = useState<boolean>(false);
+enum ButtonStates {
+  CONNECT = "Connect Wallet",
+  CONNECTING = "Processing...",
+  INSTALL_METAMASK = "Install MetaMask",
+  WRONG_NETWORK = "Wrong Network",
+  ERROR = "Error",
+}
 
-  const user = useQuery(accountQuery, {
+type IWalletButton = Pick<
+  ButtonProps,
+  "onClick" | "isLoading" | "iconLeft" | "buttonType" | "className" | "children"
+>;
+
+export function WalletButton({ className }: Props) {
+  const { account } = useWallet();
+
+  const isActivating = metaMaskHooks.useIsActivating();
+  const error = metaMaskHooks.useError();
+
+  const setUser = useSetUser();
+
+  const { data } = useQuery(accountQuery, {
     variables: {
       userAccount: account?.toLowerCase(),
       fetchPolicy: "network-only",
     },
   });
-  const applicationState = useApplicationState();
 
-  useEffect(() => {
-    const checkWallet = async () => {
-      setIsWrongUser(false);
-      const accountInformation = await checkWalletAddress(
-        account,
-        applicationState
-      );
-      if (accountInformation?.isAccountCorrectState === false) {
-        //set explicitly to false to ignores the `undefined` cases
-        setIsWrongUser(true);
-      }
-    };
-    checkWallet();
-  }, [applicationState, account, error]);
-
-  useEffect(() => {
-    if (user?.data?.user) {
-      setUser && setUser(user.data.user);
-    }
-  }, [user, setUser]);
-
-  const detectBrowser = async () => {
-    const provider = await detectEthereumProvider();
-    if (provider) {
-      return true;
-    }
-    return false;
-  };
-
-  const handleWalletConnect = async () => {
-    setIsLoading(true);
-    if (await detectBrowser()) {
-      if (!isActive) {
-        await metaMask.activate(DESIRED_CHAIN_ID);
-      }
-    }
-    setIsLoading(false);
+  const handleConnectMetaMask = () => {
+    metaMask.activate(DESIRED_CHAIN_ID);
   };
 
   useEffect(() => {
-    if (user?.data?.user) {
-      setUser && setUser(user.data.user);
+    if (data?.user) {
+      setUser && setUser(data.user);
     }
-  }, [user, setUser]);
+  }, [data, setUser]);
 
-  const getButtonStyles = (): IWalletButtonStyles => {
-    if (isLoading) {
-      return {
-        icon: "",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.CONNECTING,
-      };
-    }
+  const getButton = (): IWalletButton => {
     if (error) {
-      if (error.message.includes("MetaMask not installed")) {
-        return {
-          icon: "Exclamation",
-          type: ButtonType.PRIMARY,
-          state: ButtonStateText.INSTALL_METAMASK,
-          tooltip: "MetaMask not installed",
-        };
-      }
       return {
-        icon: "Exclamation",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.ERROR,
-        tooltip: error.message,
+        iconLeft: "Exclamation",
+        buttonType: ButtonType.PRIMARY,
+        children:
+          error.name === "ChainIdNotAllowedError"
+            ? ButtonStates.WRONG_NETWORK
+            : ButtonStates.ERROR,
+        onClick: handleConnectMetaMask,
       };
-    }
-    if (isWrongUser) {
+    } else if (isActivating) {
       return {
-        icon: "Exclamation",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.ERROR,
-        tooltip: "Wrong user type",
+        buttonType: ButtonType.PRIMARY,
+        children: ButtonStates.CONNECTING,
       };
-    }
-    if (isActive) {
+    } else if (account) {
       return {
-        icon: "Wallet",
-        type: ButtonType.SECONDARY,
-        state: handleAddressFormat(account as string),
+        iconLeft: "Wallet",
+        buttonType: ButtonType.SECONDARY,
+        children: handleAddressFormat(account),
       };
     }
     return {
-      icon: "",
-      type: ButtonType.PRIMARY,
-      state: ButtonStateText.CONNECT,
+      buttonType: ButtonType.PRIMARY,
+      onClick: handleConnectMetaMask,
+      children: ButtonStates.CONNECT,
     };
   };
-  const buttonStyles = getButtonStyles();
 
-  return buttonStyles.tooltip ? (
-    <Tooltip content={buttonStyles.tooltip}>
-      <Button
-        onClick={handleWalletConnect}
-        isLoading={{ isLoading, position: "left" }}
-        iconLeft={buttonStyles.icon as IconProps["name"]}
-        buttonType={buttonStyles.type as ButtonType}
-        className={className}
-      >
-        {buttonStyles.state}
-      </Button>
-    </Tooltip>
+  const button = <Button {...getButton()} className={className} />;
+
+  return error?.message ? (
+    <Tooltip content={error.message}>{button}</Tooltip>
   ) : (
-    <Button
-      onClick={handleWalletConnect}
-      isLoading={{ isLoading, position: "left" }}
-      iconLeft={buttonStyles.icon as IconProps["name"]}
-      buttonType={buttonStyles.type as ButtonType}
-      className={className}
-    >
-      {buttonStyles.state}
-    </Button>
+    button
   );
 }
