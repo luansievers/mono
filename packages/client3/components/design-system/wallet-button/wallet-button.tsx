@@ -1,7 +1,12 @@
 import { useQuery } from "@apollo/client";
 import { useEffect } from "react";
 
-import { Button, ButtonType, Tooltip } from "@/components/design-system";
+import {
+  Button,
+  ButtonProps,
+  ButtonType,
+  Tooltip,
+} from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
 import { useSetUser } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
@@ -9,89 +14,83 @@ import { useWallet } from "@/lib/wallet";
 import { metaMask, metaMaskHooks } from "@/lib/wallet/connectors/metamask";
 import { accountQuery } from "@/queries/user.queries";
 
-import { ButtonStateText } from "./types";
-
 type Props = {
   className?: string;
 };
 
+enum ButtonStates {
+  CONNECT = "Connect Wallet",
+  CONNECTING = "Processing...",
+  INSTALL_METAMASK = "Install MetaMask",
+  WRONG_NETWORK = "Wrong Network",
+  ERROR = "Error",
+}
+
+type IWalletButton = Pick<
+  ButtonProps,
+  "onClick" | "isLoading" | "iconLeft" | "buttonType" | "className" | "children"
+>;
+
 export function WalletButton({ className }: Props) {
   const { account } = useWallet();
+
+  const isActivating = metaMaskHooks.useIsActivating();
+  const error = metaMaskHooks.useError();
+
   const setUser = useSetUser();
+
   const { data } = useQuery(accountQuery, {
     variables: {
       userAccount: account?.toLowerCase(),
       fetchPolicy: "network-only",
     },
   });
+
+  const handleConnectMetaMask = () => {
+    metaMask.activate(DESIRED_CHAIN_ID);
+  };
+
   useEffect(() => {
     if (data?.user) {
       setUser && setUser(data.user);
     }
   }, [data, setUser]);
 
-  const isActive = metaMaskHooks.useIsActive();
-  const isActivating = metaMaskHooks.useIsActivating();
-  const error = metaMaskHooks.useError();
-  const handleConnectMetaMask = () => {
-    metaMask.activate(DESIRED_CHAIN_ID);
+  const getButton = (): IWalletButton => {
+    if (error) {
+      return {
+        iconLeft: "Exclamation",
+        buttonType: ButtonType.PRIMARY,
+        children:
+          error.name === "ChainIdNotAllowedError"
+            ? ButtonStates.WRONG_NETWORK
+            : ButtonStates.ERROR,
+        onClick: handleConnectMetaMask,
+      };
+    } else if (isActivating) {
+      return {
+        buttonType: ButtonType.PRIMARY,
+        children: ButtonStates.CONNECTING,
+      };
+    } else if (account) {
+      return {
+        iconLeft: "Wallet",
+        buttonType: ButtonType.SECONDARY,
+        children: handleAddressFormat(account),
+      };
+    }
+    return {
+      buttonType: ButtonType.PRIMARY,
+      onClick: handleConnectMetaMask,
+      children: ButtonStates.CONNECT,
+    };
   };
 
-  if (error) {
-    return (
-      <Tooltip content={error.message}>
-        <Button
-          iconLeft="Exclamation"
-          buttonType={ButtonType.PRIMARY}
-          className={className}
-          onClick={
-            error.name === "ChainIdNotAllowedError"
-              ? () => handleConnectMetaMask()
-              : undefined
-          }
-        >
-          {error.name === "ChainIdNotAllowedError"
-            ? ButtonStateText.WRONG_NETWORK
-            : ButtonStateText.ERROR}
-        </Button>
-      </Tooltip>
-    );
-  } else if (!isActive) {
-    return (
-      <Button
-        iconLeft="Exclamation"
-        buttonType={ButtonType.PRIMARY}
-        className={className}
-        onClick={handleConnectMetaMask}
-      >
-        {ButtonStateText.CONNECT}
-      </Button>
-    );
-  } else if (isActivating) {
-    return (
-      <Button buttonType={ButtonType.PRIMARY} className={className}>
-        {ButtonStateText.CONNECTING}
-      </Button>
-    );
-  } else if (account) {
-    return (
-      <Button
-        iconLeft={"Wallet"}
-        buttonType={ButtonType.SECONDARY}
-        className={className}
-      >
-        {handleAddressFormat(account)}
-      </Button>
-    );
-  } else {
-    return (
-      <Button
-        onClick={handleConnectMetaMask}
-        buttonType={ButtonType.PRIMARY}
-        className={className}
-      >
-        {ButtonStateText.CONNECT}
-      </Button>
-    );
-  }
+  const button = <Button {...getButton()} className={className} />;
+
+  return error?.message ? (
+    <Tooltip content={error.message}>{button}</Tooltip>
+  ) : (
+    button
+  );
 }
