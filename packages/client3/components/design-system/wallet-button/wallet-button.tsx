@@ -1,151 +1,61 @@
-import { useQuery } from "@apollo/client";
-import detectEthereumProvider from "@metamask/detect-provider";
-import React, { useEffect, useState } from "react";
-
-import { ButtonType, IconProps, Tooltip } from "@/components/design-system";
+import {
+  Button,
+  ButtonType,
+  Popover,
+  Tooltip,
+} from "@/components/design-system";
+import { WalletStatus } from "@/components/nav/wallet-status";
 import { DESIRED_CHAIN_ID } from "@/constants";
-import { useApplicationState } from "@/hooks/application-hooks";
-import { useSetUser } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
+import { openWalletModal } from "@/lib/state/actions";
 import { useWallet } from "@/lib/wallet";
-import { metaMask } from "@/lib/wallet/connectors/metamask";
-import { accountQuery } from "@/queries/user.queries";
-import { checkWalletAddress } from "@/services/user-services";
 
-import { Button } from "..";
-import { ButtonStateText, IWalletButtonStyles } from "./types";
+import { ButtonStateText } from "./types";
 
 type Props = {
   className?: string;
 };
 
 export function WalletButton({ className }: Props) {
-  const { account, isActive, error } = useWallet();
-  const [isLoading, setIsLoading] = useState(false);
-  const setUser = useSetUser();
-  const [isWrongUser, setIsWrongUser] = useState<boolean>(false);
+  const { account, error, connector } = useWallet();
 
-  const user = useQuery(accountQuery, {
-    variables: {
-      userAccount: account?.toLowerCase(),
-      fetchPolicy: "network-only",
-    },
-  });
-  const applicationState = useApplicationState();
-
-  useEffect(() => {
-    const checkWallet = async () => {
-      setIsWrongUser(false);
-      const accountInformation = await checkWalletAddress(
-        account,
-        applicationState
-      );
-      if (accountInformation?.isAccountCorrectState === false) {
-        //set explicitly to false to ignores the `undefined` cases
-        setIsWrongUser(true);
-      }
-    };
-    checkWallet();
-  }, [applicationState, account, error]);
-
-  useEffect(() => {
-    if (user?.data?.user) {
-      setUser && setUser(user.data.user);
-    }
-  }, [user, setUser]);
-
-  const detectBrowser = async () => {
-    const provider = await detectEthereumProvider();
-    if (provider) {
-      return true;
-    }
-    return false;
-  };
-
-  const handleWalletConnect = async () => {
-    setIsLoading(true);
-    if (await detectBrowser()) {
-      if (!isActive) {
-        await metaMask.activate(DESIRED_CHAIN_ID);
-      }
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    if (user?.data?.user) {
-      setUser && setUser(user.data.user);
-    }
-  }, [user, setUser]);
-
-  const getButtonStyles = (): IWalletButtonStyles => {
-    if (isLoading) {
-      return {
-        icon: "",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.CONNECTING,
-      };
-    }
-    if (error) {
-      if (error.message.includes("MetaMask not installed")) {
-        return {
-          icon: "Exclamation",
-          type: ButtonType.PRIMARY,
-          state: ButtonStateText.INSTALL_METAMASK,
-          tooltip: "MetaMask not installed",
-        };
-      }
-      return {
-        icon: "Exclamation",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.ERROR,
-        tooltip: error.message,
-      };
-    }
-    if (isWrongUser) {
-      return {
-        icon: "Exclamation",
-        type: ButtonType.PRIMARY,
-        state: ButtonStateText.ERROR,
-        tooltip: "Wrong user type",
-      };
-    }
-    if (isActive) {
-      return {
-        icon: "Wallet",
-        type: ButtonType.SECONDARY,
-        state: handleAddressFormat(account as string),
-      };
-    }
-    return {
-      icon: "",
-      type: ButtonType.PRIMARY,
-      state: ButtonStateText.CONNECT,
-    };
-  };
-  const buttonStyles = getButtonStyles();
-
-  return buttonStyles.tooltip ? (
-    <Tooltip content={buttonStyles.tooltip}>
+  return error ? (
+    <Tooltip content={error.message}>
       <Button
-        onClick={handleWalletConnect}
-        isLoading={{ isLoading, position: "left" }}
-        iconLeft={buttonStyles.icon as IconProps["name"]}
-        buttonType={buttonStyles.type as ButtonType}
+        iconLeft="Exclamation"
+        buttonType={ButtonType.PRIMARY}
         className={className}
+        onClick={
+          error.name === "ChainIdNotAllowedError"
+            ? () => connector.activate(DESIRED_CHAIN_ID)
+            : openWalletModal
+        }
       >
-        {buttonStyles.state}
+        {error.name === "ChainIdNotAllowedError"
+          ? ButtonStateText.WRONG_NETWORK
+          : ButtonStateText.ERROR}
       </Button>
     </Tooltip>
+  ) : account ? (
+    <Popover
+      placement="bottom-end"
+      content={({ close }) => <WalletStatus onWalletDisconnect={close} />}
+    >
+      <Button
+        iconLeft={"Wallet"}
+        buttonType={ButtonType.SECONDARY}
+        className={className}
+      >
+        {handleAddressFormat(account)}
+      </Button>
+    </Popover>
   ) : (
     <Button
-      onClick={handleWalletConnect}
-      isLoading={{ isLoading, position: "left" }}
-      iconLeft={buttonStyles.icon as IconProps["name"]}
-      buttonType={buttonStyles.type as ButtonType}
+      onClick={openWalletModal}
+      buttonType={ButtonType.PRIMARY}
       className={className}
     >
-      {buttonStyles.state}
+      {ButtonStateText.CONNECT}
     </Button>
   );
 }
