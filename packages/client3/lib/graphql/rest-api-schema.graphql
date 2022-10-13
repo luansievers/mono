@@ -1,0 +1,25 @@
+type Pool {
+  id: String!
+  poolName: String!
+  projectDetail: String!
+  goalAmount: String!
+  closingDate: String!
+  projectCoverImage: String
+  walletAddress: String!
+  terms: Terms
+  status: POOL_STATUS_TYPE!
+}
+enum POOL_STATUS_TYPE {
+  inReview
+  reviewFailed
+  approved
+}
+
+type Terms {
+  projectGoal: String
+  raisedTarget: String
+}
+
+extend type Query {
+  pendingPools: [Pool!]
+}

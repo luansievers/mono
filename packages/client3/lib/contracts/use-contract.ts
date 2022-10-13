@@ -48,7 +48,7 @@ const supportedContracts = {
 
 type SupportedContractName = keyof typeof supportedContracts;
 
-type Contract<T extends SupportedContractName> = ReturnType<
+export type Contract<T extends SupportedContractName> = ReturnType<
   typeof supportedContracts[T]
 >;
 

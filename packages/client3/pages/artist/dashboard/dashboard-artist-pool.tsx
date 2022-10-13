@@ -7,6 +7,8 @@ import { Heading, Caption } from "@/components/design-system";
 import { handleAddressFormat } from "@/lib/format/common";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 
+import PendingPoolArtist from "./pending-pools-artist";
+
 type Props = {
   openPoolData: any[];
   setEarnedAndRaisedAmount: (
@@ -35,6 +37,7 @@ function DashboardArtistPool({
 
   return (
     <>
+      <PendingPoolArtist />
       <div className="mb-5 mt-10 flex">
         <Heading className="flex-1 text-white" level={5}>
           My Open Pools
