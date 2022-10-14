@@ -7,10 +7,12 @@ import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
 import { useGetPendingPoolsQuery } from "@/lib/graphql/generated";
+import { useWallet } from "@/lib/wallet";
 import {
   createPool,
   updatePoolTransactionHash,
 } from "@/services/pool-services";
+import { createBorrower } from "@/services/user-services";
 
 gql`
   query getPendingPools {
@@ -27,6 +29,7 @@ gql`
 
 function PendingPoolArtist() {
   const router = useRouter();
+  const { account } = useWallet();
   const { data, error, loading } = useGetPendingPoolsQuery();
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
@@ -35,12 +38,36 @@ function PendingPoolArtist() {
 
   const pendingPools = data?.pendingPools ?? [];
 
-  const onContractSubmit = async (pool: typeof pendingPools[0]) => {
+  const onCreateBorrowerContract = async (
+    account: string,
+    tranchePool: typeof pendingPools[0]
+  ) => {
     if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
     }
-    const receipt = await createPool(goldfinchFactory, pool.goalAmount);
+    const borrowerContract = await createBorrower(goldfinchFactory, account);
+    console.log("borrower contract address:", borrowerContract);
+
+    const receipt = await onContractSubmit(borrowerContract, tranchePool);
+
+    return receipt;
+  };
+
+  const onContractSubmit = async (
+    borrowerContractAddress: string,
+    pool: typeof pendingPools[0]
+  ) => {
+    if (!goldfinchFactory) {
+      console.error("Goldfinch factory couldn't be initialized");
+      return;
+    }
+    const receipt = await createPool(
+      goldfinchFactory,
+      pool.goalAmount,
+      borrowerContractAddress
+    );
+
     const updatedPool = await updatePoolTransactionHash(pool.id, receipt);
     console.log(updatedPool);
   };
@@ -67,7 +94,8 @@ function PendingPoolArtist() {
               onClick={() => handleClick(tranchedPool.id)}
               onLaunchProposal={(event) => {
                 event.stopPropagation();
-                onContractSubmit(tranchedPool);
+                onCreateBorrowerContract(account as string, tranchedPool);
+                // onContractSubmit(tranchedPool);
               }}
             />
           ))

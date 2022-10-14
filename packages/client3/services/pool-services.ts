@@ -15,11 +15,14 @@ const ALLOWED_UID = [0];
 
 export const createPool = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,
-  limit: string
+  limit: string,
+  borrowerContract: string
 ) => {
   const receipt = await (
     await goldfinchFactory?.createPool(
-      CONTRACT_ADDRESSES.Borrower,
+      borrowerContract,
+      // CONTRACT_ADDRESSES.Borrower,
+      // borrower,
       JUNIOR_FEE_PERCENT,
       limit,
       INTEREST_APR,

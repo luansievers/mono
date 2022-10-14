@@ -79,7 +79,8 @@ function Dashboard() {
     [setDashboardData]
   );
 
-  if (isVerified) {
+  if (!isVerified) {
+    //change back to (isVerified)
     if (openPoolData.length > 0) {
       return (
         <>
