@@ -182,3 +182,16 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Using RestAPI within apollo client
+
+Rest API can be used with in graphQl queries in this project. It's facilitated using apollo-rest-link plugin.
+
+- While creating a API, declare it's type as graphql schema in `rest-api-schema.graphql` file( `packages/client3/lib/graphql/rest-api-schema.graphql`)
+- After adding the scheme, run `npm run codegen` to generate typescript typings for the declared graphql schema. Types with same name will be created
+  (packages/client3/lib/graphql/generated.ts)
+- To use the API, within the gql function use @rest declarative to call rest endpoints
+  //Sample
+  gql` query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) { pendingPools(walletAddress: $walletAddress, filters: $filters) @rest(path: "pool?{args}", type: "PendingPools") { id poolName walletAddress projectCoverImage status goalAmount } }`;
+
+- After creating the query, run `npm run codegen` to generate the hooks required. For example running npm run codegen generates `usePendingPoolsQuery` hook to fetch pending pools data

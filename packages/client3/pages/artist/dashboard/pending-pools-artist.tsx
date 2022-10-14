@@ -1,20 +1,25 @@
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 
-import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
+import { PendingPoolCard } from "@/components/dashboard/pool-card";
 import { Heading } from "@/components/design-system";
 import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
-import { useGetPendingPoolsQuery } from "@/lib/graphql/generated";
+import {
+  Pool_Status_Type,
+  usePendingPoolsQuery,
+} from "@/lib/graphql/generated";
+import { useWallet } from "@/lib/wallet";
 import {
   createPool,
   updatePoolTransactionHash,
 } from "@/services/pool-services";
 
 gql`
-  query getPendingPools {
-    pendingPools @rest(path: "pool", type: "PendingPools") {
+  query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) {
+    pendingPools(walletAddress: $walletAddress, filters: $filters)
+      @rest(path: "pool?{args}", type: "PendingPools") {
       id
       poolName
       walletAddress
@@ -27,7 +32,17 @@ gql`
 
 function PendingPoolArtist() {
   const router = useRouter();
-  const { data, error, loading } = useGetPendingPoolsQuery();
+  const { account } = useWallet();
+  const { data, error, loading, refetch } = usePendingPoolsQuery({
+    variables: {
+      walletAddress: account || "",
+      filters: {
+        statusType: [Pool_Status_Type.Approved, Pool_Status_Type.InReview],
+        hasTransactionHash: false,
+      },
+    },
+  });
+
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
     CONTRACT_ADDRESSES.GoldFinchFactory
@@ -41,11 +56,14 @@ function PendingPoolArtist() {
       return;
     }
     const receipt = await createPool(goldfinchFactory, pool.goalAmount);
-    const updatedPool = await updatePoolTransactionHash(pool.id, receipt);
-    console.log(updatedPool);
+    await updatePoolTransactionHash(pool.id, receipt);
+    refetch();
   };
   const handleClick = (poolAddress: string) => {
-    router.push(`/artist/pool/${poolAddress}`);
+    /**
+     * TODO: Pool details screen requires some refactoring to handle pending pool
+     */
+    //router.push(`/artist/pool/${poolAddress}`);
   };
 
   return (

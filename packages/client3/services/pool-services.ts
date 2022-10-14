@@ -38,9 +38,7 @@ export const updatePoolTransactionHash = async (
   poolId: string,
   receipt: ContractReceipt
 ) => {
-  return (
-    await axios.patch(`/api/pool/${poolId}`, {
-      transactionHash: receipt.transactionHash,
-    })
-  ).data;
+  await axios.patch(`/api/pool/${poolId}`, {
+    transactionHash: receipt.transactionHash,
+  });
 };
