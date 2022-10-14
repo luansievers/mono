@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
 import { Heading } from "@/components/design-system";
@@ -36,27 +37,42 @@ function PendingPoolArtist() {
     CONTRACT_ADDRESSES.GoldFinchFactory
   );
 
+  const uniqueIdentity = useContract(
+    "UniqueIdentity",
+    CONTRACT_ADDRESSES.UniqueIdentity
+  );
   const pendingPools = data?.pendingPools ?? [];
 
   const onCreateBorrowerContract = async (
     account: string,
     tranchePool: typeof pendingPools[0]
   ) => {
-    if (!goldfinchFactory) {
+    if (!goldfinchFactory || !uniqueIdentity) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
     }
-    const borrowerContract = await createBorrower(goldfinchFactory, account);
-    console.log("borrower contract address:", borrowerContract);
+    const borrower = await createBorrower(
+      goldfinchFactory,
+      uniqueIdentity,
+      account
+    );
+    console.log(`borrower contract address: ${borrower} for ${account}`);
 
-    const receipt = await onContractSubmit(borrowerContract, tranchePool);
+    // await onContractSubmit(tranchePool, borrower);
 
-    return receipt;
+    // const test = await changePrivileges?.initialize(
+    //   borrower,
+    //   CONTRACT_ADDRESSES.GoldfinchConfig
+    // );
+    // console.log("elevating role", test);
+
+    // const receipt = await onContractSubmit(tranchePool, test);
+    // return receipt;
   };
 
   const onContractSubmit = async (
-    borrowerContractAddress: string,
-    pool: typeof pendingPools[0]
+    pool: typeof pendingPools[0],
+    borrowerContractAddress: any
   ) => {
     if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");

@@ -22,7 +22,6 @@ export const createPool = async (
     await goldfinchFactory?.createPool(
       borrowerContract,
       // CONTRACT_ADDRESSES.Borrower,
-      // borrower,
       JUNIOR_FEE_PERCENT,
       limit,
       INTEREST_APR,
