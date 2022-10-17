@@ -67,12 +67,14 @@ export function WalletButton({ className }: Props) {
             : ButtonStates.ERROR,
         onClick: handleConnectMetaMask,
       };
-    } else if (isActivating) {
+    }
+    if (isActivating) {
       return {
         buttonType: ButtonType.PRIMARY,
         children: ButtonStates.CONNECTING,
       };
-    } else if (account) {
+    }
+    if (account) {
       return {
         iconLeft: "Wallet",
         buttonType: ButtonType.SECONDARY,
