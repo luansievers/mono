@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { MouseEventHandler } from "react";
 
 import { handleAddressFormat } from "@/lib/format/common";
 import { Pool_Status_Type } from "@/lib/graphql/generated";
@@ -12,8 +11,9 @@ interface PoolCardProps {
   poolName: string;
   statusType?: Pool_Status_Type;
   className?: string;
+  buttonText: string;
   onClick?: () => void;
-  onLaunchProposal?: MouseEventHandler<HTMLButtonElement>;
+  onButtonClick?: (approve: boolean) => void;
 }
 
 export function PendingPoolCard({
@@ -22,8 +22,9 @@ export function PendingPoolCard({
   poolName,
   statusType,
   className,
+  buttonText,
   onClick,
-  onLaunchProposal,
+  onButtonClick,
 }: PoolCardProps) {
   return (
     <div
@@ -48,20 +49,45 @@ export function PendingPoolCard({
       <>
         <div className="flex-1 pt-[28px] text-center capitalize">
           <Chip
+            // TODO type doesn't work
             type={
-              statusType == Pool_Status_Type.InReview ? "pending" : "completed"
+              statusType == Pool_Status_Type.InReview
+                ? "pending"
+                : Pool_Status_Type.Approved
+                ? "completed"
+                : "failed"
             }
           >
-            {statusType == Pool_Status_Type.InReview ? "In Review" : "Approved"}
+            {statusType == Pool_Status_Type.ReviewFailed
+              ? "failed"
+              : statusType == Pool_Status_Type.InReview
+              ? "pending"
+              : "approved"}
           </Chip>
         </div>
       </>
-      <div className="lex-none pt-[20px]">
+      <div className="flex justify-between pt-[20px]">
         <Button
-          onClick={onLaunchProposal}
-          disabled={statusType == Pool_Status_Type.InReview}
+          onClick={(event) => {
+            event.stopPropagation();
+            onButtonClick && onButtonClick(false);
+          }}
+          hidden={buttonText !== "Approve Pool"}
+          className="mr-[10px]"
+          buttonType="secondary"
         >
-          Launch Proposal
+          Decline
+        </Button>
+        <Button
+          onClick={() => {
+            onButtonClick && onButtonClick(true);
+          }}
+          disabled={
+            statusType == Pool_Status_Type.InReview &&
+            buttonText != "Approve Pool"
+          }
+        >
+          {buttonText}
         </Button>
       </div>
     </div>

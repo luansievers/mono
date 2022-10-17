@@ -24,6 +24,7 @@ gql`
       projectCoverImage
       status
       goalAmount
+      borrowerContract
     }
   }
 `;
@@ -38,26 +39,7 @@ function PendingPoolArtist() {
   );
   const pendingPools = data?.pendingPools ?? [];
 
-  const onCreateBorrowerContract = async (
-    account: string,
-    tranchePool: typeof pendingPools[0]
-  ) => {
-    if (!goldfinchFactory) {
-      console.error("Goldfinch factory couldn't be initialized");
-      return;
-    }
-    const borrowerContract = await createBorrower(goldfinchFactory, account);
-    console.log(
-      `borrower contract address: ${borrowerContract} for ${account}`
-    );
-
-    return await onContractSubmit(tranchePool, borrowerContract);
-  };
-
-  const onContractSubmit = async (
-    pool: typeof pendingPools[0],
-    borrowerContractAddress: any
-  ) => {
+  const onContractSubmit = async (pool: typeof pendingPools[0]) => {
     if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
@@ -65,9 +47,8 @@ function PendingPoolArtist() {
     const receipt = await createPool(
       goldfinchFactory,
       pool.goalAmount,
-      borrowerContractAddress
+      pool.borrowerContract
     );
-
     const updatedPool = await updatePoolTransactionHash(pool.id, receipt);
     console.log(updatedPool);
   };
@@ -92,10 +73,10 @@ function PendingPoolArtist() {
               image={""}
               statusType={tranchedPool.status}
               onClick={() => handleClick(tranchedPool.id)}
-              onLaunchProposal={(event) => {
-                event.stopPropagation();
-                onCreateBorrowerContract(account as string, tranchedPool);
-                // onContractSubmit(tranchedPool);
+              buttonText="Launch Pool"
+              onButtonClick={(event) => {
+                // event.stopPropagation();
+                // onContractSubmit(tranchedPool, tranchedPool.borrowerContract); //TODO CHANGE TO POOL
               }}
             />
           ))

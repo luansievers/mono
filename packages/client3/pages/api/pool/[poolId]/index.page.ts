@@ -33,7 +33,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break;
     }
     case "PATCH": {
-      const { transactionHash, status, token } = req.body || {};
+      const { transactionHash, status, token, borrowerContract } =
+        req.body || {};
       const pathname = path.resolve(
         `${process.cwd()}/pages/api/pool`,
         "./pools.json"
@@ -45,22 +46,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         const fileDataList = JSON.parse(fs.readFileSync(pathname, "utf-8"));
         const fileData = fileDataList[poolId];
+        // TODO: check with vineeth
         if (transactionHash) {
           fileData.transactionHash = transactionHash;
         }
         /**
          * Checks if status exist in the enum. Also verifies the token passed in by user
-         *
          */
         if (status && Object.values(Pool_Status_Type).includes(status)) {
           if (
             !token &&
             token != (process.env.NEXT_PUBLIC_ADMIN_TOKEN_FOR_API || {})
           ) {
-            res.status(405).end(`Token mismatch`);
+            res.status(405).end(`Invalid token or token mismatch`);
             return;
           }
           fileData.status = status;
+          fileData.borrowerContract = borrowerContract;
         }
         fs.writeFileSync(pathname, JSON.stringify(fileDataList), {
           encoding: "utf8",

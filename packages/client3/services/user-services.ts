@@ -1,6 +1,6 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { ContractReceipt, ContractTransaction } from "ethers";
-import { keccak256 } from "ethers/lib/utils";
+import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
 
 import { Contract, getContract } from "@/lib/contracts";
 import { fetchKycStatus, getSignatureForKyc, IKYCStatus } from "@/lib/verify";
@@ -69,12 +69,9 @@ const setBorrowerPrivileges = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,
   account: string
 ): Promise<ContractTransaction> => {
-  // const borrower = keccak256("BORROWER_ROLE") - todo to fix
+  const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
 
-  const borrower =
-    "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d";
-
-  const privileges = await goldfinchFactory.grantRole(borrower, account);
+  const privileges = await goldfinchFactory.grantRole(BORROWER_ROLE, account);
 
   console.log("privileges", privileges);
   return privileges;
