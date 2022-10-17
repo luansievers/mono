@@ -36,38 +36,22 @@ function PendingPoolArtist() {
     "GoldfinchFactory",
     CONTRACT_ADDRESSES.GoldFinchFactory
   );
-
-  const uniqueIdentity = useContract(
-    "UniqueIdentity",
-    CONTRACT_ADDRESSES.UniqueIdentity
-  );
   const pendingPools = data?.pendingPools ?? [];
 
   const onCreateBorrowerContract = async (
     account: string,
     tranchePool: typeof pendingPools[0]
   ) => {
-    if (!goldfinchFactory || !uniqueIdentity) {
+    if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
     }
-    const borrower = await createBorrower(
-      goldfinchFactory,
-      uniqueIdentity,
-      account
+    const borrowerContract = await createBorrower(goldfinchFactory, account);
+    console.log(
+      `borrower contract address: ${borrowerContract} for ${account}`
     );
-    console.log(`borrower contract address: ${borrower} for ${account}`);
 
-    // await onContractSubmit(tranchePool, borrower);
-
-    // const test = await changePrivileges?.initialize(
-    //   borrower,
-    //   CONTRACT_ADDRESSES.GoldfinchConfig
-    // );
-    // console.log("elevating role", test);
-
-    // const receipt = await onContractSubmit(tranchePool, test);
-    // return receipt;
+    return await onContractSubmit(tranchePool, borrowerContract);
   };
 
   const onContractSubmit = async (
