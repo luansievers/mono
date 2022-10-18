@@ -79,7 +79,7 @@ function Dashboard() {
     [setDashboardData]
   );
 
-  if (!isVerified) {
+  if (isVerified) {
     if (openPoolData.length > 0) {
       return (
         <>
@@ -95,6 +95,7 @@ function Dashboard() {
         </>
       );
     }
+
     return (
       <ArtistPool
         isVerified={isVerified}

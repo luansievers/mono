@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ContractReceipt } from "ethers";
 
 import { Contract } from "@/lib/contracts";
 
@@ -45,15 +44,13 @@ export const createPool = async (
  * @param receipt - ContractReceipt - transaction receipt
  * @Promise void
  */
-export const updatePoolTransactionHash = async (
+export const updatePoolAddress = async (
   poolId: string,
-  receipt: ContractReceipt
-): Promise<void> => {
-  return (
-    await axios.patch(`/api/pool/${poolId}`, {
-      transactionHash: receipt.transactionHash,
-    })
-  ).data;
+  poolAddress: string
+) => {
+  return await axios.patch(`/api/pool/${poolId}`, {
+    poolAddress: poolAddress,
+  });
 };
 
 /**
@@ -67,7 +64,7 @@ export const updatePoolBorrowerContractAddress = async (
 ): Promise<void> => {
   return (
     await axios.patch(`/api/pool/${poolId}`, {
-      borrowerContractAddress,
+      borrowerContractAddress: borrowerContractAddress,
     })
   ).data;
 };

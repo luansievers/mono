@@ -1,28 +1,34 @@
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
 
-import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
+import { PendingPoolCard } from "@/components/dashboard/pool-card";
 import { Heading } from "@/components/design-system";
 import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
-import { useGetPendingPoolsQuery } from "@/lib/graphql/generated";
+import {
+  Pool_Status_Type,
+  usePendingPoolsQuery,
+} from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import {
   createBorrowerContract,
   createPool,
-  updatePoolTransactionHash,
+  updatePoolAddress,
+  updatePoolBorrowerContractAddress,
 } from "@/services/pool-services";
+import { getLastEventArgs } from "@/utilities/contract.util";
 
 gql`
-  query getPendingPoolsForArtists($walletAddress: String!) {
-    pendingPools(walletAddress: $walletAddress)
-      @rest(path: "pool", type: "PendingPools") {
+  query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) {
+    pendingPools(walletAddress: $walletAddress, filters: $filters)
+      @rest(path: "pool?{args}", type: "PendingPools") {
       id
       poolName
       walletAddress
       projectCoverImage
       goalAmount
+      status
     }
   }
 `;
@@ -30,11 +36,16 @@ gql`
 function PendingPoolArtist() {
   const router = useRouter();
   const { account } = useWallet();
-  const { data } = useGetPendingPoolsQuery({
-    // variables: {
-    //   ["walletAddress"]: account ?? "",
-    // },
+  const { data, error, loading, refetch } = usePendingPoolsQuery({
+    variables: {
+      walletAddress: account || "",
+      filters: {
+        statusType: [Pool_Status_Type.Approved, Pool_Status_Type.InReview],
+        hasPoolAddress: false,
+      },
+    },
   });
+
   const pendingPools = data?.pendingPools ?? [];
 
   const goldfinchFactory = useContract(
@@ -50,18 +61,31 @@ function PendingPoolArtist() {
 
     const borrowerContract = await createBorrowerContract(
       goldfinchFactory,
-      pool.walletAddress
+      pool.walletAddress.toLowerCase()
     );
+
+    await updatePoolBorrowerContractAddress(
+      pool.id,
+      borrowerContract.toLowerCase()
+    );
+
+    console.log(`Borrower contract ${borrowerContract} for ${account}`);
 
     const receipt = await createPool(
       goldfinchFactory,
       pool.goalAmount,
-      borrowerContract
+      borrowerContract.toLowerCase()
     );
-    await updatePoolTransactionHash(pool.id, receipt);
+    const event = getLastEventArgs(receipt);
+
+    await updatePoolAddress(pool.id, event.pool.toLowerCase());
+    refetch();
   };
   const handleClick = (poolAddress: string) => {
-    router.push(`/artist/pool/${poolAddress}`);
+    /**
+     * TODO: Pool details screen requires some refactoring to handle pending pool
+     */
+    //router.push(`/artist/pool/${poolAddress}`);
   };
 
   return (

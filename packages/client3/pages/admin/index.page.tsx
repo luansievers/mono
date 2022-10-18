@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
 import { Heading } from "@/components/design-system";
@@ -11,13 +11,14 @@ import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
 import {
   Pool_Status_Type,
-  useGetPendingPoolsQuery,
+  useAllPendingPoolsQuery,
 } from "@/lib/graphql/generated";
 import { grantAccountBorrowerPrivileges } from "@/services/user-services";
 
 gql`
-  query getAllPendingPools {
-    pendingPools @rest(path: "pool", type: "PendingPools") {
+  query allPendingPools($filters: PendingPoolFilters) {
+    pendingPools(filters: $filters)
+      @rest(path: "pool?{args}", type: "PendingPools") {
       id
       poolName
       walletAddress
@@ -30,30 +31,21 @@ gql`
 
 function AdminDashboard() {
   const router = useRouter();
-  const { data } = useGetPendingPoolsQuery();
+  const { data } = useAllPendingPoolsQuery({
+    variables: {
+      filters: {
+        statusType: [Pool_Status_Type.InReview],
+      },
+    },
+  });
   const isAdmin = useAdmin();
-  const [openPoolData, setOpenPoolData] = useState<any[]>([]);
 
-  // only necessary once we need transaction hashes
   const pendingPools = data?.pendingPools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
     CONTRACT_ADDRESSES.GoldFinchFactory
   );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      let mappedData = [];
-      const response = await axios.get(`/api/pool`);
-      mappedData = Object.keys(response.data).map((key) => ({
-        id: key,
-        ...response.data[key],
-      }));
-      setOpenPoolData(mappedData);
-    };
-    fetchData();
-  }, []);
 
   const handleClick = (poolAddress: string) => {
     router.push(`/artist/pool/${poolAddress}`);
@@ -102,8 +94,8 @@ function AdminDashboard() {
         <Heading className="flex-1 text-white" level={5}>
           Admin Dashboard
         </Heading>
-        {openPoolData
-          ? openPoolData.map((tranchedPool: any) => (
+        {pendingPools
+          ? pendingPools.map((tranchedPool: any) => (
               <PendingPoolCard
                 key={tranchedPool.id}
                 className="mb-10"

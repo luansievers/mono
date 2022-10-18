@@ -33,21 +33,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break;
     }
     case "PATCH": {
-      const { transactionHash, status, token, borrowerContractAddress } =
+      const { poolAddress, status, token, borrowerContractAddress } =
         req.body || {};
       const pathname = path.resolve(
         `${process.cwd()}/pages/api/pool`,
         "./pools.json"
       );
-      if (!transactionHash && !status) {
+      if (!poolAddress && !status && !borrowerContractAddress) {
         res.status(405).end(`Nothing to patch`);
         return;
       }
       try {
         const fileDataList = JSON.parse(fs.readFileSync(pathname, "utf-8"));
         const fileData = fileDataList[poolId];
-        if (transactionHash) {
-          fileData.transactionHash = transactionHash;
+        if (poolAddress) {
+          fileData.poolAddress = poolAddress;
         }
         if (borrowerContractAddress) {
           fileData.borrowerContract = borrowerContractAddress;
