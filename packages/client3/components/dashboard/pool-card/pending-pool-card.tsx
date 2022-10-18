@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import { useAdmin } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
 import { Pool_Status_Type } from "@/lib/graphql/generated";
 
@@ -11,9 +12,11 @@ interface PoolCardProps {
   poolName: string;
   statusType?: Pool_Status_Type;
   className?: string;
-  buttonText: string;
   onClick?: () => void;
-  onButtonClick?: (approve: boolean) => void;
+  onButtonClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    decision?: boolean
+  ) => void;
 }
 
 export function PendingPoolCard({
@@ -22,10 +25,11 @@ export function PendingPoolCard({
   poolName,
   statusType,
   className,
-  buttonText,
   onClick,
   onButtonClick,
 }: PoolCardProps) {
+  const isAdmin = useAdmin();
+
   return (
     <div
       className={clsx(
@@ -67,27 +71,25 @@ export function PendingPoolCard({
         </div>
       </>
       <div className="flex justify-between pt-[20px]">
+        {isAdmin && (
+          <Button
+            onClick={(event) => {
+              onButtonClick && onButtonClick(event, false);
+            }}
+            className="mr-[10px]"
+            buttonType="secondary"
+          >
+            Decline
+          </Button>
+        )}
+
         <Button
           onClick={(event) => {
-            event.stopPropagation();
-            onButtonClick && onButtonClick(false);
+            onButtonClick && onButtonClick(event, true);
           }}
-          hidden={buttonText !== "Approve Pool"}
-          className="mr-[10px]"
-          buttonType="secondary"
+          disabled={statusType == Pool_Status_Type.InReview && !isAdmin}
         >
-          Decline
-        </Button>
-        <Button
-          onClick={() => {
-            onButtonClick && onButtonClick(true);
-          }}
-          disabled={
-            statusType == Pool_Status_Type.InReview &&
-            buttonText != "Approve Pool"
-          }
-        >
-          {buttonText}
+          {isAdmin ? "Approve" : "Launch Pool"}
         </Button>
       </div>
     </div>

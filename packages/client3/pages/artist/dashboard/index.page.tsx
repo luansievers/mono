@@ -53,8 +53,6 @@ function Dashboard() {
     const fetchData = async () => {
       let mappedData = [];
       const response = await axios.get(`/api/pool?walletAddress=${account}`);
-      const test = await axios.get(`/api/pool`);
-      console.log("test", test);
       mappedData = Object.keys(response.data).map((key) => ({
         id: key,
         ...response.data[key],
@@ -82,7 +80,6 @@ function Dashboard() {
   );
 
   if (!isVerified) {
-    //change back to (isVerified)
     if (openPoolData.length > 0) {
       return (
         <>

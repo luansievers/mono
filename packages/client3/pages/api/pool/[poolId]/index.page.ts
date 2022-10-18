@@ -33,7 +33,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break;
     }
     case "PATCH": {
-      const { transactionHash, status, token, borrowerContract } =
+      const { transactionHash, status, token, borrowerContractAddress } =
         req.body || {};
       const pathname = path.resolve(
         `${process.cwd()}/pages/api/pool`,
@@ -46,9 +46,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       try {
         const fileDataList = JSON.parse(fs.readFileSync(pathname, "utf-8"));
         const fileData = fileDataList[poolId];
-        // TODO: check with vineeth
         if (transactionHash) {
           fileData.transactionHash = transactionHash;
+        }
+        if (borrowerContractAddress) {
+          fileData.borrowerContract = borrowerContractAddress;
         }
         /**
          * Checks if status exist in the enum. Also verifies the token passed in by user
@@ -62,7 +64,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
             return;
           }
           fileData.status = status;
-          fileData.borrowerContract = borrowerContract;
         }
         fs.writeFileSync(pathname, JSON.stringify(fileDataList), {
           encoding: "utf8",

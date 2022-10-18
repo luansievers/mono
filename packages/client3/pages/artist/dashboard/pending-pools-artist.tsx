@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
 import { Heading } from "@/components/design-system";
@@ -10,21 +9,20 @@ import { handleAddressFormat } from "@/lib/format/common";
 import { useGetPendingPoolsQuery } from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import {
+  createBorrowerContract,
   createPool,
   updatePoolTransactionHash,
 } from "@/services/pool-services";
-import { createBorrower } from "@/services/user-services";
 
 gql`
-  query getPendingPools {
-    pendingPools @rest(path: "pool", type: "PendingPools") {
+  query getPendingPoolsForArtists($walletAddress: String!) {
+    pendingPools(walletAddress: $walletAddress)
+      @rest(path: "pool", type: "PendingPools") {
       id
       poolName
       walletAddress
       projectCoverImage
-      status
       goalAmount
-      borrowerContract
     }
   }
 `;
@@ -32,25 +30,35 @@ gql`
 function PendingPoolArtist() {
   const router = useRouter();
   const { account } = useWallet();
-  const { data, error, loading } = useGetPendingPoolsQuery();
+  const { data } = useGetPendingPoolsQuery({
+    // variables: {
+    //   ["walletAddress"]: account ?? "",
+    // },
+  });
+  const pendingPools = data?.pendingPools ?? [];
+
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
     CONTRACT_ADDRESSES.GoldFinchFactory
   );
-  const pendingPools = data?.pendingPools ?? [];
 
   const onContractSubmit = async (pool: typeof pendingPools[0]) => {
     if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
     }
+
+    const borrowerContract = await createBorrowerContract(
+      goldfinchFactory,
+      pool.walletAddress
+    );
+
     const receipt = await createPool(
       goldfinchFactory,
       pool.goalAmount,
-      pool.borrowerContract
+      borrowerContract
     );
-    const updatedPool = await updatePoolTransactionHash(pool.id, receipt);
-    console.log(updatedPool);
+    await updatePoolTransactionHash(pool.id, receipt);
   };
   const handleClick = (poolAddress: string) => {
     router.push(`/artist/pool/${poolAddress}`);
@@ -73,10 +81,9 @@ function PendingPoolArtist() {
               image={""}
               statusType={tranchedPool.status}
               onClick={() => handleClick(tranchedPool.id)}
-              buttonText="Launch Pool"
               onButtonClick={(event) => {
-                // event.stopPropagation();
-                // onContractSubmit(tranchedPool, tranchedPool.borrowerContract); //TODO CHANGE TO POOL
+                event.stopPropagation();
+                onContractSubmit(tranchedPool);
               }}
             />
           ))

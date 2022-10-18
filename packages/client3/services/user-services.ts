@@ -2,9 +2,11 @@ import { Web3Provider } from "@ethersproject/providers";
 import { ContractReceipt, ContractTransaction } from "ethers";
 import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
 
-import { Contract, getContract } from "@/lib/contracts";
+import { Contract } from "@/lib/contracts";
 import { fetchKycStatus, getSignatureForKyc, IKYCStatus } from "@/lib/verify";
 import { User } from "@/types/user";
+
+const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
 
 export const hasUid = (user?: User) => {
   return Boolean(
@@ -17,11 +19,18 @@ export const hasUid = (user?: User) => {
   );
 };
 
+/**
+ *
+ * @param account - GoldfinchFactory contract
+ * @param provider - address of borrower
+ * @param user - user object
+ * @Promise ContractReceipt - transaction receipt of granting borrower privileges
+ */
 export const getKYCStatus = async (
   account: string,
   provider: Web3Provider,
-  user?: User
-) => {
+  user: User
+): Promise<User | IKYCStatus> => {
   if (hasUid(user)) {
     return user;
   } else {
@@ -35,44 +44,15 @@ export const getKYCStatus = async (
   }
 };
 
-export const createBorrower = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
-  account: string
-): Promise<ContractReceipt> => {
-  const role = await goldfinchFactory.isBorrower();
-  const admin = await goldfinchFactory.isAdmin();
-  console.log("role", role);
-  console.log("admin", admin);
-  console.log("account", account);
-
-  if (!role) {
-    const roleGranted = await setBorrowerPrivileges(goldfinchFactory, account);
-    console.log("Grant Role", roleGranted);
-  }
-
-  const borrowerContract = await (
-    await goldfinchFactory.createBorrower(account)
-  ).wait();
-  console.log("borrowerContract", borrowerContract);
-  const privileges = borrowerContract.events?.[3].args?.borrower.toLowerCase();
-
-  const BORROWER_ROLE =
-    "0x2344277e405079ec07749d374ba0b5862a4e45a6a05ac889dbb4a991c6f9354d";
-
-  const test = await goldfinchFactory.hasRole(BORROWER_ROLE, privileges);
-  console.log("priviliges on borrowerCon", test);
-
-  return privileges;
-};
-
-const setBorrowerPrivileges = async (
+/**
+ *
+ * @param goldfinchFactory - GoldfinchFactory contract
+ * @param account - address of borrower
+ * @Promise ContractTransaction - transaction receipt of granting borrower privileges
+ */
+export const grantAccountBorrowerPrivileges = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,
   account: string
 ): Promise<ContractTransaction> => {
-  const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
-
-  const privileges = await goldfinchFactory.grantRole(BORROWER_ROLE, account);
-
-  console.log("privileges", privileges);
-  return privileges;
+  return await goldfinchFactory.grantRole(BORROWER_ROLE, account);
 };
