@@ -11,12 +11,11 @@ import UploadPDF, {
   UploadedFileType,
 } from "@/components/upload-pdf/upload-pdf";
 import { toBase64 } from "@/lib/file-utils";
-
-import { FormFields } from "./create-pool-form";
+import { IPool } from "@/types/pool";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<FormFields, any>;
+  control: Control<IPool, any>;
 };
 
 function CreatePoolDocumentUpload({ control }: Props) {

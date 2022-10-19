@@ -5,34 +5,21 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
-import { UploadedFileType } from "@/components/upload-pdf";
 import { useWallet } from "@/lib/wallet"; // add wallet address
+import { IPool } from "@/types/pool";
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
 
-export interface FormFields {
-  walletAddress: string;
-  poolAddress: string;
-  poolName: string;
-  goalAmount: string;
-  closingDate: Date;
-  projectDetail: string;
-  projectCoverImage: string;
-  pdfDocuments: {
-    poolContractPdf: UploadedFileType;
-    termSheetPdf: UploadedFileType;
-    proposalPdf: UploadedFileType;
-  };
-  terms: {
-    projectGoal: string;
-    raisedTarget: string;
-  };
+export enum ReviewStatus {
+  PENDING = "pending",
+  APPROVED = "approved",
+  DECLINED = "declined",
 }
 
 function CreatePoolForm() {
-  const rhfMethods = useForm<FormFields>({
+  const rhfMethods = useForm<IPool>({
     mode: "onSubmit",
     shouldFocusError: true,
   });
@@ -41,11 +28,12 @@ function CreatePoolForm() {
   const { account } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<IPool> = async (data) => {
     setIsLoading(true);
     await axios.post(`/api/pool`, {
       params: {
         ...data,
+        reviewStatus: ReviewStatus.PENDING,
         walletAddress: account,
         closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),
       },

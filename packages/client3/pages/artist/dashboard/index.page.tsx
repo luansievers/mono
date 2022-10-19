@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 
 import { KYC } from "@/components/dashboard/kyc";
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
-import { NotConnected } from "@/components/dashboard/not-connected";
 import { DashboardTotal } from "@/components/dashboard/total";
+import { NotConnected } from "@/components/general/not-connected";
 import { useApplicationState } from "@/hooks/application-hooks";
 import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { useUser } from "@/hooks/user-hooks";
@@ -109,7 +109,11 @@ function Dashboard() {
   if (account && !isVerified) {
     return <KYC />;
   }
-  return <NotConnected />;
+  return (
+    <NotConnected>
+      Please connect your wallet to view your dashboard
+    </NotConnected>
+  );
 }
 
 export default Dashboard;
