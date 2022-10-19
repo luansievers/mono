@@ -43,7 +43,7 @@ export function DashboardTotal({
       {createPoolHref ? (
         <div className="col-start-5 self-center">
           <LinkButton buttonType="secondary" href={createPoolHref}>
-            Create Pool
+            Submit Pool Proposal
           </LinkButton>
         </div>
       ) : null}

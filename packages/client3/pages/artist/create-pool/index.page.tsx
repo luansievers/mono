@@ -4,7 +4,7 @@ import CreatePoolForm from "./create-pool-form";
 
 export function CreatePoolPage() {
   useSelectedSidebarItem("dashboard");
-  useLayoutTitle("Create Pool");
+  useLayoutTitle("Submit Pool Proposal");
   return <CreatePoolForm />;
 }
 
