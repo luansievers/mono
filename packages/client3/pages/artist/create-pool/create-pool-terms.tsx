@@ -1,8 +1,7 @@
 import { FormState, UseFormRegister } from "react-hook-form";
 
 import { Heading, BodyText, Input } from "@/components/design-system";
-
-import { IPool } from "./create-pool-form";
+import { IPool } from "@/types/pool";
 
 type Props = {
   formState: FormState<IPool>;

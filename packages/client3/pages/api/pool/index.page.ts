@@ -4,7 +4,7 @@ import path from "path";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { IPool } from "@/pages/artist/create-pool/create-pool-form";
+import { IPool } from "@/types/pool";
 
 /**
  * This is a dummy api to save pool and need to be replaced by graphql at client side

@@ -5,33 +5,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
-import { UploadedFileType } from "@/components/upload-pdf";
 import { useWallet } from "@/lib/wallet"; // add wallet address
+import { IPool } from "@/types/pool";
 
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
 
-export interface IPool {
-  walletAddress: string;
-  poolAddress: string;
-  poolName: string;
-  goalAmount: string;
-  closingDate: Date;
-  projectDetail: string;
-  projectCoverImage: string;
-  pdfDocuments: {
-    poolContractPdf: UploadedFileType;
-    termSheetPdf: UploadedFileType;
-    proposalPdf: UploadedFileType;
-  };
-  terms: {
-    projectGoal: string;
-    raiseTarget: string;
-  };
-}
-
-export enum reviewStatus {
+export enum ReviewStatus {
   PENDING = "pending",
   APPROVED = "approved",
   DECLINED = "declined",
@@ -52,7 +33,7 @@ function CreatePoolForm() {
     await axios.post(`/api/pool`, {
       params: {
         ...data,
-        reviewStatus: reviewStatus.PENDING,
+        reviewStatus: ReviewStatus.PENDING,
         walletAddress: account,
         closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),
       },

@@ -17,8 +17,7 @@ import {
   Caption,
 } from "@/components/design-system";
 import { FileUpload } from "@/components/design-system/file-upload";
-
-import { IPool } from "./create-pool-form";
+import { IPool } from "@/types/pool";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
