@@ -246,7 +246,7 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 
 1. Run `make setup` to quickly setup development environment (env files, git hooks, etc).
 2. **root env**: Substitute `TEST_USER` for your wallet address
-3. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitue on the env bellow
+3. **client3 env**: Create an account here: `https://www.alchemy.com/` get the api key and substitute on the env bellow
  
 	```sh
 	NEXT_PUBLIC_NETWORK_NAME=localhost
@@ -260,7 +260,7 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 	1. Start with fresh install, setup the env files before anything here.
 	`nvm use && npm install && npm run bootstrap` this will take some time
 	2. start client (1) / protocol `npm run start:local`
-	3. open a new terminal (`nvm use` everytime you open a new terminal)
+	3. open a new terminal (`nvm use` every time you open a new terminal)
 	4.  `cd packages/subgraph`
 	5.  `npm run start-local` this can take a few minutes
 	6.  `npm run create-local` will throw an error if previous was not completed...
@@ -272,3 +272,7 @@ This project was forked from [Goldfinch](https://github.com/goldfinch-eng/mono)
 ##  Troubleshooting
 - `@/lib/graphql....` error 
     - Run `make reset_graph` then stat at 5.5 or (`5.a in the README.md preview`)
+- KYC failing with cors error
+    -  Check to make sure the firebase emulator is running
+        - `POST` to http://localhost:5001/goldfinch-frontends-dev/us-central1/kycStatus
+            - Should get back `error address not provided` 

@@ -17,14 +17,13 @@ import {
   Caption,
 } from "@/components/design-system";
 import { FileUpload } from "@/components/design-system/file-upload";
-
-import { FormFields } from "./create-pool-form";
+import { IPool } from "@/types/pool";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<FormFields, any>;
-  register: UseFormRegister<FormFields>;
-  formState: FormState<FormFields>;
+  control: Control<IPool, any>;
+  register: UseFormRegister<IPool>;
+  formState: FormState<IPool>;
 };
 
 function CreatePoolDetailEntry({
@@ -105,7 +104,7 @@ function CreatePoolDetailEntry({
           Default image if no image is uploaded
         </Caption>
         <img
-          src="https://gateway.ipfs.io/ipfs/QmUG9ZCvVPZT7JMARSypqvuX4LBCb72449tnAeRyknNVCE#x-ipfs-companion-no-redirect"
+          src="https://dweb.link/ipfs/QmduRx2iWPj7ychRb8r8Y9ru9BvY8FJKuuDsrzu9ZjjRbM"
           className={clsx("rounded-md", "h-[90px] w-[150px]", "object-fill")}
           alt=""
         />
