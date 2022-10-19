@@ -1,12 +1,1 @@
-{
-  "l8sx6oc5": {
-    "poolName": "Testing pool",
-    "projectDetail": "Testing",
-    "goalAmount": "100",
-    "closingDate": "2022-10-19T04:00:00.000Z",
-    "pdfDocuments": {},
-    "terms": { "projectGoal": "Make an album", "raisedTarget": "3%" },
-    "projectCoverImage": "QmT6sKDy3CLxTKFgzif8Qthei6YBMAdcpxcaLJR27rBa6J",
-    "walletAddress": "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
-  }
-}
+{"l8sx6oc5":{"poolName":"Testing pool","projectDetail":"Testing","goalAmount":"100","closingDate":"2022-10-19T04:00:00.000Z","pdfDocuments":{},"terms":{"projectGoal":"Make an album","raisedTarget":"3%"},"projectCoverImage":"QmT6sKDy3CLxTKFgzif8Qthei6YBMAdcpxcaLJR27rBa6J","walletAddress":"0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"},"l962wfab":{"poolName":"1","projectDetail":"1","goalAmount":"1","closingDate":"2022-10-26T04:00:00.000Z","pdfDocuments":{},"terms":{"projectGoal":"1","raiseTarget":"1"},"reviewStatus":"pending","walletAddress":"0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"}}

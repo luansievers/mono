@@ -48,7 +48,7 @@ function AllArtistPoolPage() {
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
   const handleClick = (poolAddress: string) => {
-    router.push(`/artist/pool/${poolAddress}`);
+    router.push(`/backer/pool/${poolAddress}`);
   };
 
   return (
@@ -64,21 +64,21 @@ function AllArtistPoolPage() {
         </TabList>
         <TabPanels>
           <TabContent className="mt-7">
-            {openPoolData
-              ? openPoolData.map((tranchedPool) => (
+            {openTranchedPools
+              ? openTranchedPools.map((tranchedPool: any) => (
                   <PoolCard
                     key={tranchedPool.id}
                     className="mb-10"
-                    poolName={tranchedPool.poolName}
+                    poolName={tranchedPool.name}
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
                       amount: BigNumber.from(
-                        tranchedPool.totalSuppliedAmount ?? 0
+                        tranchedPool?.juniorTranches[0].principalDeposited
                       ),
                     }}
                     totalGoalAmount={{
                       token: SupportedCrypto.Usdc,
-                      amount: BigNumber.from(tranchedPool.goalAmount ?? 0), //90% - not sure if this is the correct field
+                      amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
                     }}
                     artistName={tranchedPool.borrower?.name}
                     image={tranchedPool.borrower?.logo}

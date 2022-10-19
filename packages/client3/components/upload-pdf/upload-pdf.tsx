@@ -11,8 +11,8 @@ export type UploadedFileType = {
 type Props = {
   uploadedFile?: UploadedFileType;
   className?: string;
-  onFileUpload: (file: File) => void;
-  onRemoveFile: () => void;
+  onFileUpload?: (file: File) => void;
+  onRemoveFile?: () => void;
 };
 
 function UploadPDF({
@@ -31,7 +31,7 @@ function UploadPDF({
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.target?.files?.[0]) {
       const chosenFile = event.target.files[0];
-      onFileUpload(chosenFile);
+      onFileUpload && onFileUpload(chosenFile);
     }
   };
 
@@ -46,14 +46,16 @@ function UploadPDF({
         <Link className="ml-3" href={"#"} noUnderline>
           {uploadedFile.fileName}
         </Link>
-        <span
-          className="cursor-pointer"
-          onClick={() => {
-            onRemoveFile();
-          }}
-        >
-          <Icon className="ml-3 stroke-dark-50" name="XCircle" size="lg" />
-        </span>
+        {onRemoveFile ? (
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              onRemoveFile();
+            }}
+          >
+            <Icon className="ml-3 stroke-dark-50" name="XCircle" size="lg" />
+          </span>
+        ) : null}
       </BodyText>
     );
   }

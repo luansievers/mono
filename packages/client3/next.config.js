@@ -53,7 +53,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/earn",
+        destination: "/backer/all-artist-pools",
         permanent: false,
       },
     ];
