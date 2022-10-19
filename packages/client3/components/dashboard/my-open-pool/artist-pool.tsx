@@ -14,7 +14,7 @@ export function ArtistPool({ isVerified, onButtonClick }: Props) {
           : "To create the first pool, you need to verify Identity"}
       </BodyText>
       <Button className="mt-4" buttonType="secondary" onClick={onButtonClick}>
-        {isVerified ? "Create Pool" : "Verify Identity"}
+        {isVerified ? "Submit Pool Proposal" : "Verify Identity"}
       </Button>
     </div>
   );
