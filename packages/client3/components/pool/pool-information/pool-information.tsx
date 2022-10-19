@@ -21,10 +21,7 @@ import { WalletButton } from "@/components/design-system/wallet-button";
 import { TRANCHES, USDC_DECIMALS } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
-import {
-  SupplyPanelUserFieldsFragment,
-  UidType,
-} from "@/lib/graphql/generated";
+import { UidType } from "@/lib/graphql/generated";
 import {
   approveErc20IfRequired,
   canUserParticipateInPool,
@@ -70,7 +67,7 @@ export function PoolInformation({
   const { account, provider } = useWallet();
   const tranchedPoolContract = useContract("TranchedPool", tranchedPoolAddress);
   const usdcContract = useContract("USDC");
-  const user = useUser() as SupplyPanelUserFieldsFragment;
+  const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const isUserVerified =

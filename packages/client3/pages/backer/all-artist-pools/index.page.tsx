@@ -48,7 +48,7 @@ function AllArtistPoolPage() {
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
   const handleClick = (poolAddress: string) => {
-    router.push(`/backer/${poolAddress}`);
+    router.push(`/backer/pool/${poolAddress}`);
   };
 
   return (

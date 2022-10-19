@@ -62,7 +62,7 @@ function BackerPortfolioPage() {
   }
 
   const handleClick = (poolAddress: string) => {
-    router.push(`/backer/${poolAddress}`);
+    router.push(`/backer/pool/${poolAddress}`);
   };
 
   return (

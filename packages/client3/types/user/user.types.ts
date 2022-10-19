@@ -5,4 +5,5 @@ export interface User {
   isUsAccreditedIndividual: boolean;
   isUsNonAccreditedIndividual: boolean;
   isNonUsIndividual: boolean;
+  isGoListed: boolean;
 }
