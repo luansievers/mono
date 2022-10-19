@@ -24,6 +24,7 @@ const initialUser = {
   isUsAccreditedIndividual: false,
   isUsNonAccreditedIndividual: false,
   isNonUsIndividual: false,
+  isGoListed: false,
 };
 
 export const UserContext = createContext<{

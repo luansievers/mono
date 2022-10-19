@@ -12,7 +12,7 @@ export function ExitFlowButton({ children }: { children: ReactNode }) {
     if (isModalActuallyOpen) {
       closeVerificationModal();
     } else {
-      router.push("/earn");
+      router.push("/backer/all-artist-pools");
     }
   };
   return (
