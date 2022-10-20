@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client";
+import { gql, useApolloClient } from "@apollo/client";
 import { BigNumber, utils } from "ethers";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -69,7 +69,6 @@ export function PoolInformation({
   const usdcContract = useContract("USDC");
   const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
-
   const isUserVerified =
     user?.isGoListed ||
     user?.isUsEntity ||
@@ -104,7 +103,6 @@ export function PoolInformation({
       throw new Error("Wallet not connected properly");
     }
     await signAgreement(account, data.backerName, tranchedPoolAddress);
-
     // Ensures the user doesn't leave any dust behind when they choose to supply max
     let value = utils.parseUnits(data.supply, USDC_DECIMALS);
     if (usdcWithinEpsilon(value, availableBalance)) {
@@ -170,7 +168,7 @@ export function PoolInformation({
   );
 
   return (
-    <div className="w-96 gap-6 rounded-lg border-dark-90 bg-dark-100 px-6 py-7">
+    <div className="rounded-lg border border-dark-90 p-6">
       {type && (
         <>
           <div className="pb-6">
@@ -231,7 +229,7 @@ export function PoolInformation({
         <>
           <div className="mt-8 mb-2 flex items-center justify-start">
             <Display level={2} className="text-white">
-              {diffDays}
+              {diffDays < 0 ? 0 : diffDays}
             </Display>
             <BodyText size="large" className="ml-4 text-dark-50">
               Days left
@@ -266,7 +264,7 @@ export function PoolInformation({
                 </div>
               </div>
             </div>
-          ) : (
+          ) : diffDays < 1 ? null : (
             <Form rhfMethods={rhfMethods} onSubmit={onSubmit}>
               <DollarInput
                 control={control}

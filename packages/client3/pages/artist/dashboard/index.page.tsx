@@ -51,13 +51,8 @@ function Dashboard() {
    */
   useEffect(() => {
     const fetchData = async () => {
-      let mappedData = [];
       const response = await axios.get(`/api/pool?walletAddress=${account}`);
-      mappedData = Object.keys(response.data).map((key) => ({
-        id: key,
-        ...response.data[key],
-      }));
-      setOpenPoolData(mappedData);
+      setOpenPoolData(response.data);
     };
     fetchData();
   }, [state, account]);

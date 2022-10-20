@@ -1,7 +1,7 @@
 import { Heading } from "@/components/design-system";
 import UploadPDF from "@/components/upload-pdf/upload-pdf";
 
-function ArtistPoolDocuments() {
+export function PoolDocuments() {
   return (
     <div className="mt-9 rounded-lg border border-dark-90 p-6">
       <Heading className="text-white" level={5}>
@@ -31,5 +31,3 @@ function ArtistPoolDocuments() {
     </div>
   );
 }
-
-export default ArtistPoolDocuments;

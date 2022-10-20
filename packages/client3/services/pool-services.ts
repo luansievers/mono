@@ -3,6 +3,7 @@ import { ContractReceipt } from "ethers";
 
 import { CONTRACT_ADDRESSES } from "@/constants";
 import { Contract } from "@/lib/contracts";
+import { UIDType } from "@/lib/verify";
 
 const JUNIOR_FEE_PERCENT = "20";
 const INTEREST_APR = "50000000000000000"; // 5% APR
@@ -11,7 +12,13 @@ const TERM_IN_DAYS = "365";
 const LATE_FEE_APR = "0";
 const PRINCIPAL_GRACE_PERIOD_IN_DAYS = "185";
 const FUNDABLE_AT = "0";
-const ALLOWED_UID = [0];
+const ALLOWED_UID = [
+  UIDType.NonUSIndividual,
+  UIDType.NonUSEntity,
+  UIDType.USEntity,
+  UIDType.USNonAccreditedIndividual,
+  UIDType.USAccreditedIndividual,
+];
 
 export const createPool = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,

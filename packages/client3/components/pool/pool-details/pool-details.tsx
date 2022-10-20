@@ -6,12 +6,13 @@ import {
   BackersList,
   DummyBackersListData,
 } from "@/components/pool/backers-list";
+import { Pool } from "@/lib/graphql/generated";
 
 type Props = {
-  poolData: any;
+  poolData: Partial<Pool>;
 };
 
-function PoolDetail({ poolData }: Props) {
+export function PoolDetail({ poolData }: Props) {
   return (
     <>
       <div className="relative mt-3 h-[668px] w-full">
@@ -28,10 +29,10 @@ function PoolDetail({ poolData }: Props) {
           image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAdUlEQVR42mNgGAWjAAj+48GUG37i92+cmFJL/hMDKLHkv1TeVYKYIgvwBQ81gommFvxHtqB0797/6BbCxMixAGzA7AcPUFyJzEcWI9sHxAQP1YIIGWPzCVUjeehbQLN8gK2wG1o+oElpSiiIqFoXUKuCoboFAP+MJG7jSOWlAAAAAElFTkSuQmCC"
         />
         <BodyText className="pl-3 text-white" size="large" semiBold>
-          {poolData?.artist ?? "Tom Smith"}
+          {poolData?.walletAddress}
         </BodyText>
       </div>
-      <BodyText size="normal" className="mt-6 text-white">
+      {/* <BodyText size="normal" className="mt-6 text-white">
         [DUMMY DETAILS:] Tom Smith is a freelance musician from the North
         Chicago Area. Over the past 15 years, he traveled on tour, opening for
         several musicians and bands, including The Yellow Foundation and Mel
@@ -39,21 +40,12 @@ function PoolDetail({ poolData }: Props) {
         featuring fellow Northern Illinois musicians. This project, Techno
         Collab, will include his longtime friend, DJ Chaz D., as well as Library
         Sound, and Adam Zela.
-      </BodyText>
+      </BodyText> */}
       <Heading className="mt-10 text-white" level={5}>
         Project Detail
       </Heading>
       <BodyText size="normal" className="mt-6 text-white">
-        {poolData?.projectDetail ??
-          `Longtime friends Joe Smith and Chaz D. (DJ Chaz) left their small
-        Northern Illinois town to pursue music. After moving to opposide sides
-        of the country, DJ Chaz worked as a solo artist as Joe opened and
-        performed on several music tours. Years later, they reunited to jam on
-        their hometown stage. Within hours, they had a foundation for a new
-        project: a collaborative 5-track EP calling for all other Northern
-        Illinois musicians. Check out Joe’s video for an exclusive look into the
-        making of Techno Collab, the next best sound from the most unique
-        artists in Northern Illinois!`}
+        {poolData?.projectDetail}
       </BodyText>
       <Heading className="mt-10 text-white" level={5}>
         Social Media Updates
@@ -80,5 +72,3 @@ function PoolDetail({ poolData }: Props) {
     </>
   );
 }
-
-export default PoolDetail;

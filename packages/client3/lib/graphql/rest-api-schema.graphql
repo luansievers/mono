@@ -28,4 +28,5 @@ input PendingPoolFilters {
 
 extend type Query {
   pendingPools(walletAddress: String, filters: PendingPoolFilters): [Pool!]
+  pool(poolId: String!): Pool
 }
