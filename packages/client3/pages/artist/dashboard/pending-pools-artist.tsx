@@ -12,9 +12,12 @@ import {
 } from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import {
+  createBorrowerContract,
   createPool,
-  updatePoolTransactionHash,
+  updatePoolAddress,
+  updatePoolBorrowerContractAddress,
 } from "@/services/pool-services";
+import { getLastEventArgs } from "@/utilities/contract.util";
 
 gql`
   query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) {
@@ -24,8 +27,8 @@ gql`
       poolName
       walletAddress
       projectCoverImage
-      status
       goalAmount
+      status
     }
   }
 `;
@@ -38,25 +41,44 @@ function PendingPoolArtist() {
       walletAddress: account || "",
       filters: {
         statusType: [Pool_Status_Type.Approved, Pool_Status_Type.InReview],
-        hasTransactionHash: false,
+        hasPoolAddress: false,
       },
     },
   });
+
+  const pendingPools = data?.pendingPools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
     CONTRACT_ADDRESSES.GoldFinchFactory
   );
 
-  const pendingPools = data?.pendingPools ?? [];
-
   const onContractSubmit = async (pool: typeof pendingPools[0]) => {
     if (!goldfinchFactory) {
       console.error("Goldfinch factory couldn't be initialized");
       return;
     }
-    const receipt = await createPool(goldfinchFactory, pool.goalAmount);
-    await updatePoolTransactionHash(pool.id, receipt);
+
+    const borrowerContract = await createBorrowerContract(
+      goldfinchFactory,
+      pool.walletAddress.toLowerCase()
+    );
+
+    await updatePoolBorrowerContractAddress(
+      pool.id,
+      borrowerContract.toLowerCase()
+    );
+
+    console.log(`Borrower contract ${borrowerContract} for ${account}`);
+
+    const receipt = await createPool(
+      goldfinchFactory,
+      pool.goalAmount,
+      borrowerContract.toLowerCase()
+    );
+    const event = getLastEventArgs(receipt);
+
+    await updatePoolAddress(pool.id, event.pool.toLowerCase());
     refetch();
   };
   const handleClick = (poolAddress: string) => {
@@ -83,7 +105,7 @@ function PendingPoolArtist() {
               image={""}
               statusType={tranchedPool.status}
               onClick={() => handleClick(tranchedPool.id)}
-              onLaunchProposal={(event) => {
+              onButtonClick={(event) => {
                 event.stopPropagation();
                 onContractSubmit(tranchedPool);
               }}

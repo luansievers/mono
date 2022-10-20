@@ -33,31 +33,34 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       break;
     }
     case "PATCH": {
-      const { transactionHash, status, token } = req.body || {};
+      const { poolAddress, status, token, borrowerContractAddress } =
+        req.body || {};
       const pathname = path.resolve(
         `${process.cwd()}/pages/api/pool`,
         "./pools.json"
       );
-      if (!transactionHash && !status) {
+      if (!poolAddress && !status && !borrowerContractAddress) {
         res.status(405).end(`Nothing to patch`);
         return;
       }
       try {
         const fileDataList = JSON.parse(fs.readFileSync(pathname, "utf-8"));
         const fileData = fileDataList[poolId];
-        if (transactionHash) {
-          fileData.transactionHash = transactionHash;
+        if (poolAddress) {
+          fileData.poolAddress = poolAddress;
+        }
+        if (borrowerContractAddress) {
+          fileData.borrowerContract = borrowerContractAddress;
         }
         /**
          * Checks if status exist in the enum. Also verifies the token passed in by user
-         *
          */
         if (status && Object.values(Pool_Status_Type).includes(status)) {
           if (
             !token &&
             token != (process.env.NEXT_PUBLIC_ADMIN_TOKEN_FOR_API || {})
           ) {
-            res.status(405).end(`Token mismatch`);
+            res.status(405).end(`Invalid token or token mismatch`);
             return;
           }
           fileData.status = status;

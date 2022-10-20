@@ -28,6 +28,7 @@ const initialUser = {
 
 export const UserContext = createContext<{
   user?: User;
+  admin?: boolean;
   setUser?: (user: User) => void;
 }>({});
 

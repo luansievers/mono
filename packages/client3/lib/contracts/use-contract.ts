@@ -21,6 +21,7 @@ import {
   BackerRewards__factory,
   GoldfinchFactory__factory,
   CurvePool__factory,
+  Borrower__factory,
 } from "@/types/ethers-contracts";
 
 import { useWallet } from "../wallet";
@@ -44,6 +45,7 @@ const supportedContracts = {
   GoldfinchFactory: GoldfinchFactory__factory.connect,
   CurvePool: CurvePool__factory.connect,
   CurveLP: Erc20__factory.connect,
+  Borrower: Borrower__factory.connect,
 };
 
 type SupportedContractName = keyof typeof supportedContracts;

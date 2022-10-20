@@ -8,7 +8,7 @@ type Pool {
   walletAddress: String!
   terms: Terms
   status: POOL_STATUS_TYPE!
-  transactionHash: String
+  poolAddress: String!
 }
 enum POOL_STATUS_TYPE {
   inReview
@@ -23,7 +23,7 @@ type Terms {
 
 input PendingPoolFilters {
   statusType: [POOL_STATUS_TYPE]
-  hasTransactionHash: Boolean
+  hasPoolAddress: Boolean
 }
 
 extend type Query {

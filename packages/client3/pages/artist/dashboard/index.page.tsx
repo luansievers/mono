@@ -95,6 +95,7 @@ function Dashboard() {
         </>
       );
     }
+
     return (
       <ArtistPool
         isVerified={isVerified}

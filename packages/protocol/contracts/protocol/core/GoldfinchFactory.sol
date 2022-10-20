@@ -12,6 +12,8 @@ import "./ConfigHelper.sol";
 import {ImplementationRepository} from "./proxy/ImplementationRepository.sol";
 import {UcuProxy} from "./proxy/UcuProxy.sol";
 
+import "hardhat/console.sol";
+
 /**
  * @title GoldfinchFactory
  * @notice Contract that allows us to create other contracts, such as CreditLines and BorrowerContracts
@@ -57,6 +59,7 @@ contract GoldfinchFactory is BaseUpgradeablePausable {
     address _borrower = _deployMinimal(config.borrowerImplementationAddress());
     IBorrower borrower = IBorrower(_borrower);
     borrower.initialize(owner, address(config));
+    console.log("Borrower created: %s", _borrower);
     emit BorrowerCreated(address(borrower), owner);
     return address(borrower);
   }
@@ -134,6 +137,7 @@ contract GoldfinchFactory is BaseUpgradeablePausable {
   }
 
   function isBorrower() public view returns (bool) {
+    console.log("isBorrower: %s", hasRole(BORROWER_ROLE, msg.sender));
     return hasRole(BORROWER_ROLE, _msgSender());
   }
 

@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { MouseEventHandler } from "react";
 
+import { useAdmin } from "@/hooks/user-hooks";
 import { handleAddressFormat } from "@/lib/format/common";
 import { Pool_Status_Type } from "@/lib/graphql/generated";
 
@@ -13,7 +13,10 @@ interface PoolCardProps {
   statusType?: Pool_Status_Type;
   className?: string;
   onClick?: () => void;
-  onLaunchProposal?: MouseEventHandler<HTMLButtonElement>;
+  onButtonClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    decision?: boolean
+  ) => void;
 }
 
 export function PendingPoolCard({
@@ -23,8 +26,10 @@ export function PendingPoolCard({
   statusType,
   className,
   onClick,
-  onLaunchProposal,
+  onButtonClick,
 }: PoolCardProps) {
+  const isAdmin = useAdmin();
+
   return (
     <div
       className={clsx(
@@ -48,20 +53,43 @@ export function PendingPoolCard({
       <>
         <div className="flex-1 pt-[28px] text-center capitalize">
           <Chip
+            // TODO type doesn't work
             type={
-              statusType == Pool_Status_Type.InReview ? "pending" : "completed"
+              statusType == Pool_Status_Type.InReview
+                ? "pending"
+                : Pool_Status_Type.Approved
+                ? "completed"
+                : "failed"
             }
           >
-            {statusType == Pool_Status_Type.InReview ? "In Review" : "Approved"}
+            {statusType == Pool_Status_Type.ReviewFailed
+              ? "failed"
+              : statusType == Pool_Status_Type.InReview
+              ? "pending"
+              : "approved"}
           </Chip>
         </div>
       </>
-      <div className="lex-none pt-[20px]">
+      <div className="flex justify-between pt-[20px]">
+        {isAdmin && (
+          <Button
+            onClick={(event) => {
+              onButtonClick && onButtonClick(event, false);
+            }}
+            className="mr-[10px]"
+            buttonType="secondary"
+          >
+            Decline
+          </Button>
+        )}
+
         <Button
-          onClick={onLaunchProposal}
-          disabled={statusType == Pool_Status_Type.InReview}
+          onClick={(event) => {
+            onButtonClick && onButtonClick(event, true);
+          }}
+          disabled={statusType == Pool_Status_Type.InReview && !isAdmin}
         >
-          Launch Proposal
+          {isAdmin ? "Approve" : "Launch Pool"}
         </Button>
       </div>
     </div>
