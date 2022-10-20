@@ -1,3 +1,5 @@
+import { BigNumber } from "ethers";
+
 import { PoolDocuments } from "@/components/pool/pool-documents";
 import { PoolTerms } from "@/components/pool/pool-terms";
 import { Pool } from "@/lib/graphql/generated";
@@ -15,7 +17,12 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     <>
       <ArtistCancelPool
         poolData={poolData}
-        tranchedPoolData={tranchedPoolData}
+        deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
+        goalAmount={
+          tranchedPoolData?.creditLine?.maxLimit ??
+          BigNumber.from(poolData.goalAmount ?? 0)
+        }
+        numOfBackers={tranchedPoolData?.numBackers ?? 0}
       />
 
       <PoolTerms terms={terms} />

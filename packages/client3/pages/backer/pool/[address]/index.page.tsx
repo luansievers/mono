@@ -4,23 +4,35 @@ import { useRouter } from "next/router";
 import { Button, Heading } from "@/components/design-system";
 import { PoolDetail } from "@/components/pool/pool-details";
 import { useLayoutContext } from "@/hooks/sidebar-hooks";
-import { useBackerPoolDetailsQuery } from "@/lib/graphql/generated";
+import {
+  useBackerPoolGraphDataQuery,
+  useBackerPoolMetadataQuery,
+} from "@/lib/graphql/generated";
 import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
 
 import PoolDetailsRightGrid from "./pool-details-grid-right";
-
 gql`
-  ${TRANCHED_POOL_STATUS_FIELDS}
-  query backerPoolDetails($poolId: String!, $tranchedPoolAddress: ID!) {
+  query backerPoolMetadata($poolId: String!) {
     pool(poolId: $poolId) @rest(path: "pool/{args.poolId}", type: "Pool") {
       id
       poolName
+      projectDetail
       walletAddress
       projectCoverImage
       status
       goalAmount
+      terms {
+        projectGoal
+        raiseTarget
+      }
       closingDate
+      poolAddress
     }
+  }
+`;
+gql`
+  ${TRANCHED_POOL_STATUS_FIELDS}
+  query backerPoolGraphData($tranchedPoolAddress: ID!) {
     tranchedPool(id: $tranchedPoolAddress) {
       id
       estimatedJuniorApy
@@ -29,6 +41,9 @@ gql`
       fundableAt
       isPaused
       numBackers
+      backers {
+        id
+      }
       juniorTranches {
         lockedUntil
       }
@@ -59,16 +74,20 @@ function BackerPoolPage() {
   const { title } = useLayoutContext();
   const router = useRouter();
   const { address } = router.query;
-  const { data } = useBackerPoolDetailsQuery({
+  const { data: { pool: poolMetaData } = {} } = useBackerPoolMetadataQuery({
+    skip: !address,
     variables: {
       poolId: address as string,
-      tranchedPoolAddress: "0xe03ac5bb90a545bf66ed93543ad24859797ae218",
     },
   });
-  const { poolMetaData, tranchedPoolData } = {
-    poolMetaData: data?.pool,
-    tranchedPoolData: data?.tranchedPool,
-  };
+
+  const { data: { tranchedPool: tranchedPoolData } = {} } =
+    useBackerPoolGraphDataQuery({
+      skip: !poolMetaData?.poolAddress,
+      variables: {
+        tranchedPoolAddress: poolMetaData?.poolAddress || "",
+      },
+    });
 
   if (poolMetaData === undefined || poolMetaData === null) {
     return null;
@@ -89,7 +108,13 @@ function BackerPoolPage() {
         </Heading>
         <div className="grid grid-cols-6 gap-5">
           <div className="col-span-4 px-4">
-            <PoolDetail poolData={poolMetaData} />
+            <PoolDetail
+              poolData={poolMetaData}
+              backerList={tranchedPoolData?.backers?.map((backer) => ({
+                name: backer.id,
+                profileImageUrl: "",
+              }))}
+            />
           </div>
           <div className="col-span-2">
             <PoolDetailsRightGrid

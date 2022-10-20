@@ -1,19 +1,25 @@
+import { BigNumber } from "ethers";
+
 import { Display, BodyText, Icon, Button } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
 import { Pool } from "@/lib/graphql/generated";
 
 type Props = {
   poolData: Partial<Pool>;
-  tranchedPoolData: any;
+  deposited: BigNumber;
+  goalAmount: BigNumber;
+  numOfBackers: number;
 };
-function ArtistCancelPool({ poolData, tranchedPoolData }: Props) {
+function ArtistCancelPool({
+  poolData,
+  deposited,
+  goalAmount,
+  numOfBackers,
+}: Props) {
   let progressPercentage = 0;
 
-  if (!tranchedPoolData.juniorDeposited.isZero()) {
-    progressPercentage =
-      (tranchedPoolData.juniorDeposited.toNumber() /
-        tranchedPoolData.creditLine.maxLimit.toNumber()) *
-      100;
+  if (!deposited.isZero()) {
+    progressPercentage = (deposited.toNumber() / goalAmount.toNumber()) * 100;
   }
 
   const diffDays = Math.round(
@@ -25,16 +31,16 @@ function ArtistCancelPool({ poolData, tranchedPoolData }: Props) {
     <div className="rounded-lg border border-dark-90 p-6">
       <div className="flex justify-between">
         <Display className="text-accent-2" level={2}>
-          ${tranchedPoolData.juniorDeposited.toNumber()}
+          ${deposited.toNumber()}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of ${tranchedPoolData.creditLine.maxLimit.toNumber()}
+          of ${goalAmount.toNumber()}
         </BodyText>
       </div>
       <Progress percentage={progressPercentage} />
       <div className="mt-9 flex items-center">
         <Display level={2} className="text-white">
-          {tranchedPoolData.numBackers ?? 0}
+          {numOfBackers ?? 0}
         </Display>
         <BodyText size="large" className="ml-4 text-dark-50">
           Backers

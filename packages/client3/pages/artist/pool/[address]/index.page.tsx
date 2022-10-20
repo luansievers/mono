@@ -4,23 +4,37 @@ import { useRouter } from "next/router";
 import { Button, Heading } from "@/components/design-system";
 import { PoolDetail } from "@/components/pool/pool-details";
 import { useLayoutContext } from "@/hooks/sidebar-hooks";
-import { useArtistPoolDetailsQuery } from "@/lib/graphql/generated";
+import {
+  useArtistPoolGraphDataQuery,
+  useArtistPoolMetadataQuery,
+} from "@/lib/graphql/generated";
 import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
 
 import PoolDetailsRightGrid from "./pool-details-grid-right";
 
 gql`
-  ${TRANCHED_POOL_STATUS_FIELDS}
-  query artistPoolDetails($poolId: String!, $tranchedPoolAddress: ID!) {
+  query artistPoolMetadata($poolId: String!) {
     pool(poolId: $poolId) @rest(path: "pool/{args.poolId}", type: "Pool") {
       id
       poolName
+      projectDetail
       walletAddress
       projectCoverImage
       status
       goalAmount
+      terms {
+        projectGoal
+        raiseTarget
+      }
       closingDate
+      poolAddress
     }
+  }
+`;
+
+gql`
+  ${TRANCHED_POOL_STATUS_FIELDS}
+  query artistPoolGraphData($tranchedPoolAddress: ID!) {
     tranchedPool(id: $tranchedPoolAddress) {
       id
       estimatedJuniorApy
@@ -29,6 +43,9 @@ gql`
       fundableAt
       isPaused
       numBackers
+      backers {
+        id
+      }
       juniorTranches {
         lockedUntil
       }
@@ -60,17 +77,20 @@ function ArtistPoolPage() {
   const router = useRouter();
   const { address } = router.query;
 
-  const { data } = useArtistPoolDetailsQuery({
+  const { data: { pool: poolMetaData } = {} } = useArtistPoolMetadataQuery({
+    skip: !address,
     variables: {
       poolId: address as string,
-      tranchedPoolAddress: "0xe03ac5bb90a545bf66ed93543ad24859797ae218",
     },
   });
-  const { poolMetaData, tranchedPoolData } = {
-    poolMetaData: data?.pool,
-    tranchedPoolData: data?.tranchedPool,
-  };
 
+  const { data: { tranchedPool: tranchedPoolData } = {} } =
+    useArtistPoolGraphDataQuery({
+      skip: !poolMetaData?.poolAddress,
+      variables: {
+        tranchedPoolAddress: poolMetaData?.poolAddress || "",
+      },
+    });
   if (poolMetaData === undefined || poolMetaData === null) {
     return null;
   }
@@ -90,7 +110,13 @@ function ArtistPoolPage() {
         </Heading>
         <div className="grid grid-cols-6 gap-5">
           <div className="col-span-4 px-4">
-            <PoolDetail poolData={poolMetaData} />
+            <PoolDetail
+              poolData={poolMetaData}
+              backerList={tranchedPoolData?.backers?.map((backer) => ({
+                name: backer.id,
+                profileImageUrl: "",
+              }))}
+            />
           </div>
           <div className="col-span-2">
             <PoolDetailsRightGrid

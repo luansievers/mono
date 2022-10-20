@@ -16,7 +16,7 @@ export function PoolTerms({ terms }: Props) {
         <Icon className="ml-2" size="text" name="InfoCircleOutlined" />
       </div>
       <BodyText size="medium" semiBold className="mt-3 text-light-40">
-        {terms?.projectGoal ?? "5-track EP"}
+        {terms?.projectGoal ?? ""}
       </BodyText>
       <div className="mt-6 flex items-center">
         <BodyText size="normal" className="text-dark-50">
@@ -25,7 +25,7 @@ export function PoolTerms({ terms }: Props) {
         <Icon className="ml-2" size="text" name="InfoCircleOutlined" />
       </div>
       <BodyText size="medium" semiBold className="mt-3 text-light-40">
-        {terms?.raisedTarget ?? "3% Revenue"}
+        {terms?.raiseTarget ?? ""}
       </BodyText>
     </div>
   );

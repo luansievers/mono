@@ -125,6 +125,10 @@ export function PoolInformation({
       });
     } else {
       const now = (await provider.getBlock("latest")).timestamp;
+      /**
+       * Note : Sometime the timestamp returned by the provider(metamask) is of old blocks and would cause 1hr deadline to fail.
+       * Increasing the deadline seems to fix it but not the ideal approach.
+       */
       const deadline = BigNumber.from(now + 3600); // deadline is 1 hour from now
       const signature = await generateErc20PermitSignature({
         erc20TokenContract: usdcContract,

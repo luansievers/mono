@@ -2,17 +2,18 @@ import Image from "next/image";
 
 import { Avatar, BodyText, Heading } from "@/components/design-system";
 import { SocialMediaButton } from "@/components/design-system/button/social-media-button";
-import {
-  BackersList,
-  DummyBackersListData,
-} from "@/components/pool/backers-list";
+import { BackersList } from "@/components/pool/backers-list";
 import { Pool } from "@/lib/graphql/generated";
 
 type Props = {
   poolData: Partial<Pool>;
+  backerList?: {
+    name: string;
+    profileImageUrl: string;
+  }[];
 };
 
-export function PoolDetail({ poolData }: Props) {
+export function PoolDetail({ poolData, backerList }: Props) {
   return (
     <>
       <div className="relative mt-3 h-[668px] w-full">
@@ -68,7 +69,7 @@ export function PoolDetail({ poolData }: Props) {
         Backers
       </Heading>
 
-      <BackersList backersList={DummyBackersListData} className="mt-6" />
+      <BackersList backersList={backerList ?? []} className="mt-6" />
     </>
   );
 }
