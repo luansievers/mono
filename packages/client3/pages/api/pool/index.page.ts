@@ -32,24 +32,24 @@ const filterPoolDataByUsingFilters = (
   poolData: Array<Pool>,
   filters: PendingPoolFilters
 ) => {
-  const { statusType, hasTransactionHash: _hasTransactionHash } = filters;
+  const { statusType, hasPoolAddress: _hasPoolAddress } = filters;
+
   return poolData.filter((pool) => {
     // Check if statusType filter is provided and current pool's status is matching with passed in statuses
     if (statusType && !statusType.includes(pool.status)) {
       return false;
     }
-    /**
-     * Check if transactionHash param is provided
-     * If it's value is true only pools with transaction hash is returned
-     * If it's value is false pools without transactionHash is returned
-     */
-    if (_hasTransactionHash != undefined) {
-      const hasTransactionHash =
-        _hasTransactionHash.toString().toLowerCase() == "true";
-      if (hasTransactionHash && !pool.transactionHash) {
+    if (_hasPoolAddress != undefined) {
+      /**
+       * Check if poolAddress param is provided
+       * If it's value is true only pools with that pool address is returned
+       * If it's value is false pools without the pool address are returned
+       */
+      const hasPoolAddress = _hasPoolAddress.toString().toLowerCase() == "true";
+      if (hasPoolAddress && !pool.poolAddress) {
         return false;
       }
-      if (!hasTransactionHash && !!pool.transactionHash) {
+      if (!hasPoolAddress && !!pool.poolAddress) {
         return false;
       }
     }
@@ -80,14 +80,12 @@ export default async function handler(
         fileData = mapSavePoolsToPoolArray(
           JSON.parse(fs.readFileSync(pathname, "utf-8"))
         );
-
         const {
           walletAddress,
           filters,
         }: { walletAddress?: string; filters?: PendingPoolFilters } = qs.parse(
           req.query as unknown as string
         );
-
         if (walletAddress != undefined) {
           fileData = filterByWalletAddress(fileData, walletAddress);
         }

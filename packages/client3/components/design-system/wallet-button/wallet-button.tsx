@@ -33,7 +33,6 @@ type IWalletButton = Pick<
 
 export function WalletButton({ className }: Props) {
   const { account } = useWallet();
-
   const isActivating = metaMaskHooks.useIsActivating();
   const error = metaMaskHooks.useError();
 
