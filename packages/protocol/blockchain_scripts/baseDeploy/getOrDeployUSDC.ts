@@ -30,11 +30,14 @@ export async function getOrDeployUSDC(deployer: ContractDeployer, config) {
       from: gf_deployer,
       args: [initialAmount, decimalPlaces],
     })
+    await new Promise((r) => setTimeout(r, 4000))
     usdcAddress = fakeUSDC.address
     await (
       await getTruffleContract<TestERC20Instance>("TestERC20", {from: gf_deployer})
     ).transfer(protocolOwner, String(new BN(90000000).mul(USDCDecimals)))
+    await new Promise((r) => setTimeout(r, 4000))
   }
   await updateConfig(config, "address", CONFIG_KEYS.USDC, usdcAddress, logger)
+  await new Promise((r) => setTimeout(r, 4000))
   return usdcAddress
 }

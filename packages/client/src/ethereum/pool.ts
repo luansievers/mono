@@ -977,7 +977,8 @@ class StakingRewards {
       undefined,
       // This legacy contract behavior is only needed in production, or when running in a non-production environment
       // but pointed against mainnet.
-      process.env.NODE_ENV === "production" || this.goldfinchProtocol.networkIsMainnet
+      false
+      // process.env.NODE_ENV === "production" || this.goldfinchProtocol.networkIsMainnet
     )
     this.address = goldfinchProtocol.getAddress("StakingRewards")
     this.curvePool = getCurvePoolContract(goldfinchProtocol)

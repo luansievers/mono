@@ -96,12 +96,15 @@ type JuniorTrancheInfo @entity {
 
 type CreditLine @entity {
   id: ID!
+  tranchedPool: TranchedPool
   borrower: Bytes!
-  tranchedPool: TranchedPool! @derivedFrom(field: "creditLine")
   limit: BigInt!
   maxLimit: BigInt!
   interestApr: BigInt!
   balance: BigInt!
+  remainingPeriodDueAmount: BigInt
+  remainingTotalDueAmount: BigInt
+  availableCredit: BigInt
   interestAccruedAsOf: BigInt!
   paymentPeriodInDays: BigInt!
   termInDays: BigInt!
@@ -132,7 +135,7 @@ enum UidType {
 type TranchedPool @entity {
   id: ID!
   estimatedJuniorApy: BigDecimal!
-  estimatedJuniorApyFromGfiRaw: BigDecimal!
+  estimatedJuniorApyFromGfiRaw: BigDecimal
   estimatedTotalAssets: BigInt!
   estimatedLeverageRatio: BigInt
   remainingCapacity: BigInt!

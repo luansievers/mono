@@ -123,7 +123,7 @@ app.post("/advanceTimeOneDay", async (req, res) => {
 
   try {
     await advanceTime({days: 1})
-    await mineBlock()
+    // await mineBlock()
   } catch (e) {
     console.error("advanceTimeOneDay error", e)
     return res.status(500).send({message: "advanceTimeOneDay error"})
@@ -138,8 +138,8 @@ app.post("/advanceTimeThirtyDays", async (req, res) => {
   }
 
   try {
-    await advanceTime({days: 30})
-    await mineBlock()
+    await advanceTime({days: 365})
+    // await mineBlock()
   } catch (e) {
     console.error("advanceTimeThirtyDays error", e)
     return res.status(500).send({message: "advanceTimeThirtyDays error"})
@@ -148,7 +148,7 @@ app.post("/advanceTimeThirtyDays", async (req, res) => {
   return res.status(200).send({status: "success", result: JSON.stringify({success: true})})
 })
 
-admin.initializeApp({projectId: "goldfinch-frontends-dev"})
+admin.initializeApp({projectId: "free-artists-dev"})
 
 app.post("/kycStatus", async (req, res) => {
   if (process.env.NODE_ENV === "production") {

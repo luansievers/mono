@@ -665,7 +665,6 @@ function App() {
           <Router>
             <EarnProvider graphQuerierConfig={earnProviderGraphQuerierConfig}>
               <BorrowProvider>
-                {(process.env.NODE_ENV === "development" || process.env.MURMURATION === "yes") && <DevTools />}
                 <Nav>
                   <NetworkIndicators
                     user={user}
@@ -681,6 +680,7 @@ function App() {
                     hasGraphError={hasGraphError}
                   />
                 </Nav>
+                {/* {(process.env.NODE_ENV === "development" || process.env.MURMURATION === "yes") && <DevTools />} */}
                 <div>
                   <Switch>
                     <Route exact path={INDEX_ROUTE}>

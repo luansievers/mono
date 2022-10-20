@@ -36,6 +36,7 @@ export async function deployCommunityRewards(
       },
     },
   })
+  await new Promise((r) => setTimeout(r, 4000))
   const contract = await getTruffleContract<CommunityRewardsInstance>(contractName, {at: communityRewards.address})
 
   return {name: contractName, contract}

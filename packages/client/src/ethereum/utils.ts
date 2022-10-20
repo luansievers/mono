@@ -35,10 +35,13 @@ const ONE_QUADRILLION_USDC = "1000000000000000000000"
 const MAINNET = "mainnet"
 const ROPSTEN = "ropsten"
 export const RINKEBY = "rinkeby"
+export const AURORA = "aurora"
 const LOCAL = "localhost"
 const MAINNET_LAUNCH_BLOCK = "11370658"
+const AURORA_LAUNCH_BLOCK = "100915349"
 const USDC_ADDRESSES = {
   [ROPSTEN]: "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
+  [AURORA]: "0x891342BA3e1092FCeC117090f3C4D607263661Ea",
   [MAINNET]: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
 }
 
@@ -64,20 +67,23 @@ const ONE_INCH_ADDRESSES = {
 const mapNetworkToID: Record<string, string> = {
   main: MAINNET,
   ropsten: ROPSTEN,
-  private: "localhost",
+  private: AURORA,
   rinkeby: RINKEBY,
+  aurora: AURORA,
 }
 
 const chainIdToNetworkID = {
   1: MAINNET,
   4: RINKEBY,
   31337: "localhost",
+  1313161555: "aurora",
 }
 
 const SUPPORTED_NETWORKS: Record<string, boolean> = {
   [MAINNET]: true,
   [LOCAL]: true,
   [RINKEBY]: true,
+  [AURORA]: true,
 }
 
 enum SupportedChainId {
@@ -85,6 +91,7 @@ enum SupportedChainId {
   ROPSTEN = 3,
   LOCAL = 31337,
   MURMURATION = 31337,
+  AURORA = 1313161555,
 }
 
 const MURMURATION_RPC_URL = "https://murmuration.goldfinch.finance/_chain"
@@ -104,7 +111,8 @@ async function getDeployments(networkId) {
   if (config) {
     return Promise.resolve(config[networkId])
   }
-  const fileNameSuffix = process.env.NODE_ENV === "development" ? "_dev" : ""
+  // const fileNameSuffix = process.env.NODE_ENV === "development" ? "_dev" : ""
+  const fileNameSuffix = "_dev"
   return import(`@goldfinch-eng/protocol/deployments/all${fileNameSuffix}.json`)
     .then((result) => {
       config = transformedConfig(result)
@@ -148,8 +156,9 @@ export function isMainnetForking(): boolean {
 }
 
 async function getMerkleDistributorInfo(networkId: string): Promise<MerkleDistributorInfo | undefined> {
-  const fileNameSuffix =
-    process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking() ? ".dev" : ""
+  // const fileNameSuffix =
+  //   process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking() ? ".dev" : ""
+  const fileNameSuffix = ""
 
   return import(
     `@goldfinch-eng/protocol/blockchain_scripts/merkle/merkleDistributor/merkleDistributorInfo${fileNameSuffix}.json`
@@ -169,10 +178,11 @@ async function getMerkleDistributorInfo(networkId: string): Promise<MerkleDistri
 }
 
 async function getBackerMerkleDistributorInfo(networkId: string): Promise<MerkleDistributorInfo | undefined> {
-  let fileNameSuffix = ""
-  if (process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking()) {
-    fileNameSuffix = ".dev"
-  }
+  // let fileNameSuffix = ""
+  // if (process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking()) {
+  //   fileNameSuffix = ".dev"
+  // }
+  const fileNameSuffix = ""
 
   return import(
     `@goldfinch-eng/protocol/blockchain_scripts/merkle/backerMerkleDistributor/merkleDistributorInfo${fileNameSuffix}.json`
@@ -192,8 +202,9 @@ async function getBackerMerkleDistributorInfo(networkId: string): Promise<Merkle
 }
 
 async function getMerkleDirectDistributorInfo(networkId: string): Promise<MerkleDirectDistributorInfo | undefined> {
-  const fileNameSuffix =
-    process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking() ? ".dev" : ""
+  // const fileNameSuffix =
+  //   process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking() ? ".dev" : ""
+  const fileNameSuffix = ""
 
   return import(
     `@goldfinch-eng/protocol/blockchain_scripts/merkle/merkleDirectDistributor/merkleDirectDistributorInfo${fileNameSuffix}.json`
@@ -215,10 +226,11 @@ async function getMerkleDirectDistributorInfo(networkId: string): Promise<Merkle
 async function getBackerMerkleDirectDistributorInfo(
   networkId: string
 ): Promise<MerkleDirectDistributorInfo | undefined> {
-  let fileNameSuffix = ""
-  if (process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking()) {
-    fileNameSuffix = ".dev"
-  }
+  // let fileNameSuffix = ""
+  // if (process.env.NODE_ENV === "development" && networkId === LOCAL && !isMainnetForking()) {
+  //   fileNameSuffix = ".dev"
+  // }
+  const fileNameSuffix = ""
   return import(
     `@goldfinch-eng/protocol/blockchain_scripts/merkle/backerMerkleDirectDistributor/merkleDirectDistributorInfo${fileNameSuffix}.json`
   )
@@ -253,7 +265,7 @@ function getFromBlock(chain: string): string {
   if (chain === MAINNET) {
     return MAINNET_LAUNCH_BLOCK
   } else {
-    return "earliest"
+    return AURORA_LAUNCH_BLOCK
   }
 }
 

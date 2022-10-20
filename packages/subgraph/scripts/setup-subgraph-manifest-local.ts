@@ -9,7 +9,21 @@ type ContractName = keyof typeof devDeployments["31337"]["localhost"]["contracts
 
 console.log("Updating subgraph-local.yaml")
 
-const localhostContracts = devDeployments["31337"].localhost.contracts
+const devDeployments = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "../../protocol/deployments/all_dev.json")).toString()
+)
+
+const localhostContracts = devDeployments["1313161555"].aurora.contracts
+const deployedSeniorPoolProxyAddress = localhostContracts.SeniorPool_Proxy.address
+const deployedGoldfinchFactoryProxyAddress = localhostContracts.GoldfinchFactory_Proxy.address
+const deployedPoolProxyAddress = localhostContracts.Pool_Proxy.address
+const deployedPoolTokensProxyAddress = localhostContracts.PoolTokens_Proxy.address
+const deployedGoldfinchConfigAddress = localhostContracts.GoldfinchConfig.address
+const deployedFiduAddress = localhostContracts.Fidu.address
+const deployedGfiAddress = localhostContracts.GFI.address
+const deployedStakingRewardsProxyAddress = localhostContracts.StakingRewards_Proxy.address
+const deployedBackerRewardsProxyAddress = localhostContracts.BackerRewards_Proxy.address
+const deployedOldFixedLeverageRatioStrategyAddress = localhostContracts.FixedLeverageRatioStrategy.address
 
 const subgraphManifest: any = yaml.load(fs.readFileSync(path.resolve(".", "subgraph.yaml")).toString())
 

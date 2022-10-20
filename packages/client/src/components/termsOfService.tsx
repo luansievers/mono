@@ -5,13 +5,13 @@ function TermsOfService(props) {
     <div className="content-section">
       <div className="page-header">Terms of Service</div>
       <div className="legal">
-        <h3>Effective Date: November 23, 2020</h3>
+        <h3>Effective Date: October 1, 2022</h3>
         <h3>
-          Welcome to https://goldfinch.finance (the “<em>Website”</em>). This Terms of Use Agreement (the “
-          <em>Agreement</em>”) is made and entered into by and between you and Goldfinch Technology Company (the “
-          <em>Company”</em>, “<em>us</em>”, “<em>we</em>”, or “<em>our</em>”). This Agreement sets forth the terms and
-          conditions that govern your use of and access to the Website and any products, materials, and services
-          provided by or on the Website (collectively, the “<em>Services</em>”).
+          Welcome to FreeArtists (the “<em>Website”</em>). This Terms of Use Agreement (the “<em>Agreement</em>”) is
+          made and entered into by and between you and FreeArtists Technology Company (the “<em>Company”</em>, “
+          <em>us</em>”, “<em>we</em>”, or “<em>our</em>”). This Agreement sets forth the terms and conditions that
+          govern your use of and access to the Website and any products, materials, and services provided by or on the
+          Website (collectively, the “<em>Services</em>”).
         </h3>
         <h1>
           <span className="term-number">1. </span>Acceptance of this Agreement
@@ -331,7 +331,7 @@ function TermsOfService(props) {
         </h1>
         <p>
           All feedback, comments, requests for technical support, and other communications relating to the Services
-          should be directed to admin@goldfinch.finance.
+          should be directed to admin@freeartists.dao.
         </p>
       </div>
     </div>

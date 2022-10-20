@@ -4,7 +4,7 @@ import firestore = admin.firestore
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
-  kyc: {allowed_origins: "http://localhost"},
+  kyc: {allowed_origins: ["https://d2dq341cbfldko.cloudfront.net", "http://localhost"]},
   persona: {allowed_ips: ""},
   sentry: {
     dsn: "https://8c1adf3a336a4487b14ae1af080c26d1@o915675.ingest.sentry.io/5857894",
@@ -80,7 +80,7 @@ export type FirebaseConfig = {
   }
   kyc: {
     // eslint-disable-next-line camelcase
-    allowed_origins: string
+    allowed_origins: string[]
   }
   persona: {
     // eslint-disable-next-line camelcase
@@ -126,16 +126,17 @@ function getConfig(functions: any): FirebaseConfig {
   // whether we're in this bootstrapping phase, and use the test config for it as well as for when
   // `process.env.NODE_ENV === "test"`. `process.env.NODE_ENV` becomes `"test"` immediately after this
   // bootstrapping phase, via the `npm test` command passed as an argument to `npx firebase emulators:exec`.
-  const isBootstrappingEmulator =
-    process.env.FUNCTIONS_EMULATOR === "true" && // Cf. https://stackoverflow.com/a/60963496
-    process.env.NODE_ENV === undefined &&
-    // We expect the emulator never to be used with the prod project's functions, so we can
-    // include the following extra condition to prevent `isBootstrappingEmulator` ever enabling use of the
-    // test config with the prod project.
-    process.env.GCLOUD_PROJECT === "goldfinch-frontends-dev"
+  // const isBootstrappingEmulator =
+  //   process.env.FUNCTIONS_EMULATOR === "true" && // Cf. https://stackoverflow.com/a/60963496
+  //   process.env.NODE_ENV === undefined &&
+  //   // We expect the emulator never to be used with the prod project's functions, so we can
+  //   // include the following extra condition to prevent `isBootstrappingEmulator` ever enabling use of the
+  //   // test config with the prod project.
+  //   process.env.GCLOUD_PROJECT === "goldfinch-frontends-dev"
 
-  const isTesting = process.env.NODE_ENV === "test"
-  const result = isBootstrappingEmulator || isTesting ? _configForTest : functions.config()
+  // const isTesting = process.env.NODE_ENV === "test"
+  // const result = isBootstrappingEmulator || isTesting ? _configForTest : functions.config()
+  const result = _configForTest
   if (isFirebaseConfig(result)) {
     return result
   } else {

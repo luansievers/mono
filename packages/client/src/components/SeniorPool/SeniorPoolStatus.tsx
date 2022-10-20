@@ -78,7 +78,11 @@ function SeniorPoolStatus(props: SeniorPoolStatusProps) {
         <a href={"https://dune.xyz/goldfinch/goldfinch"} target="_blank" rel="noopener noreferrer">
           Dashboard<span className="outbound-link">{iconOutArrow}</span>
         </a>
-        <a href={pool ? `https://etherscan.io/address/${pool.address}` : ""} target="_blank" rel="noopener noreferrer">
+        <a
+          href={pool ? `https://testnet.aurorascan.dev/address/${pool.address}` : ""}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Pool<span className="outbound-link">{iconOutArrow}</span>
         </a>
       </div>
