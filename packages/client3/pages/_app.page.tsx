@@ -24,11 +24,11 @@ const initialUser = {
   isUsAccreditedIndividual: false,
   isUsNonAccreditedIndividual: false,
   isNonUsIndividual: false,
-  isGoListed: false,
 };
 
 export const UserContext = createContext<{
   user?: User;
+  admin?: boolean;
   setUser?: (user: User) => void;
 }>({});
 

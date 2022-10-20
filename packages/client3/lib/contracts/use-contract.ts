@@ -19,7 +19,9 @@ import {
   MerkleDirectDistributor__factory,
   BackerMerkleDirectDistributor__factory,
   BackerRewards__factory,
+  GoldfinchFactory__factory,
   CurvePool__factory,
+  Borrower__factory,
 } from "@/types/ethers-contracts";
 
 import { useWallet } from "../wallet";
@@ -40,13 +42,15 @@ const supportedContracts = {
   MerkleDirectDistributor: MerkleDirectDistributor__factory.connect,
   BackerMerkleDirectDistributor: BackerMerkleDirectDistributor__factory.connect,
   BackerRewards: BackerRewards__factory.connect,
+  GoldfinchFactory: GoldfinchFactory__factory.connect,
   CurvePool: CurvePool__factory.connect,
   CurveLP: Erc20__factory.connect,
+  Borrower: Borrower__factory.connect,
 };
 
 type SupportedContractName = keyof typeof supportedContracts;
 
-type Contract<T extends SupportedContractName> = ReturnType<
+export type Contract<T extends SupportedContractName> = ReturnType<
   typeof supportedContracts[T]
 >;
 

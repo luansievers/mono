@@ -50,7 +50,7 @@ export default {
       },
       allowUnlimitedContractSize: true,
       timeout: 1800000,
-      accounts: {mnemonic: "test test test test test test test test test test test junk"},
+      accounts: [{privateKey: process.env.PRIVATE_KEY, balance: "100000000000000000000000000"}],
       chainId: process.env.HARDHAT_FORK === "mainnet" ? 1 : 31337,
       forking: process.env.HARDHAT_FORK
         ? {
@@ -115,7 +115,7 @@ export default {
       4: "0x12B82166fd044aC854D3Fc15C48B5719Ca8Dfb94",
     },
     gf_deployer: {
-      default: 1,
+      default: 0,
       1: "0xa083880F7a5df37Bf00a25380C3eB9AF9cD92D8f",
       4: "0x12B82166fd044aC854D3Fc15C48B5719Ca8Dfb94",
     },

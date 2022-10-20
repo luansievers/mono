@@ -80,8 +80,8 @@ function AllArtistPoolPage() {
                       token: SupportedCrypto.Usdc,
                       amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
                     }}
-                    artistName={tranchedPool.borrower.name}
-                    image={tranchedPool.borrower.logo}
+                    artistName={tranchedPool.borrower?.name}
+                    image={tranchedPool.borrower?.logo}
                     onClick={() => handleClick(tranchedPool.id)}
                   />
                 ))

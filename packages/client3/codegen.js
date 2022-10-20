@@ -29,6 +29,7 @@ module.exports = {
   schema: [
     graphQlApiUrl, // ./lib/graphql/schema.json in case of emergency (see above note)
     "./lib/graphql/client-only-schema.graphql",
+    "./lib/graphql/rest-api-schema.graphql",
   ],
   documents: [
     "./pages/**/*.tsx",
