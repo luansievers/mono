@@ -1,17 +1,16 @@
-import {Address, BigDecimal, BigInt} from "@graphprotocol/graph-ts"
+import {Address, BigDecimal, BigInt, log} from "@graphprotocol/graph-ts"
 import {SeniorPool, SeniorPoolStatus} from "../../generated/schema"
-import {SeniorPool as SeniorPoolContract} from "../../generated/SeniorPool/SeniorPool"
-import {Fidu as FiduContract} from "../../generated/SeniorPool/Fidu"
-import {USDC as UsdcContract} from "../../generated/SeniorPool/USDC"
-import {CONFIG_KEYS_ADDRESSES} from "../constants"
+import {SeniorPool as SeniorPoolContract} from "../../generated/templates/SeniorPool/SeniorPool"
+import {Fidu_Implementation as FiduContract} from "../../generated/templates/SeniorPool/Fidu_Implementation"
+import {FIDU_ADDRESS} from "../constants"
 import {calculateEstimatedInterestForTranchedPool} from "./helpers"
 import {getStakingRewards} from "./staking_rewards"
-import {getAddressFromConfig} from "../utils"
 
 export function getOrInitSeniorPool(address: Address): SeniorPool {
   let seniorPool = SeniorPool.load(address.toHexString())
   if (!seniorPool) {
     seniorPool = new SeniorPool(address.toHexString())
+    seniorPool.capitalProviders = []
     seniorPool.investmentsMade = []
 
     const poolStatus = getOrInitSeniorPoolStatus()
@@ -39,10 +38,8 @@ export function getOrInitSeniorPoolStatus(): SeniorPoolStatus {
     poolStatus.cumulativeDrawdowns = new BigInt(0)
     poolStatus.estimatedTotalInterest = BigDecimal.zero()
     poolStatus.estimatedApy = BigDecimal.zero()
-    poolStatus.estimatedApyFromGfiRaw = BigDecimal.zero()
     poolStatus.defaultRate = new BigInt(0)
     poolStatus.tranchedPools = []
-    poolStatus.usdcBalance = BigInt.zero()
     poolStatus.save()
   }
   return poolStatus
@@ -63,6 +60,14 @@ export function updateEstimatedApyFromGfiRaw(): void {
   }
 }
 
+export function updatePoolCapitalProviders(seniorPoolAddress: Address, userAddress: Address): void {
+  let seniorPool = getOrInitSeniorPool(seniorPoolAddress)
+  let seniorPoolCapitalProviders = seniorPool.capitalProviders
+  seniorPoolCapitalProviders.push(userAddress.toHexString())
+  seniorPool.capitalProviders = seniorPoolCapitalProviders
+  seniorPool.save()
+}
+
 const FIDU_DECIMALS = BigInt.fromString("1000000000000000000") // 18 zeroes
 const GFI_DECIMALS = BigInt.fromString("1000000000000000000") // 18 zeroes
 const USDC_DECIMALS = BigInt.fromString("1000000") // 6 zeroes
@@ -70,21 +75,17 @@ const SECONDS_PER_YEAR = BigInt.fromString("31536000")
 
 export function updatePoolStatus(seniorPoolAddress: Address): void {
   let seniorPool = getOrInitSeniorPool(seniorPoolAddress)
+  let fidu_contract = FiduContract.bind(Address.fromString(FIDU_ADDRESS))
+  const stakingRewards = getStakingRewards()
 
-  const seniorPoolContract = SeniorPoolContract.bind(seniorPoolAddress)
-  const fidu_contract = FiduContract.bind(getAddressFromConfig(seniorPoolContract, CONFIG_KEYS_ADDRESSES.Fidu))
-  const usdc_contract = UsdcContract.bind(getAddressFromConfig(seniorPoolContract, CONFIG_KEYS_ADDRESSES.USDC))
-
-  let sharePrice = seniorPoolContract.sharePrice()
-  let compoundBalance = seniorPoolContract.compoundBalance()
-  let totalLoansOutstanding = seniorPoolContract.totalLoansOutstanding()
+  let contract = SeniorPoolContract.bind(seniorPoolAddress)
+  let sharePrice = contract.sharePrice()
+  let compoundBalance = contract.compoundBalance()
+  let totalLoansOutstanding = contract.totalLoansOutstanding()
   let totalSupply = fidu_contract.totalSupply()
   let totalPoolAssets = totalSupply.times(sharePrice)
   let totalPoolAssetsUsdc = totalPoolAssets.times(USDC_DECIMALS).div(FIDU_DECIMALS).div(FIDU_DECIMALS)
-  let balance = seniorPoolContract
-    .assets()
-    .minus(seniorPoolContract.totalLoansOutstanding())
-    .plus(seniorPoolContract.totalWritedowns())
+  let balance = contract.assets().minus(contract.totalLoansOutstanding()).plus(contract.totalWritedowns())
   let rawBalance = balance
 
   let poolStatus = SeniorPoolStatus.load(seniorPool.latestPoolStatus) as SeniorPoolStatus
@@ -94,7 +95,6 @@ export function updatePoolStatus(seniorPoolAddress: Address): void {
   poolStatus.balance = balance
   poolStatus.sharePrice = sharePrice
   poolStatus.rawBalance = rawBalance
-  poolStatus.usdcBalance = usdc_contract.balanceOf(seniorPoolAddress)
   poolStatus.totalPoolAssets = totalPoolAssets
   poolStatus.totalPoolAssetsUsdc = totalPoolAssetsUsdc
   poolStatus.save()

@@ -1,4 +1,12 @@
-import {BigInt} from "@graphprotocol/graph-ts"
+import {dataSource, BigInt} from "@graphprotocol/graph-ts"
+
+import {
+  LOCALHOST_FIDU_ADDRESS,
+  LOCALHOST_GOLDFINCH_CONFIG_ADDRESS,
+  LOCALHOST_POOL_TOKENS_ADDRESS,
+  LOCALHOST_SENIOR_POOL_ADDRESS,
+  LOCALHOST_OLD_FIXED_LEVERAGE_RATIO_STRATEGY_ADDRESS,
+} from "./localhost-addresses"
 
 export const V2_2_MIGRATION_TIME = "1643943600"
 export const BACKER_REWARDS_EPOCH = "1644021439"

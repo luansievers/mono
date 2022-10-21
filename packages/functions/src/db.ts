@@ -4,7 +4,7 @@ import firestore = admin.firestore
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
-  kyc: {allowed_origins: ["https://d2dq341cbfldko.cloudfront.net", "http://localhost"]},
+  kyc: {allowed_origins: "https://d2dq341cbfldko.cloudfront.net, http://localhost"},
   persona: {allowed_ips: ""},
   sentry: {
     dsn: "https://8c1adf3a336a4487b14ae1af080c26d1@o915675.ingest.sentry.io/5857894",
@@ -80,7 +80,7 @@ export type FirebaseConfig = {
   }
   kyc: {
     // eslint-disable-next-line camelcase
-    allowed_origins: string[]
+    allowed_origins: string
   }
   persona: {
     // eslint-disable-next-line camelcase

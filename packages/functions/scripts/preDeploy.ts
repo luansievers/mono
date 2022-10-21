@@ -13,7 +13,6 @@ async function runCommand(args: Array<string>, {cwd}: {cwd: string}): Promise<st
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {cwd})
     let output = ""
-    const child = spawn(command, args, {cwd})
     child.stdout.on("data", (chunk: any) => {
       output += chunk.toString()
     })

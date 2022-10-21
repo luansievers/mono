@@ -1,10 +1,6 @@
 import {findEnvLocal} from "@goldfinch-eng/utils"
 import dotenv from "dotenv"
 import {
-  TEST_MERKLE_DISTRIBUTOR_RECIPIENT_A,
-  TEST_MERKLE_DISTRIBUTOR_RECIPIENT_B,
-} from "./test/blockchain_scripts/merkle/merkleDistributor/fixtures"
-import {
   TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,
   TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_B,
 } from "./test/blockchain_scripts/merkle/merkleDirectDistributor/fixtures"
@@ -50,7 +46,7 @@ export default {
       },
       allowUnlimitedContractSize: true,
       timeout: 1800000,
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [{privateKey: process.env.PRIVATE_KEY, balance: "100000000000000000000000000"}],
       chainId: process.env.HARDHAT_FORK === "mainnet" ? 1 : 31337,
       forking: process.env.HARDHAT_FORK
         ? {
@@ -75,41 +71,47 @@ export default {
     },
     fuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
       // gasPrice: 225000000000,
       chainId: 43113,
       // gasPrice: 120000000000
     },
     moonbeam: {
       url: "https://rpc.api.moonbase.moonbeam.network",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 1287,
     },
     aurora: {
       url: "https://testnet.aurora.dev",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 1313161555,
       // gasPrice: 120 * 1000000000
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com/",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 80001,
       // gasPrice: 120 * 1000000000
     },
     arbitrum: {
       url: "https://rinkeby.arbitrum.io/rpc",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 421611,
     },
     bsc: {
       url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 97,
     },
     evmos: {
       url: "https://eth.bd.evmos.dev:8545",
-      accounts: {mnemonic: process.env.EOA_MNEMONIC},
+      accounts: [process.env.PRIVATE_KEY],
+
       chainId: 9000,
     },
   },
@@ -164,10 +166,10 @@ export default {
       31337: "0x60d2be34bce277f5f5889adfd4991baefa17461c",
     },
     test_merkle_distributor_recipient_a: {
-      hardhat: TEST_MERKLE_DISTRIBUTOR_RECIPIENT_A,
+      hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,
     },
     test_merkle_distributor_recipient_b: {
-      hardhat: TEST_MERKLE_DISTRIBUTOR_RECIPIENT_B,
+      hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_B,
     },
     test_merkle_direct_distributor_recipient_a: {
       hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,
