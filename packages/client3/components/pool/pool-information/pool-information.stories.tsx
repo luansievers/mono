@@ -19,7 +19,6 @@ export const PoolInformationStory: ComponentStory<typeof PoolInformation> = (
 PoolInformationStory.args = {
   closingDate: new Date(2100, 1, 1),
   totalBackers: 2,
-  totalEarned: 100,
   totalGoalAmount: 10000,
   totalSuppliedAmount: 1000,
   tranchedPoolAddress: "0xeabdc184471a6edba7b4a9a4c94ad2343b70fd8b",

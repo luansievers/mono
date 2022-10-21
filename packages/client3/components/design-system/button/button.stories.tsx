@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Button } from ".";
+import { Button, LinkButton } from ".";
 import { SocialMediaButton } from "./social-media-button";
 
 export default {
@@ -28,10 +28,11 @@ ButtonStory.args = {
   buttonType: "primary",
 };
 
-export const SocialMediaButtonStory: ComponentStory<typeof Button> = (args) => (
-  <SocialMediaButton {...args} />
-);
+export const SocialMediaButtonStory: ComponentStory<typeof LinkButton> = (
+  args
+) => <SocialMediaButton {...args} />;
 
 SocialMediaButtonStory.args = {
   children: "Button",
+  href: "",
 };

@@ -21,7 +21,8 @@ import { WalletButton } from "@/components/design-system/wallet-button";
 import { TRANCHES, USDC_DECIMALS } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
-import { UidType } from "@/lib/graphql/generated";
+import { formatFiat } from "@/lib/format";
+import { SupportedFiat, UidType } from "@/lib/graphql/generated";
 import {
   approveErc20IfRequired,
   canUserParticipateInPool,
@@ -37,7 +38,6 @@ type Props = {
   totalSuppliedAmount: number;
   totalGoalAmount: number;
   totalBackers: number;
-  totalEarned: number;
   closingDate: Date;
   tranchedPoolAddress: string;
   allowedUidTypes: UidType[];
@@ -55,7 +55,6 @@ export function PoolInformation({
   totalSuppliedAmount,
   totalGoalAmount,
   totalBackers,
-  totalEarned,
   closingDate,
   type,
   agreement,
@@ -170,7 +169,7 @@ export function PoolInformation({
   );
 
   return (
-    <div className="w-96 gap-6 rounded-lg border-dark-90 bg-dark-100 px-6 py-7">
+    <div className="w-96 gap-6 rounded-lg border border-dark-90 bg-dark-100 px-6 py-7">
       {type && (
         <>
           <div className="pb-6">
@@ -198,10 +197,17 @@ export function PoolInformation({
           level={2}
           className={type == "failed" ? "text-accent-3" : "text-accent-2"}
         >
-          ${totalSuppliedAmount}
+          {formatFiat({
+            symbol: SupportedFiat.Usd,
+            amount: totalSuppliedAmount,
+          })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of ${totalGoalAmount}
+          of{" "}
+          {formatFiat({
+            symbol: SupportedFiat.Usd,
+            amount: totalGoalAmount,
+          })}
         </BodyText>
       </div>
       <Progress
@@ -209,16 +215,6 @@ export function PoolInformation({
         percentage={progressPercentage}
         type={type}
       />
-      {type && (
-        <div className="mb-8 flex items-center justify-start">
-          <Display level={2} className="text-white">
-            ${totalEarned}
-          </Display>
-          <BodyText size="large" className="ml-4 text-dark-50">
-            Earned
-          </BodyText>
-        </div>
-      )}
       <div className="flex items-center justify-start">
         <Display level={2} className="text-white">
           {totalBackers}
