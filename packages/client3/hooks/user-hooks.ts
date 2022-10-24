@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { CONTRACT_ADDRESSES } from "@/constants";
+import { AURORA_CONTRACTS } from "@/constants/contract-addresses/aurora_contracts";
 import { useContract } from "@/lib/contracts";
 import { UserContext } from "@/pages/_app.page";
 
@@ -18,7 +18,7 @@ export function useAdmin() {
   const [isAdmin, setAdmin] = useState<boolean>();
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldFinchFactory
+    AURORA_CONTRACTS.GoldfinchFactory
   );
   useEffect(() => {
     if (goldfinchFactory) {

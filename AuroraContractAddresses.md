@@ -14,7 +14,7 @@ TestERC20 was deployed to: 0xbECe409F5d5Df43950AE8d33a27676911A3Cb4d4
 Fidu was deployed to: 0xeB8827E360F1B9a4e68875AF43976e3E85042508
 PoolTokens was deployed to: 0x5e2EE35590963e14aD088d03d26BE43D4cD1182C
 TranchingLogic library was deployed to: 0xA8CaC9022164B3b7a6ab764227dBC38B8D47eef1
-TranchedPool was deployed to: 0x034F9C34a9bBfE33bb8fDd5aFb62CEC999404813 (
+TranchedPool was deployed to: 0x034F9C34a9bBfE33bb8fDd5aFb62CEC999404813
 TranchedPoolImplementationRepository was deployed to: 0xCe7F9d1b28B957bC070d3232B931aA75005f5855
 Accountant library was deployed to: 0xB2123D27842FaeDbFf0b39E2fC2bC59BCBd6248c
 SeniorPool was deployed to: 0x76941Fb15eC56f73c178cf7259a786Ab3196cd9A

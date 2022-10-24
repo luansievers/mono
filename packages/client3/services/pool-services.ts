@@ -1,6 +1,8 @@
 import axios from "axios";
+import { Result } from "ethers/lib/utils";
 
 import { Contract } from "@/lib/contracts";
+import { getLastEventArgs } from "@/utilities/contract.util";
 
 const JUNIOR_FEE_PERCENT = "20";
 const INTEREST_APR = "50000000000000000"; // 5% APR
@@ -88,5 +90,14 @@ export const createBorrowerContract = async (
     await goldfinchFactory.createBorrower(account)
   ).wait();
 
-  return borrowerContract.events?.[3].args?.borrower.toLowerCase();
+  console.log("borrowerContract return", borrowerContract);
+
+  console.log(
+    "old borrowerContract would have been",
+    borrowerContract.events?.[3].args?.borrower.toLowerCase()
+  );
+
+  const lastEvent = getLastEventArgs(borrowerContract);
+
+  return lastEvent.borrower;
 };
