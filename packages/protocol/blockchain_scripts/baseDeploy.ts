@@ -47,6 +47,7 @@ const baseDeploy: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
     return
   }
 
+  await new Promise((r) => setTimeout(r, 4000))
   const deployEffects = await getDeployEffects()
 
   const {getNamedAccounts, getChainId} = hre
@@ -59,30 +60,59 @@ const baseDeploy: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
   assertIsChainId(chainId)
   logger("Chain id is:", chainId)
   const config = await deployConfig(deployer)
+  await new Promise((r) => setTimeout(r, 4000))
+
   await getOrDeployUSDC(deployer, config)
+  await new Promise((r) => setTimeout(r, 4000))
+
+  await new Promise((r) => setTimeout(r, 4000))
+
   await getOrDeployFiduUSDCCurveLP(deployer, config)
   const fidu = await deployFidu(deployer, config)
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployPoolTokens(deployer, {config})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployTranchedPoolImplementationRepository(deployer, {config, deployEffects})
+
+  await new Promise((r) => setTimeout(r, 4000))
+
   logger("Granting minter role to Pool")
   const seniorPool = await deploySeniorPool(deployer, {config, fidu})
   await deployBorrower(deployer, {config})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deploySeniorPoolStrategies(deployer, {config})
   logger("Deploying GoldfinchFactory")
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployGoldfinchFactory(deployer, {config})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployClImplementation(deployer, {config})
 
   const gfi = await deployGFI(deployer, {config})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployLPStakingRewards(deployer, {config, deployEffects})
   const communityRewards = await deployCommunityRewards(deployer, {config, deployEffects})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployMerkleDistributor(deployer, {communityRewards, deployEffects})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployMerkleDirectDistributor(deployer, {gfi, deployEffects})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployMerkleDistributor(deployer, {
     communityRewards,
     deployEffects,
     contractName: "BackerMerkleDistributor",
     merkleDistributorInfoPath: process.env.BACKER_MERKLE_DISTRIBUTOR_INFO_PATH,
   })
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployMerkleDirectDistributor(deployer, {
     gfi,
     deployEffects,
@@ -95,14 +125,25 @@ const baseDeploy: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
   const uniqueIdentity = await deployUniqueIdentity({deployer, trustedSigner, deployEffects})
 
   const go = await deployGo(deployer, {configAddress: config.address, uniqueIdentity, deployEffects})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await deployBackerRewards(deployer, {configAddress: config.address, deployEffects})
 
   logger("deploying Zapper and granting it ZAPPER_ROLE role on SeniorPool, StakingRewards, and Go")
   const zapper = await deployZapper(deployer, {config, deployEffects})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await seniorPool.initZapperRole({from: trustedSigner})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await seniorPool.grantRole(ZAPPER_ROLE, zapper.address, {from: trustedSigner})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await go.contract.initZapperRole({from: trustedSigner})
+  await new Promise((r) => setTimeout(r, 4000))
+
   await go.contract.grantRole(await go.contract.ZAPPER_ROLE(), zapper.address, {from: trustedSigner})
+  await new Promise((r) => setTimeout(r, 4000))
 
   await deployEffects.executeDeferred()
 }
