@@ -2,6 +2,7 @@ import axios from "axios";
 import { Result } from "ethers/lib/utils";
 
 import { Contract } from "@/lib/contracts";
+import { UIDType } from "@/lib/verify";
 import { getLastEventArgs } from "@/utilities/contract.util";
 
 const JUNIOR_FEE_PERCENT = "20";
@@ -11,7 +12,13 @@ const TERM_IN_DAYS = "365";
 const LATE_FEE_APR = "0";
 const PRINCIPAL_GRACE_PERIOD_IN_DAYS = "185";
 const FUNDABLE_AT = "0";
-const ALLOWED_UID = [0];
+const ALLOWED_UID = [
+  UIDType.NonUSIndividual,
+  UIDType.NonUSEntity,
+  UIDType.USEntity,
+  UIDType.USNonAccreditedIndividual,
+  UIDType.USAccreditedIndividual,
+];
 
 /**
  * @param goldfinchFactory - GoldfinchFactory contract

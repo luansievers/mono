@@ -1,39 +1,95 @@
-import axios from "axios";
+import { gql } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-import { Button, Heading, LinkButton } from "@/components/design-system";
+import { Button, Heading } from "@/components/design-system";
+import { PoolDetail } from "@/components/pool/pool-details";
+import { useLayoutContext } from "@/hooks/sidebar-hooks";
 import {
-  useLayoutContext,
-  useLayoutTitle,
-  useSelectedSidebarItem,
-} from "@/hooks/sidebar-hooks";
+  useBackerPoolGraphDataQuery,
+  useBackerPoolMetadataQuery,
+} from "@/lib/graphql/generated";
+import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
 
-import PoolDetail from "./pool-details";
 import PoolDetailsRightGrid from "./pool-details-grid-right";
+gql`
+  query backerPoolMetadata($poolId: String!) {
+    pool(poolId: $poolId) @rest(path: "pool/{args.poolId}", type: "Pool") {
+      id
+      poolName
+      projectDetail
+      walletAddress
+      projectCoverImage
+      status
+      goalAmount
+      terms {
+        projectGoal
+        raiseTarget
+      }
+      closingDate
+      poolAddress
+    }
+  }
+`;
+gql`
+  ${TRANCHED_POOL_STATUS_FIELDS}
+  query backerPoolGraphData($tranchedPoolAddress: ID!) {
+    tranchedPool(id: $tranchedPoolAddress) {
+      id
+      estimatedJuniorApy
+      estimatedJuniorApyFromGfiRaw
+      estimatedLeverageRatio
+      fundableAt
+      isPaused
+      numBackers
+      backers {
+        id
+      }
+      juniorTranches {
+        lockedUntil
+      }
+      juniorDeposited
+      creditLine {
+        id
+        limit
+        maxLimit
+        id
+        termInDays
+        paymentPeriodInDays
+        nextDueTime
+        interestAprDecimal
+        borrower
+        lateFeeApr
+      }
+      initialInterestOwed
+      principalAmountRepaid
+      interestAmountRepaid
+      remainingJuniorCapacity
+      allowedUidTypes
+      ...TranchedPoolStatusFields
+    }
+  }
+`;
 
-function ArtistPoolPage() {
+function BackerPoolPage() {
   const { title } = useLayoutContext();
-  const [poolData, setPoolData] = useState<any>(undefined);
   const router = useRouter();
   const { address } = router.query;
-  /**
-   * Below code(useEffect) and it's usages need to be replaced by openTranchedPools when create pool insertion is done
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/api/pool`);
-      const mappedData = Object.keys(response.data).map((key) => ({
-        id: key,
-        ...response.data[key],
-      }));
-      const data = mappedData.find((poolData) => poolData.id === address);
-      setPoolData(data ?? null);
-    };
-    fetchData();
-  }, [address]);
+  const { data: { pool: poolMetaData } = {} } = useBackerPoolMetadataQuery({
+    skip: !address,
+    variables: {
+      poolId: address as string,
+    },
+  });
 
-  if (poolData === undefined) {
+  const { data: { tranchedPool: tranchedPoolData } = {} } =
+    useBackerPoolGraphDataQuery({
+      skip: !poolMetaData?.poolAddress,
+      variables: {
+        tranchedPoolAddress: poolMetaData?.poolAddress || "",
+      },
+    });
+
+  if (poolMetaData === undefined || poolMetaData === null) {
     return null;
   }
 
@@ -48,14 +104,23 @@ function ArtistPoolPage() {
       </Button>
       <div className="mb-10 px-4">
         <Heading level={1} className="text-white">
-          {poolData?.poolName ?? "Collaboration with Sam"}
+          {poolMetaData?.poolName ?? ""}
         </Heading>
         <div className="grid grid-cols-6 gap-5">
           <div className="col-span-4 px-4">
-            <PoolDetail poolData={poolData} />
+            <PoolDetail
+              poolData={poolMetaData}
+              backerList={tranchedPoolData?.backers?.map((backer) => ({
+                name: backer.id,
+                profileImageUrl: "",
+              }))}
+            />
           </div>
           <div className="col-span-2">
-            <PoolDetailsRightGrid poolData={poolData} />
+            <PoolDetailsRightGrid
+              poolData={poolMetaData}
+              tranchedPoolData={tranchedPoolData}
+            />
           </div>
         </div>
       </div>
@@ -63,4 +128,4 @@ function ArtistPoolPage() {
   );
 }
 
-export default ArtistPoolPage;
+export default BackerPoolPage;

@@ -187,9 +187,9 @@
   --toastify-color-success: theme(colors.state.success.DEFAULT);
   --toastify-color-warning: #fbf7d5;
   --toastify-color-error: theme(colors.state.error.DEFAULT);
-  --toastify-text-color-success: theme(colors.state.success.DEFAULT);
+  --toastify-text-color-success: theme(colors.state.success.light);
   --toastify-text-color-warning: #645c18;
-  --toastify-text-color-error: theme(colors.state.error.DEFAULT);
+  --toastify-text-color-error: theme(colors.state.error.light);
   --toastify-icon-color-info: theme(colors.state.process.light);
   --toastify-icon-color-success: theme(colors.state.success.light);
   --toastify-icon-color-error: theme(colors.state.error.light);
