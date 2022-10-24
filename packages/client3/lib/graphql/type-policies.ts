@@ -73,7 +73,7 @@ export const typePolicies: InMemoryCacheConfig["typePolicies"] = {
             );
             return;
           }
-          const borrowerKey = POOL_METADATA[id].borrower;
+          const borrowerKey = POOL_METADATA[id]?.borrower;
           return BORROWER_METADATA[borrowerKey];
         },
       },

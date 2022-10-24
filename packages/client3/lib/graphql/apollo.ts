@@ -16,9 +16,9 @@ const graphQlApiUrl =
   typeof process.env.NEXT_PUBLIC_GRAPHQL_URL !== "undefined"
     ? process.env.NEXT_PUBLIC_GRAPHQL_URL
     : process.env.NEXT_PUBLIC_NETWORK_NAME === "mainnet"
-    ? "https://api.thegraph.com/subgraphs/name/goldfinch-eng/goldfinch-v2"
+    ? "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists"
     : process.env.NEXT_PUBLIC_NETWORK_NAME === "localhost"
-    ? "http://localhost:8000/subgraphs/name/goldfinch-subgraph"
+    ? "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists"
     : null;
 if (!graphQlApiUrl) {
   throw new Error("Could not determine GraphQL API URL");
