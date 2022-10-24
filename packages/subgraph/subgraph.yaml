@@ -9,9 +9,9 @@ dataSources:
     name: SeniorPool
     network: aurora-testnet
     source:
-      address: "0x76941Fb15eC56f73c178cf7259a786Ab3196cd9A"
+      address: "0xCc67DeE4a4aFf88F89FfbCbC061E7eCa72f03D63"
       abi: SeniorPool
-      startBlock: 103147924
+      startBlock: 103392492
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -53,9 +53,9 @@ dataSources:
     name: GoldfinchFactory
     network: aurora-testnet
     source:
-      address: "0x3fEb6C9815f7d0ba7D5d51151a18f2a7001338b4"
+      address: "0xe2803904a00C26406ed79dd526A61b03207054b5"
       abi: GoldfinchFactory
-      startBlock: 0x60806040
+      startBlock: 103392633
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -84,9 +84,9 @@ dataSources:
     name: PoolTokens
     network: aurora-testnet
     source:
-      address: "0x5e2EE35590963e14aD088d03d26BE43D4cD1182C"
+      address: "0x0443997dD4F6deEFDAb42794F7DE07b4B520D8C3"
       abi: PoolTokens
-      startBlock: 103147818
+      startBlock: 103392390
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -123,9 +123,9 @@ dataSources:
     name: StakingRewards
     network: aurora-testnet
     source:
-      address: "0x6Df6F746A3EaA2da35e74b614AecE548119e1025"
+      address: "0x409929269e47c8a1F5d0Dd54a51A1128f4407378"
       abi: StakingRewards
-      startBlock: 103148187
+      startBlock: 103392718
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -164,9 +164,9 @@ dataSources:
     name: BackerRewards
     network: aurora-testnet
     source:
-      address: "0x2715Bbf7430a0F6771da0Ca922564d4a33bC4229"
+      address: "0x7928feC16DB5b216aAb76e093453324a1bE39832"
       abi: BackerRewards
-      startBlock: 103148298
+      startBlock: 103392825
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -191,9 +191,9 @@ dataSources:
     name: UniqueIdentity
     network: aurora-testnet
     source:
-      address: "0x607Bc295b8E566afeaB7fb2f8fda4580cB9477A1"
+      address: "0xCc78cd15d8A0aa9Fececb105A526b773e0789a61"
       abi: UniqueIdentity
-      startBlock: 103148247
+      startBlock: 103392781
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -212,9 +212,9 @@ dataSources:
     name: GoldfinchConfig
     network: aurora-testnet
     source:
-      address: "0xe8fFE75Dc76B335f710b62b8065D19f272cAE3EB"
+      address: "0x9d64Ba30d699507BbC84628417B7A4fF4bdb8563"
       abi: GoldfinchConfig
-      startBlock: 103147539
+      startBlock: 103392178
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -235,9 +235,9 @@ dataSources:
     name: CommunityRewards
     network: aurora-testnet
     source:
-      address: "0xB6Dff489e7202bbB62F5E2a915f0663B564Eb8C1"
+      address: "0xC467384310CBeFb256BAcDB72A4182516d0169ed"
       abi: CommunityRewards
-      startBlock: 103148206
+      startBlock: 103392739
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

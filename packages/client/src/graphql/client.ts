@@ -3,8 +3,11 @@ import {NetworkConfig} from "../types/network"
 import {isProductionAndPrivateNetwork} from "../utils"
 
 const API_URLS = {
+  // mainnet: "https://api.thegraph.com/subgraphs/name/goldfinch-eng/goldfinch",
+  // localhost: "http://localhost:8000/subgraphs/name/goldfinch-subgraph",
   mainnet: "https://api.thegraph.com/subgraphs/name/goldfinch-eng/goldfinch",
-  localhost: "http://localhost:8000/subgraphs/name/goldfinch-subgraph",
+  localhost: "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists",
+  aurora: "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists",
 }
 
 const getApolloClient = (network: NetworkConfig | undefined): ApolloClient<NormalizedCacheObject> => {
