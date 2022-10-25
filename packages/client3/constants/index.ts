@@ -59,7 +59,8 @@ export const SERVER_URL =
     ? ""
     : networkName === "murmuration"
     ? "https://murmuration.goldfinch.finance"
-    : "http://localhost:4000";
+    : "https://us-central1-free-artists-dev.cloudfunctions.net";
+// : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =
   networkName === "mainnet"

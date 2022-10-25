@@ -28,6 +28,10 @@ const filterByWalletAddress = (
   return poolData.filter((pool: any) => pool.walletAddress === walletAddress);
 };
 
+const filterByPoolAddress = (poolData: Array<Pool>, poolAddress: string) => {
+  return poolData.filter((pool: any) => pool.poolAddress === poolAddress);
+};
+
 const filterPoolDataByUsingFilters = (
   poolData: Array<Pool>,
   filters: PendingPoolFilters
@@ -76,6 +80,7 @@ export default async function handler(
         `${process.cwd()}/pages/api/pool`,
         "./pools.json"
       );
+
       try {
         fileData = mapSavePoolsToPoolArray(
           JSON.parse(fs.readFileSync(pathname, "utf-8"))
@@ -83,11 +88,19 @@ export default async function handler(
         const {
           walletAddress,
           filters,
-        }: { walletAddress?: string; filters?: PendingPoolFilters } = qs.parse(
-          req.query as unknown as string
-        );
+          poolAddress,
+        }: {
+          walletAddress?: string;
+          filters?: PendingPoolFilters;
+          poolAddress?: string;
+        } = qs.parse(req.query as unknown as string);
+        console.log(poolAddress);
         if (walletAddress != undefined) {
           fileData = filterByWalletAddress(fileData, walletAddress);
+        }
+        if (poolAddress != undefined) {
+          console.log("poolAddress", poolAddress);
+          fileData = filterByPoolAddress(fileData, poolAddress);
         }
         if (filters) {
           fileData = filterPoolDataByUsingFilters(fileData, filters);

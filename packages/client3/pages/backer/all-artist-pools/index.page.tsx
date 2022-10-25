@@ -47,8 +47,9 @@ function AllArtistPoolPage() {
     (tranchedPool: any) =>
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
-  const handleClick = (poolAddress: string) => {
-    router.push(`/backer/pool/${poolAddress}`);
+  const handleClick = async (poolAddress: string) => {
+    const response = await axios.get(`/api/pool?poolAddress=${poolAddress}`);
+    router.push(`/backer/pool/${response.data[0].id}`);
   };
 
   return (
