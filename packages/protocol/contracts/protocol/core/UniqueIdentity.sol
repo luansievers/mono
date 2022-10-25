@@ -116,7 +116,7 @@ contract UniqueIdentity is ERC1155PresetPauserUpgradeable, IUniqueIdentity {
   }
 
   modifier onlySigner(
-    address account, // 0x108
+    address account,
     uint256 id,
     uint256 expiresAt,
     bytes calldata signature
