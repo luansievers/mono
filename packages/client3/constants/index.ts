@@ -27,7 +27,7 @@ export const TRANCHES = {
 export const API_BASE_URL = process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   ? process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   : networkName === "mainnet"
-  ? "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net"
+  ? "https://us-central1-free-artists.cloudfunctions.net"
   : networkName === "murmuration"
   ? "https://murmuration.goldfinch.finance/_gcloudfunctions"
   : "http://localhost:5001/goldfinch-frontends-dev/us-central1";
@@ -59,7 +59,7 @@ export const SERVER_URL =
     ? ""
     : networkName === "murmuration"
     ? "https://murmuration.goldfinch.finance"
-    : "https://us-central1-free-artists-dev.cloudfunctions.net";
+    : "https://us-central1-free-artists.cloudfunctions.net";
 // : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =

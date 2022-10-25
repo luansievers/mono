@@ -24,7 +24,7 @@ const LATENESS_GRACE_PERIOD_CONFIG_KEY = 5
 const BASE_URLS = {
   prod: "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net",
   dev: "https://us-central1-goldfinch-frontends-dev.cloudfunctions.net",
-  local: "http://localhost:5001/goldfinch-frontends-dev/us-central1",
+  local: "https://us-central1-free-artists.cloudfunctions.net",
 }
 
 const percentageFormatter = new Intl.NumberFormat("en-US", {

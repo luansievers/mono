@@ -43,6 +43,8 @@ function AllArtistPoolPage() {
     (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
   );
 
+  console.log("openTranchedPools", openTranchedPools);
+
   const closedTranchedPools = data?.tranchedPools?.filter(
     (tranchedPool: any) =>
       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
@@ -70,7 +72,7 @@ function AllArtistPoolPage() {
                   <PoolCard
                     key={tranchedPool.id}
                     className="mb-10"
-                    poolName={tranchedPool.name}
+                    poolName={tranchedPool.poolName}
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
                       amount: BigNumber.from(
