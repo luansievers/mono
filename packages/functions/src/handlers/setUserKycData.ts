@@ -18,6 +18,7 @@ export const setUserKYCData = genRequestHandler({
     }
 
     const address = verificationResult.address.toLowerCase()
+    console.log("address", address)
 
     const {residency} = req.body
 
@@ -26,7 +27,9 @@ export const setUserKYCData = genRequestHandler({
     }
 
     const users = getUsers(admin.firestore())
+    console.log("users", users)
     const userRef = users.doc(`${address}`)
+    console.log("userRef", userRef)
 
     await userRef.set(
       {

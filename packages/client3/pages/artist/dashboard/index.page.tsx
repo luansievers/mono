@@ -74,7 +74,7 @@ function Dashboard() {
     [setDashboardData]
   );
 
-  if (!isVerified) {
+  if (isVerified) {
     if (openPoolData.length > 0) {
       return (
         <>
@@ -93,7 +93,7 @@ function Dashboard() {
 
     return (
       <ArtistPool
-        isVerified={true}
+        isVerified={isVerified}
         onButtonClick={() => {
           router.push("/artist/create-pool");
         }}

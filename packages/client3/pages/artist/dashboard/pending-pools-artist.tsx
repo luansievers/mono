@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { PendingPoolCard } from "@/components/dashboard/pool-card";
 import { Heading } from "@/components/design-system";
-import { AURORA_CONTRACTS } from "@/constants/contract-addresses/aurora_contracts";
+import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
 import {
@@ -50,7 +50,7 @@ function PendingPoolArtist() {
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    AURORA_CONTRACTS.GoldfinchFactory
+    CONTRACT_ADDRESSES.GoldfinchFactory
   );
 
   const onContractSubmit = async (pool: typeof pendingPools[0]) => {

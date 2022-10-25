@@ -116,7 +116,7 @@ contract UniqueIdentity is ERC1155PresetPauserUpgradeable, IUniqueIdentity {
   }
 
   modifier onlySigner(
-    address account,
+    address account, // 0x108
     uint256 id,
     uint256 expiresAt,
     bytes calldata signature
@@ -124,7 +124,9 @@ contract UniqueIdentity is ERC1155PresetPauserUpgradeable, IUniqueIdentity {
     require(block.timestamp < expiresAt, "Signature has expired");
 
     bytes32 hash = keccak256(abi.encodePacked(account, id, expiresAt, address(this), nonces[account], block.chainid));
+
     bytes32 ethSignedMessage = ECDSAUpgradeable.toEthSignedMessageHash(hash);
+
     require(hasRole(SIGNER_ROLE, ECDSAUpgradeable.recover(ethSignedMessage, signature)), "Invalid signer");
     _;
   }

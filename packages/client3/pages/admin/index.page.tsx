@@ -5,7 +5,7 @@ import React from "react";
 
 import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
 import { Heading } from "@/components/design-system";
-import { AURORA_CONTRACTS } from "@/constants/contract-addresses/aurora_contracts";
+import { CONTRACT_ADDRESSES } from "@/constants";
 import { useAdmin } from "@/hooks/user-hooks";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
@@ -44,7 +44,7 @@ function AdminDashboard() {
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    AURORA_CONTRACTS.GoldfinchFactory
+    CONTRACT_ADDRESSES.GoldfinchFactory
   );
 
   const handleClick = (poolAddress: string) => {
