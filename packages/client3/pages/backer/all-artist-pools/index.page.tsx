@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import axios from "axios";
 import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import {
@@ -20,35 +19,23 @@ import { backerAllArtistPools } from "@/queries/backer.queries";
 function AllArtistPoolPage() {
   useSelectedSidebarItem("all-artist-pools");
   useLayoutTitle("All Artist Pools");
-
-  const { data, error } = useQuery(backerAllArtistPools);
-  const [openPoolData, setOpenPoolData] = useState<any[]>([]);
   const router = useRouter();
-  /**
-   * Below code(useEffect) and it's usages need to be replaced by openTranchedPools when create pool insertion is done
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/api/pool`);
-      const mappedData = Object.keys(response.data).map((key) => ({
-        id: key,
-        ...response.data[key],
-      }));
-      setOpenPoolData(mappedData);
-    };
-    fetchData();
-  }, []);
 
-  const openTranchedPools = data?.tranchedPools?.filter((tranchedPool: any) =>
-    (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-  );
+  const { data } = useQuery(backerAllArtistPools);
 
-  console.log("openTranchedPools", openTranchedPools);
+  console.log("data", data);
 
-  const closedTranchedPools = data?.tranchedPools?.filter(
-    (tranchedPool: any) =>
-      !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-  );
+  const openTranchedPools =
+    data?.tranchedPools?.filter((tranchedPool: any) =>
+      (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+    ) || [];
+
+  const closedTranchedPools =
+    data?.tranchedPools?.filter(
+      (tranchedPool: any) =>
+        !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+    ) || [];
+
   const handleClick = async (poolAddress: string) => {
     const response = await axios.get(`/api/pool?poolAddress=${poolAddress}`);
     router.push(`/backer/pool/${response.data[0].id}`);

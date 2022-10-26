@@ -16,9 +16,9 @@ export const backerAllArtistPools = gql`
         highlights
       }
       # pool info from metadata
-      name @client
-      category @client
-      icon @client
+      name @rest
+      category @rest
+      icon @rest
       creditLine {
         maxLimit
         borrower

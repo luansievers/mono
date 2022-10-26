@@ -6,8 +6,8 @@ const API_URLS = {
   // mainnet: "https://api.thegraph.com/subgraphs/name/goldfinch-eng/goldfinch",
   // localhost: "http://localhost:8000/subgraphs/name/goldfinch-subgraph",
   mainnet: "https://api.thegraph.com/subgraphs/name/goldfinch-eng/goldfinch",
-  localhost: "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists",
-  aurora: "https://api.thegraph.com/subgraphs/name/sachasmart-weavik/free-artists",
+  localhost: "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-aurora-testnet",
+  aurora: "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-aurora-testnet",
 }
 
 const getApolloClient = (network: NetworkConfig | undefined): ApolloClient<NormalizedCacheObject> => {
