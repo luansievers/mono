@@ -1,40 +1,87 @@
-import { useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import axios from "axios";
-import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
 
-import { PoolCard } from "@/components/dashboard/pool-card";
 import {
   Heading,
   TabButton,
-  TabContent,
   TabGroup,
   TabList,
   TabPanels,
 } from "@/components/design-system";
 import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
-import { SupportedCrypto } from "@/lib/graphql/generated";
-import { backerAllArtistPools } from "@/queries/backer.queries";
+import { useBackerGetAllPoolsGraphDataQuery } from "@/lib/graphql/generated";
+
+gql`
+  query backerGetAllPoolsGraphData {
+    tranchedPools {
+      id
+      backers {
+        id
+      }
+      juniorTranches {
+        lockedUntil
+      }
+      juniorDeposited
+      creditLine {
+        id
+        limit
+        maxLimit
+      }
+    }
+  }
+`;
+
+gql`
+  query backerPoolAddressPoolMetadata($poolAddress: String!) {
+    poolAddress(poolAddress: $poolAddress)
+      @rest(path: "pool/{args.poolAddress}", type: "Pool") {
+      id
+      poolName
+      walletAddress
+      status
+      goalAmount
+      closingDate
+      poolAddress
+    }
+  }
+`;
 
 function AllArtistPoolPage() {
   useSelectedSidebarItem("all-artist-pools");
   useLayoutTitle("All Artist Pools");
   const router = useRouter();
 
-  const { data } = useQuery(backerAllArtistPools);
+  const { data: { tranchedPools: tranchedPoolData } = {} } =
+    useBackerGetAllPoolsGraphDataQuery({});
 
-  console.log("data", data);
+  console.log("here", tranchedPoolData);
 
-  const openTranchedPools =
-    data?.tranchedPools?.filter((tranchedPool: any) =>
-      (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-    ) || [];
+  // set data for tranchedPool cards and get userBackerPoolAddress from metadata
 
-  const closedTranchedPools =
-    data?.tranchedPools?.filter(
-      (tranchedPool: any) =>
-        !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-    ) || [];
+  // const { data: { poolAddress: poolMetaData } = {} } =
+  //   useBackerPoolAddressPoolMetadataQuery({
+  //     variables: {
+  //       poolAddress: tranchedPoolData?.map((pool) => pool.id),
+  //     },
+  //   });
+
+  // console.log("poolMetaData", poolMetaData);
+
+  // if (poolMetaData === undefined || poolMetaData === null) {
+  //   return null;
+  // }
+
+  // const openTranchedPools =
+  //   data?.tranchedPools?.filter((tranchedPool: any) =>
+  //     (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+  //   ) || [];
+
+  // const closedTranchedPools =
+  //   data?.tranchedPools?.filter(
+  //     (tranchedPool: any) =>
+  //       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
+  //   ) || [];
 
   const handleClick = async (poolAddress: string) => {
     const response = await axios.get(`/api/pool?poolAddress=${poolAddress}`);
@@ -53,9 +100,9 @@ function AllArtistPoolPage() {
           </TabButton>
         </TabList>
         <TabPanels>
-          <TabContent className="mt-7">
-            {openTranchedPools
-              ? openTranchedPools.map((tranchedPool: any) => (
+          {/* <TabContent className="mt-7">
+            {poolMetaData
+              ? poolMetaData.map((tranchedPool: any) => (
                   <PoolCard
                     key={tranchedPool.id}
                     className="mb-10"
@@ -76,8 +123,8 @@ function AllArtistPoolPage() {
                   />
                 ))
               : undefined}
-          </TabContent>
-          <TabContent className="mt-7">
+          </TabContent> */}
+          {/* <TabContent className="mt-7">
             {closedTranchedPools
               ? closedTranchedPools.map((tranchedPool: any) => (
                   <PoolCard
@@ -106,7 +153,7 @@ function AllArtistPoolPage() {
                   />
                 ))
               : undefined}
-          </TabContent>
+          </TabContent> */}
         </TabPanels>
       </TabGroup>
     </>

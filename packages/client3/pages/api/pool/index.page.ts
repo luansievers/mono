@@ -94,12 +94,12 @@ export default async function handler(
           filters?: PendingPoolFilters;
           poolAddress?: string;
         } = qs.parse(req.query as unknown as string);
-        console.log(poolAddress);
+
+        console.log("poolAddress", poolAddress);
         if (walletAddress != undefined) {
           fileData = filterByWalletAddress(fileData, walletAddress);
         }
         if (poolAddress != undefined) {
-          console.log("poolAddress", poolAddress);
           fileData = filterByPoolAddress(fileData, poolAddress);
         }
         if (filters) {

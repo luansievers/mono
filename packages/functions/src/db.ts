@@ -4,7 +4,7 @@ import firestore = admin.firestore
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
-  kyc: {allowed_origins: "http://localhost,freedao-client-deploymen.vercel.app"},
+  kyc: {allowed_origins: "http://localhost,https://freedao-client-deploymen.vercel.app"},
   persona: {allowed_ips: ""},
   sentry: {
     dsn: "https://8c1adf3a336a4487b14ae1af080c26d1@o915675.ingest.sentry.io/5857894",

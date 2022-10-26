@@ -74,6 +74,7 @@ function BackerPoolPage() {
   const { title } = useLayoutContext();
   const router = useRouter();
   const { address } = router.query;
+
   const { data: { pool: poolMetaData } = {} } = useBackerPoolMetadataQuery({
     skip: !address,
     variables: {
