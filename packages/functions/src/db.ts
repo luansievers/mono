@@ -4,7 +4,7 @@ import firestore = admin.firestore
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
-  kyc: {allowed_origins: "http://localhost"},
+  kyc: {allowed_origins: "http://localhost,freedao-client-deploymen.vercel.app"},
   persona: {allowed_ips: ""},
   sentry: {
     dsn: "https://8c1adf3a336a4487b14ae1af080c26d1@o915675.ingest.sentry.io/5857894",
@@ -158,4 +158,13 @@ function setEnvForTest(firestore: firestore.Firestore, config: Omit<FirebaseConf
   }
 }
 
-export {getUsers, getDestroyedUsers, getAgreements, getDb, getConfig, setEnvForTest}
+/**
+ * Get the pool collection given a reference to the firestore
+ * @param {firestore.Firestore} firestore The firestore to get the collection from (ignored for tests)
+ * @return {firestore.CollectionReference} A Collection object that can be queried
+ */
+function getPools(firestore: firestore.Firestore): firestore.CollectionReference<firestore.DocumentData> {
+  return getCollection("pools", firestore)
+}
+
+export {getUsers, getDestroyedUsers, getAgreements, getDb, getConfig, setEnvForTest, getPools}
