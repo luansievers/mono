@@ -10,9 +10,10 @@ export const poolMetaData = genRequestHandler({
     switch (req.method) {
       case "GET": {
         const pools = getPools(admin.firestore())
-        return res.status(200).send(pools)
+        const response = await pools.get()
+        return res.status(200).send(response)
       }
-      case "PUT": {
+      case "POST": {
         const {poolData} = req.body
         const pools = getPools(admin.firestore())
         const poolRef = pools.doc(`${poolData.id}`)
