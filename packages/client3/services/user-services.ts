@@ -55,9 +55,5 @@ export const grantAccountBorrowerPrivileges = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,
   account: string
 ): Promise<ContractTransaction> => {
-  // return await goldfinchFactory.grantRole(BORROWER_ROLE, account);
-  return await goldfinchFactory.grantRole(
-    BORROWER_ROLE,
-    "0x86D637d8EB368BC61E4A2111D11050B299B2de2c"
-  );
+  return await goldfinchFactory.grantRole(BORROWER_ROLE, account);
 };
