@@ -21,7 +21,8 @@ import { WalletButton } from "@/components/design-system/wallet-button";
 import { TRANCHES, USDC_DECIMALS } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
-import { UidType } from "@/lib/graphql/generated";
+import { formatCrypto } from "@/lib/format";
+import { SupportedCrypto, UidType } from "@/lib/graphql/generated";
 import {
   approveErc20IfRequired,
   canUserParticipateInPool,
@@ -200,10 +201,17 @@ export function PoolInformation({
           level={2}
           className={type == "failed" ? "text-accent-3" : "text-accent-2"}
         >
-          ${totalSuppliedAmount}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(totalSuppliedAmount ?? 0),
+          })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of ${totalGoalAmount}
+          of{" "}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(totalGoalAmount ?? 0),
+          })}
         </BodyText>
       </div>
       <Progress

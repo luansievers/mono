@@ -108,3 +108,15 @@ export const createBorrowerContract = async (
 
   return lastEvent.borrower;
 };
+
+export const mergeGraphAndMetaData = (graphDatas: any, metaData: any) => {
+  return metaData.map((poolData: any) => {
+    const graphData = graphDatas.find(
+      (pool: any) => pool.id == poolData.poolAddress
+    );
+    return {
+      ...poolData,
+      ...graphData,
+    };
+  });
+};

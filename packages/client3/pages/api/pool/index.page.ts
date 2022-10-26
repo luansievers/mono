@@ -32,6 +32,10 @@ const filterByPoolAddress = (poolData: Array<Pool>, poolAddress: string) => {
   return poolData.filter((pool: any) => pool.poolAddress === poolAddress);
 };
 
+const filterByPoolIds = (poolData: Array<Pool>, poolIds: string[]) => {
+  return poolData.filter((pool: any) => poolIds.includes(pool.poolAddress));
+};
+
 const filterPoolDataByUsingFilters = (
   poolData: Array<Pool>,
   filters: PendingPoolFilters
@@ -89,10 +93,12 @@ export default async function handler(
           walletAddress,
           filters,
           poolAddress,
+          poolIds,
         }: {
           walletAddress?: string;
           filters?: PendingPoolFilters;
           poolAddress?: string;
+          poolIds?: string[];
         } = qs.parse(req.query as unknown as string);
 
         console.log("poolAddress", poolAddress);
@@ -104,6 +110,9 @@ export default async function handler(
         }
         if (filters) {
           fileData = filterPoolDataByUsingFilters(fileData, filters);
+        }
+        if (poolIds) {
+          fileData = filterByPoolIds(fileData, poolIds);
         }
         res.status(200).json(fileData);
       } catch (error) {

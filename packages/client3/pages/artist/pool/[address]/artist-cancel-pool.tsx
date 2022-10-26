@@ -2,7 +2,8 @@ import { BigNumber } from "ethers";
 
 import { Display, BodyText, Icon, Button } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
-import { Pool } from "@/lib/graphql/generated";
+import { formatCrypto } from "@/lib/format";
+import { Pool, SupportedCrypto } from "@/lib/graphql/generated";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -31,10 +32,17 @@ function ArtistCancelPool({
     <div className="rounded-lg border border-dark-90 p-6">
       <div className="flex justify-between">
         <Display className="text-accent-2" level={2}>
-          ${deposited.toNumber()}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(deposited ?? 0),
+          })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of ${goalAmount.toNumber()}
+          {"of "}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(goalAmount ?? 0),
+          })}
         </BodyText>
       </div>
       <Progress percentage={progressPercentage} />
@@ -57,7 +65,7 @@ function ArtistCancelPool({
       <div className="flex items-center">
         <Icon size="md" name="Clock" />
         <BodyText size="large" className="ml-3 text-dark-50">
-          Closing on
+          {"Closing on "}
           {new Date(poolData.closingDate ?? "").toLocaleDateString("en-us", {
             year: "numeric",
             month: "short",
