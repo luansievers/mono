@@ -1,16 +1,25 @@
 import { gql } from "@apollo/client";
 import axios from "axios";
+import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
+import { PoolCard } from "@/components/dashboard/pool-card";
 import {
   Heading,
   TabButton,
+  TabContent,
   TabGroup,
   TabList,
   TabPanels,
 } from "@/components/design-system";
 import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
-import { useBackerGetAllPoolsGraphDataQuery } from "@/lib/graphql/generated";
+import {
+  useBackerPoolAddressPoolMetadataQuery,
+  useBackerGetAllPoolsGraphDataQuery,
+  SupportedCrypto,
+} from "@/lib/graphql/generated";
+import { mergeGraphAndMetaData } from "@/services/pool-services";
 
 gql`
   query backerGetAllPoolsGraphData {
@@ -33,9 +42,8 @@ gql`
 `;
 
 gql`
-  query backerPoolAddressPoolMetadata($poolAddress: String!) {
-    poolAddress(poolAddress: $poolAddress)
-      @rest(path: "pool/{args.poolAddress}", type: "Pool") {
+  query backerPoolAddressPoolMetadata($ids: [ID!]!) {
+    poolsByIds(poolIds: $ids) @rest(path: "pool?{args}", type: "pools") {
       id
       poolName
       walletAddress
@@ -51,37 +59,27 @@ function AllArtistPoolPage() {
   useSelectedSidebarItem("all-artist-pools");
   useLayoutTitle("All Artist Pools");
   const router = useRouter();
+  const { data: { tranchedPools: poolGraphData } = {} } =
+    useBackerGetAllPoolsGraphDataQuery();
 
-  const { data: { tranchedPools: tranchedPoolData } = {} } =
-    useBackerGetAllPoolsGraphDataQuery({});
+  const { data: { poolsByIds: backerPoolMetaData } = {} } =
+    useBackerPoolAddressPoolMetadataQuery({
+      variables: {
+        ids: poolGraphData?.map((pool) => pool.id) ?? [],
+      },
+      skip: !poolGraphData,
+    });
+  const mergedData = useMemo(() => {
+    if (backerPoolMetaData && poolGraphData) {
+      return mergeGraphAndMetaData(poolGraphData, backerPoolMetaData);
+    } else {
+      return [];
+    }
+  }, [backerPoolMetaData, poolGraphData]);
 
-  console.log("here", tranchedPoolData);
-
-  // set data for tranchedPool cards and get userBackerPoolAddress from metadata
-
-  // const { data: { poolAddress: poolMetaData } = {} } =
-  //   useBackerPoolAddressPoolMetadataQuery({
-  //     variables: {
-  //       poolAddress: tranchedPoolData?.map((pool) => pool.id),
-  //     },
-  //   });
-
-  // console.log("poolMetaData", poolMetaData);
-
-  // if (poolMetaData === undefined || poolMetaData === null) {
-  //   return null;
-  // }
-
-  // const openTranchedPools =
-  //   data?.tranchedPools?.filter((tranchedPool: any) =>
-  //     (tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-  //   ) || [];
-
-  // const closedTranchedPools =
-  //   data?.tranchedPools?.filter(
-  //     (tranchedPool: any) =>
-  //       !(tranchedPool.juniorTranches[0].lockedUntil as BigNumber).isZero()
-  //   ) || [];
+  if (poolGraphData === undefined || poolGraphData === null) {
+    return null;
+  }
 
   const handleClick = async (poolAddress: string) => {
     const response = await axios.get(`/api/pool?poolAddress=${poolAddress}`);
@@ -100,9 +98,9 @@ function AllArtistPoolPage() {
           </TabButton>
         </TabList>
         <TabPanels>
-          {/* <TabContent className="mt-7">
-            {poolMetaData
-              ? poolMetaData.map((tranchedPool: any) => (
+          <TabContent className="mt-7">
+            {mergedData
+              ? mergedData.map((tranchedPool: any) => (
                   <PoolCard
                     key={tranchedPool.id}
                     className="mb-10"
@@ -110,20 +108,21 @@ function AllArtistPoolPage() {
                     totalSuppliedAmount={{
                       token: SupportedCrypto.Usdc,
                       amount: BigNumber.from(
-                        tranchedPool?.juniorTranches[0].principalDeposited
+                        tranchedPool?.juniorDeposited ?? BigNumber.from(0)
                       ),
                     }}
                     totalGoalAmount={{
                       token: SupportedCrypto.Usdc,
-                      amount: tranchedPool.creditLine.maxLimit, //90% - not sure if this is the correct field
+                      amount:
+                        tranchedPool.creditLine?.maxLimit ?? BigNumber.from(0), //90% - not sure if this is the correct field
                     }}
-                    artistName={tranchedPool.borrower?.name}
-                    image={tranchedPool.borrower?.logo}
+                    artistName={tranchedPool.walletAddress}
+                    image={""}
                     onClick={() => handleClick(tranchedPool.id)}
                   />
                 ))
               : undefined}
-          </TabContent> */}
+          </TabContent>
           {/* <TabContent className="mt-7">
             {closedTranchedPools
               ? closedTranchedPools.map((tranchedPool: any) => (

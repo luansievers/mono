@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 
 import { Button, Heading } from "@/components/design-system";
 import { PoolDetail } from "@/components/pool/pool-details";
-import { useLayoutContext } from "@/hooks/sidebar-hooks";
+import {
+  useLayoutContext,
+  useSelectedSidebarItem,
+} from "@/hooks/sidebar-hooks";
 import {
   useBackerPoolGraphDataQuery,
   useBackerPoolMetadataQuery,
@@ -71,6 +74,7 @@ gql`
 `;
 
 function BackerPoolPage() {
+  useSelectedSidebarItem("all-artist-pools");
   const { title } = useLayoutContext();
   const router = useRouter();
   const { address } = router.query;

@@ -21,8 +21,8 @@ import { getLastEventArgs } from "@/utilities/contract.util";
 
 gql`
   query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) {
-    pendingPools(walletAddress: $walletAddress, filters: $filters)
-      @rest(path: "pool?{args}", type: "PendingPools") {
+    pools(walletAddress: $walletAddress, filters: $filters)
+      @rest(path: "pool?{args}", type: "pools") {
       id
       poolName
       walletAddress
@@ -46,7 +46,7 @@ function PendingPoolArtist() {
     },
   });
 
-  const pendingPools = data?.pendingPools ?? [];
+  const pendingPools = data?.pools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",

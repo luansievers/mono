@@ -1,7 +1,8 @@
+import { gql } from "@apollo/client";
 import axios from "axios";
 import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { KYC } from "@/components/dashboard/kyc";
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
@@ -10,13 +11,18 @@ import { NotConnected } from "@/components/general/not-connected";
 import { useApplicationState } from "@/hooks/application-hooks";
 import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { useUser } from "@/hooks/user-hooks";
-import { SupportedCrypto } from "@/lib/graphql/generated";
+import {
+  SupportedCrypto,
+  useArtistGetAllPoolsGraphDataQuery,
+  useArtistPoolMetadataListQuery,
+} from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
+import { mergeGraphAndMetaData } from "@/services/pool-services";
 import { hasUid } from "@/services/user-services";
 
 import DashboardArtistPool from "./dashboard-artist-pool";
 
-const DummyDashboardDataEmpty = {
+const DashboardDataEmpty = {
   totalEarnedAmount: {
     amount: BigNumber.from(0),
     token: SupportedCrypto.Usdc,
@@ -27,16 +33,47 @@ const DummyDashboardDataEmpty = {
   },
 };
 
+gql`
+  query artistGetAllPoolsGraphData {
+    tranchedPools {
+      id
+      backers {
+        id
+      }
+      juniorTranches {
+        lockedUntil
+      }
+      juniorDeposited
+      creditLine {
+        id
+        limit
+        maxLimit
+      }
+    }
+  }
+`;
+
+gql`
+  query artistPoolMetadataList($ids: [ID!]!, $walletAddress: String!) {
+    poolsByIds(poolIds: $ids, walletAddress: $walletAddress)
+      @rest(path: "pool?{args}", type: "pools") {
+      id
+      poolName
+      walletAddress
+      status
+      goalAmount
+      closingDate
+      poolAddress
+    }
+  }
+`;
+
 function Dashboard() {
   useSelectedSidebarItem("dashboard");
   useLayoutTitle("Artist Dashboard");
-  const [dashBoardData, setDashboardData] = useState<
-    typeof DummyDashboardDataEmpty
-  >(DummyDashboardDataEmpty);
+  const [dashBoardData, setDashboardData] =
+    useState<typeof DashboardDataEmpty>(DashboardDataEmpty);
   const [isVerified, setIsVerified] = useState(false);
-  const [openPoolData, setOpenPoolData] = useState<any[]>([]);
-
-  const state = useApplicationState();
   const router = useRouter();
   const user = useUser();
   const { account } = useWallet();
@@ -46,16 +83,24 @@ function Dashboard() {
     setIsVerified(isVerified);
   }, [user]);
 
-  /**
-   * Below code(useEffect) and it's usages need to be replaced by openTranchedPools when create pool insertion is done
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/api/pool?walletAddress=${account}`);
-      setOpenPoolData(response.data);
-    };
-    fetchData();
-  }, [state, account]);
+  const { data: { tranchedPools: poolGraphData } = {} } =
+    useArtistGetAllPoolsGraphDataQuery();
+
+  const { data: { poolsByIds: artistPoolMetaData } = {} } =
+    useArtistPoolMetadataListQuery({
+      variables: {
+        ids: poolGraphData?.map((pool) => pool.id) ?? [],
+        walletAddress: user?.id ?? " ",
+      },
+      skip: !poolGraphData || !user?.id,
+    });
+  const mergedData = useMemo(() => {
+    if (artistPoolMetaData && poolGraphData) {
+      return mergeGraphAndMetaData(poolGraphData, artistPoolMetaData);
+    } else {
+      return [];
+    }
+  }, [artistPoolMetaData, poolGraphData]);
 
   const onSetEarnedAndRaisedAmount = useCallback(
     (earnedAmount: number, raisedAmount: number) => {
@@ -74,8 +119,12 @@ function Dashboard() {
     [setDashboardData]
   );
 
+  if (poolGraphData === undefined || poolGraphData === null) {
+    return null;
+  }
+
   if (isVerified) {
-    if (openPoolData.length > 0) {
+    if (mergedData.length > 0) {
       return (
         <>
           <DashboardTotal
@@ -85,7 +134,7 @@ function Dashboard() {
           />
           <DashboardArtistPool
             setEarnedAndRaisedAmount={onSetEarnedAndRaisedAmount}
-            openPoolData={openPoolData}
+            openPoolData={mergedData}
           />
         </>
       );

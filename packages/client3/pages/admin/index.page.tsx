@@ -18,8 +18,7 @@ import { grantAccountBorrowerPrivileges } from "@/services/user-services";
 
 gql`
   query allPendingPools($filters: PendingPoolFilters) {
-    pendingPools(filters: $filters)
-      @rest(path: "pool?{args}", type: "PendingPools") {
+    pools(filters: $filters) @rest(path: "pool?{args}", type: "pools") {
       id
       poolName
       walletAddress
@@ -43,7 +42,7 @@ function AdminDashboard() {
   });
   const isAdmin = useAdmin();
 
-  const pendingPools = data?.pendingPools ?? [];
+  const pendingPools = data?.pools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",

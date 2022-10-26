@@ -5,7 +5,7 @@ export const backerAllArtistPools = gql`
     tranchedPools(orderBy: createdAt, orderDirection: desc) {
       id
       # artist info from metadata
-      pendingPools @rest(path: "pool?{args.id}", type: "Pool") {
+      pools @rest(path: "pool?{args.id}", type: "Pool") {
         name
         logo
         orgType
