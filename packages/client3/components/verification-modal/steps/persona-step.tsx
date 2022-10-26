@@ -34,34 +34,32 @@ export function PersonaStep() {
       });
     }
 
-    goToStep(VerificationFlowSteps.Mint);
-
-    // const Persona = await import("persona");
-    // const client = new Persona.Client({
-    //   templateId: PERSONA_CONFIG.templateId,
-    //   environment: PERSONA_CONFIG.environment,
-    //   referenceId: account,
-    //   onReady: () => {
-    //     client.open();
-    //     setIsPersonaLoading(false);
-    //   },
-    //   onComplete: (props) => {
-    //     if (props.status === "completed") {
-    //       goToStep(VerificationFlowSteps.Mint);
-    //     } else if (props.status === "failed") {
-    //       goToStep(VerificationFlowSteps.Ineligible);
-    //     } else {
-    //       goToStep(VerificationFlowSteps.Pending);
-    //     }
-    //     client.destroy();
-    //   },
-    //   onError: (error) => {
-    //     setErrorMessage(error.message);
-    //   },
-    //   onCancel: () => {
-    //     client.destroy();
-    //   },
-    // });
+    const Persona = await import("persona");
+    const client = new Persona.Client({
+      templateId: PERSONA_CONFIG.templateId,
+      environment: PERSONA_CONFIG.environment,
+      referenceId: account,
+      onReady: () => {
+        client.open();
+        setIsPersonaLoading(false);
+      },
+      onComplete: (props) => {
+        if (props.status === "completed") {
+          goToStep(VerificationFlowSteps.Mint);
+        } else if (props.status === "failed") {
+          goToStep(VerificationFlowSteps.Ineligible);
+        } else {
+          goToStep(VerificationFlowSteps.Pending);
+        }
+        client.destroy();
+      },
+      onError: (error) => {
+        setErrorMessage(error.message);
+      },
+      onCancel: () => {
+        client.destroy();
+      },
+    });
   };
 
   return (

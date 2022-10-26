@@ -33,6 +33,7 @@ UniqueIdentity was deployed to: 0xCc78cd15d8A0aa9Fececb105A526b773e0789a61 (2.28
 Go was deployed to: 0x171e7405B3F0117Fbe29F3ADa4144cEBfF332870 (2.286kb)
 BackerRewards was deployed to: 0x7928feC16DB5b216aAb76e093453324a1bE39832 (2.286kb)
 Zapper was deployed to: 0xF085CaFFfD0D22371eD4B1Bc90c3F5B3f2cb100D (2.286kb)
+OpenZepplin Relay: 0x25190908c3e1c75be8f5cb248425d8c09ed02e22
 
 # Deferred executions
 
