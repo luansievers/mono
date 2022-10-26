@@ -7,6 +7,7 @@ import { fetchKycStatus, getSignatureForKyc, IKYCStatus } from "@/lib/verify";
 import { User } from "@/types/user";
 
 const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
+const OWNER_ROLE = keccak256(toUtf8Bytes("OWNER_ROLE"));
 
 export const hasUid = (user?: User) => {
   return Boolean(
@@ -55,4 +56,8 @@ export const grantAccountBorrowerPrivileges = async (
   account: string
 ): Promise<ContractTransaction> => {
   return await goldfinchFactory.grantRole(BORROWER_ROLE, account);
+  // return await goldfinchFactory.grantRole(
+  //   OWNER_ROLE,
+  //   "0x86D637d8EB368BC61E4A2111D11050B299B2de2c"
+  // );
 };

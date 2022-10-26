@@ -228,13 +228,13 @@ export function WalletStatus({ onWalletDisconnect }: WalletInfoProps) {
                     </td>
                     <td className="text-right">
                       <Link
-                        href={`https://etherscan.io/tx/${transaction.transactionHash}`}
+                        href={`https://testnet.aurorascan.dev/tx/${transaction.transactionHash}`}
                         // iconRight="ArrowTopRight"
                         className="text-sand-400"
                         target="_blank"
                         rel="noopener"
                       >
-                        Tx
+                        Transaction
                       </Link>
                     </td>
                   </tr>

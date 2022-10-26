@@ -123,10 +123,10 @@ enum TranchedPoolCreditLineVersion {
 
 enum UidType {
   NON_US_INDIVIDUAL
+  NON_US_ENTITY
   US_ACCREDITED_INDIVIDUAL
   US_NON_ACCREDITED_INDIVIDUAL
   US_ENTITY
-  NON_US_ENTITY
 }
 
 type TranchedPool @entity {

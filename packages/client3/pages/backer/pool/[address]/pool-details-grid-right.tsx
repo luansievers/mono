@@ -19,7 +19,7 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
           totalBackers={tranchedPoolData.numBackers}
           totalEarned={tranchedPoolData.juniorDeposited.toNumber()}
           closingDate={new Date(poolData.closingDate ?? "")}
-          allowedUidTypes={[UidType.UsEntity]}
+          allowedUidTypes={tranchedPoolData.allowedUidTypes}
           remainingJuniorCapacity={tranchedPoolData.remainingJuniorCapacity}
           tranchedPoolAddress={tranchedPoolData.id}
         />

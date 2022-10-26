@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Result } from "ethers/lib/utils";
 
 import { Contract } from "@/lib/contracts";
 import { UIDType } from "@/lib/verify";
@@ -18,6 +17,7 @@ const ALLOWED_UID = [
   UIDType.USEntity,
   UIDType.USNonAccreditedIndividual,
   UIDType.USAccreditedIndividual,
+  UIDType.isGoListed,
 ];
 
 /**

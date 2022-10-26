@@ -101,7 +101,7 @@ export function TransactionTable() {
         ) : null}
       </div>,
       <Link
-        href={`https://etherscan.io/tx/${transaction.transactionHash}`}
+        href={`https://testnet.aurorascan.dev//tx/${transaction.transactionHash}`}
         target="_blank"
         rel="noopener noreferrer"
         className="text-sand-400"
