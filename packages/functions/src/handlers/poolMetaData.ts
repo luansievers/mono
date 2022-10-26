@@ -9,9 +9,14 @@ export const poolMetaData = genRequestHandler({
   handler: async (req, res: Response): Promise<Response> => {
     switch (req.method) {
       case "GET": {
-        const pools = getPools(admin.firestore())
-        const response = await pools.get()
-        return res.status(200).send(response)
+        const poolRef = getPools(admin.firestore())
+        const pools: FirebaseFirestore.DocumentData[] = []
+        await poolRef.get().then((snapShot) => {
+          snapShot.docs.forEach((doc) => {
+            pools.push(doc.data())
+          })
+        })
+        return res.status(200).send(pools)
       }
       case "POST": {
         const {poolData} = req.body
