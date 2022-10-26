@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import axios from "axios";
 import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -8,7 +7,6 @@ import { KYC } from "@/components/dashboard/kyc";
 import { ArtistPool } from "@/components/dashboard/my-open-pool";
 import { DashboardTotal } from "@/components/dashboard/total";
 import { NotConnected } from "@/components/general/not-connected";
-import { useApplicationState } from "@/hooks/application-hooks";
 import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { useUser } from "@/hooks/user-hooks";
 import {
@@ -21,6 +19,7 @@ import { mergeGraphAndMetaData } from "@/services/pool-services";
 import { hasUid } from "@/services/user-services";
 
 import DashboardArtistPool from "./dashboard-artist-pool";
+import PendingPoolArtist from "./pending-pools-artist";
 
 const DashboardDataEmpty = {
   totalEarnedAmount: {
@@ -90,9 +89,9 @@ function Dashboard() {
     useArtistPoolMetadataListQuery({
       variables: {
         ids: poolGraphData?.map((pool) => pool.id) ?? [],
-        walletAddress: user?.id ?? " ",
+        walletAddress: account ?? " ",
       },
-      skip: !poolGraphData || !user?.id,
+      skip: !poolGraphData || !account,
     });
   const mergedData = useMemo(() => {
     if (artistPoolMetaData && poolGraphData) {
@@ -132,6 +131,8 @@ function Dashboard() {
             totalRaisedAmount={dashBoardData.totalRaisedAmount}
             createPoolHref={"/artist/create-pool"}
           />
+
+          <PendingPoolArtist />
           <DashboardArtistPool
             setEarnedAndRaisedAmount={onSetEarnedAndRaisedAmount}
             openPoolData={mergedData}
@@ -141,12 +142,15 @@ function Dashboard() {
     }
 
     return (
-      <ArtistPool
-        isVerified={isVerified}
-        onButtonClick={() => {
-          router.push("/artist/create-pool");
-        }}
-      />
+      <>
+        <ArtistPool
+          isVerified={isVerified}
+          onButtonClick={() => {
+            router.push("/artist/create-pool");
+          }}
+        />
+        <PendingPoolArtist />
+      </>
     );
   }
 

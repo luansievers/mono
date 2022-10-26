@@ -1,10 +1,8 @@
-import fs from "fs";
-import path from "path";
-
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import qs from "qs";
 
+import { API_BASE_URL } from "@/constants";
 //Added because ESlint import order was complaining. But this order works fine in pages
 // eslint-disable-next-line import/order
 import {
@@ -13,13 +11,7 @@ import {
   Pool_Status_Type,
 } from "@/lib/graphql/generated";
 
-const mapSavePoolsToPoolArray = (poolData: any) => {
-  const mappedData = Object.keys(poolData).map((key) => ({
-    id: key,
-    ...poolData[key],
-  }));
-  return mappedData as Pool[];
-};
+export const POOL_CLOUD_URL = `${API_BASE_URL}/poolMetaData`;
 
 const filterByWalletAddress = (
   poolData: Array<Pool>,
@@ -79,16 +71,9 @@ export default async function handler(
   const { method } = req;
   switch (method) {
     case "GET": {
-      let fileData: Pool[];
-      const pathname = path.resolve(
-        `${process.cwd()}/pages/api/pool`,
-        "./pools.json"
-      );
-
       try {
-        fileData = mapSavePoolsToPoolArray(
-          JSON.parse(fs.readFileSync(pathname, "utf-8"))
-        );
+        const poolDataResponse = await axios.get(POOL_CLOUD_URL);
+        let fileData = poolDataResponse.data;
         const {
           walletAddress,
           filters,
@@ -100,8 +85,6 @@ export default async function handler(
           poolAddress?: string;
           poolIds?: string[];
         } = qs.parse(req.query as unknown as string);
-
-        console.log("poolAddress", poolAddress);
         if (walletAddress != undefined) {
           fileData = filterByWalletAddress(fileData, walletAddress);
         }
@@ -123,30 +106,18 @@ export default async function handler(
     }
 
     case "POST": {
-      let fileData;
-      const pathname = path.resolve(
-        `${process.cwd()}/pages/api/pool`,
-        "./pools.json"
-      );
       const newPoolData = req.body.params;
-      try {
-        fileData = JSON.parse(fs.readFileSync(pathname, "utf-8"));
-      } catch (error) {
-        console.error(error);
-      }
       const id = Date.now().toString(36);
       newPoolData.status = Pool_Status_Type.InReview;
-      fileData[id] = newPoolData;
-      fs.writeFileSync(pathname, JSON.stringify(fileData), {
-        encoding: "utf8",
-        flag: "w",
+      newPoolData.id = id;
+      await axios.post(POOL_CLOUD_URL, {
+        poolData: {
+          id: id,
+          data: newPoolData,
+        },
       });
-
       await sendToDiscord(newPoolData);
-      res.status(200).json({
-        id: id,
-        fileData,
-      });
+      res.status(200).json(newPoolData);
       break;
     }
     default:

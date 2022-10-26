@@ -97,13 +97,6 @@ export const createBorrowerContract = async (
     await goldfinchFactory.createBorrower(account)
   ).wait();
 
-  console.log("borrowerContract return", borrowerContract);
-
-  console.log(
-    "old borrowerContract would have been",
-    borrowerContract.events?.[3].args?.borrower.toLowerCase()
-  );
-
   const lastEvent = getLastEventArgs(borrowerContract);
 
   return lastEvent.borrower;

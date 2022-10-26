@@ -63,7 +63,6 @@ function PendingPoolArtist() {
       goldfinchFactory,
       pool.walletAddress.toLowerCase()
     );
-    console.log(`Borrower contract ${borrowerContract} for ${account}`);
 
     await updatePoolBorrowerContractAddress(
       pool.id,
