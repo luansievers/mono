@@ -55,7 +55,7 @@ export function DollarInput({
             mask: Number,
             thousandsSeparator: ",",
             lazy: false,
-            scale: USDC_DECIMALS,
+            scale: 0,
             radix: ".",
           },
         }}

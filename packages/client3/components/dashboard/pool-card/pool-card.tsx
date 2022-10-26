@@ -4,6 +4,7 @@ import { Progress } from "@/components/design-system/progress";
 import { cryptoToFloat, formatCrypto, formatFiat } from "@/lib/format";
 import { handleAddressFormat } from "@/lib/format/common";
 import { CryptoAmount, SupportedFiat } from "@/lib/graphql/generated";
+import { formatNumber } from "@/utilities/common.util";
 
 import { Avatar, BodyText, Caption, Chip } from "../../design-system";
 
@@ -98,7 +99,7 @@ export function PoolCard({
           </BodyText>
           <BodyText size="normal" className="text-right text-dark-50">
             {/* Goal is format crypto */}
-            of {formatCrypto(totalGoalAmount)}
+            of {formatNumber(totalGoalAmount.amount.toNumber())}
           </BodyText>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { Display, BodyText, Icon, Button } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
 import { formatCrypto } from "@/lib/format";
 import { Pool, SupportedCrypto } from "@/lib/graphql/generated";
+import { formatNumber } from "@/utilities/common.util";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -39,10 +40,7 @@ function ArtistCancelPool({
         </Display>
         <BodyText size="large" className=" text-dark-50">
           {"of "}
-          {formatCrypto({
-            token: SupportedCrypto.Usdc,
-            amount: BigNumber.from(goalAmount ?? 0),
-          })}
+          {formatNumber(Number(poolData.goalAmount) ?? 0)}
         </BodyText>
       </div>
       <Progress percentage={progressPercentage} />
