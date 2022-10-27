@@ -82,8 +82,7 @@ function AllArtistPoolPage() {
   }
 
   const handleClick = async (poolAddress: string) => {
-    const response = await axios.get(`/api/pool?poolAddress=${poolAddress}`);
-    router.push(`/backer/pool/${response.data[0].id}`);
+    router.push(`/backer/pool/${poolAddress}`);
   };
 
   return (

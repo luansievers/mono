@@ -108,8 +108,8 @@ export const mergeGraphAndMetaData = (graphDatas: any, metaData: any) => {
       (pool: any) => pool.id == poolData.poolAddress
     );
     return {
-      ...poolData,
       ...graphData,
+      ...poolData,
     };
   });
 };
