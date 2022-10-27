@@ -20,7 +20,13 @@ const setCORSHeaders = (req: Request, res: Response) => {
     return
   }
   const allowedOrigins = (getConfig(functions).kyc.allowed_origins || "").split(",")
+
+  console.log("allowedOrigins", allowedOrigins)
+
   const origin = req.headers.origin || ""
+
+  console.log("origin", origin)
+
   if (originAllowed(allowedOrigins, origin)) {
     res.set("Access-Control-Allow-Origin", req.headers.origin)
     res.set("Access-Control-Allow-Headers", "*")
@@ -103,6 +109,7 @@ export const mockGetBlockchain = (mock: ((origin: string) => BaseProvider) | und
  * @return {HttpFunction} The wrapped handler suitable for passing to `functions.https.onRequest()`.
  */
 const wrapWithSentry = (fn: HttpFunction, wrapOptions?: Partial<HttpFunctionWrapperOptions>): HttpFunction => {
+  return fn
   if (process.env.NODE_ENV === "test") {
     // If we're in a testing environment, Sentry's wrapper just gets in the way of intelligible test
     // errors. So we won't use it.

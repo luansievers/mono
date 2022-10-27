@@ -1,10 +1,12 @@
 import axios from "axios";
+import { utils } from "ethers";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { Button, Form } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
+import { USDC_DECIMALS } from "@/constants";
 import { useWallet } from "@/lib/wallet"; // add wallet address
 import { IPool } from "@/types/pool";
 
@@ -33,6 +35,7 @@ function CreatePoolForm() {
     await axios.post(`/api/pool`, {
       params: {
         ...data,
+        goalAmount: utils.parseUnits(data.goalAmount, USDC_DECIMALS).toString(),
         reviewStatus: ReviewStatus.PENDING,
         walletAddress: account,
         closingDate: new Date(data.closingDate.setHours(0, 0, 0, 0)),

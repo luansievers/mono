@@ -1,10 +1,12 @@
 import * as admin from "firebase-admin"
-import {isPlainObject, isString, isStringOrUndefined} from "@goldfinch-eng/utils"
+// import {isPlainObject, isString, isStringOrUndefined} from "@goldfinch-eng/utils"
 import firestore = admin.firestore
 
 let _firestoreForTest: firestore.Firestore
 let _configForTest: FirebaseConfig = {
-  kyc: {allowed_origins: "http://localhost,https://freedao-client-deploymen.vercel.app"},
+  kyc: {
+    allowed_origins: "http://localhost,https://freedao-client-deploymen.vercel.app,*",
+  },
   persona: {allowed_ips: ""},
   sentry: {
     dsn: "https://8c1adf3a336a4487b14ae1af080c26d1@o915675.ingest.sentry.io/5857894",
@@ -93,22 +95,22 @@ export type FirebaseConfig = {
  * @param {unknown} obj The thing whose type to inspect.
  * @return {boolean} Whether the thing is of type FirebaseConfig.
  */
-function isFirebaseConfig(obj: unknown): obj is FirebaseConfig {
-  return (
-    isPlainObject(obj) &&
-    isPlainObject(obj.sentry) &&
-    isString(obj.sentry.dsn) &&
-    isString(obj.sentry.release) &&
-    (obj.sentry.environment === "development" ||
-      obj.sentry.environment === "test" ||
-      obj.sentry.environment === "production") &&
-    isPlainObject(obj.kyc) &&
-    isString(obj.kyc.allowed_origins) &&
-    isPlainObject(obj.persona) &&
-    isString(obj.persona.allowed_ips) &&
-    isStringOrUndefined(obj.persona.secret)
-  )
-}
+// function isFirebaseConfig(obj: unknown): obj is FirebaseConfig {
+//   return (
+//     isPlainObject(obj) &&
+//     isPlainObject(obj.sentry) &&
+//     isString(obj.sentry.dsn) &&
+//     isString(obj.sentry.release) &&
+//     (obj.sentry.environment === "development" ||
+//       obj.sentry.environment === "test" ||
+//       obj.sentry.environment === "production") &&
+//     isPlainObject(obj.kyc) &&
+//     isString(obj.kyc.allowed_origins) &&
+//     isPlainObject(obj.persona) &&
+//     isString(obj.persona.allowed_ips) &&
+//     isStringOrUndefined(obj.persona.secret)
+//   )
+// }
 
 /**
  * Get the firebase config (test aware)
@@ -135,11 +137,13 @@ function getConfig(functions: any): FirebaseConfig {
   // process.env.GCLOUD_PROJECT === "goldfinch-frontends-dev"
 
   const result = _configForTest
-  if (isFirebaseConfig(result)) {
-    return result
-  } else {
-    throw new Error(`Firebase config failed type guard. result:${result}`)
-  }
+
+  return result
+  // if (isFirebaseConfig(result)) {
+  //   return result
+  // } else {
+  //   throw new Error(`Firebase config failed type guard. result:${result}`)
+  // }
 }
 
 /**

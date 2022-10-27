@@ -32,7 +32,6 @@ import {
 import { openVerificationModal } from "@/lib/state/actions";
 import { toastTransaction } from "@/lib/toast";
 import { isSmartContract, useWallet } from "@/lib/wallet";
-import { formatNumber } from "@/utilities/common.util";
 import { validateMaximumAmountSupply } from "@/utilities/validation.util";
 
 type Props = {
@@ -208,7 +207,11 @@ export function PoolInformation({
           })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of {formatNumber(totalGoalAmount ?? 0)}
+          of{" "}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(totalGoalAmount ?? 0),
+          })}
         </BodyText>
       </div>
       <Progress

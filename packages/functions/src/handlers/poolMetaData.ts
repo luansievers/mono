@@ -5,7 +5,7 @@ import * as admin from "firebase-admin"
 
 export const poolMetaData = genRequestHandler({
   requireAuth: "none",
-  cors: true,
+  cors: false,
   handler: async (req, res: Response): Promise<Response> => {
     switch (req.method) {
       case "GET": {
