@@ -8,7 +8,11 @@ export default function TransactionsPage() {
   useLayoutTitle("My Transactions");
   return (
     <div>
-      <Heading as="h1" level={2} className="mb-12 text-center lg:text-left">
+      <Heading
+        as="h1"
+        level={2}
+        className="mb-12 text-center text-light-10  lg:text-left"
+      >
         Transactions
       </Heading>
       <TransactionTable />
