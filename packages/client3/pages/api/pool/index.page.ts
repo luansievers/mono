@@ -116,7 +116,7 @@ export default async function handler(
           data: newPoolData,
         },
       });
-      await sendToDiscord(newPoolData);
+      //await sendToDiscord(newPoolData);
       res.status(200).json(newPoolData);
       break;
     }
