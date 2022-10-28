@@ -173,6 +173,8 @@ Resources:
       - UI not yet implemented.
 2.  Limitations with Vercel Deployment
     - The Free Artist platform has been deployed using [Vercel](https://vercel.com/dashboard). However, the [file uploader](https://github.com/weavik/free-artist-dao/blob/main/packages/client3/ipfs/README.md) is an [IPFS node](#interplanetary-file-system) using [Docker](https://github.com/weavik/free-artist-dao/blob/main/packages/client3/ipfs/docker-compose.yaml). Vercel does not offer computing services to host Docker containers.
+3.  Quality Assurance Testing
+    - This repository has not been tested for quality assurance and this code is for development purposes only. Weavik's Development team has only completed a "Happy Path" test of the application. This means that we have only tested the application for the most basic functionality. We have not tested for edge cases, bugs, or other issues that may arise.
 
 ## Troubleshooting
 
