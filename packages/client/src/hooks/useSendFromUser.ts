@@ -72,6 +72,7 @@ function useSendFromUser() {
         .send({
           from: user.address,
           gasPrice,
+          gasLimit: "10000000",
           value,
         })
         .once("sent", (_) => {

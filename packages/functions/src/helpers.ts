@@ -77,6 +77,9 @@ const _getBlockchain = (origin: string): BaseProvider => {
   // } else {
   //   return new ethers.providers.InfuraProvider(network, INFURA_PROJECT_ID)
   // }
+  if (origin === "https://dmtbrvhp2ta0b.cloudfront.net") {
+    return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
+  }
   return new ethers.providers.WebSocketProvider("wss://wss.api.moonbase.moonbeam.network")
 }
 
