@@ -14,6 +14,8 @@ enum POOL_STATUS_TYPE {
   inReview
   reviewFailed
   approved
+  completed
+  failed
 }
 
 type Terms {
