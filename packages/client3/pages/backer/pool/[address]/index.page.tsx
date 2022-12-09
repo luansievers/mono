@@ -38,6 +38,7 @@ gql`
   query backerPoolGraphData($tranchedPoolAddress: ID!) {
     tranchedPool(id: $tranchedPoolAddress) {
       id
+      remainingCapacity
       estimatedJuniorApy
       estimatedJuniorApyFromGfiRaw
       estimatedLeverageRatio
@@ -63,6 +64,8 @@ gql`
         borrower
         lateFeeApr
       }
+      totalDeployed # Total amount withdraw from the pool
+      estimatedTotalAssets # Total amount of assets in the pool
       initialInterestOwed
       principalAmountRepaid
       interestAmountRepaid
@@ -85,7 +88,6 @@ function BackerPoolPage() {
       poolId: address as string,
     },
   });
-
   const { data: { tranchedPool: tranchedPoolData } = {} } =
     useBackerPoolGraphDataQuery({
       skip: !poolMetaData?.poolAddress,
@@ -100,6 +102,7 @@ function BackerPoolPage() {
 
   return (
     <>
+      {poolMetaData}
       <Button
         buttonType="tertiary"
         onClick={() => router.back()}

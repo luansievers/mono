@@ -9,6 +9,7 @@ type Pool {
   terms: Terms
   status: POOL_STATUS_TYPE!
   poolAddress: String!
+  borrowerContract: String!
 }
 enum POOL_STATUS_TYPE {
   inReview
