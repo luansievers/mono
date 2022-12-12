@@ -5,6 +5,7 @@ import { PoolTerms } from "@/components/pool/pool-terms";
 import { Pool } from "@/lib/graphql/generated";
 
 import ArtistCancelPool from "./artist-cancel-pool";
+import ArtistWithdrawPool from "./artist-withdraw-pool";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -13,17 +14,30 @@ type Props = {
 
 function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
   const terms = poolData?.terms;
+
   return (
     <>
-      <ArtistCancelPool
-        poolData={poolData}
-        deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
-        goalAmount={
-          tranchedPoolData?.creditLine?.maxLimit ??
-          BigNumber.from(poolData.goalAmount ?? 0)
-        }
-        numOfBackers={tranchedPoolData?.numBackers ?? 0}
-      />
+      {poolData.status !== "completed" || "failed" ? (
+        <ArtistWithdrawPool
+          poolData={poolData}
+          deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
+          goalAmount={
+            tranchedPoolData?.creditLine?.maxLimit ??
+            BigNumber.from(poolData.goalAmount ?? 0)
+          }
+          numOfBackers={tranchedPoolData?.numBackers ?? 0}
+        />
+      ) : (
+        <ArtistCancelPool
+          poolData={poolData}
+          deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
+          goalAmount={
+            tranchedPoolData?.creditLine?.maxLimit ??
+            BigNumber.from(poolData.goalAmount ?? 0)
+          }
+          numOfBackers={tranchedPoolData?.numBackers ?? 0}
+        />
+      )}
 
       <PoolTerms terms={terms} />
 

@@ -10,7 +10,7 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
    */
   children?: ReactNode;
   disabled?: boolean;
-  buttonType?: "primary" | "secondary" | "tertiary" | "custom";
+  buttonType?: "primary" | "secondary" | "tertiary" | "accent2" | "custom";
   iconLeft?: IconProps["name"];
   iconRight?: IconProps["name"];
   isLoading?: { isLoading: boolean; position?: "left" | "right" };
@@ -70,6 +70,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               buttonType == "secondary",
             "bg-transparent text-white hover:bg-dark-80 disabled:text-dark-80 disabled:hover:bg-transparent":
               buttonType == "tertiary",
+            "bg-accent-2 text-green-90 hover:bg-accent-2-opacity disabled:text-dark-80 disabled:hover:bg-transparent":
+              buttonType == "accent2",
           },
           className
         )}
@@ -89,7 +91,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children && (
           <div
             className={clsx(
-              "text-button font-semibold",
+              "w-full text-center text-button font-semibold",
               childrenClassName || "py-4"
             )}
           >
