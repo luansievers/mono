@@ -394,6 +394,8 @@ async function createBorrowerContractAndPools({
   logger(`Setting up for borrower: ${address}`)
 
   // Create Borrower Contract
+  // NOTE: BORROWER CONTRACT is created and passed to createPool() function
+
   const result = await (await goldfinchFactory.createBorrower(address)).wait()
   const lastEventArgs = getLastEventArgs(result)
   const bwrConAddr = lastEventArgs[0]
@@ -409,6 +411,7 @@ async function createBorrowerContractAndPools({
     allowedUIDTypes: [...NON_US_UID_TYPES, ...US_UID_TYPES],
   })
 
+  // NOTE: Pool is then locked
   let filledPoolTxn = await filledPool.lockJuniorCapital()
   await filledPoolTxn.wait()
   const ownerSigner = ethers.provider.getSigner(protocol_owner)
@@ -471,6 +474,7 @@ async function createFullPool(
   let txn
   txn = await erc20.connect(ownerSigner).approve(pool.address, String(depositAmount))
   await txn.wait()
+  // Note: this is using deposit not depositWithPermit
   txn = await pool.connect(ownerSigner).deposit(TRANCHES.Junior, String(depositAmount))
   await txn.wait()
   logger(`Deposited ${depositAmount} into the full pool`)
@@ -668,6 +672,8 @@ async function createPoolForBorrower({
   const poolAddress = lastEventArgs[0]
   const poolContract = await getDeployedAsEthersContract<TranchedPool>(getOrNull, "TranchedPool")
   assertNonNullable(poolContract)
+
+  // Note: not sure about this
   const pool = poolContract.attach(poolAddress).connect(underwriterSigner)
 
   logger(`Created a Pool ${poolAddress} for the borrower ${borrower}`)

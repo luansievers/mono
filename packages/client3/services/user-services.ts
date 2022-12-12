@@ -7,6 +7,8 @@ import { fetchKycStatus, getSignatureForKyc, IKYCStatus } from "@/lib/verify";
 import { User } from "@/types/user";
 
 const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
+
+// ! NOTE: Below is the code to grant owner privileges:
 const OWNER_ROLE = keccak256(toUtf8Bytes("OWNER_ROLE"));
 
 export const hasUid = (user?: User) => {
@@ -46,7 +48,6 @@ export const getKYCStatus = async (
 };
 
 /**
- *
  * @param goldfinchFactory - GoldfinchFactory contract
  * @param account - address of borrower
  * @Promise ContractTransaction - transaction receipt of granting borrower privileges
@@ -55,5 +56,10 @@ export const grantAccountBorrowerPrivileges = async (
   goldfinchFactory: Contract<"GoldfinchFactory">,
   account: string
 ): Promise<ContractTransaction> => {
+  // ! NOTE: Below is the code to grant owner privileges:
+  // return await goldfinchFactory.grantRole(
+  //   OWNER_ROLE,
+  //   account
+  // );
   return await goldfinchFactory.grantRole(BORROWER_ROLE, account);
 };

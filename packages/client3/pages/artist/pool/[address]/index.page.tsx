@@ -28,6 +28,7 @@ gql`
       }
       closingDate
       poolAddress
+      borrowerContract
     }
   }
 `;
@@ -37,6 +38,7 @@ gql`
   query artistPoolGraphData($tranchedPoolAddress: ID!) {
     tranchedPool(id: $tranchedPoolAddress) {
       id
+      remainingCapacity
       estimatedJuniorApy
       estimatedJuniorApyFromGfiRaw
       estimatedLeverageRatio
@@ -64,6 +66,8 @@ gql`
       }
       initialInterestOwed
       principalAmountRepaid
+      totalDeployed # Total amount withdraw from the pool
+      estimatedTotalAssets # Total amount of assets in the pool
       interestAmountRepaid
       remainingJuniorCapacity
       allowedUidTypes

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { BigNumber } from "ethers";
 
 import {
@@ -5,7 +6,6 @@ import {
   BodyText,
   Heading,
   Chip,
-  Icon,
   Button,
 } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
@@ -17,6 +17,10 @@ type Props = {
   deposited: BigNumber;
   goalAmount: BigNumber;
   numOfBackers: number;
+  disabled: boolean;
+  onButtonClick?: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
 };
 
 function ArtistWithdrawPool({
@@ -24,6 +28,8 @@ function ArtistWithdrawPool({
   deposited,
   goalAmount,
   numOfBackers,
+  disabled,
+  onButtonClick,
 }: Props) {
   let progressPercentage = 0;
   if (!deposited.isZero()) {
@@ -83,6 +89,7 @@ function ArtistWithdrawPool({
             </BodyText>
           </div>
         </div>
+        {/* NOTE: TESTING --- {poolData.status == "approved" ? ( */}
         {poolData.status == "completed" ? (
           <div className="mt-2 flex items-center rounded-b-lg bg-green-80">
             <div className="w-full items-center p-6">
@@ -109,9 +116,18 @@ function ArtistWithdrawPool({
               <div className="text-center">
                 <Button
                   buttonType="accent2"
-                  className="mx-auto mt-4 w-full text-center"
+                  className={clsx(
+                    "mx-auto mt-4 w-full text-center",
+                    disabled ? "cursor-not-allowed opacity-50" : ""
+                  )}
+                  onClick={(event) => {
+                    onButtonClick && onButtonClick(event);
+                  }}
+                  disabled={disabled}
                 >
-                  Withdraw
+                  {disabled
+                    ? "No more funds to withdraw" /* TODO: This will change to Pay */
+                    : "Withdraw"}
                 </Button>
               </div>
             </div>

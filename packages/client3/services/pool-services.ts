@@ -80,7 +80,7 @@ export const updatePoolBorrowerContractAddress = async (
 
 /**
  * @param goldfinchFactory - GoldfinchFactory contract
- * @param account - address of borrower
+ * @param account - address of account for which the borrower contract will be created for.
  * @Promise ContractReceipt - transaction receipt of granting borrower privileges
  */
 export const createBorrowerContract = async (

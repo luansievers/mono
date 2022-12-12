@@ -59,6 +59,11 @@ function PendingPoolArtist() {
       return;
     }
 
+    if (!account) {
+      console.error("Wallet is not connected");
+      return;
+    }
+
     const borrowerContract = await createBorrowerContract(
       goldfinchFactory,
       pool.walletAddress.toLowerCase()

@@ -53,7 +53,6 @@ export function PendingPoolCard({
       <>
         <div className="flex-1 pt-[28px] text-center capitalize">
           <Chip
-            // TODO type doesn't work
             type={
               statusType == Pool_Status_Type.InReview
                 ? "pending"
