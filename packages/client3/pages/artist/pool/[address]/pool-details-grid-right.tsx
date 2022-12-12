@@ -26,10 +26,9 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     CONTRACT_ADDRESSES.GoldfinchFactory
   );
 
-  const disabled =
-    tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed == 0
-      ? true
-      : false;
+  const disabled = !(
+    tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
+  );
 
   const onArtistWithdraw = async () => {
     if (!borrowerContract) {
