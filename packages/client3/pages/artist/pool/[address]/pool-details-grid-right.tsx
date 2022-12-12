@@ -8,7 +8,7 @@ import { Pool } from "@/lib/graphql/generated";
 import { drawdownArtists } from "@/services/artist-services";
 
 import ArtistCancelPool from "./artist-cancel-pool";
-import ArtistWithdrawPool from "./artist-withdraw-pool";
+import ArtistPoolInformation, { EventType } from "./artist-pool-information";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -27,10 +27,19 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
   );
 
   const disabled = !(
-    tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
+    tranchedPoolData?.estimatedTotalAssets - tranchedPoolData?.totalDeployed
   );
 
-  const onArtistWithdraw = async () => {
+  const onArtistEvent = async (eventType: EventType) => {
+    if (eventType !== EventType.WITHDRAW) {
+      await artistWithdraw();
+    }
+    if (eventType === EventType.DEPOSIT) {
+      await artistDeposit();
+    }
+  };
+
+  const artistWithdraw = async () => {
     if (!borrowerContract) {
       console.error("Borrower contract couldn't be initialized");
       return;
@@ -53,16 +62,15 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     }
     const role = await goldfinchFactory.isBorrower();
     if (!role) {
-      console.log("Must be borrower to drawdown");
+      console.error("Must be borrower to drawdown");
       return;
     }
 
+    // NOTE: Hardcode testing amount below
+    // const amountToDrawdown = BigNumber.from(2);
     const amountToDrawdown = BigNumber.from(
       tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
     );
-
-    // NOTE: Hardcode testing amount below
-    // const amountToDrawdown = BigNumber.from(2);
 
     await drawdownArtists(
       borrowerContract,
@@ -74,10 +82,14 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     );
   };
 
+  const artistDeposit = async () => {
+    console.log("Deposit button clicked");
+  };
+
   return (
     <>
       {poolData.status !== "completed" || "failed" ? (
-        <ArtistWithdrawPool
+        <ArtistPoolInformation
           poolData={poolData}
           deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
           goalAmount={
@@ -86,9 +98,9 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
           }
           numOfBackers={tranchedPoolData?.numBackers ?? 0}
           disabled={disabled}
-          onButtonClick={(event) => {
+          onButtonClick={(event, EventType) => {
             event.stopPropagation();
-            onArtistWithdraw();
+            onArtistEvent(EventType);
           }}
         />
       ) : (

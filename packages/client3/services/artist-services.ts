@@ -1,6 +1,8 @@
-import { BigNumber, ContractReceipt } from "ethers";
+import { BigNumber } from "ethers";
 
 import { Contract } from "@/lib/contracts";
+
+import { lockJuniorCapital, lockPool } from "./pool-services";
 
 /**
  * @param borrowerContract - Borrower contract
@@ -18,46 +20,13 @@ export const drawdownArtists = async (
   amount: BigNumber,
   walletToTransferTo: string,
   poolName: string // TODO - add a toasttransaction here with poolName
-): Promise<ContractReceipt> => {
+) => {
   if (remainingCapacity != BigNumber.from(0).toString()) {
-    console.log(
-      "Remaining capacity is not 0, locking down junior capital and pool"
-    );
     await lockJuniorCapital(borrowerFactory, poolAddress);
     await lockPool(borrowerFactory, poolAddress);
   }
   const receipt = await (
     await borrowerFactory?.drawdown(poolAddress, amount, walletToTransferTo)
   ).wait();
-  return receipt;
-};
-
-/**
- * Locks the Junior Capital of the Tranched Pool
- * @param borrowerFactory - Borrower contract
- * @param poolAddress - string - pool address
- * @Promise ContractReceipt - transaction receipt of locking junior capital
- */
-export const lockJuniorCapital = async (
-  borrowerFactory: Contract<"Borrower">,
-  poolAddress: string
-): Promise<ContractReceipt> => {
-  const receipt = await (
-    await borrowerFactory?.lockJuniorCapital(poolAddress)
-  ).wait();
-  return receipt;
-};
-
-/**
- * Locks the Tranched Pool so money can be withdrawn.
- * @param borrowerFactory - Borrower contract
- * @param poolAddress - string - pool address
- * @Promise ContractReceipt - transaction receipt of locking junior capital
- */
-export const lockPool = async (
-  borrowerFactory: Contract<"Borrower">,
-  poolAddress: string
-): Promise<ContractReceipt> => {
-  const receipt = await (await borrowerFactory?.lockPool(poolAddress)).wait();
   return receipt;
 };

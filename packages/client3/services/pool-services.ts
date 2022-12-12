@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ContractReceipt } from "ethers";
 
 import { Contract } from "@/lib/contracts";
 import { UIDType } from "@/lib/verify";
@@ -112,4 +113,34 @@ export const mergeGraphAndMetaData = (graphDatas: any, metaData: any) => {
       ...poolData,
     };
   });
+};
+
+/**
+ * Locks the Junior Capital of the Tranched Pool
+ * @param borrowerFactory - Borrower contract
+ * @param poolAddress - string - pool address
+ * @Promise ContractReceipt - transaction receipt of locking junior capital
+ */
+export const lockJuniorCapital = async (
+  borrowerFactory: Contract<"Borrower">,
+  poolAddress: string
+) => {
+  const receipt = await (
+    await borrowerFactory?.lockJuniorCapital(poolAddress)
+  ).wait();
+  return receipt;
+};
+
+/**
+ * Locks the Tranched Pool so money can be withdrawn.
+ * @param borrowerFactory - Borrower contract
+ * @param poolAddress - string - pool address
+ * @Promise ContractReceipt - transaction receipt of locking junior capital
+ */
+export const lockPool = async (
+  borrowerFactory: Contract<"Borrower">,
+  poolAddress: string
+) => {
+  const receipt = await (await borrowerFactory?.lockPool(poolAddress)).wait();
+  return receipt;
 };
