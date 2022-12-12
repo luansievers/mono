@@ -35,9 +35,9 @@
     ]
   },
   "dependencies": {
-    "@goldfinch-eng/pools": "^0.0.0",
-    "@goldfinch-eng/protocol": "^0.1.0",
-    "@goldfinch-eng/utils": "^0.0.1",
+    "@goldfinch-eng/pools": "file:./goldfinch-eng-pools-0.0.0.tgz",
+    "@goldfinch-eng/protocol": "file:./goldfinch-eng-protocol-0.1.0.tgz",
+    "@goldfinch-eng/utils": "file:./goldfinch-eng-utils-0.0.1.tgz",
     "hardhat": "^2.9.1",
     "hardhat-deploy": "0.9.1",
     "@sentry/integrations": "^6.8.0",

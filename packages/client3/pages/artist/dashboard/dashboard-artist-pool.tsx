@@ -4,10 +4,7 @@ import { useEffect } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
 import { Heading, Caption } from "@/components/design-system";
-import { handleAddressFormat } from "@/lib/format/common";
 import { SupportedCrypto } from "@/lib/graphql/generated";
-
-import PendingPoolArtist from "./pending-pools-artist";
 
 type Props = {
   openPoolData: any[];
@@ -25,10 +22,14 @@ function DashboardArtistPool({
 
   useEffect(() => {
     let totalRaised = 0;
-    (openPoolData ?? []).forEach((tranchedPool: any) => {
-      totalRaised += Number(tranchedPool.totalSuppliedAmount ?? 0);
-    });
-    setEarnedAndRaisedAmount(totalRaised * 0.8, totalRaised);
+    if (openPoolData) {
+      (openPoolData ?? []).forEach((tranchedPool: any) => {
+        totalRaised += BigNumber.from(
+          tranchedPool?.juniorDeposited ?? BigNumber.from(0)
+        ).toNumber();
+      });
+    }
+    setEarnedAndRaisedAmount(0, totalRaised);
   }, [openPoolData, setEarnedAndRaisedAmount]);
 
   const handleClick = (poolAddress: string) => {
@@ -37,7 +38,6 @@ function DashboardArtistPool({
 
   return (
     <>
-      <PendingPoolArtist />
       <div className="mb-5 mt-10 flex">
         <Heading className="flex-1 text-white" level={5}>
           My Open Pools
@@ -52,17 +52,16 @@ function DashboardArtistPool({
               poolName={tranchedPool.poolName}
               totalSuppliedAmount={{
                 token: SupportedCrypto.Usdc,
-                amount: BigNumber.from(tranchedPool.totalSuppliedAmount ?? 0),
+                amount: BigNumber.from(
+                  tranchedPool?.juniorDeposited ?? BigNumber.from(0)
+                ),
               }}
               totalGoalAmount={{
                 token: SupportedCrypto.Usdc,
-                amount: BigNumber.from(tranchedPool.goalAmount ?? 0), //90% - not sure if this is the correct field
+                amount: tranchedPool.creditLine?.maxLimit ?? BigNumber.from(0), //90% - not sure if this is the correct field
               }}
-              artistName={
-                tranchedPool.artist ??
-                handleAddressFormat(tranchedPool.walletAddress as string)
-              }
-              image={tranchedPool.icon}
+              artistName={tranchedPool.walletAddress}
+              image={""}
               onClick={() => handleClick(tranchedPool.id)}
             />
           ))

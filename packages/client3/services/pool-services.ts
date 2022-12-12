@@ -1,6 +1,8 @@
 import axios from "axios";
 
 import { Contract } from "@/lib/contracts";
+import { UIDType } from "@/lib/verify";
+import { getLastEventArgs } from "@/utilities/contract.util";
 
 const JUNIOR_FEE_PERCENT = "20";
 const INTEREST_APR = "50000000000000000"; // 5% APR
@@ -9,7 +11,14 @@ const TERM_IN_DAYS = "365";
 const LATE_FEE_APR = "0";
 const PRINCIPAL_GRACE_PERIOD_IN_DAYS = "185";
 const FUNDABLE_AT = "0";
-const ALLOWED_UID = [0];
+const ALLOWED_UID = [
+  UIDType.NonUSIndividual,
+  UIDType.NonUSEntity,
+  UIDType.USEntity,
+  UIDType.USNonAccreditedIndividual,
+  UIDType.USAccreditedIndividual,
+  UIDType.isGoListed,
+];
 
 /**
  * @param goldfinchFactory - GoldfinchFactory contract
@@ -88,5 +97,19 @@ export const createBorrowerContract = async (
     await goldfinchFactory.createBorrower(account)
   ).wait();
 
-  return borrowerContract.events?.[3].args?.borrower.toLowerCase();
+  const lastEvent = getLastEventArgs(borrowerContract);
+
+  return lastEvent.borrower;
+};
+
+export const mergeGraphAndMetaData = (graphDatas: any, metaData: any) => {
+  return metaData.map((poolData: any) => {
+    const graphData = graphDatas.find(
+      (pool: any) => pool.id == poolData.poolAddress
+    );
+    return {
+      ...graphData,
+      ...poolData,
+    };
+  });
 };

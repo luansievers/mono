@@ -6,6 +6,7 @@ import React from "react";
 import { PendingPoolCard } from "@/components/dashboard/pool-card/pending-pool-card";
 import { Heading } from "@/components/design-system";
 import { CONTRACT_ADDRESSES } from "@/constants";
+import { useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { useAdmin } from "@/hooks/user-hooks";
 import { useContract } from "@/lib/contracts";
 import { handleAddressFormat } from "@/lib/format/common";
@@ -17,8 +18,7 @@ import { grantAccountBorrowerPrivileges } from "@/services/user-services";
 
 gql`
   query allPendingPools($filters: PendingPoolFilters) {
-    pendingPools(filters: $filters)
-      @rest(path: "pool?{args}", type: "PendingPools") {
+    pools(filters: $filters) @rest(path: "pool?{args}", type: "pools") {
       id
       poolName
       walletAddress
@@ -30,6 +30,8 @@ gql`
 `;
 
 function AdminDashboard() {
+  useLayoutTitle("Admin Dashboard");
+
   const router = useRouter();
   const { data } = useAllPendingPoolsQuery({
     variables: {
@@ -40,11 +42,11 @@ function AdminDashboard() {
   });
   const isAdmin = useAdmin();
 
-  const pendingPools = data?.pendingPools ?? [];
+  const pendingPools = data?.pools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldFinchFactory
+    CONTRACT_ADDRESSES.GoldfinchFactory
   );
 
   const handleClick = (poolAddress: string) => {
@@ -91,8 +93,8 @@ function AdminDashboard() {
   if (isAdmin) {
     return (
       <div>
-        <Heading className="flex-1 text-white" level={5}>
-          Admin Dashboard
+        <Heading className="mb-5 flex-1 text-white" level={5}>
+          Pools Pending Approval
         </Heading>
         {pendingPools
           ? pendingPools.map((tranchedPool: any) => (

@@ -5,7 +5,7 @@ export const backerAllArtistPools = gql`
     tranchedPools(orderBy: createdAt, orderDirection: desc) {
       id
       # artist info from metadata
-      borrower @client {
+      pools @rest(path: "pool?{args.id}", type: "Pool") {
         name
         logo
         orgType
@@ -16,9 +16,9 @@ export const backerAllArtistPools = gql`
         highlights
       }
       # pool info from metadata
-      name @client
-      category @client
-      icon @client
+      name @rest
+      category @rest
+      icon @rest
       creditLine {
         maxLimit
         borrower

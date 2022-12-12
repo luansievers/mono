@@ -18,7 +18,7 @@ enum POOL_STATUS_TYPE {
 
 type Terms {
   projectGoal: String
-  raisedTarget: String
+  raiseTarget: String
 }
 
 input PendingPoolFilters {
@@ -27,5 +27,8 @@ input PendingPoolFilters {
 }
 
 extend type Query {
-  pendingPools(walletAddress: String, filters: PendingPoolFilters): [Pool!]
+  pools(walletAddress: String, filters: PendingPoolFilters): [Pool!]
+  pool(poolId: String!): Pool
+  poolAddress(poolAddress: String!): Pool
+  poolsByIds(poolIds: [ID!]!, walletAddress: String): [Pool!]
 }

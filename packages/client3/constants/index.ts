@@ -8,7 +8,11 @@ if (!networkName) {
   throw new Error("Network name is not defined in env vars");
 }
 export const DESIRED_CHAIN_ID =
-  networkName === "mainnet" ? 1 : networkName === "murmuration" ? 31337 : 31337;
+  networkName === "mainnet"
+    ? 1
+    : networkName === "murmuration"
+    ? 1313161555
+    : 1313161555;
 
 export const USDC_DECIMALS = 6;
 export const GFI_DECIMALS = 18;
@@ -23,7 +27,7 @@ export const TRANCHES = {
 export const API_BASE_URL = process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   ? process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   : networkName === "mainnet"
-  ? "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net"
+  ? "https://us-central1-free-artists.cloudfunctions.net"
   : networkName === "murmuration"
   ? "https://murmuration.goldfinch.finance/_gcloudfunctions"
   : "http://localhost:5001/goldfinch-frontends-dev/us-central1";
@@ -55,12 +59,13 @@ export const SERVER_URL =
     ? ""
     : networkName === "murmuration"
     ? "https://murmuration.goldfinch.finance"
-    : "http://localhost:4000";
+    : "https://us-central1-free-artists-dev.cloudfunctions.net";
+// : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =
   networkName === "mainnet"
-    ? "https://api.defender.openzeppelin.com/autotasks/bc31d6f7-0ab4-4170-9ba0-4978a6ed6034/runs/webhook/6a51e904-1439-4c68-981b-5f22f1c0b560/3fwK6xbVKfeBHZjSdsYQWe"
-    : `${SERVER_URL}/uniqueIdentitySigner`;
+    ? "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS"
+    : "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS";
 
 export const UNIQUE_IDENTITY_MINT_PRICE = "830000000000000";
 

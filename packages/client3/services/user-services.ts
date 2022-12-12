@@ -7,6 +7,7 @@ import { fetchKycStatus, getSignatureForKyc, IKYCStatus } from "@/lib/verify";
 import { User } from "@/types/user";
 
 const BORROWER_ROLE = keccak256(toUtf8Bytes("BORROWER_ROLE"));
+const OWNER_ROLE = keccak256(toUtf8Bytes("OWNER_ROLE"));
 
 export const hasUid = (user?: User) => {
   return Boolean(

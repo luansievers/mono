@@ -6,7 +6,7 @@ import {arrayify} from "@ethersproject/bytes"
 // This is the address of the Unique Identity Signer, a relayer on
 // Defender. It has the SIGNER_ROLE on UniqueIdentity and therefore
 // is able to authorize a burn.
-export const UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS = "0x125cde169191c6c6c5e71c4a814bb7f7b8ee2e3f"
+export const UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS = "0x25190908c3e1c75be8f5cb248425d8c09ed02e22"
 
 /**
  * @param fromAddress - The address of the msgSender for a mint/mintTo operation

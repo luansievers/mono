@@ -1,10 +1,6 @@
 import {findEnvLocal} from "@goldfinch-eng/utils"
 import dotenv from "dotenv"
 import {
-  TEST_MERKLE_DISTRIBUTOR_RECIPIENT_A,
-  TEST_MERKLE_DISTRIBUTOR_RECIPIENT_B,
-} from "./test/blockchain_scripts/merkle/merkleDistributor/fixtures"
-import {
   TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,
   TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_B,
 } from "./test/blockchain_scripts/merkle/merkleDirectDistributor/fixtures"
@@ -73,6 +69,12 @@ export default {
       chainId: 31337,
       accounts: {mnemonic: "test test test test test test test test test test test junk"},
     },
+    aurora: {
+      url: "https://testnet.aurora.dev",
+      chainId: 1313161555,
+      accounts: [process.env.PRIVATE_KEY],
+      timeout: 100_000,
+    },
   },
   solidity: {
     compilers: [
@@ -125,10 +127,10 @@ export default {
       31337: "0x60d2be34bce277f5f5889adfd4991baefa17461c",
     },
     test_merkle_distributor_recipient_a: {
-      hardhat: TEST_MERKLE_DISTRIBUTOR_RECIPIENT_A,
+      hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,
     },
     test_merkle_distributor_recipient_b: {
-      hardhat: TEST_MERKLE_DISTRIBUTOR_RECIPIENT_B,
+      hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_B,
     },
     test_merkle_direct_distributor_recipient_a: {
       hardhat: TEST_MERKLE_DIRECT_DISTRIBUTOR_RECIPIENT_A,

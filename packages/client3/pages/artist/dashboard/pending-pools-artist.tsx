@@ -21,8 +21,8 @@ import { getLastEventArgs } from "@/utilities/contract.util";
 
 gql`
   query pendingPools($walletAddress: String!, $filters: PendingPoolFilters) {
-    pendingPools(walletAddress: $walletAddress, filters: $filters)
-      @rest(path: "pool?{args}", type: "PendingPools") {
+    pools(walletAddress: $walletAddress, filters: $filters)
+      @rest(path: "pool?{args}", type: "pools") {
       id
       poolName
       walletAddress
@@ -46,11 +46,11 @@ function PendingPoolArtist() {
     },
   });
 
-  const pendingPools = data?.pendingPools ?? [];
+  const pendingPools = data?.pools ?? [];
 
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldFinchFactory
+    CONTRACT_ADDRESSES.GoldfinchFactory
   );
 
   const onContractSubmit = async (pool: typeof pendingPools[0]) => {
@@ -69,12 +69,10 @@ function PendingPoolArtist() {
       borrowerContract.toLowerCase()
     );
 
-    console.log(`Borrower contract ${borrowerContract} for ${account}`);
-
     const receipt = await createPool(
       goldfinchFactory,
       pool.goalAmount,
-      borrowerContract.toLowerCase()
+      borrowerContract
     );
     const event = getLastEventArgs(receipt);
 

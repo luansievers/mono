@@ -40,11 +40,11 @@ export async function toastTransaction({
               {pendingPrompt ? pendingPrompt : "Transaction submitted."} View it
               on{" "}
               <Link
-                href={`https://etherscan.io/tx/${transactionHash}`}
+                href={`https://testnet.aurorascan.dev/tx/${transactionHash}`}
                 target="_blank"
                 rel="noopener"
               >
-                etherscan.io
+                Aurora Testnet Scanner
               </Link>
               .
             </div>
@@ -58,11 +58,11 @@ export async function toastTransaction({
               {successPrompt ? successPrompt : "Transaction succeeded."} View it
               on{" "}
               <Link
-                href={`https://etherscan.io/tx/${transactionHash}`}
+                href={`https://testnet.aurorascan.dev/tx/${transactionHash}`}
                 target="_blank"
                 rel="noopener"
               >
-                etherscan.io
+                Aurora Testnet Scanner
               </Link>
               .
             </div>
@@ -76,11 +76,11 @@ export async function toastTransaction({
               {errorPrompt ? errorPrompt : `Transaction failed.`} Error message:{" "}
               {data.message}. View it on{" "}
               <Link
-                href={`https://etherscan.io/tx/${transactionHash}`}
+                href={`https://testnet.aurorascan.dev/tx/${transactionHash}`}
                 target="_blank"
                 rel="noopener"
               >
-                etherscan.io
+                Aurora Testnet Scanner
               </Link>
               .
             </div>

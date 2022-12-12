@@ -78,33 +78,36 @@ export function TransactionTable() {
     return [
       <div
         key={`${transaction.id}-category`}
-        className="flex items-center gap-3 text-left"
+        className="flex items-center gap-3 text-left text-light-10"
       >
         <Icon name={getTransactionIcon(transaction)} size="sm" />
         {getTransactionLabel(transaction)}
       </div>,
-      <div key={`${transaction.id}-amount`} className="text-left">
+      <div
+        key={`${transaction.id}-amount`}
+        className="text-left  text-light-10"
+      >
         {amount}
       </div>,
-      <div key={`${transaction.id}-date`} className="text-left">
+      <div key={`${transaction.id}-date`} className="text-left  text-light-10">
         {format(date, "MMM d, y")}
       </div>,
-      <div key={`${transaction.id}-pool`} className="text-left">
+      <div key={`${transaction.id}-pool`} className="text-left  text-light-10">
         {transaction.tranchedPool ? (
           <Link
             href={`/pools/${transaction.tranchedPool.id}`}
             // iconRight="ArrowTopRight"
-            className="text-sand-400"
+            className=" text-light-10"
           >
             Pool
           </Link>
         ) : null}
       </div>,
       <Link
-        href={`https://etherscan.io/tx/${transaction.transactionHash}`}
+        href={`https://testnet.aurorascan.dev//tx/${transaction.transactionHash}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sand-400"
+        className=" text-light-10"
         key={`${transaction.id}-link`}
         // iconRight="ArrowTopRight"
       >
@@ -139,6 +142,7 @@ export function TransactionTable() {
   ) : (
     <Table
       headings={["Type", "Amount", "Date", "Link", ""]}
+      className=" text-light-10"
       rows={rows}
       onScrollBottom={onScrollBottom}
     />

@@ -18,7 +18,7 @@ export function useAdmin() {
   const [isAdmin, setAdmin] = useState<boolean>();
   const goldfinchFactory = useContract(
     "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldFinchFactory
+    CONTRACT_ADDRESSES.GoldfinchFactory
   );
   useEffect(() => {
     if (goldfinchFactory) {

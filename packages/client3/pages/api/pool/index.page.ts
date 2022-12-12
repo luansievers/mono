@@ -1,10 +1,8 @@
-import fs from "fs";
-import path from "path";
-
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import qs from "qs";
 
+import { API_BASE_URL } from "@/constants";
 //Added because ESlint import order was complaining. But this order works fine in pages
 // eslint-disable-next-line import/order
 import {
@@ -13,19 +11,21 @@ import {
   Pool_Status_Type,
 } from "@/lib/graphql/generated";
 
-const mapSavePoolsToPoolArray = (poolData: any) => {
-  const mappedData = Object.keys(poolData).map((key) => ({
-    id: key,
-    ...poolData[key],
-  }));
-  return mappedData as Pool[];
-};
+export const POOL_CLOUD_URL = `${API_BASE_URL}/poolMetaData`;
 
 const filterByWalletAddress = (
   poolData: Array<Pool>,
   walletAddress: string
 ) => {
   return poolData.filter((pool: any) => pool.walletAddress === walletAddress);
+};
+
+const filterByPoolAddress = (poolData: Array<Pool>, poolAddress: string) => {
+  return poolData.filter((pool: any) => pool.poolAddress === poolAddress);
+};
+
+const filterByPoolIds = (poolData: Array<Pool>, poolIds: string[]) => {
+  return poolData.filter((pool: any) => poolIds.includes(pool.poolAddress));
 };
 
 const filterPoolDataByUsingFilters = (
@@ -71,26 +71,31 @@ export default async function handler(
   const { method } = req;
   switch (method) {
     case "GET": {
-      let fileData: Pool[];
-      const pathname = path.resolve(
-        `${process.cwd()}/pages/api/pool`,
-        "./pools.json"
-      );
       try {
-        fileData = mapSavePoolsToPoolArray(
-          JSON.parse(fs.readFileSync(pathname, "utf-8"))
-        );
+        const poolDataResponse = await axios.get(POOL_CLOUD_URL);
+        let fileData = poolDataResponse.data;
         const {
           walletAddress,
           filters,
-        }: { walletAddress?: string; filters?: PendingPoolFilters } = qs.parse(
-          req.query as unknown as string
-        );
+          poolAddress,
+          poolIds,
+        }: {
+          walletAddress?: string;
+          filters?: PendingPoolFilters;
+          poolAddress?: string;
+          poolIds?: string[];
+        } = qs.parse(req.query as unknown as string);
         if (walletAddress != undefined) {
           fileData = filterByWalletAddress(fileData, walletAddress);
         }
+        if (poolAddress != undefined) {
+          fileData = filterByPoolAddress(fileData, poolAddress);
+        }
         if (filters) {
           fileData = filterPoolDataByUsingFilters(fileData, filters);
+        }
+        if (poolIds) {
+          fileData = filterByPoolIds(fileData, poolIds);
         }
         res.status(200).json(fileData);
       } catch (error) {
@@ -101,30 +106,18 @@ export default async function handler(
     }
 
     case "POST": {
-      let fileData;
-      const pathname = path.resolve(
-        `${process.cwd()}/pages/api/pool`,
-        "./pools.json"
-      );
       const newPoolData = req.body.params;
-      try {
-        fileData = JSON.parse(fs.readFileSync(pathname, "utf-8"));
-      } catch (error) {
-        console.error(error);
-      }
       const id = Date.now().toString(36);
       newPoolData.status = Pool_Status_Type.InReview;
-      fileData[id] = newPoolData;
-      fs.writeFileSync(pathname, JSON.stringify(fileData), {
-        encoding: "utf8",
-        flag: "w",
+      newPoolData.id = id;
+      await axios.post(POOL_CLOUD_URL, {
+        poolData: {
+          id: id,
+          data: newPoolData,
+        },
       });
-
-      await sendToDiscord(newPoolData);
-      res.status(200).json({
-        id: id,
-        fileData,
-      });
+      //await sendToDiscord(newPoolData);
+      res.status(200).json(newPoolData);
       break;
     }
     default:

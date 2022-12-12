@@ -20,9 +20,10 @@ import {
   verifySignature,
 } from "@goldfinch-eng/utils"
 import {UniqueIdentity} from "@goldfinch-eng/protocol/typechain/ethers"
-import UniqueIdentityDeployment from "@goldfinch-eng/protocol/deployments/mainnet/UniqueIdentity.json"
+import UniqueIdentityDeployment from "@goldfinch-eng/protocol/deployments/aurora/UniqueIdentity.json"
 export const UNIQUE_IDENTITY_ABI = UniqueIdentityDeployment.abi
-export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0xba0439088dc1e75F58e0A7C107627942C15cbb41"
+export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0xCc78cd15d8A0aa9Fececb105A526b773e0789a61"
+// export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0xba0439088dc1e75F58e0A7C107627942C15cbb41"
 import baseHandler from "../core/handler"
 
 export const UniqueIdentityAbi = UniqueIdentityDeployment.abi
@@ -35,6 +36,7 @@ const isKYC = (obj: unknown): obj is KYC => isPlainObject(obj) && isStatus(obj.s
 const API_URLS: {[key: number]: string} = {
   1: "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net",
   31337: "http://localhost:5001/goldfinch-frontends-dev/us-central1",
+  1313161555: "https://us-central1-free-artists.cloudfunctions.net",
 }
 
 const defaultFetchKYCStatus: FetchKYCFunction = async ({auth, chainId}) => {
@@ -43,7 +45,10 @@ const defaultFetchKYCStatus: FetchKYCFunction = async ({auth, chainId}) => {
   assertNonNullable(baseUrl, `No baseUrl function URL defined for chain ${chainId}`)
   const {data} = await axios.get(`${baseUrl}/kycStatus`, {headers: auth})
 
+  console.log("data", data)
+
   if (isKYC(data)) {
+    console.log("kyc true")
     return data
   } else {
     throw new Error(
@@ -67,6 +72,7 @@ const linkUserToUidStatus = async ({
   const baseUrl = API_URLS[chainId]
   assertNonNullable(baseUrl, `No baseUrl function URL defined for chain ${chainId}`)
   try {
+    console.log("linking User to UID")
     await axios.post(
       `${baseUrl}/linkUserToUid`,
       {
@@ -131,11 +137,21 @@ export const handler = baseHandler("unique-identity-signer", async (event: Handl
 
   const {auth, mintToAddress} = event.request.body
 
+  console.log("auth", auth)
+  console.log("mintToAddress", mintToAddress)
+
   const credentials = {...event}
+  console.log("credentials", credentials)
   const provider = new DefenderRelayProvider(credentials)
+  console.log("provider", provider)
   const signer = new DefenderRelaySigner(credentials, provider, {speed: "fast"})
+  console.log("singer", signer)
 
   const network = await signer.provider.getNetwork()
+
+  console.log("network", network)
+  console.log("Unique Identity Address", UNIQUE_IDENTITY_MAINNET_ADDRESS)
+  console.log("Unique Identity ABI", UNIQUE_IDENTITY_ABI)
   const uniqueIdentity = new ethers.Contract(
     UNIQUE_IDENTITY_MAINNET_ADDRESS,
     UNIQUE_IDENTITY_ABI,
@@ -167,7 +183,13 @@ export async function main({
   const signInSignature = auth["x-goldfinch-signature"]
   const signInSignatureBlockNum = auth["x-goldfinch-signature-block-num"]
 
+  console.log("userAddress", userAddress)
+  console.log("signInSignature", signInSignature)
+  console.log("signInSignatureBlockNum", signInSignatureBlockNum)
+
   auth = asAuth(auth)
+
+  console.log("Step 1", auth)
 
   assertNonNullable(signer.provider)
   if (!ethers.utils.isAddress(userAddress)) {
@@ -178,6 +200,7 @@ export async function main({
   }
 
   await verifySignature(userAddress, signInSignature, signInSignatureBlockNum, signer.provider)
+
   Sentry.setUser({id: userAddress})
 
   // accredited individuals + entities do not go through persona
@@ -190,6 +213,7 @@ export async function main({
   ) {
     try {
       kycStatus = await fetchKYCStatus({auth, chainId: network.chainId})
+      console.log("Step 2, kycStatus", kycStatus)
     } catch (e) {
       console.error("fetchKYCStatus failed", e)
       throw e
@@ -207,8 +231,11 @@ export async function main({
   }
 
   const currentBlock = await signer.provider.getBlock("latest")
+  console.log(currentBlock, "currentBlock")
   const expiresAt = currentBlock.timestamp + SIGNATURE_EXPIRY_IN_SECONDS
+  console.log(expiresAt, "expiresAt")
   const nonce = await uniqueIdentity.nonces(userAddress)
+  console.log(nonce, "nonce")
   const idVersion = getIDType({
     address: userAddress,
     kycStatus,
@@ -237,6 +264,8 @@ export async function main({
   }
 
   const signature = await signer.signMessage(presignedMessage)
+
+  console.log(signature, "signature")
   await linkUserToUidStatus({
     signerAddress: await signer.getAddress(),
     signature,

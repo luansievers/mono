@@ -42,13 +42,17 @@ export const kycStatus = genRequestHandler({
   ): Promise<Response> => {
     // Verify plaintext matches expected plaintext to prevent the use of an arbitrary signature
     const blockNum = extractHeaderValue(req, "x-goldfinch-signature-block-num")
+    console.log("blockNum", blockNum)
     const expectedPlaintext = `Sign in to Goldfinch: ${blockNum}`
     if (verificationResult.plaintext !== expectedPlaintext) {
+      console.log("Plaintext mismatch", verificationResult.plaintext, expectedPlaintext)
       return res.status(401).send({error: "Unexpected signature"})
     }
 
     const address = verificationResult.address
+    console.log("address", address)
     const payload = {address: address, status: "unknown", countryCode: null, residency: ""}
+    console.log("payload", payload)
 
     // Respond with approved if address on any approved list
     if (
@@ -60,13 +64,20 @@ export const kycStatus = genRequestHandler({
     }
 
     const users = getUsers(admin.firestore())
+    console.log("users", users)
     const user = await users.doc(`${address.toLowerCase()}`).get()
+    console.log("user", user)
 
     if (user.exists) {
       payload.status = userStatusFromPersonaStatus(user.data()?.persona?.status)
+      console.log("payload status", payload.status)
       payload.countryCode = user.data()?.countryCode
+      console.log("payload countryCode", payload.countryCode)
       payload.residency = user.data()?.kyc?.residency
+      console.log("payload residency ", payload.residency)
     }
+
+    console.log("return", payload)
 
     return res.status(200).send(payload)
   },

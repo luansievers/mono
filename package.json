@@ -22,6 +22,7 @@
     "start:client3": "npm --prefix packages/client3 run dev"
   },
   "devDependencies": {
+    "@nomiclabs/buidler": "^1.4.8",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/experimental-utils": "^5.14.0",
     "@typescript-eslint/parser": "^4.31.1",

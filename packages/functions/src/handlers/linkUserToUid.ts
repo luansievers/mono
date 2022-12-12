@@ -29,7 +29,7 @@ const getUniqueIdentityDeployment = (chainId: number) => {
   if (chainId === 1) {
     return UNIQUE_IDENTITY_MAINNET_DEPLOYMENT
   } else {
-    return deployedDevABIs?.[chainId]?.["localhost"]?.contracts?.["UniqueIdentity"]
+    return deployedDevABIs?.[chainId]?.["aurora"]?.contracts?.["UniqueIdentity"]
   }
 }
 
@@ -75,8 +75,11 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
 
       const blockchain = await getBlockchain("https://app.goldfinch.finance")
       const network = await blockchain.getNetwork()
+      console.log("network", network)
 
       const uidDeployment = injectedUidDeployment ?? getUniqueIdentityDeployment(network.chainId)
+
+      console.log("uidDeployment", uidDeployment)
 
       assertNonNullable(uidDeployment)
       assertNonNullable(msgSender)

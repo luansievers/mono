@@ -74,6 +74,7 @@ export enum UIDType {
   USNonAccreditedIndividual = 2,
   USEntity = 3,
   NonUSEntity = 4,
+  isGoListed = 5,
 }
 
 /**
@@ -93,6 +94,8 @@ export function getUIDLabelFromType(type: UIDType): string {
       return "U.S. Entity";
     case UIDType.NonUSEntity:
       return "Non-U.S. Entity";
+    case UIDType.isGoListed:
+      return "Go Listed";
   }
 }
 

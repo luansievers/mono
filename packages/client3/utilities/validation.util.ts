@@ -13,7 +13,7 @@ export const validateMaximumAmountSupply = async (
   if (!account || !usdcContract) {
     return;
   }
-  const valueAsUsdc = utils.parseUnits(value, USDC_DECIMALS);
+  const valueAsUsdc = utils.parseUnits(value, 0);
   if (valueAsUsdc.gt(remainingJuniorCapacity)) {
     return "Amount exceeds remaining junior capacity";
   }

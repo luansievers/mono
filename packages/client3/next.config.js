@@ -104,6 +104,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withBundleAnalyzer(
-  withSentryConfig(withMDX(nextConfig), sentryWebpackPluginOptions)
-);
+module.exports = withBundleAnalyzer(withMDX(nextConfig));

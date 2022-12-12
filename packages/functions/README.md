@@ -16,14 +16,23 @@ SDK Docs: https://cloud.google.com/sdk/gcloud/reference/beta/runtime-config/conf
 
 `gcloud auth login`
 
-`gcloud beta runtime-config configs list --project <projects>`
+`gcloud beta runtime-config configs list --project free-artists`
 
-`gcloud beta runtime-config configs variables list --config-name kyc --values --project <projects>`
+If not config is returned, create one: 
+`gcloud beta runtime-config configs create free-artists --description free-artists`
+
+`gcloud beta runtime-config configs create kyc --description free-artists`
+
+List variables
+`gcloud beta runtime-config configs variables list --config-name kyc --values --project free-artists`
 
 Example get variables
-`gcloud beta runtime-config configs variables get-value allowed_origins --config-name kyc --project <projects>`
+`gcloud beta runtime-config configs variables get-value allowed_origins --config-name kyc --project free-artists`
 
 Example set variable `--is-text` is a needed param
-`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app" --config-name kyc --project <projects> --is-text`
+`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name kyc --project free-artists --is-text`
 
 NOTE: If you want to be able to use the remote cloud functions when running locally, then `http://localhost:3000` should be included as one of those allowed origins ^^^.
+
+
+`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name free-artists --project free-artists --is-text`

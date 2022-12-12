@@ -1,4 +1,4 @@
-import { useApolloClient } from "@apollo/client";
+import { gql, useApolloClient } from "@apollo/client";
 import { BigNumber, utils } from "ethers";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,8 @@ import { WalletButton } from "@/components/design-system/wallet-button";
 import { TRANCHES, USDC_DECIMALS } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
-import { UidType } from "@/lib/graphql/generated";
+import { formatCrypto } from "@/lib/format";
+import { SupportedCrypto, UidType } from "@/lib/graphql/generated";
 import {
   approveErc20IfRequired,
   canUserParticipateInPool,
@@ -69,7 +70,6 @@ export function PoolInformation({
   const usdcContract = useContract("USDC");
   const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
-
   const isUserVerified =
     user?.isGoListed ||
     user?.isUsEntity ||
@@ -104,7 +104,6 @@ export function PoolInformation({
       throw new Error("Wallet not connected properly");
     }
     await signAgreement(account, data.backerName, tranchedPoolAddress);
-
     // Ensures the user doesn't leave any dust behind when they choose to supply max
     let value = utils.parseUnits(data.supply, USDC_DECIMALS);
     if (usdcWithinEpsilon(value, availableBalance)) {
@@ -127,6 +126,10 @@ export function PoolInformation({
       });
     } else {
       const now = (await provider.getBlock("latest")).timestamp;
+      /**
+       * Note : Sometime the timestamp returned by the provider(metamask) is of old blocks and would cause 1hr deadline to fail.
+       * Increasing the deadline seems to fix it but not the ideal approach.
+       */
       const deadline = BigNumber.from(now + 3600); // deadline is 1 hour from now
       const signature = await generateErc20PermitSignature({
         erc20TokenContract: usdcContract,
@@ -170,7 +173,7 @@ export function PoolInformation({
   );
 
   return (
-    <div className="w-96 gap-6 rounded-lg border-dark-90 bg-dark-100 px-6 py-7">
+    <div className="rounded-lg border border-dark-90 p-6">
       {type && (
         <>
           <div className="pb-6">
@@ -198,10 +201,17 @@ export function PoolInformation({
           level={2}
           className={type == "failed" ? "text-accent-3" : "text-accent-2"}
         >
-          ${totalSuppliedAmount}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(totalSuppliedAmount ?? 0),
+          })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of ${totalGoalAmount}
+          of{" "}
+          {formatCrypto({
+            token: SupportedCrypto.Usdc,
+            amount: BigNumber.from(totalGoalAmount ?? 0),
+          })}
         </BodyText>
       </div>
       <Progress
@@ -231,7 +241,7 @@ export function PoolInformation({
         <>
           <div className="mt-8 mb-2 flex items-center justify-start">
             <Display level={2} className="text-white">
-              {diffDays}
+              {diffDays < 0 ? 0 : diffDays}
             </Display>
             <BodyText size="large" className="ml-4 text-dark-50">
               Days left
@@ -256,7 +266,8 @@ export function PoolInformation({
             >
               Verify Identity
             </Button>
-          ) : !canUserParticipate ? (
+          ) : //TODO change back to !canUserParticipate
+          !canUserParticipate ? (
             <div>
               <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
                 <Icon size="md" name="Exclamation" />
@@ -266,7 +277,7 @@ export function PoolInformation({
                 </div>
               </div>
             </div>
-          ) : (
+          ) : diffDays < 1 ? null : (
             <Form rhfMethods={rhfMethods} onSubmit={onSubmit}>
               <DollarInput
                 control={control}
