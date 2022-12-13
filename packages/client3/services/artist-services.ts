@@ -30,3 +30,14 @@ export const drawdownArtists = async (
   ).wait();
   return receipt;
 };
+
+export const artistRepayment = async (
+  borrowerContract: Contract<"Borrower">,
+  poolAddress: string,
+  amount: BigNumber
+) => {
+  const receipt = await (
+    await borrowerContract.pay(poolAddress, amount)
+  ).wait();
+  return receipt;
+};

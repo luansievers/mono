@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ContractReceipt } from "ethers";
 
 import { Contract } from "@/lib/contracts";
 import { UIDType } from "@/lib/verify";
