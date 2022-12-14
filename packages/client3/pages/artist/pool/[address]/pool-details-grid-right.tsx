@@ -123,17 +123,13 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     console.log("admin", await CreditLine.isAdmin());
 
     const OWNER_ROLE = keccak256(toUtf8Bytes("OWNER_ROLE"));
-
-    await CreditLine.grantRole(
-      OWNER_ROLE,
-      "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
-    );
+    const DEFAULT_ADMIN_ROLE = keccak256(toUtf8Bytes("DEFAULT_ADMIN_ROLE"));
 
     console.log(
       "owner role?",
       await CreditLine.hasRole(
         OWNER_ROLE,
-        "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
+        "0x44ca2e067d72aa7f87b5746a95e7ecd7b7c4be2a"
       )
     );
 
@@ -141,6 +137,11 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
       OWNER_ROLE,
       "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
     );
+
+    // await CreditLine.grantRole(
+    //   DEFAULT_ADMIN_ROLE,
+    //   "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
+    // );
 
     console.log(
       "Credit Line balance",

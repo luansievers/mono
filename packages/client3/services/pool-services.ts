@@ -6,7 +6,7 @@ import { getLastEventArgs } from "@/utilities/contract.util";
 
 const JUNIOR_FEE_PERCENT = "20";
 const INTEREST_APR = "50000000000000000"; // 5% APR
-const PAYMENT_PERIOD_IN_DAYS = "10";
+const PAYMENT_PERIOD_IN_DAYS = "1";
 const TERM_IN_DAYS = "365";
 const LATE_FEE_APR = "0";
 const PRINCIPAL_GRACE_PERIOD_IN_DAYS = "185";

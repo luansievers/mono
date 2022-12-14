@@ -7,12 +7,10 @@ const networkName = process.env.NEXT_PUBLIC_NETWORK_NAME as string;
 if (!networkName) {
   throw new Error("Network name is not defined in env vars");
 }
+networkName === "mainnet" ? 1 : networkName === "murmuration" ? 31337 : 31337;
+
 export const DESIRED_CHAIN_ID =
-  networkName === "mainnet"
-    ? 1
-    : networkName === "murmuration"
-    ? 1313161555
-    : 1313161555;
+  networkName === "mainnet" ? 1 : networkName === "murmuration" ? 31337 : 31337;
 
 export const USDC_DECIMALS = 6;
 export const GFI_DECIMALS = 18;
@@ -59,8 +57,8 @@ export const SERVER_URL =
     ? ""
     : networkName === "murmuration"
     ? "https://murmuration.goldfinch.finance"
-    : "https://us-central1-free-artists-dev.cloudfunctions.net";
-// : "http://localhost:4000";
+    : // : "https://us-central1-free-artists.cloudfunctions.net";
+      "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =
   networkName === "mainnet"

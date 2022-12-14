@@ -2,6 +2,7 @@ import { BigNumber } from "ethers";
 
 import { Display, BodyText, Heading, Chip } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
+import { PoolInformation } from "@/components/pool/pool-information";
 import { formatCrypto } from "@/lib/format";
 import { Pool, SupportedCrypto } from "@/lib/graphql/generated";
 
@@ -104,10 +105,17 @@ function ArtistPoolInformation({
             onButtonClick={onButtonClick}
           />
         ) : (
-          <> </>
+          <>
+            {/* delete this one */}
+            <ArtistWithdrawalCard
+              deposited={deposited}
+              disabled={!disabled}
+              onButtonClick={onButtonClick}
+            />
+          </>
         )}
       </div>
-      {!disabled ? ( // Note: If (disabled) then the pool has been locked and withdrawn maximally from.
+      {disabled ? ( // Note: If (disabled) then the pool has been locked and withdrawn maximally from.
         <div className="mt-8">
           <ArtistDepositCard
             repayed={deposited} // TODO: Change to repayed amount not deposited - FAD-172

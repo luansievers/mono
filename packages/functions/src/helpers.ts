@@ -1,4 +1,4 @@
-// import {getNetwork} from "@ethersproject/networks"
+import {getNetwork} from "@ethersproject/networks"
 import {BaseProvider} from "@ethersproject/providers"
 import * as Sentry from "@sentry/serverless"
 import {HttpFunctionWrapperOptions} from "@sentry/serverless/dist/gcpfunction"
@@ -11,7 +11,7 @@ import _ from "lodash"
 import {assertUnreachable} from "@goldfinch-eng/utils"
 
 // This is not a secret, so it's ok to hardcode this.
-// const INFURA_PROJECT_ID = "d8e13fc4893e4be5aae875d94fee67b7"
+const INFURA_PROJECT_ID = "d8e13fc4893e4be5aae875d94fee67b7"
 
 const setCORSHeaders = (req: Request, res: Response) => {
   if (process.env.MURMURATION === "yes") {
@@ -52,16 +52,16 @@ export const originAllowed = (allowedOrigins: string[], origin: string): boolean
  * Maps a request origin to the url or chain id of the blockchain that we consider the appropriate
  * one to use by default in servicing the request.
  */
-// const defaultBlockchainIdentifierByOrigin: {[origin: string]: string | number} = {
-//   "http://localhost:3000": 1313161555,
-//   "https://murmuration.goldfinch.finance": "https://murmuration.goldfinch.finance/_chain",
-//   "https://app.goldfinch.finance": 1,
-// }
-// const overrideBlockchainIdentifier = (): string | number | undefined => {
-//   const override = process.env.CHAIN_IDENTIFIER
-//   const overrideNumber = override ? parseInt(override, 10) : undefined
-//   return overrideNumber && !isNaN(overrideNumber) ? overrideNumber : override
-// }
+const defaultBlockchainIdentifierByOrigin: {[origin: string]: string | number} = {
+  "http://localhost:3000": 31337,
+  "https://murmuration.goldfinch.finance": "https://murmuration.goldfinch.finance/_chain",
+  "https://app.goldfinch.finance": 1,
+}
+const overrideBlockchainIdentifier = (): string | number | undefined => {
+  const override = process.env.CHAIN_IDENTIFIER
+  const overrideNumber = override ? parseInt(override, 10) : undefined
+  return overrideNumber && !isNaN(overrideNumber) ? overrideNumber : override
+}
 
 /**
  * Provides the blockchain we want to use in servicing a request. In descending priority, this is:
@@ -72,18 +72,18 @@ export const originAllowed = (allowedOrigins: string[], origin: string): boolean
  * @return {BaseProvider} The blockchain provider.
  */
 const _getBlockchain = (origin: string): BaseProvider => {
-  // let blockchain = overrideBlockchainIdentifier() || defaultBlockchainIdentifierByOrigin[origin]
-  // if (!blockchain) {
-  //   console.warn(`Failed to identify appropriate blockchain for request origin: ${origin}. Defaulting to mainnet.`)
-  //   blockchain = 1
-  // }
-  // const network = typeof blockchain === "number" ? getNetwork(blockchain) : blockchain
-  // // If we're using urls for the network (hardhat or murmuration) use the default provider
-  // if (typeof network === "string" && network.match(/^(ws|http)s?:/i)) {
-  //   return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
-  // } else {
-  //   return new ethers.providers.InfuraProvider(network, INFURA_PROJECT_ID)
-  // }
+  let blockchain = overrideBlockchainIdentifier() || defaultBlockchainIdentifierByOrigin[origin]
+  if (!blockchain) {
+    console.warn(`Failed to identify appropriate blockchain for request origin: ${origin}. Defaulting to mainnet.`)
+    blockchain = 1
+  }
+  const network = typeof blockchain === "number" ? getNetwork(blockchain) : blockchain
+  // If we're using urls for the network (hardhat or murmuration) use the default provider
+  if (typeof network === "string" && network.match(/^(ws|http)s?:/i)) {
+    return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
+  } else {
+    return new ethers.providers.InfuraProvider(network, INFURA_PROJECT_ID)
+  }
   return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
 }
 
