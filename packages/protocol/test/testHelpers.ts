@@ -413,6 +413,7 @@ async function advanceTime({days, seconds, toSecond}: {days?: Numberish; seconds
   expect(newTimestamp).to.bignumber.gt(currentTimestamp)
 
   await ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp.toNumber()])
+  console.log(`Advanced time by ${secondsPassed} seconds to ${newTimestamp}`)
   return newTimestamp
 }
 

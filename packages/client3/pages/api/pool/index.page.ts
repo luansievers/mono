@@ -25,8 +25,6 @@ const filterByPoolAddress = (poolData: Array<Pool>, poolAddress: string) => {
 };
 
 const filterByPoolIds = (poolData: Array<Pool>, poolIds: string[]) => {
-  console.log("poolData3", poolData);
-
   return poolData.filter((pool: any) => poolIds.includes(pool.poolAddress));
 };
 
@@ -89,7 +87,6 @@ export default async function handler(
         } = qs.parse(req.query as unknown as string);
         if (walletAddress != undefined) {
           fileData = await filterByWalletAddress(fileData, walletAddress);
-          console.log("fileData", fileData);
         }
         if (poolAddress != undefined) {
           fileData = filterByPoolAddress(fileData, poolAddress);
@@ -100,7 +97,6 @@ export default async function handler(
         if (poolIds) {
           fileData = filterByPoolIds(fileData, poolIds);
         }
-        console.log("fileData2", fileData);
 
         res.status(200).json(fileData);
       } catch (error) {
