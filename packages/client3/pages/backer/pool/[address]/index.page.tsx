@@ -102,7 +102,6 @@ function BackerPoolPage() {
 
   return (
     <>
-      {poolMetaData}
       <Button
         buttonType="tertiary"
         onClick={() => router.back()}

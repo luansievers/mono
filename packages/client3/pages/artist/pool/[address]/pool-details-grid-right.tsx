@@ -35,9 +35,8 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     "0x229d85802a7f547770f6e51e36a7affed405ad15"
   );
 
-  const disabled = !(
-    tranchedPoolData?.estimatedTotalAssets - tranchedPoolData?.totalDeployed
-  );
+  // Note: Basically reference to whether the pool is locked
+  const lockedPool = !tranchedPoolData?.remaningCapacity;
 
   const onArtistEvent = async (eventType: EventType) => {
     if (eventType == EventType.WITHDRAW) {
@@ -208,7 +207,7 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
             BigNumber.from(poolData.goalAmount ?? 0)
           }
           numOfBackers={tranchedPoolData?.numBackers ?? 0}
-          disabled={disabled}
+          lockedPool={lockedPool}
           onButtonClick={(event, EventType) => {
             event.stopPropagation();
             onArtistEvent(EventType);

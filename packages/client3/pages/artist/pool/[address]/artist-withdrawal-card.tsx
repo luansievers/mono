@@ -15,29 +15,29 @@ import { EventType } from "./artist-pool-information";
 
 type Props = {
   deposited: BigNumber;
-  disabled: boolean;
+  lockedPool: boolean;
   onButtonClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     type: EventType
   ) => void;
 };
-function ArtistWithdrawalCard({ deposited, disabled, onButtonClick }: Props) {
+function ArtistWithdrawalCard({ deposited, lockedPool, onButtonClick }: Props) {
   return (
     <div
       className={clsx(
         "flex items-center rounded-b-lg",
-        disabled ? "bg-transparent" : "bg-green-80"
+        lockedPool ? "bg-transparent" : "bg-green-80"
       )}
     >
       <div className="w-full items-center p-6">
         <BodyText
           size="normal"
-          className={clsx(disabled ? "text-dark-70" : "text-light-40")}
+          className={clsx(lockedPool ? "text-dark-70" : "text-light-40")}
         >
           Withdraw
         </BodyText>
         <BodyText size="small" className="mt-2 text-light-40">
-          {disabled
+          {lockedPool
             ? "Funds have been withdrawn"
             : "Withdraw funds from your pool"}
         </BodyText>
@@ -45,7 +45,7 @@ function ArtistWithdrawalCard({ deposited, disabled, onButtonClick }: Props) {
           <Display level={2} className="text-light-40">
             {formatCrypto({
               token: SupportedCrypto.Usdc,
-              amount: BigNumber.from(disabled ? 0 : deposited ?? 0),
+              amount: BigNumber.from(lockedPool ? 0 : deposited ?? 0),
             })}
           </Display>
           <BodyText
@@ -56,7 +56,7 @@ function ArtistWithdrawalCard({ deposited, disabled, onButtonClick }: Props) {
           </BodyText>
         </div>
         <div className="mt-6 flex">
-          {disabled ? (
+          {lockedPool ? (
             <Link href="/artist/transactions" className="text-accent-2">
               Transaction
               <Icon name="Link" className="ml-1 border-accent-2" />

@@ -18,7 +18,7 @@ type Props = {
   deposited: BigNumber;
   goalAmount: BigNumber;
   numOfBackers: number;
-  disabled: boolean;
+  lockedPool: boolean;
   onButtonClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     type: EventType
@@ -30,7 +30,7 @@ function ArtistPoolInformation({
   deposited,
   goalAmount,
   numOfBackers,
-  disabled,
+  lockedPool,
   onButtonClick,
 }: Props) {
   let progressPercentage = 0;
@@ -90,7 +90,7 @@ function ArtistPoolInformation({
               {numOfBackers > 1 ? "Backers" : "Backer"}
             </BodyText>
           </div>
-          {disabled ? (
+          {!lockedPool ? (
             <div className="mt-8 w-full border border-dark-90" />
           ) : (
             <></>
@@ -100,14 +100,14 @@ function ArtistPoolInformation({
         {poolData.status == "approved" ? (
           <ArtistWithdrawalCard
             deposited={deposited}
-            disabled={disabled}
+            lockedPool={lockedPool}
             onButtonClick={onButtonClick}
           />
         ) : (
           <> </>
         )}
       </div>
-      {!disabled ? ( // Note: If (disabled) then the pool has been locked and withdrawn maximally from.
+      {lockedPool ? ( // Note: If (disabled) then the pool has been locked and withdrawn maximally from.
         <div className="mt-8">
           <ArtistDepositCard
             repayed={deposited} // TODO: Change to repayed amount not deposited - FAD-172
