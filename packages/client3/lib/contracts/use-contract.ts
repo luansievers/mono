@@ -23,7 +23,6 @@ import {
   CurvePool__factory,
   Borrower__factory,
 } from "@/types/ethers-contracts";
-import { GoldfinchConfig__factory } from "@/types/ethers-contracts/factories/GoldfinchConfig__factory";
 
 import { useWallet } from "../wallet";
 
@@ -43,11 +42,10 @@ const supportedContracts = {
   MerkleDirectDistributor: MerkleDirectDistributor__factory.connect,
   BackerMerkleDirectDistributor: BackerMerkleDirectDistributor__factory.connect,
   BackerRewards: BackerRewards__factory.connect,
-  GoldfinchFactory: GoldfinchFactory__factory.connect,
+  GoldFinchFactory: GoldfinchFactory__factory.connect,
   CurvePool: CurvePool__factory.connect,
   CurveLP: Erc20__factory.connect,
   Borrower: Borrower__factory.connect,
-  GoldfinchConfig: GoldfinchConfig__factory.connect,
 };
 
 type SupportedContractName = keyof typeof supportedContracts;

@@ -7,42 +7,37 @@ import {
   Button,
   Display,
   DollarInput,
+  Form,
   Icon,
   Link,
 } from "@/components/design-system";
 import { formatCrypto } from "@/lib/format";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 
-import { EventType } from "./artist-pool-information";
-
 type Props = {
-  repayed: BigNumber;
-  onButtonClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    type: EventType
-  ) => void;
+  balance: BigNumber;
+  onSubmit?: (amount: string) => void;
 };
 interface FormFields {
-  deposit: string; //NOTE: Check to make sure this is not number
+  repay: string;
 }
 
-function ArtistDepositCard({ repayed, onButtonClick }: Props) {
-  // ------------ FAD-172 ---------
+export function ArtistRepayCard({ balance, onSubmit }: Props) {
   const rhfMethods = useForm<FormFields>({
     mode: "onSubmit",
     shouldFocusError: true,
   });
   const { control } = rhfMethods;
-
-  const validateMaximumAmount = (value: string) => {
-    const amount = Number(value);
-    if (amount > 0 && amount <= Number(repayed)) {
-      return true;
-    } else {
-      return "Invalid amount";
-    }
-  };
-  // ------------ FAD-172 ---------
+  // ------------ TODO ---------
+  // const validateMaximumAmount = (value: string) => {
+  //   const amount = Number(value);
+  //   if (amount > 0 && amount <= Number(balance)) {
+  //     return true;
+  //   } else {
+  //     return "Invalid amount";
+  //   }
+  // };
+  // ------------ TODO ---------
 
   return (
     <div className="mt-2 flex items-center rounded-lg bg-green-80">
@@ -53,13 +48,13 @@ function ArtistDepositCard({ repayed, onButtonClick }: Props) {
         <BodyText size="small" className="mt-2 text-light-40">
           Revenue Distributed to backers
         </BodyText>
-        {repayed > BigNumber.from(0) ? (
+        {balance > BigNumber.from(0) ? (
           <div className="mt-6 flex justify-between">
             <>
               <Display level={2} className="text-accent-2">
                 {formatCrypto({
                   token: SupportedCrypto.Usdc,
-                  amount: BigNumber.from(repayed ?? 0),
+                  amount: BigNumber.from(balance ?? 0),
                 })}
               </Display>
               <Link href="/artist/transactions" className="pt-2 text-accent-2">
@@ -76,29 +71,30 @@ function ArtistDepositCard({ repayed, onButtonClick }: Props) {
         <BodyText size="small" className="text-light-40">
           Deposit Revenue
         </BodyText>
-        <DollarInput
-          control={control}
-          name="deposit"
-          rules={{
-            required: "Required",
-            validate: validateMaximumAmount, // TODO: FAD-172
-          }}
-          textSize="lg"
-          className="mb-4"
-        />
-        <Button
-          buttonType="accent2"
-          type="submit"
-          className={clsx("mx-auto mt-4 w-full text-center")}
-          onClick={(event) => {
-            onButtonClick && onButtonClick(event, EventType.DEPOSIT);
+        <Form
+          rhfMethods={rhfMethods}
+          onSubmit={(data) => {
+            onSubmit?.(data.repay);
           }}
         >
-          Deposit
-        </Button>
+          <DollarInput
+            control={control}
+            name="repay"
+            rules={{
+              required: "Required",
+            }}
+            textSize="lg"
+            className="mb-4"
+          />
+          <Button
+            buttonType="accent2"
+            type="submit"
+            className={clsx("mx-auto mt-4 w-full text-center")}
+          >
+            Deposit
+          </Button>
+        </Form>
       </div>
     </div>
   );
 }
-
-export default ArtistDepositCard;

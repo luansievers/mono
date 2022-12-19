@@ -10,9 +10,9 @@ if (!networkName) {
 export const DESIRED_CHAIN_ID =
   networkName === "mainnet"
     ? 1
-    : networkName === "murmuration"
+    : networkName === "aurora_testnet"
     ? 1313161555
-    : 1313161555;
+    : 31337;
 
 export const USDC_DECIMALS = 6;
 export const GFI_DECIMALS = 18;
@@ -28,10 +28,13 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   ? process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   : networkName === "mainnet"
   ? "https://us-central1-free-artists.cloudfunctions.net"
-  : networkName === "murmuration"
-  ? "https://murmuration.goldfinch.finance/_gcloudfunctions"
+  : networkName === "aurora_testnet"
+  ? "https://us-central1-free-artists.cloudfunctions.net"
+  : networkName === "localhost"
+  ? "http://localhost:5001/goldfinch-frontends-dev/us-central1"
   : "http://localhost:5001/goldfinch-frontends-dev/us-central1";
 
+// TODO: Persona config needs to be updated to Production
 type PersonaConfig = {
   templateId: string;
   environment: "sandbox" | "production";
@@ -57,13 +60,14 @@ export const PERSONA_CONFIG: PersonaConfig =
 export const SERVER_URL =
   networkName === "mainnet"
     ? ""
-    : networkName === "murmuration"
-    ? "https://murmuration.goldfinch.finance"
-    : "https://us-central1-free-artists-dev.cloudfunctions.net";
-// : "http://localhost:4000";
+    : networkName === "aurora_testnet"
+    ? "https://us-central1-free-artists.cloudfunctions.net"
+    : networkName === "localhost"
+    ? "http://localhost:4000"
+    : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =
-  networkName === "mainnet"
+  networkName === "aurora_testnet"
     ? "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS"
     : "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS";
 

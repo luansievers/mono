@@ -1,5 +1,4 @@
 import { BigNumber } from "ethers";
-import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
 
 import { PoolDocuments } from "@/components/pool/pool-documents";
 import { PoolTerms } from "@/components/pool/pool-terms";
@@ -8,7 +7,7 @@ import { Pool } from "@/lib/graphql/generated";
 import { artistRepayment, drawdownArtists } from "@/services/artist-services";
 
 import ArtistCancelPool from "./artist-cancel-pool";
-import ArtistPoolInformation, { EventType } from "./artist-pool-information";
+import ArtistPoolInformation from "./artist-pool-information";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -20,11 +19,6 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
 
   const borrowerContract = useContract("Borrower", poolData.borrowerContract);
 
-  const goldfinchConfig = useContract(
-    "GoldfinchConfig",
-    "0x9d64Ba30d699507BbC84628417B7A4fF4bdb8563"
-  );
-
   const USDC = useContract(
     "USDC",
     "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080"
@@ -32,20 +26,11 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
 
   const CreditLine = useContract(
     "CreditLine",
-    "0x229d85802a7f547770f6e51e36a7affed405ad15"
+    "0x099758bd8b67658e153357d302da655c52b3aefd"
   );
 
   // Note: Basically reference to whether the pool is locked
   const lockedPool = !tranchedPoolData?.remaningCapacity;
-
-  const onArtistEvent = async (eventType: EventType) => {
-    if (eventType == EventType.WITHDRAW) {
-      await artistWithdraw();
-    }
-    if (eventType === EventType.DEPOSIT) {
-      await artistDeposit(BigNumber.from(200000000));
-    }
-  };
 
   const artistWithdraw = async () => {
     if (!borrowerContract) {
@@ -65,9 +50,6 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
       console.error("Pool Name not found");
       return;
     }
-    /** NOTE: Hardcode testing amount below
-     * const amountToDrawdown = BigNumber.from(2);
-     * **/
 
     const amountToDrawdown = BigNumber.from(
       tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
@@ -83,23 +65,9 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     );
   };
 
-  const artistDeposit = async (amount: BigNumber) => {
-    console.log(
-      "Deposit button clicked",
-      BigNumber.from(amount).toNumber(),
-      poolData.poolAddress,
-      borrowerContract
-    );
-    if (!goldfinchConfig) {
-      console.error("Goldfinch Config contract couldn't be initialized");
-      return;
-    }
-
-    // for (let i = 0; i <= 23; i++) {
-    //   const receipt = await goldfinchConfig.getAddress(i);
-    //   console.log(receipt);
-    // }
-    console.log("USDC", await goldfinchConfig.getAddress(5));
+  const onArtistRepayment = async (amount: string) => {
+    // ! TODO: KANE USDC FORMAT
+    const amountToRepay = BigNumber.from(amount).mul(10 ** 6);
 
     if (!borrowerContract) {
       console.error("Borrower contract couldn't be initialized");
@@ -119,81 +87,13 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
       console.error("USDC not found");
       return;
     }
-    console.log("admin", await CreditLine.isAdmin());
+    await USDC.approve(borrowerContract.address, amountToRepay);
 
-    const OWNER_ROLE = keccak256(toUtf8Bytes("OWNER_ROLE"));
-
-    await CreditLine.grantRole(
-      OWNER_ROLE,
-      "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
-    );
-
-    console.log(
-      "owner role?",
-      await CreditLine.hasRole(
-        OWNER_ROLE,
-        "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
-      )
-    );
-
-    await CreditLine.grantRole(
-      OWNER_ROLE,
-      "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425"
-    );
-
-    console.log(
-      "Credit Line balance",
-      BigNumber.from(await CreditLine.balance()).toNumber()
-    );
-
-    // const creditLineAssess = await (await creditLine.assess()).wait();
-
-    // console.log(creditLineAssess);
-
-    // const balance = await USDC?.balanceOf(poolData?.poolAddress);
-
-    // console.log("balance", BigNumber.from(balance).toNumber());
-    const creditLineAmount = await CreditLine.balance();
-    // amount.mul(2);
-
-    await USDC.approve(borrowerContract.address, amount);
-
-    // const balance1 = await USDC?.balanceOf(poolData.poolAddress);
-    // const borrowerBalance2 = await USDC?.balanceOf(borrowerContract.address);
-
-    // const allowed1 = await USDC?.allowance(
-    //   "0x108Cc3833CD49333A7908e4bB52f4CF8f4090425",
-    //   borrowerContract.address
-    // );
-    // console.log("balance", BigNumber.from(balance1).toNumber());
-    // console.log("allowed", BigNumber.from(allowed1).toNumber());
-    // console.log("borrowerBalance2", BigNumber.from(borrowerBalance2));
-
-    // console.log(borrowerContract.address);
-
-    // console.log("amount", BigNumber.from(amount).toNumber());
-    console.log(await CreditLine.address);
-
-    const receipt = await artistRepayment(
+    await artistRepayment(
       borrowerContract,
       poolData.poolAddress,
-      amount
+      amountToRepay
     );
-    console.log(receipt);
-
-    console.log(await CreditLine.address);
-
-    console.log(
-      "balance of Pool Address",
-      BigNumber.from(await USDC.balanceOf(poolData.poolAddress)).toString()
-    );
-
-    console.log(
-      "Credit Line balance",
-      BigNumber.from(await CreditLine.balance()).toNumber()
-    );
-
-    // console.log("assess credit line", await CreditLine.assess());
   };
 
   return (
@@ -206,11 +106,15 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
             tranchedPoolData?.creditLine?.maxLimit ??
             BigNumber.from(poolData.goalAmount ?? 0)
           }
+          balance={tranchedPoolData?.creditLine.balance ?? BigNumber.from(0)}
           numOfBackers={tranchedPoolData?.numBackers ?? 0}
           lockedPool={lockedPool}
-          onButtonClick={(event, EventType) => {
+          onButtonClick={(event) => {
             event.stopPropagation();
-            onArtistEvent(EventType);
+            artistWithdraw();
+          }}
+          onRepayment={(amount) => {
+            onArtistRepayment(amount);
           }}
         />
       ) : (

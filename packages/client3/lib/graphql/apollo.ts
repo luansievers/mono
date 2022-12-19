@@ -18,6 +18,8 @@ const graphQlApiUrl =
     : process.env.NEXT_PUBLIC_NETWORK_NAME === "mainnet"
     ? "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-aurora-testnet"
     : process.env.NEXT_PUBLIC_NETWORK_NAME === "localhost"
+    ? "http://localhost:8000/subgraphs/name/goldfinch-subgraph"
+    : process.env.NEXT_PUBLIC_NETWORK_NAME === "aurora_testnet"
     ? "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-aurora-testnet"
     : null;
 if (!graphQlApiUrl) {

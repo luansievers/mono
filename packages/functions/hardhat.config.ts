@@ -21,6 +21,7 @@ const config = {
       localhost: ["../protocol/deployments/localhost"],
       mainnet: ["../protocol/deployments/mainnet"],
       rinkeby: ["../protocol/deployments/rinkeby"],
+      aurora_testnet: ["../protocol/deployments/aurora"],
     },
   },
 }

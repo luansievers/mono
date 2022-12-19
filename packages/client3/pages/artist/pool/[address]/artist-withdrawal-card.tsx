@@ -11,14 +11,11 @@ import {
 import { formatCrypto } from "@/lib/format";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 
-import { EventType } from "./artist-pool-information";
-
 type Props = {
   deposited: BigNumber;
   lockedPool: boolean;
   onButtonClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    type: EventType
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
 };
 function ArtistWithdrawalCard({ deposited, lockedPool, onButtonClick }: Props) {
@@ -66,7 +63,7 @@ function ArtistWithdrawalCard({ deposited, lockedPool, onButtonClick }: Props) {
               buttonType="accent2"
               className={clsx("mx-auto mt-4 w-full text-center")}
               onClick={(event) => {
-                onButtonClick && onButtonClick(event, EventType.WITHDRAW);
+                onButtonClick && onButtonClick(event);
               }}
             >
               Withdraw

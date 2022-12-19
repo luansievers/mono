@@ -27,7 +27,7 @@ const ALLOWED_UID = [
  * @Promise void
  */
 export const createPool = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
+  goldfinchFactory: Contract<"GoldFinchFactory">,
   limit: string,
   borrowerContract: string
 ) => {
@@ -84,7 +84,7 @@ export const updatePoolBorrowerContractAddress = async (
  * @Promise ContractReceipt - transaction receipt of granting borrower privileges
  */
 export const createBorrowerContract = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
+  goldfinchFactory: Contract<"GoldFinchFactory">,
   account: string
 ): Promise<string> => {
   const role = await goldfinchFactory.isBorrower();

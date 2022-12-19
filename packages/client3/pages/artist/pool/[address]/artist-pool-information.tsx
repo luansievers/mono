@@ -5,7 +5,7 @@ import { Progress } from "@/components/design-system/progress";
 import { formatCrypto } from "@/lib/format";
 import { Pool, SupportedCrypto } from "@/lib/graphql/generated";
 
-import ArtistDepositCard from "./artist-deposit-card";
+import { ArtistRepayCard } from "./artist-repay-card";
 import ArtistWithdrawalCard from "./artist-withdrawal-card";
 
 export enum EventType {
@@ -17,21 +17,24 @@ type Props = {
   poolData: Partial<Pool>;
   deposited: BigNumber;
   goalAmount: BigNumber;
+  balance: BigNumber;
   numOfBackers: number;
   lockedPool: boolean;
   onButtonClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    type: EventType
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  onRepayment?: (amount: string) => void;
 };
 
 function ArtistPoolInformation({
   poolData,
   deposited,
   goalAmount,
+  balance,
   numOfBackers,
   lockedPool,
   onButtonClick,
+  onRepayment,
 }: Props) {
   let progressPercentage = 0;
   if (!deposited.isZero()) {
@@ -107,11 +110,20 @@ function ArtistPoolInformation({
           <> </>
         )}
       </div>
-      {lockedPool ? ( // Note: If (disabled) then the pool has been locked and withdrawn maximally from.
+      {lockedPool ? (
         <div className="mt-8">
-          <ArtistDepositCard
-            repayed={deposited} // TODO: Change to repayed amount not deposited - FAD-172
-            onButtonClick={onButtonClick}
+          {console.log(
+            "balance",
+            BigNumber.from(balance).toNumber(),
+            lockedPool,
+            balance,
+            deposited
+          )}
+          <ArtistRepayCard
+            balance={balance}
+            onSubmit={(amount) => {
+              onRepayment?.(amount);
+            }}
           />
         </div>
       ) : (

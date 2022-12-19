@@ -266,8 +266,7 @@ export function PoolInformation({
             >
               Verify Identity
             </Button>
-          ) : //TODO change back to !canUserParticipate
-          !canUserParticipate ? (
+          ) : !canUserParticipate ? (
             <div>
               <div className="mt-3 flex items-center justify-center gap-3 text-sm text-white">
                 <Icon size="md" name="Exclamation" />

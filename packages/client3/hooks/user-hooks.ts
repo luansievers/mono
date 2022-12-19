@@ -17,8 +17,8 @@ export function useSetUser() {
 export function useAdmin() {
   const [isAdmin, setAdmin] = useState<boolean>();
   const goldfinchFactory = useContract(
-    "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldfinchFactory
+    "GoldFinchFactory",
+    CONTRACT_ADDRESSES.GoldFinchFactory
   );
   useEffect(() => {
     if (goldfinchFactory) {
