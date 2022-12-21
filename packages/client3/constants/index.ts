@@ -30,8 +30,6 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   ? "https://us-central1-free-artists.cloudfunctions.net"
   : networkName === "aurora_testnet"
   ? "https://us-central1-free-artists.cloudfunctions.net"
-  : networkName === "localhost"
-  ? "http://localhost:5001/goldfinch-frontends-dev/us-central1"
   : "http://localhost:5001/goldfinch-frontends-dev/us-central1";
 
 // TODO: Persona config needs to be updated to Production
@@ -62,8 +60,6 @@ export const SERVER_URL =
     ? ""
     : networkName === "aurora_testnet"
     ? "https://us-central1-free-artists.cloudfunctions.net"
-    : networkName === "localhost"
-    ? "http://localhost:4000"
     : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =

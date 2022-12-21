@@ -1,7 +1,7 @@
 import { PoolDocuments } from "@/components/pool/pool-documents";
 import { PoolInformation } from "@/components/pool/pool-information";
 import { PoolTerms } from "@/components/pool/pool-terms";
-import { Pool, UidType } from "@/lib/graphql/generated";
+import { Pool } from "@/lib/graphql/generated";
 
 type Props = {
   poolData: Partial<Pool>;

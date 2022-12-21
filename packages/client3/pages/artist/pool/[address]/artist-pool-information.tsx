@@ -95,9 +95,7 @@ function ArtistPoolInformation({
           </div>
           {!lockedPool ? (
             <div className="mt-8 w-full border border-dark-90" />
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
         {/* NOTE: TESTING --- {poolData.status == "approved" ? ( otherwise it should be "completed"*/}
         {poolData.status == "approved" ? (
@@ -106,19 +104,10 @@ function ArtistPoolInformation({
             lockedPool={lockedPool}
             onButtonClick={onButtonClick}
           />
-        ) : (
-          <> </>
-        )}
+        ) : null}
       </div>
       {lockedPool ? (
         <div className="mt-8">
-          {console.log(
-            "balance",
-            BigNumber.from(balance).toNumber(),
-            lockedPool,
-            balance,
-            deposited
-          )}
           <ArtistRepayCard
             balance={balance}
             onSubmit={(amount) => {
@@ -126,9 +115,7 @@ function ArtistPoolInformation({
             }}
           />
         </div>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   );
 }

@@ -22,7 +22,7 @@ interface FormFields {
   repay: string;
 }
 
-export function ArtistRepayCard({ balance, onSubmit }: Props) {
+export function BackerWithdrawCard({ balance, onSubmit }: Props) {
   const rhfMethods = useForm<FormFields>({
     mode: "onSubmit",
     shouldFocusError: true,
@@ -65,7 +65,7 @@ export function ArtistRepayCard({ balance, onSubmit }: Props) {
         <div className="my-4 w-full border border-dark-50" />
 
         <BodyText size="small" className="text-light-40">
-          Deposit Revenue
+          Withdraw Revenue
         </BodyText>
         <Form
           rhfMethods={rhfMethods}
@@ -87,7 +87,7 @@ export function ArtistRepayCard({ balance, onSubmit }: Props) {
             type="submit"
             className={clsx("mx-auto mt-4 w-full text-center")}
           >
-            Deposit
+            Withdraw
           </Button>
         </Form>
       </div>

@@ -88,19 +88,16 @@ function ArtistPoolPage() {
     },
   });
 
-  console.log(poolMetaData?.poolAddress);
-
   const { data: { tranchedPool: tranchedPoolData } = {} } =
     useArtistPoolGraphDataQuery({
       skip: !poolMetaData?.poolAddress,
       variables: {
-        tranchedPoolAddress: "0xd010269dca2f8f958f3a498ce0fecc324c594e7d" || "",
+        tranchedPoolAddress: poolMetaData?.poolAddress || "",
       },
     });
   if (poolMetaData === undefined || poolMetaData === null) {
     return null;
   }
-  console.log("tranchedPoolData", tranchedPoolData);
 
   return (
     <>

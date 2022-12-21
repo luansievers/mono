@@ -2,6 +2,7 @@ import { BigNumber } from "ethers";
 
 import { PoolDocuments } from "@/components/pool/pool-documents";
 import { PoolTerms } from "@/components/pool/pool-terms";
+import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { Pool } from "@/lib/graphql/generated";
 import { artistRepayment, drawdownArtists } from "@/services/artist-services";
@@ -19,18 +20,10 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
 
   const borrowerContract = useContract("Borrower", poolData.borrowerContract);
 
-  const USDC = useContract(
-    "USDC",
-    "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080"
-  );
-
-  const CreditLine = useContract(
-    "CreditLine",
-    "0x099758bd8b67658e153357d302da655c52b3aefd"
-  );
+  const USDC = useContract("USDC", CONTRACT_ADDRESSES.USDC);
 
   // Note: Basically reference to whether the pool is locked
-  const lockedPool = !tranchedPoolData?.remaningCapacity;
+  const lockedPool = !tranchedPoolData?.remainingCapacity;
 
   const artistWithdraw = async () => {
     if (!borrowerContract) {
@@ -75,11 +68,6 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     }
     if (!poolData.poolAddress) {
       console.error("Pool address not found");
-      return;
-    }
-
-    if (!CreditLine) {
-      console.error("Credit line not found");
       return;
     }
 
