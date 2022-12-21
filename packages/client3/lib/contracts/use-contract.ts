@@ -42,7 +42,7 @@ const supportedContracts = {
   MerkleDirectDistributor: MerkleDirectDistributor__factory.connect,
   BackerMerkleDirectDistributor: BackerMerkleDirectDistributor__factory.connect,
   BackerRewards: BackerRewards__factory.connect,
-  GoldfinchFactory: GoldfinchFactory__factory.connect,
+  GoldFinchFactory: GoldfinchFactory__factory.connect,
   CurvePool: CurvePool__factory.connect,
   CurveLP: Erc20__factory.connect,
   Borrower: Borrower__factory.connect,

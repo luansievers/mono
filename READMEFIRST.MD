@@ -179,3 +179,8 @@ Resources:
 ## Troubleshooting
 
 Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for the Weavik team's troubleshooting docs.
+
+## Videos
+
+- [Create Pool](https://user-images.githubusercontent.com/98773781/196561274-724e0df1-8944-4078-babe-28dba2cc584f.mov)
+- [KYC/UID](https://free-artists.slack.com/files/U03UN2XSJMC/F04F09NDJTH/2022-12-15_12-22-33.mp4)

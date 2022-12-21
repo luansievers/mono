@@ -40,6 +40,15 @@ if (networkName === "mainnet") {
       .toString()
   );
   contracts = murmurationDeployments["31337"].localhost.contracts;
+} else if (networkName === "aurora_testnet") {
+  const localDeployments = JSON.parse(
+    fs
+      .readFileSync(
+        path.resolve(__dirname, "../../protocol/deployments/all.json")
+      )
+      .toString()
+  );
+  contracts = localDeployments["1313161555"].aurora_testnet.contracts;
 } else {
   throw new Error(`Unrecognized network name ${networkName}`);
 }
@@ -49,7 +58,8 @@ const contractAddressFileRelativePath =
 const addresses = {
   USDC:
     contracts.TestERC20?.address ??
-    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
+    "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
+  // "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
   SeniorPool: contracts.SeniorPool.address,
   GFI: contracts.GFI.address,
   Fidu: contracts.Fidu.address,
@@ -58,11 +68,11 @@ const addresses = {
   StakingRewards: contracts.StakingRewards.address,
   Zapper: contracts.Zapper.address,
   CommunityRewards: contracts.CommunityRewards.address,
-  MerkleDistributor: contracts.MerkleDistributor.address,
-  BackerMerkleDistributor: contracts.BackerMerkleDistributor.address,
-  MerkleDirectDistributor: contracts.MerkleDirectDistributor.address,
-  BackerMerkleDirectDistributor:
-    contracts.BackerMerkleDirectDistributor.address,
+  // MerkleDistributor: contracts.MerkleDistributor.address,
+  // BackerMerkleDistributor: contracts.BackerMerkleDistributor.address,
+  // MerkleDirectDistributor: contracts.MerkleDirectDistributor.address,
+  // BackerMerkleDirectDistributor:
+  // contracts.BackerMerkleDirectDistributor.address,
   BackerRewards: contracts.BackerRewards.address,
   CurvePool:
     contracts.TestFiduUSDCCurveLP?.address ??

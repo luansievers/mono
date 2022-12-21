@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import axios from "axios";
 import { BigNumber } from "ethers";
 import { useRouter } from "next/router";
 import { useMemo } from "react";

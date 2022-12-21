@@ -5,10 +5,10 @@ import { PoolTerms } from "@/components/pool/pool-terms";
 import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { Pool } from "@/lib/graphql/generated";
-import { drawdownArtists } from "@/services/artist-services";
+import { artistRepayment, drawdownArtists } from "@/services/artist-services";
 
 import ArtistCancelPool from "./artist-cancel-pool";
-import ArtistWithdrawPool from "./artist-withdraw-pool";
+import ArtistPoolInformation from "./artist-pool-information";
 
 type Props = {
   poolData: Partial<Pool>;
@@ -18,27 +18,19 @@ type Props = {
 function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
   const terms = poolData?.terms;
 
-  // Note: Need to use Borrower.sol to interact with TranchedPool.sol
   const borrowerContract = useContract("Borrower", poolData.borrowerContract);
 
-  const goldfinchFactory = useContract(
-    "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldfinchFactory
-  );
+  const USDC = useContract("USDC", CONTRACT_ADDRESSES.USDC);
 
-  const disabled = !(
-    tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
-  );
+  // Note: Basically reference to whether the pool is locked
+  const lockedPool = !tranchedPoolData?.remainingCapacity;
 
-  const onArtistWithdraw = async () => {
+  const artistWithdraw = async () => {
     if (!borrowerContract) {
       console.error("Borrower contract couldn't be initialized");
       return;
     }
-    if (!goldfinchFactory) {
-      console.error("Goldfinch Factory contract couldn't be initialized");
-      return;
-    }
+
     if (!poolData.poolAddress) {
       console.error("Pool address not found");
       return;
@@ -51,18 +43,10 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
       console.error("Pool Name not found");
       return;
     }
-    const role = await goldfinchFactory.isBorrower();
-    if (!role) {
-      console.log("Must be borrower to drawdown");
-      return;
-    }
 
     const amountToDrawdown = BigNumber.from(
       tranchedPoolData.estimatedTotalAssets - tranchedPoolData.totalDeployed
     );
-
-    // NOTE: Hardcode testing amount below
-    // const amountToDrawdown = BigNumber.from(2);
 
     await drawdownArtists(
       borrowerContract,
@@ -74,21 +58,51 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
     );
   };
 
+  const onArtistRepayment = async (amount: string) => {
+    // ! TODO: KANE USDC FORMAT
+    const amountToRepay = BigNumber.from(amount).mul(10 ** 6);
+
+    if (!borrowerContract) {
+      console.error("Borrower contract couldn't be initialized");
+      return;
+    }
+    if (!poolData.poolAddress) {
+      console.error("Pool address not found");
+      return;
+    }
+
+    if (!USDC) {
+      console.error("USDC not found");
+      return;
+    }
+    await USDC.approve(borrowerContract.address, amountToRepay);
+
+    await artistRepayment(
+      borrowerContract,
+      poolData.poolAddress,
+      amountToRepay
+    );
+  };
+
   return (
     <>
       {poolData.status !== "completed" || "failed" ? (
-        <ArtistWithdrawPool
+        <ArtistPoolInformation
           poolData={poolData}
           deposited={tranchedPoolData?.juniorDeposited ?? BigNumber.from(0)}
           goalAmount={
             tranchedPoolData?.creditLine?.maxLimit ??
             BigNumber.from(poolData.goalAmount ?? 0)
           }
+          balance={tranchedPoolData?.creditLine.balance ?? BigNumber.from(0)}
           numOfBackers={tranchedPoolData?.numBackers ?? 0}
-          disabled={disabled}
+          lockedPool={lockedPool}
           onButtonClick={(event) => {
             event.stopPropagation();
-            onArtistWithdraw();
+            artistWithdraw();
+          }}
+          onRepayment={(amount) => {
+            onArtistRepayment(amount);
           }}
         />
       ) : (

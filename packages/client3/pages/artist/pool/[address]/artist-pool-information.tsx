@@ -1,35 +1,40 @@
-import clsx from "clsx";
 import { BigNumber } from "ethers";
 
-import {
-  Display,
-  BodyText,
-  Heading,
-  Chip,
-  Button,
-} from "@/components/design-system";
+import { Display, BodyText, Heading, Chip } from "@/components/design-system";
 import { Progress } from "@/components/design-system/progress";
 import { formatCrypto } from "@/lib/format";
 import { Pool, SupportedCrypto } from "@/lib/graphql/generated";
+
+import { ArtistRepayCard } from "./artist-repay-card";
+import ArtistWithdrawalCard from "./artist-withdrawal-card";
+
+export enum EventType {
+  DEPOSIT = "deposit",
+  WITHDRAW = "withdraw",
+}
 
 type Props = {
   poolData: Partial<Pool>;
   deposited: BigNumber;
   goalAmount: BigNumber;
+  balance: BigNumber;
   numOfBackers: number;
-  disabled: boolean;
+  lockedPool: boolean;
   onButtonClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
+  onRepayment?: (amount: string) => void;
 };
 
-function ArtistWithdrawPool({
+function ArtistPoolInformation({
   poolData,
   deposited,
   goalAmount,
+  balance,
   numOfBackers,
-  disabled,
+  lockedPool,
   onButtonClick,
+  onRepayment,
 }: Props) {
   let progressPercentage = 0;
   if (!deposited.isZero()) {
@@ -88,56 +93,31 @@ function ArtistWithdrawPool({
               {numOfBackers > 1 ? "Backers" : "Backer"}
             </BodyText>
           </div>
+          {!lockedPool ? (
+            <div className="mt-8 w-full border border-dark-90" />
+          ) : null}
         </div>
-        {/* NOTE: TESTING --- {poolData.status == "approved" ? ( */}
-        {poolData.status == "completed" ? (
-          <div className="mt-2 flex items-center rounded-b-lg bg-green-80">
-            <div className="w-full items-center p-6">
-              <BodyText size="normal" className="text-light-40">
-                Withdraw
-              </BodyText>
-              <BodyText size="small" className="mt-2 text-light-40">
-                Withdraw funds from your pool
-              </BodyText>
-              <div className="mt-6 flex">
-                <Display level={2} className="text-light-40">
-                  {formatCrypto({
-                    token: SupportedCrypto.Usdc,
-                    amount: BigNumber.from(deposited ?? 0),
-                  })}
-                </Display>
-                <BodyText
-                  size="medium"
-                  className="align-center ml-1	text-light-40"
-                >
-                  USDC
-                </BodyText>
-              </div>
-              <div className="text-center">
-                <Button
-                  buttonType="accent2"
-                  className={clsx(
-                    "mx-auto mt-4 w-full text-center",
-                    disabled ? "cursor-not-allowed opacity-50" : ""
-                  )}
-                  onClick={(event) => {
-                    onButtonClick && onButtonClick(event);
-                  }}
-                  disabled={disabled}
-                >
-                  {disabled
-                    ? "No more funds to withdraw" /* TODO: This will change to Pay */
-                    : "Withdraw"}
-                </Button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
+        {/* NOTE: TESTING --- {poolData.status == "approved" ? ( otherwise it should be "completed"*/}
+        {poolData.status == "approved" ? (
+          <ArtistWithdrawalCard
+            deposited={deposited}
+            lockedPool={lockedPool}
+            onButtonClick={onButtonClick}
+          />
+        ) : null}
       </div>
+      {lockedPool ? (
+        <div className="mt-8">
+          <ArtistRepayCard
+            balance={balance}
+            onSubmit={(amount) => {
+              onRepayment?.(amount);
+            }}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
 
-export default ArtistWithdrawPool;
+export default ArtistPoolInformation;

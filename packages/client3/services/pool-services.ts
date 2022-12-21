@@ -27,7 +27,7 @@ const ALLOWED_UID = [
  * @Promise void
  */
 export const createPool = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
+  goldfinchFactory: Contract<"GoldFinchFactory">,
   limit: string,
   borrowerContract: string
 ) => {
@@ -84,7 +84,7 @@ export const updatePoolBorrowerContractAddress = async (
  * @Promise ContractReceipt - transaction receipt of granting borrower privileges
  */
 export const createBorrowerContract = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
+  goldfinchFactory: Contract<"GoldFinchFactory">,
   account: string
 ): Promise<string> => {
   const role = await goldfinchFactory.isBorrower();
@@ -112,4 +112,34 @@ export const mergeGraphAndMetaData = (graphDatas: any, metaData: any) => {
       ...poolData,
     };
   });
+};
+
+/**
+ * Locks the Junior Capital of the Tranched Pool
+ * @param borrowerFactory - Borrower contract
+ * @param poolAddress - string - pool address
+ * @Promise ContractReceipt - transaction receipt of locking junior capital
+ */
+export const lockJuniorCapital = async (
+  borrowerFactory: Contract<"Borrower">,
+  poolAddress: string
+) => {
+  const receipt = await (
+    await borrowerFactory?.lockJuniorCapital(poolAddress)
+  ).wait();
+  return receipt;
+};
+
+/**
+ * Locks the Tranched Pool so money can be withdrawn.
+ * @param borrowerFactory - Borrower contract
+ * @param poolAddress - string - pool address
+ * @Promise ContractReceipt - transaction receipt of locking junior capital
+ */
+export const lockPool = async (
+  borrowerFactory: Contract<"Borrower">,
+  poolAddress: string
+) => {
+  const receipt = await (await borrowerFactory?.lockPool(poolAddress)).wait();
+  return receipt;
 };

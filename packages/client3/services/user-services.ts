@@ -1,5 +1,5 @@
 import { Web3Provider } from "@ethersproject/providers";
-import { ContractReceipt, ContractTransaction } from "ethers";
+import { ContractTransaction } from "ethers";
 import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
 
 import { Contract } from "@/lib/contracts";
@@ -53,7 +53,7 @@ export const getKYCStatus = async (
  * @Promise ContractTransaction - transaction receipt of granting borrower privileges
  */
 export const grantAccountBorrowerPrivileges = async (
-  goldfinchFactory: Contract<"GoldfinchFactory">,
+  goldfinchFactory: Contract<"GoldFinchFactory">,
   account: string
 ): Promise<ContractTransaction> => {
   // ! NOTE: Below is the code to grant owner privileges:

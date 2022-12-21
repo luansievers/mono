@@ -45,8 +45,8 @@ function AdminDashboard() {
   const pendingPools = data?.pools ?? [];
 
   const goldfinchFactory = useContract(
-    "GoldfinchFactory",
-    CONTRACT_ADDRESSES.GoldfinchFactory
+    "GoldFinchFactory",
+    CONTRACT_ADDRESSES.GoldFinchFactory
   );
 
   const handleClick = (poolAddress: string) => {
