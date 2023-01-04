@@ -54,7 +54,7 @@ export function Table({
               {headings.map((heading, index) => (
                 <th
                   className={clsx(
-                    "px-5 py-3.5 text-left font-normal",
+                    "w-full py-3.5 text-left text-light-40",
                     hideHeadings ? "sr-only" : null
                   )}
                   key={index}
@@ -70,7 +70,7 @@ export function Table({
                 {row.map((col, index) => (
                   <td
                     key={index}
-                    className="border-y-2 border-white bg-sand-50 px-5 py-3.5 text-center first:rounded-l first:text-left last:rounded-r last:text-right"
+                    className="bg-sand-50 border-y-2 border-white px-5 py-3.5 text-center text-light-40 first:rounded-l first:text-left last:rounded-r last:text-right"
                   >
                     {col}
                   </td>
