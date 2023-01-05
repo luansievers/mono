@@ -32,6 +32,7 @@ import {
 import { openVerificationModal } from "@/lib/state/actions";
 import { toastTransaction } from "@/lib/toast";
 import { isSmartContract, useWallet } from "@/lib/wallet";
+import { BackerWithdrawCard } from "@/pages/backer/pool/[address]/backer-withdraw-card";
 import { validateMaximumAmountSupply } from "@/utilities/validation.util";
 
 type Props = {

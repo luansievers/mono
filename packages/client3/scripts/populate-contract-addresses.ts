@@ -49,6 +49,15 @@ if (networkName === "mainnet") {
       .toString()
   );
   contracts = localDeployments["1313161555"].aurora_testnet.contracts;
+} else if (networkName === "aurora_mainnet") {
+  const localDeployments = JSON.parse(
+    fs
+      .readFileSync(
+        path.resolve(__dirname, "../../protocol/deployments/all.json")
+      )
+      .toString()
+  );
+  contracts = localDeployments["1313161554"].aurora.contracts;
 } else {
   throw new Error(`Unrecognized network name ${networkName}`);
 }

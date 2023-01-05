@@ -12,6 +12,7 @@ import {
   useBackerPoolMetadataQuery,
 } from "@/lib/graphql/generated";
 import { TRANCHED_POOL_STATUS_FIELDS } from "@/lib/pools";
+import { useWallet } from "@/lib/wallet";
 
 import PoolDetailsRightGrid from "./pool-details-grid-right";
 gql`
@@ -35,7 +36,7 @@ gql`
 `;
 gql`
   ${TRANCHED_POOL_STATUS_FIELDS}
-  query backerPoolGraphData($tranchedPoolAddress: ID!) {
+  query backerPoolGraphData($tranchedPoolAddress: ID!, $userAddress: ID!) {
     tranchedPool(id: $tranchedPoolAddress) {
       id
       remainingCapacity
@@ -71,6 +72,14 @@ gql`
       interestAmountRepaid
       remainingJuniorCapacity
       allowedUidTypes
+      tokens(where: { user_: { id: $userAddress } }) {
+        id
+        principalAmount
+        principalRedeemed
+        principalRedeemable
+        interestRedeemed
+        interestRedeemable
+      }
       ...TranchedPoolStatusFields
     }
   }
@@ -81,6 +90,7 @@ function BackerPoolPage() {
   const { title } = useLayoutContext();
   const router = useRouter();
   const { address } = router.query;
+  const { account } = useWallet();
 
   const { data: { pool: poolMetaData } = {} } = useBackerPoolMetadataQuery({
     skip: !address,
@@ -93,6 +103,7 @@ function BackerPoolPage() {
       skip: !poolMetaData?.poolAddress,
       variables: {
         tranchedPoolAddress: poolMetaData?.poolAddress || "",
+        userAddress: account?.toLowerCase() || "",
       },
     });
 

@@ -69,9 +69,15 @@ export default {
       chainId: 31337,
       accounts: {mnemonic: "test test test test test test test test test test test junk"},
     },
-    aurora: {
+    aurora_testnet: {
       url: "https://testnet.aurora.dev",
       chainId: 1313161555,
+      accounts: [process.env.PRIVATE_KEY],
+      timeout: 100_000,
+    },
+    aurora_production: {
+      url: "https://mainnet.aurora.dev",
+      chainId: 12314,
       accounts: [process.env.PRIVATE_KEY],
       timeout: 100_000,
     },
