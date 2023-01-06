@@ -36,3 +36,23 @@ NOTE: If you want to be able to use the remote cloud functions when running loca
 
 
 `gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name free-artists --project free-artists --is-text`
+
+
+## Troubleshooting
+
+- Deploying cloud functions, make sure your checksum values are correct.
+    - If you do get a checksum error, delete directories `functions/node_modules`, `functions/package-lock.json`, the `goldfinch-eng-pool-x.x.x.tgz`, the `protocol/cache` directory, **change the**:
+```
+    "@goldfinch-eng/pools": "file:./goldfinch-eng-pools-0.0.0.tgz",
+    "@goldfinch-eng/protocol": "file:./goldfinch-eng-protocol-0.1.0.tgz",
+    "@goldfinch-eng/utils": "file:./goldfinch-eng-utils-0.0.1.tgz",
+```
+back to:
+```
+    "@goldfinch-eng/pools": "^0.0.0",
+    "@goldfinch-eng/protocol": "^0.1.0",
+    "@goldfinch-eng/utils": "^0.0.1",
+```
+  - then rerun `make protocol`. Wait until the `goldfinch-eng-pool-x.x.x.tgz` are generated. Double check the values in the `package.json` have reverted back to the `file: ....` Then try to redeploy the cloud functions.
+      - If they have not reverted back to the `file: ....`, run `npm run pre-deploy`. 
+      - 

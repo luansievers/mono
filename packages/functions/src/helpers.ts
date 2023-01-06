@@ -239,7 +239,6 @@ const verifySignature = async (
 /**
  * Verifies a signature in the same manner as `verifySignature` with the additional
  * constraint that the signer must be present in the `allowedSigners` list
- *
  * @param {Request} req The request being handled.
  * @param {Response} res The response to the request.
  * @param {number} signatureMaxAge age in seconds after which the signature becomes invalid
@@ -266,6 +265,8 @@ const verifySignatureAndAllowList = async (
     return signatureVerification
   }
 
+  console.log(`Signer address: ${signatureVerification.address}`)
+
   // Checksum all the addresses to disambiguate
   const signerAddress = ethers.utils.getAddress(signatureVerification.address)
   allowedSigners = await Promise.all(
@@ -274,8 +275,14 @@ const verifySignatureAndAllowList = async (
     }),
   )
 
+  console.log("signerAddress", signerAddress)
+  console.log("allowedSigners", allowedSigners)
+
+  // !Note Here
   const signerProhibited = allowedSigners.indexOf(signerAddress) === -1
   if (signerProhibited) {
+    console.log("signerProhibited", signerProhibited)
+
     return {
       res: res.status(403).send({error: `Signer ${signerAddress} not allowed to call this function`}),
       address: undefined,
@@ -312,8 +319,12 @@ export const genRequestHandler = (config: RequestHandlerConfig): functions.Https
           res,
           config.signatureMaxAge,
           config.fallbackOnMissingPlaintext,
-          config.signerAllowList,
+          config.signerAllowList, // !Note UID is this service because of signerAllowList
         )
+
+        console.log(config)
+        console.log("verificationResult", verificationResult)
+
         return verificationResult.res ? verificationResult.res : config.handler(req, res, verificationResult)
       } else if (authType === "none") {
         return config.handler(req, res)

@@ -12,24 +12,40 @@ export const signAgreement = genRequestHandler({
     const address = Array.isArray(addressHeader) ? addressHeader.join("") : addressHeader
     const pool = (req.body.pool || "").trim()
 
+    console.log("address", address)
+    console.log("pool", pool)
+    console.log("addressHeader", addressHeader)
+
     if (!address) {
       return res.status(403).send({error: "Invalid address"})
     }
     const fullName = (req.body.fullName || "").trim()
+
+    console.log("fullName", fullName)
 
     if (pool === "" || fullName === "") {
       return res.status(403).send({error: "Invalid name or pool"})
     }
 
     const agreements = getAgreements(admin.firestore())
+
+    console.log("agreements", agreements)
+
     const key = `${pool.toLowerCase()}-${address.toLowerCase()}`
+
+    console.log("key", key)
     const agreement = await agreements.doc(key)
-    await agreement.set({
-      address: address,
-      pool: pool,
-      fullName: fullName,
-      signedAt: Date.now(),
-    })
+    console.log("agreement", agreement)
+
+    console.log(
+      await agreement.set({
+        address: address,
+        pool: pool,
+        fullName: fullName,
+        signedAt: Date.now(),
+      }),
+    )
+
     return res.status(200).send({status: "success"})
   },
 })

@@ -16,7 +16,7 @@ import {
 } from "@goldfinch-eng/utils"
 import firestore = admin.firestore
 import type {UniqueIdentity} from "@goldfinch-eng/protocol/typechain/ethers/UniqueIdentity"
-import UNIQUE_IDENTITY_MAINNET_DEPLOYMENT from "@goldfinch-eng/protocol/deployments/mainnet/UniqueIdentity.json"
+// import UNIQUE_IDENTITY_MAINNET_DEPLOYMENT from "@goldfinch-eng/protocol/deployments/mainnet/UniqueIdentity.json"
 import {KycProvider} from "../types"
 
 let deployedDevABIs: any
@@ -26,11 +26,11 @@ try {
 } catch (_) {}
 
 const getUniqueIdentityDeployment = (chainId: number) => {
-  if (chainId === 1) {
-    return UNIQUE_IDENTITY_MAINNET_DEPLOYMENT
-  } else {
-    return deployedDevABIs?.[chainId]?.["aurora"]?.contracts?.["UniqueIdentity"]
-  }
+  // if (chainId === 1) {
+  //   return UNIQUE_IDENTITY_MAINNET_DEPLOYMENT
+  // } else {
+  return deployedDevABIs?.[chainId]?.["aurora"]?.contracts?.["UniqueIdentity"]
+  // }
 }
 
 /**
@@ -43,16 +43,16 @@ class NonExistingUserError extends Error {}
  */
 class ExistingUidRecipientAddressError extends Error {}
 
-const UNIT_TESTING_SIGNER = "0xc34461018f970d343d5a25e4Ed28C4ddE6dcCc3F"
-const MURMURATION_AND_DEV_SIGNER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
-let ALLOWED_SIGNERS: string[]
-if (process.env.NODE_ENV == "test") {
-  ALLOWED_SIGNERS = [UNIT_TESTING_SIGNER, UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS]
-} else if (process.env.MURMURATION === "yes" || process.env.LOCAL === "yes") {
-  ALLOWED_SIGNERS = [UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS, MURMURATION_AND_DEV_SIGNER]
-} else {
-  ALLOWED_SIGNERS = [UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS]
-}
+// const UNIT_TESTING_SIGNER = "0xc34461018f970d343d5a25e4Ed28C4ddE6dcCc3F"
+// const MURMURATION_AND_DEV_SIGNER = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+// let ALLOWED_SIGNERS: string[]
+// if (process.env.NODE_ENV == "test") {
+//   ALLOWED_SIGNERS = [UNIT_TESTING_SIGNER, UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS]
+// } else if (process.env.MURMURATION === "yes" || process.env.LOCAL === "yes") {
+//   ALLOWED_SIGNERS = [UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS, MURMURATION_AND_DEV_SIGNER]
+// } else {
+const ALLOWED_SIGNERS = [UNIQUE_IDENTITY_SIGNER_MAINNET_ADDRESS]
+// }
 
 /**
  * Link the provided user's address to their intended UID recipient address.
@@ -61,6 +61,10 @@ if (process.env.NODE_ENV == "test") {
  * @return {HttpsFunction} Https function that handles the request
  */
 export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: string; abi: any}) => {
+  console.log("ALLOWED_SIGNERS", ALLOWED_SIGNERS)
+  console.log("injectedUidDeployment", injectedUidDeployment) //  !IMPORTANT comes back as undefined
+  console.log("environment", JSON.stringify(process.env, null, 2))
+
   return genRequestHandler({
     fallbackOnMissingPlaintext: false,
     requireAuth: "signatureWithAllowList",
@@ -69,16 +73,23 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
     cors: false,
     handler: async (req, res): Promise<Response> => {
       const {expiresAt, nonce} = req.body
+      console.log(req.body)
+
       const uidType = BigNumber.from(req.body.uidType)
+      console.log("uidType", uidType)
+
       const msgSender = req.body.msgSender?.toLowerCase()
+      console.log("msgSender", msgSender)
+
       const explicitMintToAddress = req.body.mintToAddress?.toLowerCase()
+      console.log("explicitMintToAddress", explicitMintToAddress) // !IMPORTANT comes back as undefined
 
       const blockchain = await getBlockchain("https://app.goldfinch.finance")
+
       const network = await blockchain.getNetwork()
       console.log("network", network)
 
       const uidDeployment = injectedUidDeployment ?? getUniqueIdentityDeployment(network.chainId)
-
       console.log("uidDeployment", uidDeployment)
 
       assertNonNullable(uidDeployment)
@@ -93,6 +104,7 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
       }
 
       const uid = new ethers.Contract(uidDeployment.address, uidDeployment.abi, blockchain) as unknown as UniqueIdentity
+      console.log("uid", uid.address)
 
       let expectedPresignedMessage
       if (explicitMintToAddress) {
@@ -118,6 +130,9 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
 
       const uidRecipientAddress = explicitMintToAddress || msgSender
 
+      console.log("expectedPresignedMessage", expectedPresignedMessage)
+      console.log("uidRecipientAddress", uidRecipientAddress)
+
       if (
         expectedPresignedMessage.toString() != extractHeaderValue(req, "x-goldfinch-signature-plaintext")?.toString()
       ) {
@@ -131,6 +146,8 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
         await uid.balanceOf(uidRecipientAddress || msgSender, uidType)
       ).toNumber()
       const existingMsgSenderBalance: number = (await uid.balanceOf(msgSender, uidType)).toNumber()
+
+      console.log("existingUidRecipentBalance", existingUidRecipentBalance)
 
       // Implicitly, UniqueIdentity smart contract will not allow a UID recipient to receive a UID when they already have one of this type.
       // Prevent a user from arbitrarily overwriting their UID mapping.
@@ -149,14 +166,20 @@ export const genLinkKycWithUidDeployment = (injectedUidDeployment?: {address: st
       }
 
       const db = getDb(admin.firestore())
+      console.log("db", db)
+
       const userRef = getUsers(admin.firestore()).doc(`${msgSender.toLowerCase()}`)
+      console.log("userRef", userRef)
+
       const uidTypeId = uidType.toString()
+      console.log("uidTypeId", uidTypeId)
 
       const isUsAccredited = isApprovedUSAccreditedEntity(msgSender) || isApprovedUSAccreditedIndividual(msgSender)
       const isParallelMarketsUser = isApprovedNonUSEntity(msgSender) || isUsAccredited
       try {
         await db.runTransaction(async (t: firestore.Transaction) => {
           const user = await t.get(userRef)
+          console.log("user", user)
           let userExists: boolean = user.exists
           // Parallel Markets users will usually not exist in Firestore at this point in the KYC process (barring manual intervention or error cases)
           // ^ This would be resolved as part of GFI-266
