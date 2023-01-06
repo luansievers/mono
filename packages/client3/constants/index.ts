@@ -47,11 +47,11 @@ export const PERSONA_CONFIG: PersonaConfig =
       } as PersonaConfig)
     : networkName === "mainnet"
     ? {
-        templateId: "tmpl_vD1HECndpPFNeYHaaPQWjd6H",
+        templateId: "itmpl_gCVJrSiieqGva2j61nysxQuR",
         environment: "production",
       }
     : {
-        templateId: "tmpl_vD1HECndpPFNeYHaaPQWjd6H",
+        templateId: "itmpl_gCVJrSiieqGva2j61nysxQuR",
         environment: "sandbox",
       };
 
