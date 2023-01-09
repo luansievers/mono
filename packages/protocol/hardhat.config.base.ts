@@ -75,9 +75,9 @@ export default {
       accounts: [process.env.PRIVATE_KEY],
       timeout: 100_000,
     },
-    aurora_production: {
+    aurora_prod: {
       url: "https://mainnet.aurora.dev",
-      chainId: 12314,
+      chainId: 1313161554,
       accounts: [process.env.PRIVATE_KEY],
       timeout: 100_000,
     },

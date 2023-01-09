@@ -59,7 +59,6 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
   };
 
   const onArtistRepayment = async (amount: string) => {
-    // ! TODO: KANE USDC FORMAT
     const amountToRepay = BigNumber.from(amount).mul(10 ** 6);
 
     if (!borrowerContract) {

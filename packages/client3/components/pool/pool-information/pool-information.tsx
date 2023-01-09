@@ -106,7 +106,7 @@ export function PoolInformation({
     }
     await signAgreement(account, data.backerName, tranchedPoolAddress);
     // Ensures the user doesn't leave any dust behind when they choose to supply max
-    let value = utils.parseUnits(data.supply, USDC_DECIMALS);
+    let value = BigNumber.from(data.supply).mul(BigNumber.from(10).pow(6));
     if (usdcWithinEpsilon(value, availableBalance)) {
       value = availableBalance;
     }

@@ -16,7 +16,6 @@ import {
 } from "@goldfinch-eng/utils"
 import firestore = admin.firestore
 import type {UniqueIdentity} from "@goldfinch-eng/protocol/typechain/ethers/UniqueIdentity"
-import UNIQUE_IDENTITY_MAINNET_DEPLOYMENT from "@goldfinch-eng/protocol/deployments/mainnet/UniqueIdentity.json"
 import {KycProvider} from "../types"
 
 let deployedDevABIs: any
@@ -26,9 +25,10 @@ try {
 } catch (_) {}
 
 const getUniqueIdentityDeployment = (chainId: number) => {
-  if (chainId === 1) {
-    return UNIQUE_IDENTITY_MAINNET_DEPLOYMENT
-  } else {
+  if (chainId === 1313161554) {
+    // UNIQUE IDENTITY ABIS
+    return deployedDevABIs?.[chainId]?.["aurora_prod"]?.contracts?.["UniqueIdentity"]
+  } else if (chainId === 1313161555) {
     return deployedDevABIs?.[chainId]?.["aurora"]?.contracts?.["UniqueIdentity"]
   }
 }

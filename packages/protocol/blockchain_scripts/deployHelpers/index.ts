@@ -48,8 +48,15 @@ const ROPSTEN = "ropsten"
 const RINKEBY = "rinkeby"
 const MAINNET = "mainnet"
 const AURORA = "aurora"
+const AURORA_PROD = "aurora-prod"
 
-export type ChainName = typeof LOCAL | typeof ROPSTEN | typeof RINKEBY | typeof MAINNET | typeof AURORA
+export type ChainName =
+  | typeof LOCAL
+  | typeof ROPSTEN
+  | typeof RINKEBY
+  | typeof MAINNET
+  | typeof AURORA
+  | typeof AURORA_PROD
 
 const MAX_UINT = new BN("115792089237316195423570985008687907853269984665640564039457584007913129639935")
 
@@ -63,15 +70,24 @@ const RINKEBY_CHAIN_ID = "4"
 type RinkebyChainId = typeof RINKEBY_CHAIN_ID
 const AURORA_CHAIN_ID = "1313161555"
 type AuroraChainId = typeof AURORA_CHAIN_ID
+const AURORA_PROD_CHAIN_ID = "1313161554"
+type AuroraPRODChainId = typeof AURORA_PROD_CHAIN_ID
 
-export type ChainId = LocalChainId | RopstenChainId | MainnetChainId | RinkebyChainId | AuroraChainId
+export type ChainId =
+  | LocalChainId
+  | RopstenChainId
+  | MainnetChainId
+  | RinkebyChainId
+  | AuroraChainId
+  | AuroraPRODChainId
 
 const CHAIN_IDS = genExhaustiveTuple<ChainId>()(
   LOCAL_CHAIN_ID,
   ROPSTEN_CHAIN_ID,
   MAINNET_CHAIN_ID,
   RINKEBY_CHAIN_ID,
-  AURORA_CHAIN_ID
+  AURORA_CHAIN_ID,
+  AURORA_PROD_CHAIN_ID
 )
 export const assertIsChainId: (val: unknown) => asserts val is ChainId = (val: unknown): asserts val is ChainId => {
   if (!(CHAIN_IDS as unknown[]).includes(val)) {
@@ -85,6 +101,7 @@ const CHAIN_NAME_BY_ID: Record<ChainId, ChainName> = {
   [MAINNET_CHAIN_ID]: MAINNET,
   [RINKEBY_CHAIN_ID]: RINKEBY,
   [AURORA_CHAIN_ID]: AURORA,
+  [AURORA_PROD_CHAIN_ID]: AURORA_PROD,
 }
 
 export type AddressString = string
@@ -174,9 +191,16 @@ function interestAprAsBN(interestPercentageString: string): BN {
 }
 
 function getUSDCAddress(chainId: ChainId): AddressString | undefined {
-  return getERC20Address("USDC", chainId)
+  if (chainId === AURORA_CHAIN_ID) {
+    return "0xcc78cd15d8a0aa9fececb105a526b773e0789a6"
+  } else if (chainId === AURORA_PROD_CHAIN_ID) {
+    return "0xb12bfca5a55806aaf64e99521918a4bf0fc40802"
+  } else {
+    return getERC20Address("USDC", chainId)
+  }
 }
 
+// !NOTE Only for ethereum mainnet
 export type Ticker = USDCTicker | USDTTicker | BUSDTicker | ETHTicker
 const TICKERS = [USDC, USDT, BUSD, ETH]
 function getERC20Address(ticker: Ticker, chainId: ChainId): AddressString | undefined {
