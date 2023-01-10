@@ -22,6 +22,7 @@ export async function getOrDeployUSDC(deployer: ContractDeployer, config) {
   let usdcAddress = getUSDCAddress(chainId)
   const protocolOwner = await getProtocolOwner()
   if (!usdcAddress) {
+    // Potentially just comment this out or add Aurora Mainnet address here
     logger("We don't have a USDC address for this network, so deploying a fake USDC")
     const initialAmount = String(new BN("100000000").mul(USDCDecimals))
     const decimalPlaces = String(new BN(6))

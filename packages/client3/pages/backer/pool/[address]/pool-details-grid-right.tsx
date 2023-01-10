@@ -27,11 +27,13 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
             tranchedPoolAddress={tranchedPoolData.id}
           />
 
-          <BackerWithdrawCard
-            backerTokenInformation={tranchedPoolData.tokens}
-            tranchedPoolData={tranchedPoolData}
-            poolAddress={tranchedPoolData.id}
-          />
+          {tranchedPoolData.tokens ? (
+            <BackerWithdrawCard
+              backerTokenInformation={tranchedPoolData.tokens}
+              tranchedPoolData={tranchedPoolData}
+              poolAddress={tranchedPoolData.id}
+            />
+          ) : null}
         </>
       ) : null}
 

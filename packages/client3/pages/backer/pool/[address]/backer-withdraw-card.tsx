@@ -50,6 +50,7 @@ export function BackerWithdrawCard({
    **/
   const calculateBackerEarnings = () => {
     let totalEarnings = 0;
+
     for (let i = 0; i < backerTokenInformation.length; i++) {
       totalEarnings +=
         BigNumber.from(backerTokenInformation[i].principalRedeemed).toNumber() +
