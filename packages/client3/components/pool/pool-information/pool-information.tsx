@@ -32,6 +32,7 @@ import {
 import { openVerificationModal } from "@/lib/state/actions";
 import { toastTransaction } from "@/lib/toast";
 import { isSmartContract, useWallet } from "@/lib/wallet";
+import { BackerWithdrawCard } from "@/pages/backer/pool/[address]/backer-withdraw-card";
 import { validateMaximumAmountSupply } from "@/utilities/validation.util";
 
 type Props = {
@@ -105,7 +106,7 @@ export function PoolInformation({
     }
     await signAgreement(account, data.backerName, tranchedPoolAddress);
     // Ensures the user doesn't leave any dust behind when they choose to supply max
-    let value = utils.parseUnits(data.supply, USDC_DECIMALS);
+    let value = BigNumber.from(data.supply).mul(BigNumber.from(10).pow(6));
     if (usdcWithinEpsilon(value, availableBalance)) {
       value = availableBalance;
     }

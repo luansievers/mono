@@ -2,6 +2,9 @@
 
 ## TL;DR
 
+Click here for video:
+[![Free Artists Demo](https://raw.githubusercontent.com/weavik/free-artist-dao/main/packages/client3/public/FAD-logo-full.png)](https://drive.google.com/file/d/1vbHNQemQrAoY2_h6xe5km95atCIhGL1c/view?usp=share_link)
+
 [Free Artists Application](https://freeartists-dev.vercel.app/)
 [GitHub Repository](https://github.com/weavik/free-artist-dao)
 [Subgraph](https://thegraph.com/hosted-service/subgraph/freeartists/free-artists-aurora-testnet)
@@ -176,6 +179,42 @@ Resources:
 3.  Quality Assurance Testing
     - This repository has not been tested for quality assurance and this code is for development purposes only. Weavik's Development team has only completed a "Happy Path" test of the application. This means that we have only tested the application for the most basic functionality. We have not tested for edge cases, bugs, or other issues that may arise.
 
+# Depoloyments
+
+## Deploy Contracts:
+
+- Run this command: `npx hardhat deploy --network aurora --export-all deployments/all.json`
+  - Networks are from your `hardhat.config.base.ts` file.
+  - Make sure `deployEffects.executeDeferred()`. If execute deferred is not completed, restart the deployment.
+  - If contracts do fail, remove the "failed" deployments from the `deployments/all.json` file.
+
+## Deploy Vercel
+
+- Make sure the staging branch is up to date.
+- Make sure the Vercel project environment is correct - [see here](https://vercel.com/freeartists/freeartists-dev/settings/environment-variables)
+- Install the [Vercel CLI](https://vercel.com/docs/cli)
+- Run `vercel` in the `client3` directory of the project.
+- Enter in the credentials for the Vercel account (get Chris/Harrison to approve you).
+- Run:
+
+```bash
+# run "vercel pull" if you just updated the environment.
+vercel build
+```
+
+- The return should look something like:
+
+```nano
+Vercel CLI 28.10.0
+🔍 Inspect: https://vercel.com/freeartists/freeartists-dev/21pKnFwM8YN1MoobXDk26ApTk6Hd [15s]
+✅ Preview: https://freeartists-dev-freeartists.vercel.app [2m]
+📝 To deploy to production (freeartists-dev.vercel.app), run `vercel --prod`
+❗️ Ignoring function property `includeFiles`. When using Next.js, only `memory` and `maxDuration` can be used.
+Learn More: https://vercel.link/functions-property-next
+```
+
+- If the build is successful and correct, run `vercel --prod` to deploy to production.
+
 ## Troubleshooting
 
 Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for the Weavik team's troubleshooting docs.
@@ -184,3 +223,8 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 
 - [Create Pool](https://user-images.githubusercontent.com/98773781/196561274-724e0df1-8944-4078-babe-28dba2cc584f.mov)
 - [KYC/UID](https://free-artists.slack.com/files/U03UN2XSJMC/F04F09NDJTH/2022-12-15_12-22-33.mp4)
+
+## Deployment
+
+- Add the networks to the `hardhat.config.base.ts` file.
+- Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`

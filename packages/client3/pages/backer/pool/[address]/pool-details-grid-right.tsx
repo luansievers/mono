@@ -3,6 +3,8 @@ import { PoolInformation } from "@/components/pool/pool-information";
 import { PoolTerms } from "@/components/pool/pool-terms";
 import { Pool } from "@/lib/graphql/generated";
 
+import { BackerWithdrawCard } from "./backer-withdraw-card";
+
 type Props = {
   poolData: Partial<Pool>;
   tranchedPoolData?: any; //TODO: Typing needs to be added later
@@ -13,16 +15,26 @@ function PoolDetailsRightGrid({ poolData, tranchedPoolData }: Props) {
   return (
     <>
       {tranchedPoolData ? (
-        <PoolInformation
-          totalSuppliedAmount={tranchedPoolData.juniorDeposited.toNumber()}
-          totalGoalAmount={tranchedPoolData.creditLine.maxLimit.toNumber()}
-          totalBackers={tranchedPoolData.numBackers}
-          totalEarned={tranchedPoolData.juniorDeposited.toNumber()}
-          closingDate={new Date(poolData.closingDate ?? "")}
-          allowedUidTypes={tranchedPoolData.allowedUidTypes}
-          remainingJuniorCapacity={tranchedPoolData.remainingJuniorCapacity}
-          tranchedPoolAddress={tranchedPoolData.id}
-        />
+        <>
+          <PoolInformation
+            totalSuppliedAmount={tranchedPoolData.juniorDeposited.toNumber()}
+            totalGoalAmount={tranchedPoolData.creditLine.maxLimit.toNumber()}
+            totalBackers={tranchedPoolData.numBackers}
+            totalEarned={tranchedPoolData.juniorDeposited.toNumber()}
+            closingDate={new Date(poolData.closingDate ?? "")}
+            allowedUidTypes={tranchedPoolData.allowedUidTypes}
+            remainingJuniorCapacity={tranchedPoolData.remainingJuniorCapacity}
+            tranchedPoolAddress={tranchedPoolData.id}
+          />
+
+          {tranchedPoolData.tokens ? (
+            <BackerWithdrawCard
+              backerTokenInformation={tranchedPoolData.tokens}
+              tranchedPoolData={tranchedPoolData}
+              poolAddress={tranchedPoolData.id}
+            />
+          ) : null}
+        </>
       ) : null}
 
       <PoolTerms terms={terms} />
