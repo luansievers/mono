@@ -18,8 +18,10 @@ const logger = console.log
 export async function getOrDeployUSDC(deployer: ContractDeployer, config) {
   const {gf_deployer} = await getNamedAccounts()
   const chainId = await deployer.getChainId()
+  logger("Chain id is:", chainId)
   assertIsChainId(chainId)
   let usdcAddress = getUSDCAddress(chainId)
+  logger("USDC address is:", usdcAddress)
   const protocolOwner = await getProtocolOwner()
   if (!usdcAddress) {
     // Potentially just comment this out or add Aurora Mainnet address here

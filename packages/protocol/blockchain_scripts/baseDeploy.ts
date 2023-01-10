@@ -62,6 +62,7 @@ const baseDeploy: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
   const config = await deployConfig(deployer)
   await new Promise((r) => setTimeout(r, 4000))
 
+  logger("Deploying USDC is next...")
   await getOrDeployUSDC(deployer, config)
   await new Promise((r) => setTimeout(r, 4000))
 
@@ -145,6 +146,7 @@ const baseDeploy: DeployFunction = async function (hre: HardhatRuntimeEnvironmen
   await go.contract.grantRole(await go.contract.ZAPPER_ROLE(), zapper.address, {from: trustedSigner})
   await new Promise((r) => setTimeout(r, 4000))
 
+  // !IMPORTANT make sure this runs.
   await deployEffects.executeDeferred()
 }
 
