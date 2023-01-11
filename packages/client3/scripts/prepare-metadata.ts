@@ -38,6 +38,15 @@ export default localhostMetadata as Record<string, PoolMetadata>;
 `;
 
   fs.writeFileSync(metadataFilePath, code);
+} else if (metadataNetwork === "aurora_mainnet") {
+  console.log("Connecting app to metadata from local chain");
+  const code = `import localhostMetadata from "./localhost.json";
+import type { PoolMetadata } from "./types";
+
+export default localhostMetadata as Record<string, PoolMetadata>;
+`;
+
+  fs.writeFileSync(metadataFilePath, code);
 } else if (metadataNetwork === "murmuration") {
   console.log("Connecting app to metadata from murmuration");
   const code = `import murmurationMetadata from "./murmuration.json";

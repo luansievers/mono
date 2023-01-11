@@ -226,12 +226,18 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 
 ## Deployment Lifecycle
 
-- [ ]Add the networks to the `hardhat.config.base.ts` file.
-- [ ] Add network information here `packages/protocol/blockchain_scripts/deployHelpers/index.ts`
-- [ ] Make sure that USDC coin address is correct here: `packages/protocol/blockchain_scripts/baseDeploy/getOrDeployUSDC.ts`
-- [ ] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
+- [x] Add the networks to the `hardhat.config.base.ts` file.
+- [x] Add network information here `packages/protocol/blockchain_scripts/deployHelpers/index.ts`
+- [x] Make sure that USDC coin address is correct here: `packages/protocol/blockchain_scripts/baseDeploy/getOrDeployUSDC.ts`
+- [x] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
   - e.g., `npx hardhat deploy --network aurora_testnet --export-all deployments/test_deploy.json`
   - e.g., `npx hardhat deploy --network aurora_prod --export-all deployments/all.json`
+- [ ] Update client3 environment
+  - `packages/client3/scripts/populate-contract-addresses.ts` and `packages/client3/env.local`
+- [ ] Deploy GCP Functions
+  - Depending on the deployment consider making a new firebase project to seperate concerns.
+  - `cd packages/functions && firebase deploy --only functions`
+- [ ] Create/Update Subgraph
 - [ ] Create a Defender Relay and add API key to: `.env.local`
 - [ ] Deploy Autotask and Relay
   - e.g., `cd packages/autotask && npm run deploy`

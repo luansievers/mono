@@ -48,7 +48,7 @@ if (networkName === "mainnet") {
       )
       .toString()
   );
-  contracts = localDeployments["1313161555"].aurora_testnet.contracts;
+  contracts = localDeployments["1313161555"].aurora.contracts;
 } else if (networkName === "aurora_mainnet") {
   const localDeployments = JSON.parse(
     fs
@@ -57,7 +57,7 @@ if (networkName === "mainnet") {
       )
       .toString()
   );
-  contracts = localDeployments["1313161554"].aurora.contracts;
+  contracts = localDeployments["1313161554"].aurora_prod.contracts;
 } else {
   throw new Error(`Unrecognized network name ${networkName}`);
 }
@@ -66,8 +66,12 @@ const contractAddressFileRelativePath =
   "../constants/contract-addresses/index.ts";
 const addresses = {
   USDC:
-    contracts.TestERC20?.address ??
-    "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
+    networkName === "aurora_mainnet"
+      ? "0xb12bfca5a55806aaf64e99521918a4bf0fc40802"
+      : networkName === "aurora_testnet"
+      ? "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080"
+      : contracts.TestERC20?.address ??
+        "0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
   // "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // mainnet doesn't have TestERC20 (obviously), use the actual USDC mainnet address instead
   SeniorPool: contracts.SeniorPool.address,
   GFI: contracts.GFI.address,
