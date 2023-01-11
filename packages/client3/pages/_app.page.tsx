@@ -6,7 +6,6 @@ import Head from "next/head";
 import { createContext, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
-import { BetaNux } from "@/components/beta-nux";
 import { DevToolsPanel } from "@/components/dev-tools";
 import { Layout } from "@/components/layout";
 import { apolloClient } from "@/lib/graphql/apollo";
@@ -56,7 +55,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         process.env.NEXT_PUBLIC_NETWORK_NAME === "murmuration" ? (
           <DevToolsPanel />
         ) : null}
-        <BetaNux />
         <AppLevelSideEffects />
       </ApolloProvider>
     </WalletProvider>
