@@ -76,7 +76,8 @@ export default {
       timeout: 100_000,
     },
     aurora_prod: {
-      url: "https://mainnet.aurora.dev",
+      // should be able to get free transactions here: https://aurora.plus/signup
+      url: "https://mainnet.aurora.dev/51BMW5Ck2SREwxjt3qVq44EqccRzEtpN7UcYwvTu4wH",
       chainId: 1313161554,
       accounts: [process.env.PRIVATE_KEY],
       timeout: 100_000,

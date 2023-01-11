@@ -29,7 +29,7 @@ Click here for video:
 
 **Fidu**: 0x8F43Fe6670222Dbe0D4F9aaC65C79bb379c9b401
 
-**UniqueIdentity**: 0xCc78cd15d8A0aa9Fececb105A526b773e0789a6
+**UniqueIdentity**: 0xCc78cd15d8A0aa9Fececb105A526b773e0789a61
 
 **Go**: 0x171e7405B3F0117Fbe29F3ADa4144cEBfF33287
 
@@ -224,7 +224,16 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 - [Create Pool](https://user-images.githubusercontent.com/98773781/196561274-724e0df1-8944-4078-babe-28dba2cc584f.mov)
 - [KYC/UID](https://free-artists.slack.com/files/U03UN2XSJMC/F04F09NDJTH/2022-12-15_12-22-33.mp4)
 
-## Deployment
+## Deployment Lifecycle
 
-- Add the networks to the `hardhat.config.base.ts` file.
-- Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
+- [ ]Add the networks to the `hardhat.config.base.ts` file.
+- [ ] Add network information here `packages/protocol/blockchain_scripts/deployHelpers/index.ts`
+- [ ] Make sure that USDC coin address is correct here: `packages/protocol/blockchain_scripts/baseDeploy/getOrDeployUSDC.ts`
+- [ ] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
+  - e.g., `npx hardhat deploy --network aurora_testnet --export-all deployments/test_deploy.json`
+  - e.g., `npx hardhat deploy --network aurora_prod --export-all deployments/all.json`
+- [ ] Create a Defender Relay and add API key to: `.env.local`
+- [ ] Deploy Autotask and Relay
+  - e.g., `cd packages/autotask && npm run deploy`
+- [ ] Grant Admin privileges to Autotask relay
+- [ ] Add UID types to Unique Identity Provider

@@ -192,8 +192,11 @@ function interestAprAsBN(interestPercentageString: string): BN {
 
 function getUSDCAddress(chainId: ChainId): AddressString | undefined {
   if (chainId === AURORA_CHAIN_ID) {
-    return "0xcc78cd15d8a0aa9fececb105a526b773e0789a6"
+    // Testnet Chain ID: https://testnet.aurorascan.dev/address/0x3E0B09aDf6171F5D1aefef567BA6Cf1fb364E080
+    console.log("Using USDC address for Aurora testnet")
+    return "0x3e0b09adf6171f5d1aefef567ba6cf1fb364e080"
   } else if (chainId === AURORA_PROD_CHAIN_ID) {
+    // Aurora Mainnet address: https://mainnet.aurora.dev/tokens/usdc.e
     return "0xb12bfca5a55806aaf64e99521918a4bf0fc40802"
   } else {
     return getERC20Address("USDC", chainId)
@@ -459,6 +462,8 @@ export {
   RINKEBY_CHAIN_ID,
   LOCAL_CHAIN_ID,
   SAFE_CONFIG,
+  AURORA_PROD_CHAIN_ID,
+  AURORA_CHAIN_ID,
   isTestEnv,
   isMainnetForking,
   isMainnet,
