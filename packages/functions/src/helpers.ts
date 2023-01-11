@@ -84,7 +84,11 @@ const _getBlockchain = (origin: string): BaseProvider => {
   // } else {
   //   return new ethers.providers.InfuraProvider(network, INFURA_PROJECT_ID)
   // }
-  return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
+  if (origin === "http://localhost:3000" || origin === "https://freeartists-dev.vercel.app") {
+    return new ethers.providers.WebSocketProvider("wss://testnet.aurora.dev")
+  } else {
+    return new ethers.providers.WebSocketProvider("wss://mainnet.aurora.dev")
+  }
 }
 
 /**
@@ -212,8 +216,14 @@ const verifySignature = async (
     return {res: res.status(401).send({error: "Invalid address or signature."}), address: undefined}
   }
   const origin = req.headers.origin || ""
+  console.log(`origin: ${origin}`)
+
   const blockchain = getBlockchain(origin)
+
+  console.log(`blockchain for origin ${origin}: ${blockchain}`)
   const currentBlock = await blockchain.getBlock("latest")
+  console.log(`currentBlock: ${JSON.stringify(currentBlock)}`)
+
   // Don't allow signatures signed for the future.
   if (currentBlock.number < signatureBlockNum) {
     return {
@@ -224,8 +234,12 @@ const verifySignature = async (
     }
   }
   const signatureBlock = await blockchain.getBlock(signatureBlockNum)
+  console.log(`signatureBlock: ${JSON.stringify(signatureBlock)}`)
+
   const signatureTime = signatureBlock.timestamp
+  console.log(`signatureTime: ${signatureTime}`)
   const now = currentBlock.timestamp
+  console.log(`now: ${now}`)
 
   // Don't allow signatures older than the max allowable age
   if (signatureTime + signatureMaxAge < now) {

@@ -42,9 +42,9 @@ Example get variables
 Example set variable `--is-text` is a needed param
 `gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name kyc --project free-artists --is-text`
 
-`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name kyc --project free-artists-production --is-text`
+`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,localhost:3001,https://freeartists-dev.vercel.app" --config-name kyc --project free-artists-production --is-text`
 
-`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name free-artists --project free-artists-production --is-text`
+`gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,localhost:3001,https://freeartists-dev.vercel.app" --config-name free-artists --project free-artists-production --is-text`
 
 NOTE: If you want to be able to use the remote cloud functions when running locally, then `http://localhost:3000` should be included as one of those allowed origins ^^^.
 
