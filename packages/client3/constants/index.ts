@@ -31,7 +31,7 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_GCLOUD_FUNCTIONS_URL
   : networkName === "mainnet"
   ? "https://us-central1-free-artists.cloudfunctions.net"
   : networkName === "aurora_mainnet"
-  ? "https://us-central1-free-artists.cloudfunctions.net" //! CHANGE ME TO THE PRODUCTION INSTANCE
+  ? "https://us-central1-free-artists-production.cloudfunctions.net"
   : networkName === "aurora_testnet"
   ? "https://us-central1-free-artists.cloudfunctions.net"
   : "http://localhost:5001/goldfinch-frontends-dev/us-central1";
@@ -63,14 +63,14 @@ export const SERVER_URL =
   networkName === "mainnet"
     ? ""
     : networkName === "aurora_mainnet"
-    ? "https://us-central1-free-artists.cloudfunctions.net" //! CHANGE ME TO THE PRODUCTION INSTANCE
+    ? "https://us-central1-free-artists-production.cloudfunctions.net"
     : networkName === "aurora_testnet"
     ? "https://us-central1-free-artists.cloudfunctions.net"
     : "http://localhost:4000";
 
 export const UNIQUE_IDENTITY_SIGNER_URL =
   networkName === "aurora_mainnet"
-    ? "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS" //! CHANGE ME TO THE PRODUCTION INSTANCE
+    ? "https://api.defender.openzeppelin.com/autotasks/892c81a0-09d2-49b3-b673-d619750685a5/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/JhRBdxjLo8nuwNoKKqA8jK"
     : networkName === "aurora_testnet"
     ? "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS"
     : "https://api.defender.openzeppelin.com/autotasks/8320d42c-98bb-4b53-94e1-aad0628a0892/runs/webhook/356c72eb-f56c-443a-90c3-2b6040ee76b8/E4m9oGprLmtMba6GELSPcS";

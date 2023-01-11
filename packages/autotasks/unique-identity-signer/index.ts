@@ -22,7 +22,8 @@ import {
 import {UniqueIdentity} from "@goldfinch-eng/protocol/typechain/ethers"
 import UniqueIdentityDeployment from "@goldfinch-eng/protocol/deployments/aurora/UniqueIdentity.json"
 export const UNIQUE_IDENTITY_ABI = UniqueIdentityDeployment.abi
-export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0xCc78cd15d8A0aa9Fececb105A526b773e0789a61"
+export const UNIQUE_IDENTITY_TESTNET_ADDRESS = "0xCc78cd15d8A0aa9Fececb105A526b773e0789a61"
+export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0x76941Fb15eC56f73c178cf7259a786Ab3196cd9A"
 // export const UNIQUE_IDENTITY_MAINNET_ADDRESS = "0xba0439088dc1e75F58e0A7C107627942C15cbb41"
 import baseHandler from "../core/handler"
 
@@ -37,6 +38,7 @@ const API_URLS: {[key: number]: string} = {
   1: "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net",
   31337: "http://localhost:5001/goldfinch-frontends-dev/us-central1",
   1313161555: "https://us-central1-free-artists.cloudfunctions.net",
+  1313161554: "https://us-central1-free-artists-production.cloudfunctions.net",
 }
 
 const defaultFetchKYCStatus: FetchKYCFunction = async ({auth, chainId}) => {
@@ -150,15 +152,29 @@ export const handler = baseHandler("unique-identity-signer", async (event: Handl
   const network = await signer.provider.getNetwork()
 
   console.log("network", network)
-  console.log("Unique Identity Address", UNIQUE_IDENTITY_MAINNET_ADDRESS)
-  console.log("Unique Identity ABI", UNIQUE_IDENTITY_ABI)
-  const uniqueIdentity = new ethers.Contract(
-    UNIQUE_IDENTITY_MAINNET_ADDRESS,
-    UNIQUE_IDENTITY_ABI,
-    signer
-  ) as UniqueIdentity
 
-  return await main({signer, auth, network, uniqueIdentity, mintToAddress})
+  if (network.chainId === 1313161555) {
+    console.log("Free Artists AURORA TESTNET")
+    console.log("Unique Identity Address", UNIQUE_IDENTITY_TESTNET_ADDRESS)
+    console.log("Unique Identity ABI", UNIQUE_IDENTITY_ABI)
+    const uniqueIdentity = new ethers.Contract(
+      UNIQUE_IDENTITY_TESTNET_ADDRESS,
+      UNIQUE_IDENTITY_ABI,
+      signer
+    ) as UniqueIdentity
+    return await main({signer, auth, network, uniqueIdentity, mintToAddress})
+  } else if (network.chainId === 1313161554) {
+    console.log("Free Artists AURORA MAINNET")
+
+    console.log("Unique Identity Address", UNIQUE_IDENTITY_MAINNET_ADDRESS)
+    console.log("Unique Identity ABI", UNIQUE_IDENTITY_ABI)
+    const uniqueIdentity = new ethers.Contract(
+      UNIQUE_IDENTITY_MAINNET_ADDRESS,
+      UNIQUE_IDENTITY_ABI,
+      signer
+    ) as UniqueIdentity
+    return await main({signer, auth, network, uniqueIdentity, mintToAddress})
+  }
 })
 
 // Main function

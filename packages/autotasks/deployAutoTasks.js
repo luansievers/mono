@@ -50,6 +50,11 @@ async function buildAndDeploy(id, name, dir, autoTaskClient) {
     // {id: "bc31d6f7-0ab4-4170-9ba0-4978a6ed6034", name: "Mainnet Unique Identity Signer", dir: "unique-identity-signer"},
     // {id: "6ba87b47-341d-4b0a-a8b8-02bc04f978f7", name: "SeniorPoolRedeem", dir: "senior-pool-redeemer"},
     {id: "8320d42c-98bb-4b53-94e1-aad0628a0892", name: "Unique Identity Signer", dir: "unique-identity-signer"},
+    {
+      id: "892c81a0-09d2-49b3-b673-d619750685a5",
+      name: "Unique Identity Signer (Aurora Mainnet)",
+      dir: "unique-identity-signer",
+    },
     // {id: "b4bd81b2-8461-470e-98b3-b961ba539391", name: "Unique Identity Signer", dir: "unique-identity-signer"},
   ]
   const autotaskClient = new AutotaskClient({
