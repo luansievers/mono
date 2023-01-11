@@ -22,8 +22,8 @@ import {SVG, registerWindow, Container} from "@svgdotjs/svg.js"
 const LATENESS_GRACE_PERIOD_CONFIG_KEY = 5
 
 const BASE_URLS = {
-  prod: "https://us-central1-goldfinch-frontends-prod.cloudfunctions.net",
-  dev: "https://us-central1-goldfinch-frontends-dev.cloudfunctions.net",
+  prod: "https://us-central1-free-artists.cloudfunctions.net", // change me
+  dev: "https://us-central1-free-artists.cloudfunctions.net",
   local: "https://us-central1-free-artists.cloudfunctions.net",
 }
 
@@ -38,7 +38,9 @@ const doubleDigitFormatter = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
 })
 
-type TranchedPoolMetadata = typeof POOL_METADATA[keyof typeof POOL_METADATA]
+// issue with deploying function need the parentheses around POOL_METADATA
+// prettier-ignore
+type TranchedPoolMetadata = (typeof POOL_METADATA)[keyof typeof POOL_METADATA]
 interface TranchedPoolMetadataStore {
   [address: string]: TranchedPoolMetadata
 }

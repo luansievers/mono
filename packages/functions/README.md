@@ -36,3 +36,9 @@ NOTE: If you want to be able to use the remote cloud functions when running loca
 
 
 `gcloud beta runtime-config configs variables set allowed_origins "https://app.goldfinch.finance,https://beta.app.goldfinch.finance,https://deploy-preview-*--goldfinchfi.netlify.app,http://localhost:3000,https://freeartists-dev.vercel.app" --config-name free-artists --project free-artists --is-text`
+
+
+### Set Function Environment:
+https://cloud.google.com/functions/docs/configuring/env-var
+Probably look like:
+`firebase deploy --only functions --set-env-vars AURORA_TESTNET=yes`

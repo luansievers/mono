@@ -108,7 +108,7 @@ then go to `Add Token` in Metamask, and paste it in there. Your fake USDC balanc
   * [`protocol/`](./packages/protocol) (`@goldfinch-eng/protocol`): Solidity smart contracts and tests.
   * [`client/`](./packages/client) (`@goldfinch-eng/client`): Web3 frontend using React.
   * [`functions/`](./packages/functions) (`@goldfinch-eng/functions`): Google cloud functions to support KYC and other server-side functionality.
-  * [`autotasks/`](./packages/autotasks) (`@goldfinch-eng/functions`): [Defender Autotasks and Relay](https://docs.openzeppelin.com/defender/autotasks) code for triggering periodic on-chain calls.
+  * [`autotasks/`](./packages/autotasks) (`@goldfinch-eng/autotasks`): [Defender Autotasks and Relay](https://docs.openzeppelin.com/defender/autotasks) code for triggering periodic on-chain calls.
   * [`utils/`](./packages/utils) (`@goldfinch-eng/utils`): Generally useful utilities that are shared across packages.
   * [`docs/`](./packages/docs) (`@goldfinch-eng/docs`): Static site of protocol documentation.
 * [`murmuration/`](./murmuration): Provisioning scripts for our cloud staging environment, called Murmuration.
