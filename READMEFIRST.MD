@@ -232,14 +232,18 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 - [x] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
   - e.g., `npx hardhat deploy --network aurora_testnet --export-all deployments/test_deploy.json`
   - e.g., `npx hardhat deploy --network aurora_prod --export-all deployments/all.json`
-- [ ] Update client3 environment
+- [x] Update client3 environment
   - `packages/client3/scripts/populate-contract-addresses.ts` and `packages/client3/env.local`
-- [ ] Deploy GCP Functions
+- [x] Create/Update Subgraph
+  - `graph deploy --product hosted-service freeartists/free-artists-production aurora_mainnet_subgraph.yaml`
+- [x] Deploy GCP Functions
   - Depending on the deployment consider making a new firebase project to seperate concerns.
-  - `cd packages/functions && firebase deploy --only functions`
-- [ ] Create/Update Subgraph
-- [ ] Create a Defender Relay and add API key to: `.env.local`
-- [ ] Deploy Autotask and Relay
+  - `cd packages/functions && firebase deploy` <---this deploys firebase and functions
+  - To update functions run, `cd packages/functions && firebase deploy --only functions`
+- [x] Create GCP config
+- [x] Create a Defender Relay and add API key to: `.env.local`
+- [x] Deploy Autotask and Relay
   - e.g., `cd packages/autotask && npm run deploy`
 - [ ] Grant Admin privileges to Autotask relay
 - [ ] Add UID types to Unique Identity Provider
+- [ ] Redeploy GCP functions
