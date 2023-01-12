@@ -2,6 +2,7 @@ import { useApolloClient } from "@apollo/client";
 import { BigNumber } from "ethers";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 import {
   BodyText,
@@ -19,7 +20,7 @@ import {
 import { Divider } from "@/components/design-system/divider";
 import { Progress } from "@/components/design-system/progress";
 import { WalletButton } from "@/components/design-system/wallet-button";
-import { TRANCHES } from "@/constants";
+import { CONTRACT_ADDRESSES, TRANCHES } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
 import { formatCrypto } from "@/lib/format";
@@ -89,7 +90,7 @@ export function PoolInformation({
   const apolloClient = useApolloClient();
   const { account, provider } = useWallet();
   const tranchedPoolContract = useContract("TranchedPool", tranchedPoolAddress);
-  const usdcContract = useContract("USDC");
+  const usdcContract = useContract("USDC", CONTRACT_ADDRESSES.USDC);
   const user = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const isUserVerified =
@@ -126,6 +127,7 @@ export function PoolInformation({
       throw new Error("Wallet not connected properly");
     }
     await signAgreement(account, data.backerName, tranchedPoolAddress);
+
     // Ensures the user doesn't leave any dust behind when they choose to supply max
     let value = BigNumber.from(data.supply).mul(BigNumber.from(10).pow(6));
     if (usdcWithinEpsilon(value, availableBalance)) {
@@ -153,6 +155,7 @@ export function PoolInformation({
        * Increasing the deadline seems to fix it but not the ideal approach.
        */
       const deadline = BigNumber.from(now + 3600); // deadline is 1 hour from now
+
       const signature = await generateErc20PermitSignature({
         erc20TokenContract: usdcContract,
         provider,
@@ -160,8 +163,14 @@ export function PoolInformation({
         spender: tranchedPoolAddress,
         value,
         deadline,
+      }).catch((err) => {
+        toast.error(
+          err.data === "0x"
+            ? "Transaction rejected, this is possibly because you do not have USDC.e"
+            : err
+        );
+        throw err;
       });
-
       const transaction = tranchedPoolContract.depositWithPermit(
         TRANCHES.Junior,
         value,
@@ -170,6 +179,7 @@ export function PoolInformation({
         signature.r,
         signature.s
       );
+
       await toastTransaction({
         transaction,
         pendingPrompt: `Deposit submitted for pool ${tranchedPoolAddress}.`,
