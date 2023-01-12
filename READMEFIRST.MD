@@ -244,6 +244,6 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 - [x] Create a Defender Relay and add API key to: `.env.local`
 - [x] Deploy Autotask and Relay
   - e.g., `cd packages/autotask && npm run deploy`
-- [ ] Grant Admin privileges to Autotask relay
-- [ ] Add UID types to Unique Identity Provider
-- [ ] Redeploy GCP functions
+- [x] Grant Admin privileges to Autotask relay
+- [x] Add UID types to Unique Identity Provider
+- [x] Redeploy GCP functions
