@@ -2,7 +2,13 @@ import { useApolloClient } from "@apollo/client";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 
-import { Button, InfoIconTooltip, Spinner } from "@/components/design-system";
+import {
+  Button,
+  Heading,
+  InfoIconTooltip,
+  Link,
+  Spinner,
+} from "@/components/design-system";
 import { UNIQUE_IDENTITY_MINT_PRICE } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { toastTransaction } from "@/lib/toast";
@@ -124,7 +130,18 @@ export function MintStep() {
       <div className="flex h-full flex-col items-center justify-between">
         <div>
           {errorMessage ? (
-            <div className="text-clay-500">{errorMessage}</div>
+            <div className="text-clay-500">
+              {errorMessage}
+              <Heading level={2}>
+                If you just completed your KYC, this step most likely failed
+                because an agent has not assessed your KYC yet. Please try again
+                in 24-48hrs, or join our{" "}
+                <Link href="https://discord.gg/freeartists">
+                  Discord channel
+                </Link>
+                to speak with an admin.
+              </Heading>
+            </div>
           ) : isPolling ? (
             <div>
               <div className="mb-8">
