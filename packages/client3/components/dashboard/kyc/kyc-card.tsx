@@ -1,7 +1,7 @@
 import { keccak256, toUtf8Bytes } from "ethers/lib/utils";
 import React from "react";
 
-import { BodyText, Button } from "@/components/design-system";
+import { BodyText, Button, Link, Tooltip } from "@/components/design-system";
 import { CONTRACT_ADDRESSES } from "@/constants";
 import { useContract } from "@/lib/contracts";
 import { openVerificationModal } from "@/lib/state/actions";
@@ -36,18 +36,39 @@ export function KYC() {
 
    */
 
+  const ToolTipInformation = () => (
+    <div className="max-w-xs">
+      <div className="mb-4 text-xl font-bold text-dark-80">
+        Why do I need to KYC?
+      </div>
+      <div>
+        KYC verifies everyone’s identity & reduces fraud in the platform. Learn
+        more&nbsp;
+        <Link
+          href={
+            "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+          }
+        >
+          here
+        </Link>
+      </div>
+    </div>
+  );
+
   return (
     <div className="grid place-items-center rounded-lg bg-green-100 pt-[105px] pb-[101px] ">
       <BodyText size="large" className="pb-[24px] text-dark-50">
         To create the first pool, you need to verify identity
       </BodyText>
-      <Button
-        className="text-center"
-        buttonType="secondary"
-        onClick={() => openVerificationModal()}
-      >
-        Verify Identity
-      </Button>
+      <Tooltip placement="bottom-start" content={<ToolTipInformation />}>
+        <Button
+          className="text-center"
+          buttonType="secondary"
+          onClick={() => openVerificationModal()}
+        >
+          Verify Identity
+        </Button>
+      </Tooltip>
     </div>
   );
 }

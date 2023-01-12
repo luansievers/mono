@@ -3,7 +3,13 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { PoolCard } from "@/components/dashboard/pool-card";
-import { Heading, Caption } from "@/components/design-system";
+import {
+  Heading,
+  Caption,
+  Link,
+  Tooltip,
+  Icon,
+} from "@/components/design-system";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 
 type Props = {
@@ -13,6 +19,25 @@ type Props = {
     raisedAmount: number
   ) => void;
 };
+
+const ToolTipInformation = () => (
+  <div className="max-w-xs">
+    <div className="mb-4 text-xl font-bold text-dark-80">
+      How do I collect revenue?
+    </div>
+    <div>
+      Collect revenue by claiming USDC with your token, when revenue is
+      announced. View step-by-step here&nbsp;
+      <Link
+        href={
+          "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+        }
+      >
+        here
+      </Link>
+    </div>
+  </div>
+);
 
 function DashboardArtistPool({
   openPoolData,
@@ -39,10 +64,17 @@ function DashboardArtistPool({
   return (
     <>
       <div className="mb-5 mt-10 flex">
-        <Heading className="flex-1 text-white" level={5}>
-          My Open Pools
+        <Heading className="flex w-96 text-white" level={5} medium={true}>
+          <Tooltip placement="bottom-start" content={<ToolTipInformation />}>
+            <button>
+              My Open Pools
+              <Icon name="InfoCircleOutlined" className="ml-2" />
+            </button>
+          </Tooltip>
         </Heading>
-        <Caption className="mr-11 w-60 flex-none text-right">Progress</Caption>
+        <Caption className="mr-11 w-60 flex-1 pt-3 text-right text-light-40">
+          Progress
+        </Caption>
       </div>
       {openPoolData
         ? openPoolData.map((tranchedPool: any) => (

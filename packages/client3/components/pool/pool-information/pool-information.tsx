@@ -1,5 +1,5 @@
-import { gql, useApolloClient } from "@apollo/client";
-import { BigNumber, utils } from "ethers";
+import { useApolloClient } from "@apollo/client";
+import { BigNumber } from "ethers";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -14,11 +14,12 @@ import {
   Icon,
   Input,
   Link,
+  Tooltip,
 } from "@/components/design-system";
 import { Divider } from "@/components/design-system/divider";
 import { Progress } from "@/components/design-system/progress";
 import { WalletButton } from "@/components/design-system/wallet-button";
-import { TRANCHES, USDC_DECIMALS } from "@/constants";
+import { TRANCHES } from "@/constants";
 import { useUser } from "@/hooks/user-hooks";
 import { generateErc20PermitSignature, useContract } from "@/lib/contracts";
 import { formatCrypto } from "@/lib/format";
@@ -32,7 +33,6 @@ import {
 import { openVerificationModal } from "@/lib/state/actions";
 import { toastTransaction } from "@/lib/toast";
 import { isSmartContract, useWallet } from "@/lib/wallet";
-import { BackerWithdrawCard } from "@/pages/backer/pool/[address]/backer-withdraw-card";
 import { validateMaximumAmountSupply } from "@/utilities/validation.util";
 
 type Props = {
@@ -52,6 +52,27 @@ interface FormFields {
   supply: string;
   backerName: string;
 }
+
+const ToolTipInformation = () => (
+  <div className="max-w-xs">
+    <div className="mb-4 text-xl font-bold text-dark-80">
+      What do I receive for my contribution
+    </div>
+    <div>
+      You receive a token that holds details of your revenue % and relevant
+      perks. Over time, this token allows the project to distribute revenue
+      accordingly. View step-by-step to contribute&nbsp;
+      <Link
+        target={"_blank"}
+        href={
+          "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+        }
+      >
+        here
+      </Link>
+    </div>
+  </div>
+);
 
 export function PoolInformation({
   totalSuppliedAmount,
@@ -298,22 +319,40 @@ export function PoolInformation({
               <Caption className="text-dark-50">
                 By entering my name and clicking “Contribute” below, I hereby
                 agree and acknowledge that (i) I am electronically signing and
-                becoming a party to the&nbsp;
-                {agreement ? (
-                  <Link href={agreement}>agreement</Link>
-                ) : (
-                  "agreement"
-                )}
-                &nbsp; for this pool, and (ii) my name and transaction
-                information may be shared with the artist.
+                becoming a party to this co-operative&nbsp;
+                <Link
+                  target={"_blank"}
+                  href={
+                    "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+                  }
+                >
+                  <Caption className="text-dark-50">(FAQ)</Caption>
+                </Link>
+                , (ii) I am electronically agreeing to the Terms & Services
+                outlined&nbsp;
+                <Link
+                  target={"_blank"}
+                  href={
+                    "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+                  }
+                >
+                  <Caption className="text-dark-50"> here</Caption>
+                </Link>
+                &nbsp; and (iii) my name and transaction information may be
+                shared with the artist.
               </Caption>
-              <Button
-                type="submit"
-                isLoading={{ isLoading }}
-                className="mt-6 w-full justify-center bg-accent-2"
+              <Tooltip
+                placement="bottom-start"
+                content={<ToolTipInformation />}
               >
-                Contribute to this artist
-              </Button>
+                <Button
+                  type="submit"
+                  isLoading={{ isLoading }}
+                  className="mt-6 w-full justify-center bg-accent-2"
+                >
+                  Contribute to this artist
+                </Button>
+              </Tooltip>
             </Form>
           )}
         </>

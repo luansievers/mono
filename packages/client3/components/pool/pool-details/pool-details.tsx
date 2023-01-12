@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-import { Avatar, BodyText, Heading } from "@/components/design-system";
+import {
+  Avatar,
+  BodyText,
+  Heading,
+  Link,
+  Tooltip,
+} from "@/components/design-system";
 import { SocialMediaButton } from "@/components/design-system/button/social-media-button";
 import { BackersList } from "@/components/pool/backers-list";
 import { Pool } from "@/lib/graphql/generated";
@@ -12,6 +18,19 @@ type Props = {
     profileImageUrl: string;
   }[];
 };
+
+const ToolTipInformation = () => (
+  <div className="max-w-xs">
+    <div className="mb-4 text-xl font-bold text-dark-80">
+      How can I support in artist development (joining the team or network)?
+    </div>
+    <div>
+      If you want to contribute your skills or talen in support of the artist,
+      please click&nbsp;
+      <Link href={"https://forms.gle/zEt5ENjzdpUvaMfg6"}>here</Link>
+    </div>
+  </div>
+);
 
 export function PoolDetail({ poolData, backerList }: Props) {
   return (
@@ -42,9 +61,14 @@ export function PoolDetail({ poolData, backerList }: Props) {
         Collab, will include his longtime friend, DJ Chaz D., as well as Library
         Sound, and Adam Zela.
       </BodyText> */}
-      <Heading className="mt-10 text-white" level={5}>
-        Project Detail
-      </Heading>
+      <Tooltip placement="bottom-start" content={<ToolTipInformation />}>
+        <button>
+          <Heading className="mt-10 text-white" level={5}>
+            Project Detail
+          </Heading>
+        </button>
+      </Tooltip>
+
       <BodyText size="normal" className="mt-6 text-white">
         {poolData?.projectDetail}
       </BodyText>
