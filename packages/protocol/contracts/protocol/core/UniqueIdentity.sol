@@ -127,6 +127,7 @@ contract UniqueIdentity is ERC1155PresetPauserUpgradeable, IUniqueIdentity {
 
     bytes32 ethSignedMessage = ECDSAUpgradeable.toEthSignedMessageHash(hash);
 
+    // Error here? Refer to `packages/client3/components/dashboard/kyc/kyc-card.tsx`.
     require(hasRole(SIGNER_ROLE, ECDSAUpgradeable.recover(ethSignedMessage, signature)), "Invalid signer");
     _;
   }

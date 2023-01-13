@@ -1,0 +1,204 @@
+{
+  "lambdas": {
+    "__NEXT_API_LAMBDA_0": {
+      "handler": "now__launcher.launcher",
+      "runtime": "nodejs16.x",
+      "filename": "lambdas/__NEXT_API_LAMBDA_0.zip",
+      "route": "/__NEXT_API_LAMBDA_0"
+    }
+  },
+  "staticRoutes": [
+    "/404",
+    "/android-chrome-192x192.png",
+    "/android-chrome-512x512.png",
+    "/apple-touch-icon.png",
+    "/browserconfig.xml",
+    "/FAD-logo-full.png",
+    "/favicon-16x16.png",
+    "/favicon-32x32.png",
+    "/favicon.ico",
+    "/images/free-artists-bg.png",
+    "/images/my-portfolio-bg.png",
+    "/mstile-150x150.png",
+    "/safari-pinned-tab.svg",
+    "/site.webmanifest",
+    "/vercel.svg",
+    "/[role]/transactions",
+    "/admin",
+    "/artist/create-pool",
+    "/artist/dashboard",
+    "/artist/pool/[address]",
+    "/backer/all-artist-pools",
+    "/backer/my-portfolio",
+    "/backer/pool/[address]",
+    "/privacy",
+    "/senior-pool-agreement-interstitial",
+    "/senior-pool-agreement-non-us",
+    "/senior-pool-agreement-us",
+    "/terms",
+    "/verify"
+  ],
+  "routes": [
+    {
+      "src": "^(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))\\/$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308,
+      "continue": true
+    },
+    {
+      "src": "^(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))?$",
+      "headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "Content-Security-Policy": "frame-ancestors 'self';"
+      },
+      "continue": true
+    },
+    {
+      "src": "^\\/$",
+      "headers": {
+        "Location": "/backer/all-artist-pools"
+      },
+      "status": 307
+    },
+    {
+      "src": "/404",
+      "status": 404,
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/api/gfi\\-grants/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/gfi-grants"
+      },
+      "check": true
+    },
+    {
+      "src": "^/api/hello/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/hello"
+      },
+      "check": true
+    },
+    {
+      "src": "^/api/pool/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/pool"
+      },
+      "check": true
+    },
+    {
+      "handle": "resource"
+    },
+    {
+      "src": "/.*",
+      "status": 404
+    },
+    {
+      "handle": "miss"
+    },
+    {
+      "handle": "rewrite"
+    },
+    {
+      "src": "^/api/gfi\\-grants/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/gfi-grants"
+      },
+      "check": true
+    },
+    {
+      "src": "^/api/hello/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/hello"
+      },
+      "check": true
+    },
+    {
+      "src": "^/api/pool/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/pool"
+      },
+      "check": true
+    },
+    {
+      "src": "^/api/pool/(?<poolId>[^/]+?)(?:/)?$",
+      "dest": "/api/pool/[poolId]?poolId=$poolId",
+      "check": true
+    },
+    {
+      "src": "^/api/pool/\\[poolId\\]/?$",
+      "dest": "/__NEXT_API_LAMBDA_0",
+      "headers": {
+        "x-nextjs-page": "/api/pool/[poolId]"
+      },
+      "check": true
+    },
+    {
+      "src": "^/artist/pool/(?<address>[^/]+?)(?:/)?$",
+      "dest": "/artist/pool/[address]?address=$address",
+      "check": true
+    },
+    {
+      "src": "^/backer/pool/(?<address>[^/]+?)(?:/)?$",
+      "dest": "/backer/pool/[address]?address=$address",
+      "check": true
+    },
+    {
+      "src": "^/(?<role>[^/]+?)/transactions(?:/)?$",
+      "dest": "/[role]/transactions?role=$role",
+      "check": true
+    },
+    {
+      "handle": "hit"
+    },
+    {
+      "handle": "error"
+    },
+    {
+      "src": "/.*",
+      "dest": "/404",
+      "status": 404
+    }
+  ],
+  "buildId": "U-HHRESVH-J1Unnx7pI4N",
+  "prerenders": {},
+  "staticFilesArchive": "static-website-files.zip",
+  "version": 1,
+  "images": {
+    "domains": [],
+    "sizes": [
+      640,
+      750,
+      828,
+      1080,
+      1200,
+      1920,
+      2048,
+      3840,
+      16,
+      32,
+      48,
+      64,
+      96,
+      128,
+      256,
+      384
+    ],
+    "formats": [
+      "image/webp"
+    ],
+    "dangerouslyAllowSVG": false,
+    "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;"
+  }
+}

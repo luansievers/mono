@@ -22,6 +22,8 @@ const graphQlApiUrl =
     ? "http://localhost:8000/subgraphs/name/goldfinch-subgraph"
     : env.combinedEnv.NEXT_PUBLIC_NETWORK_NAME === "aurora_testnet"
     ? "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-aurora-testnet"
+    : env.combinedEnv.NEXT_PUBLIC_NETWORK_NAME === "aurora_mainnet"
+    ? "https://api.thegraph.com/subgraphs/name/freeartists/free-artists-production"
     : null;
 if (!graphQlApiUrl) {
   throw new Error("Could not determine GraphQL API URL");

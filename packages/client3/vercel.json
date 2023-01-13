@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "pages/api/gfi-grants/index.page.ts": {
-      "includeFiles": "gfi-grants/*.json"
-    }
-  }
-}
+{}

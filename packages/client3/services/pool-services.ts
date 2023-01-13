@@ -5,7 +5,7 @@ import { UIDType } from "@/lib/verify";
 import { getLastEventArgs } from "@/utilities/contract.util";
 
 const JUNIOR_FEE_PERCENT = "20";
-const INTEREST_APR = "50000000000000000"; // 5% APR
+const INTEREST_APR = "50000000000000000000000";
 const PAYMENT_PERIOD_IN_DAYS = "10";
 const TERM_IN_DAYS = "365";
 const LATE_FEE_APR = "0";

@@ -8,7 +8,9 @@ import {
   ButtonType,
   Caption,
   Heading,
+  Link,
   LinkButton,
+  Tooltip,
 } from "@/components/design-system";
 import { NotConnected } from "@/components/general/not-connected";
 import { PortfolioTotal } from "@/components/portfolio/total";
@@ -16,6 +18,25 @@ import { useSelectedSidebarItem, useLayoutTitle } from "@/hooks/sidebar-hooks";
 import { SupportedCrypto } from "@/lib/graphql/generated";
 import { useWallet } from "@/lib/wallet";
 import { MyPortfolioPools } from "@/queries/backer.queries";
+
+const ToolTipInformation = () => (
+  <div className="max-w-xs">
+    <div className="mb-4 text-xl font-bold text-dark-80">
+      Why do I need to KYC?
+    </div>
+    <div>
+      KYC verifies everyone’s identity & reduces fraud in the platform. Learn
+      more&nbsp;
+      <Link
+        href={
+          "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+        }
+      >
+        here
+      </Link>
+    </div>
+  </div>
+);
 
 function BackerPortfolioPage() {
   useSelectedSidebarItem("my-portfolio");
@@ -79,9 +100,14 @@ function BackerPortfolioPage() {
       />
 
       <div className="mb-5 mt-10 flex">
-        <Heading className="w-96 flex-1 text-white" level={5} medium={true}>
-          My Open Pools
-        </Heading>
+        <Tooltip placement="bottom-start" content={<ToolTipInformation />}>
+          <button>
+            <Heading className="w-96 flex-1 text-white" level={5} medium={true}>
+              My Open Pools TEST
+            </Heading>
+          </button>
+        </Tooltip>
+
         <Caption className="ml-32 flex-1 text-center">
           Total Contributed
         </Caption>

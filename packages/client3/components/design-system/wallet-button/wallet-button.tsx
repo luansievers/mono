@@ -5,6 +5,7 @@ import {
   Button,
   ButtonProps,
   ButtonType,
+  Link,
   Tooltip,
 } from "@/components/design-system";
 import { DESIRED_CHAIN_ID } from "@/constants";
@@ -30,6 +31,27 @@ type IWalletButton = Pick<
   ButtonProps,
   "onClick" | "isLoading" | "iconLeft" | "buttonType" | "className" | "children"
 >;
+
+const ToolTipInformation = () => (
+  <div className="max-w-xs">
+    <div className="mb-4 text-xl font-bold text-dark-80">
+      Why do I need a wallet?
+    </div>
+    <div>
+      Your wallet allows interaction on blockchain, which is needed to
+      co-ordinate revenue distribution at a high volume. Learn how to set it
+      up&nbsp;
+      <Link
+        target={"_blank"}
+        href={
+          "https://drive.google.com/file/d/1K0CAAACatYbfRkx4IRMwYa1ZNg9_RAf0/view"
+        }
+      >
+        here
+      </Link>
+    </div>
+  </div>
+);
 
 export function WalletButton({ className }: Props) {
   const { account } = useWallet();
@@ -91,6 +113,8 @@ export function WalletButton({ className }: Props) {
 
   return error?.message ? (
     <Tooltip content={error.message}>{button}</Tooltip>
+  ) : !account ? (
+    <Tooltip content={<ToolTipInformation />}>{button}</Tooltip>
   ) : (
     button
   );
