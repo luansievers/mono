@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/nextjs";
 import { ReactNode, FormHTMLAttributes, useEffect } from "react";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, FieldValues } from "react-hook-form";
 import { UseFormReturn, SubmitHandler } from "react-hook-form/dist/types/form";
 
-type FormProps<FormFields> = Omit<
+type FormProps<FormFields extends FieldValues> = Omit<
   FormHTMLAttributes<HTMLFormElement>,
   "onSubmit"
 > & {
@@ -18,7 +18,7 @@ type FormProps<FormFields> = Omit<
 
 const reservedErrorField = "fallback";
 
-export function Form<FormFields>({
+export function Form<FormFields extends FieldValues>({
   children,
   rhfMethods,
   onSubmit,
@@ -71,7 +71,6 @@ export function Form<FormFields>({
         onSubmit={wrappedSubmitHandler}
       >
         {children}
-        {/* @ts-expect-error Same as above */}
         {errors[reservedErrorField] ? (
           <></>
         ) : // <HelperText className="mt-2">

@@ -7,6 +7,7 @@ type Pool {
   projectCoverImage: String
   walletAddress: String!
   terms: Terms
+  termAgreement: Boolean
   status: POOL_STATUS_TYPE!
   poolAddress: String!
   borrowerContract: String!

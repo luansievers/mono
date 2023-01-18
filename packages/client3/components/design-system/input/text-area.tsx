@@ -50,9 +50,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     {
       const formContext = useFormContext();
       const [focus, setFocus] = useState(false);
-      let _errorMessage = errorMessage;
+      const _errorMessage = errorMessage;
       if (formContext !== null) {
-        _errorMessage = formContext.formState.errors[name]?.message;
+        //  _errorMessage = formContext.formState.errors[name]?.message;
       }
       const isError = !!_errorMessage;
 

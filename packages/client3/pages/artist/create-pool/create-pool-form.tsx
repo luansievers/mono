@@ -13,6 +13,7 @@ import { IPool } from "@/types/pool";
 import CreatePoolDetailEntry from "./create-pool-detail-entry";
 import CreatePoolDocumentUpload from "./create-pool-document-upload";
 import CreatePoolTerms from "./create-pool-terms";
+import OnServiceAcceptance from "./create-terms-of-service";
 
 export enum ReviewStatus {
   PENDING = "pending",
@@ -53,6 +54,10 @@ function CreatePoolForm() {
           register={register}
           formState={formState}
         />
+
+        <Divider className="col-span-4" />
+
+        <OnServiceAcceptance formState={formState} register={register} />
 
         <Divider className="col-span-4" />
 

@@ -47,7 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         formState: { isSubmitting, errors },
       } = formContext;
       const filteredOutWarnings = Object.fromEntries(
-        Object.entries(errors).filter(([, value]) => value.type !== "warn")
+        Object.entries(errors).filter(([, value]) => value?.type !== "warn")
       );
       const isValid = Object.keys(filteredOutWarnings).length === 0;
       _disabled = disabled || isSubmitting || !isValid;
