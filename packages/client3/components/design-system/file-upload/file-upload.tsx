@@ -27,9 +27,9 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
     const formContext = useFormContext();
 
-    let _errorMessage = errorMessage;
+    const _errorMessage = errorMessage;
     if (formContext !== null) {
-      _errorMessage = formContext.formState.errors[name]?.message;
+      //_errorMessage = formContext.formState.errors[name]?.message;
     }
     const isError = !!_errorMessage;
 

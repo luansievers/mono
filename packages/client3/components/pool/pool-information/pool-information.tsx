@@ -239,10 +239,10 @@ export function PoolInformation({
           })}
         </Display>
         <BodyText size="large" className=" text-dark-50">
-          of{" "}
+          of
           {formatCrypto({
             token: SupportedCrypto.Usdc,
-            amount: BigNumber.from(totalGoalAmount ?? 0),
+            amount: BigNumber.from(totalGoalAmount * 10 ** 6 ?? 0),
           })}
         </BodyText>
       </div>

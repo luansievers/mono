@@ -8,6 +8,7 @@ export interface IPool {
   closingDate: Date;
   projectDetail: string;
   projectCoverImage: string;
+  termAgreement: boolean;
   pdfDocuments: {
     poolContractPdf: UploadedFileType;
     termSheetPdf: UploadedFileType;

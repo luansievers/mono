@@ -1,4 +1,9 @@
-import { Control, Controller } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FormState,
+  UseFormRegister,
+} from "react-hook-form";
 
 import {
   Heading,
@@ -16,18 +21,29 @@ import { IPool } from "@/types/pool";
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<IPool, any>;
+  register: UseFormRegister<IPool>;
+  formState: FormState<IPool>;
 };
 
-function CreatePoolDocumentUpload({ control }: Props) {
+function CreatePoolDocumentUpload({
+  control,
+  register,
+  formState: { errors },
+}: Props) {
   const onFileUpload = async (
+    //  file: UploadedFileType,
     file: File,
-    onComplete: (base64File: UploadedFileType) => void
+    onComplete: (string: UploadedFileType) => void
   ) => {
     const base64String = await toBase64(file);
     onComplete({
       fileName: file.name,
       fileUrl: base64String,
     });
+  };
+
+  const onRemoveFile = async () => {
+    return;
   };
 
   return (
@@ -47,7 +63,11 @@ function CreatePoolDocumentUpload({ control }: Props) {
           <Caption className="text-dark-50">Download template</Caption>
         </Link>
       </div>
+
       <Controller
+        {...register("pdfDocuments.poolContractPdf", {
+          required: "Pool Contract Terms are required",
+        })}
         name={"pdfDocuments.poolContractPdf"}
         control={control}
         render={({ field: { onChange, value } }) => {
@@ -74,6 +94,9 @@ function CreatePoolDocumentUpload({ control }: Props) {
         </Link>
       </div>
       <Controller
+        {...register("pdfDocuments.termSheetPdf", {
+          required: "Pool Term Sheet is required",
+        })}
         name={"pdfDocuments.termSheetPdf"}
         control={control}
         render={({ field: { onChange, value } }) => {
@@ -101,6 +124,9 @@ function CreatePoolDocumentUpload({ control }: Props) {
         </Link>
       </div>
       <Controller
+        {...register("pdfDocuments.proposalPdf", {
+          required: "Proposal Pool Sheet is required",
+        })}
         name={"pdfDocuments.proposalPdf"}
         control={control}
         render={({ field: { onChange, value } }) => {

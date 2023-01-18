@@ -6,8 +6,8 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import { Icon } from "../icon";
 import { Input } from "./input";
+import { Icon } from "../icon";
 
 type DropDownProps = ComponentProps<typeof Input> &
   UseControllerProps<any> & {
@@ -36,9 +36,9 @@ export function DropDown({
   });
 
   const formContext = useFormContext();
-  let _errorMessage = errorMessage;
+  const _errorMessage = errorMessage;
   if (formContext !== null) {
-    _errorMessage = formContext.formState.errors[name]?.message;
+    //  _errorMessage = formContext.formState.errors[name]?.message;
   }
   const isError = !!_errorMessage;
 
