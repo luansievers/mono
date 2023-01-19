@@ -3236,7 +3236,11 @@
     },
     "a5477a5839e6b7e5ea32c3e4448678bd1e0abb689b48ae84d2e9de4dc6df1510": {
       "address": "0x57Dde0Bd887428cC4402e90174ec305d8822ccF5",
+<<<<<<< HEAD
       "txHash": "0x5614fe0e34f625cf9bcbdbefbfe0c0f55dc590b52eca4df4140cb2632a86950e",
+=======
+      "txHash": "0xc99f27d72911ec9a9ee55e11c4dc600ed84ac034431fcb4d70003f74a315fe24",
+>>>>>>> 30e68857637b9fe7701c4d9c8b9fc77d62d9659c
       "layout": {
         "solcVersion": "0.8.4",
         "storage": [

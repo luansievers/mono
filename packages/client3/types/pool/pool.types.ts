@@ -1,6 +1,7 @@
 import { UploadedFileType } from "@/components/upload-pdf";
 
 export interface IPool {
+  userName: string;
   walletAddress: string;
   poolAddress: string;
   poolName: string;

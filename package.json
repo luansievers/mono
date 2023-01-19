@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "lint": "npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 lint --no-bail",
     "bootstrap": "npx lerna bootstrap && npm run stub-dev-deployments && npm run build",
     "stub-dev-deployments": "sh -c \"[ ! -e \"packages/protocol/deployments/all_dev.json\" ] && echo {} > packages/protocol/deployments/all_dev.json || true\"",
     "start": "npm run kill-ports && REACT_APP_HARDHAT_FORK=mainnet HARDHAT_FORK=mainnet npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 start --parallel",
@@ -12,8 +13,6 @@
     "test:client": "npm run test -- --scope @goldfinch-eng/client",
     "test:protocol": "npm run test -- --scope @goldfinch-eng/protocol",
     "test:autotasks": "npm run test -- --scope @goldfinch-eng/autotasks",
-    "lint": "npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 lint --no-bail",
-    "lint:fix": "npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 lint:fix --no-bail",
     "prepare": "husky install",
     "build": "npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 build --stream --scope @goldfinch-eng/protocol && npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 build --stream --ignore @goldfinch-eng/protocol",
     "build-netlify": "npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 --ignore @goldfinch-eng/subgraph --ignore @goldfinch-eng/server build --stream --scope @goldfinch-eng/protocol && npx lerna run --ignore @goldfinch-eng/client2 --ignore @goldfinch-eng/client3 --ignore @goldfinch-eng/subgraph --ignore @goldfinch-eng/server build --stream --ignore @goldfinch-eng/protocol",
@@ -22,6 +21,7 @@
     "start:client3": "npm --prefix packages/client3 run dev"
   },
   "devDependencies": {
+    "@metamask/detect-provider": "^2.0.0",
     "@nomiclabs/buidler": "^1.4.8",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/experimental-utils": "^5.14.0",
@@ -30,10 +30,16 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-mocha-no-only": "^1.1.1",
-    "husky": "^7.0.2",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
     "lerna": "^5.3.0",
+    "lint-staged": "^13.1.0",
     "prettier": "^2.4.0",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
-    "typescript": "^4.4.3"
+    "typescript": "^4.9.4"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

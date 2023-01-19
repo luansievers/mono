@@ -1,5 +1,6 @@
 type Pool {
   id: String!
+  userName: String!
   poolName: String!
   projectDetail: String!
   goalAmount: String!

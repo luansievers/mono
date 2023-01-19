@@ -54,6 +54,9 @@ function CreatePoolForm() {
           register={register}
           formState={formState}
         />
+        <Divider className="col-span-4" />
+
+        <OnServiceAcceptance formState={formState} register={register} />
 
         <Divider className="col-span-4" />
 
@@ -61,7 +64,11 @@ function CreatePoolForm() {
 
         <Divider className="col-span-4" />
 
-        <CreatePoolDocumentUpload control={control} />
+        <CreatePoolDocumentUpload
+          control={control}
+          register={register}
+          formState={formState}
+        />
 
         <Divider className="col-span-4" />
 

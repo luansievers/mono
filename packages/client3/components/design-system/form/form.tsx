@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import { ReactNode, FormHTMLAttributes, useEffect } from "react";
-import { FormProvider, FieldValues } from "react-hook-form";
+import { FieldValues, FormProvider } from "react-hook-form";
 import { UseFormReturn, SubmitHandler } from "react-hook-form/dist/types/form";
 
 type FormProps<FormFields extends FieldValues> = Omit<
@@ -74,8 +74,8 @@ export function Form<FormFields extends FieldValues>({
         {errors[reservedErrorField] ? (
           <></>
         ) : // <HelperText className="mt-2">
-        //   {/* @ts-expect-error Same as above */}
-        //   Error: {errors[reservedErrorField].message}
+        //   /* @ts-expect-error Same as above */
+        //   Error: errors[reservedErrorField].message
         // </HelperText>
         null}
       </form>
