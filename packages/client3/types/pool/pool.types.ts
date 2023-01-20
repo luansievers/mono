@@ -1,6 +1,7 @@
 import { UploadedFileType } from "@/components/upload-pdf";
 
 export interface IPool {
+  userName: string;
   walletAddress: string;
   poolAddress: string;
   poolName: string;
@@ -8,6 +9,7 @@ export interface IPool {
   closingDate: Date;
   projectDetail: string;
   projectCoverImage: string;
+  termAgreement: boolean;
   pdfDocuments: {
     poolContractPdf: UploadedFileType;
     termSheetPdf: UploadedFileType;

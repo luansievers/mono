@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 import { ReactNode, FormHTMLAttributes, useEffect } from "react";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, FieldValues} from "react-hook-form";
 import { UseFormReturn, SubmitHandler } from "react-hook-form/dist/types/form";
 
 type FormProps<FormFields> = Omit<

@@ -49,7 +49,7 @@ export function PoolDetail({ poolData, backerList }: Props) {
           image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAdUlEQVR42mNgGAWjAAj+48GUG37i92+cmFJL/hMDKLHkv1TeVYKYIgvwBQ81gommFvxHtqB0797/6BbCxMixAGzA7AcPUFyJzEcWI9sHxAQP1YIIGWPzCVUjeehbQLN8gK2wG1o+oElpSiiIqFoXUKuCoboFAP+MJG7jSOWlAAAAAElFTkSuQmCC"
         />
         <BodyText className="pl-3 text-white" size="large" semiBold>
-          {poolData?.walletAddress}
+          {poolData?.userName}
         </BodyText>
       </div>
       {/* <BodyText size="normal" className="mt-6 text-white">
