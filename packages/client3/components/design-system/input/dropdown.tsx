@@ -38,7 +38,7 @@ export function DropDown({
   const formContext = useFormContext();
   let _errorMessage = errorMessage;
   if (formContext !== null) {
-    _errorMessage = formContext.formState.errors[name]?.message;
+    //_errorMessage = formContext.formState.errors[name]?.message;
   }
   const isError = !!_errorMessage;
 

@@ -48,11 +48,18 @@ function CreatePoolForm() {
   return (
     <Form rhfMethods={rhfMethods} onSubmit={onSubmit}>
       <div className="grid grid-cols-4 gap-y-6 px-64">
-        <CreatePoolDetailEntry
+
+      
+
+      <CreatePoolDetailEntry
           control={control}
           register={register}
           formState={formState}
         />
+
+        <Divider className="col-span-4" />
+
+        <OnServiceAcceptance formState={formState} register={register} />
 
         <Divider className="col-span-4" />
 

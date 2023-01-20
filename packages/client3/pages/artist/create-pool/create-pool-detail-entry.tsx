@@ -34,6 +34,17 @@ function CreatePoolDetailEntry({
   return (
     <>
       <BodyText className="my-auto text-white" size="normal">
+        User Name
+      </BodyText>
+      <Input
+        {...register("userName", { required: "User name is required" })}
+        className="col-span-3"
+        name="userName"
+        inputMode="text"
+        placeholder="Enter your user or stage name"
+        errorMessage={errors.userName?.message}
+      />
+      <BodyText className="my-auto text-white" size="normal">
         Pool Name
       </BodyText>
       <Input
