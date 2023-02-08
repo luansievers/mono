@@ -226,24 +226,24 @@ Click [here](https://github.com/weavik/free-artist-dao#troubleshooting-1) for th
 
 ## Deployment Lifecycle
 
-- [x] Add the networks to the `hardhat.config.base.ts` file.
-- [x] Add network information here `packages/protocol/blockchain_scripts/deployHelpers/index.ts`
-- [x] Make sure that USDC coin address is correct here: `packages/protocol/blockchain_scripts/baseDeploy/getOrDeployUSDC.ts`
-- [x] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
+- [ ] Add the networks to the `hardhat.config.base.ts` file.
+- [ ] Add network information here `packages/protocol/blockchain_scripts/deployHelpers/index.ts`
+- [ ] Make sure that USDC coin address is correct here: `packages/protocol/blockchain_scripts/baseDeploy/getOrDeployUSDC.ts`
+- [ ] Run `npx hardhat deploy --network <hardhat-network> --export-all deployments/all.json`
   - e.g., `npx hardhat deploy --network aurora_testnet --export-all deployments/test_deploy.json`
   - e.g., `npx hardhat deploy --network aurora_prod --export-all deployments/all.json`
-- [x] Update client3 environment
+- [ ] Update client3 environment
   - `packages/client3/scripts/populate-contract-addresses.ts` and `packages/client3/env.local`
-- [x] Create/Update Subgraph
+- [ ] Create/Update Subgraph
   - `graph deploy --product hosted-service freeartists/free-artists-production aurora_mainnet_subgraph.yaml`
-- [x] Deploy GCP Functions
+- [ ] Deploy GCP Functions
   - Depending on the deployment consider making a new firebase project to seperate concerns.
   - `cd packages/functions && firebase deploy` <---this deploys firebase and functions
   - To update functions run, `cd packages/functions && firebase deploy --only functions`
-- [x] Create GCP config
-- [x] Create a Defender Relay and add API key to: `.env.local`
-- [x] Deploy Autotask and Relay
+- [ ] Create GCP config
+- [ ] Create a Defender Relay and add API key to: `.env.local`
+- [ ] Deploy Autotask and Relay
   - e.g., `cd packages/autotask && npm run deploy`
-- [x] Grant Admin privileges to Autotask relay
-- [x] Add UID types to Unique Identity Provider
-- [x] Redeploy GCP functions
+- [ ] Grant Admin privileges to Autotask relay
+- [ ] Add UID types to Unique Identity Provider
+- [ ] Redeploy GCP functions

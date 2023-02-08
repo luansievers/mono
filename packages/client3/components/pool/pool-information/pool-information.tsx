@@ -154,34 +154,15 @@ export function PoolInformation({
        * Note : Sometime the timestamp returned by the provider(metamask) is of old blocks and would cause 1hr deadline to fail.
        * Increasing the deadline seems to fix it but not the ideal approach.
        */
-      const deadline = BigNumber.from(now + 3600); // deadline is 1 hour from now
 
-      const signature = await generateErc20PermitSignature({
-        erc20TokenContract: usdcContract,
-        provider,
-        owner: account,
+      await approveErc20IfRequired({
+        account,
         spender: tranchedPoolAddress,
-        value,
-        deadline,
-      }).catch((err) => {
-        toast.error(
-          err.data === "0x"
-            ? "Transaction rejected, this is possibly because you do not have USDC.e"
-            : err
-        );
-        throw err;
+        amount: value,
+        erc20Contract: usdcContract,
       });
-      const transaction = tranchedPoolContract.depositWithPermit(
-        TRANCHES.Junior,
-        value,
-        deadline,
-        signature.v,
-        signature.r,
-        signature.s
-      );
-
       await toastTransaction({
-        transaction,
+        transaction: tranchedPoolContract.deposit(TRANCHES.Junior, value),
         pendingPrompt: `Deposit submitted for pool ${tranchedPoolAddress}.`,
       });
     }
